@@ -1,6 +1,7 @@
 function PlayerControl(camera){
     this.camera=camera;
     var scope=this;
+
     var myMouseManager=new MouseManager();
     myMouseManager.dragMouse=function (dx,dy) {
         scope.rotation1(-0.02*dx);
@@ -12,6 +13,7 @@ function PlayerControl(camera){
         else if ( event.detail !== undefined )delta = - event.detail;
         scope.forward(delta);
     }
+
     var myKeyboardManager=new KeyboardManager();
     myMouseManager.init();
     myKeyboardManager.onKeyDown=function(event){
@@ -24,6 +26,16 @@ function PlayerControl(camera){
         else if(event.key==="ArrowRight"||event.key==="D"||event.key==="d")scope.left(-step);
     }
     myKeyboardManager.init();
+
+    var myPhoneManager=new PhoneManager();
+    myPhoneManager.drag=function(dx,dy){
+        scope.rotation1(-0.02*dx);
+        scope.rotation2(-0.02*dy);
+    }
+    myPhoneManager.dragDouble=function(distanceChange){
+        scope.forward(distanceChange);
+    }
+    myPhoneManager.init();
 
     this.rotation1=function(step){//水平旋转
         var direction0=this.camera.getWorldDirection();
@@ -118,7 +130,7 @@ function MouseManager(){
     this.onMouseWheel=function(event){
         console.log(event);
     }
-    this.init=function(  ) {
+    this.init=function() {
         document.addEventListener( 'mousemove',scope.onMouseMove, false );
         document.addEventListener( 'mouseup', scope.onMouseUp, false );
         document.addEventListener( 'mousedown',scope.onMouseDown, false );
@@ -132,5 +144,49 @@ function KeyboardManager(){
     }
     this.init=function(){
         window.addEventListener( 'keydown',scope.onKeyDown, false );
+    }
+}
+function PhoneManager(){
+    var scope=this;
+    this.preX=-1;
+    this.preY=-1;
+    this.preDistance=-1;
+    this.drag=function(dx,dy){
+        console.log(dx,dy);
+    }
+    this.dragDouble=function(distanceChange){
+        console.log(distanceChange);
+    }
+    this.onTouchMove = function (event) {
+        //event.touches.length//同时出现的触摸点个数
+        if(event.touches.length===1){
+            if(scope.preX>=0&&scope.preY>=0)
+                scope.drag(
+                    event.touches[ 0 ].pageX-scope.preX,
+                    event.touches[ 0 ].pageY-scope.preY
+                );
+            scope.preX=event.touches[ 0 ].pageX;
+            scope.preY=event.touches[ 0 ].pageY;
+        }else if(event.touches.length===2){
+            var dx = event.touches[ 0 ].pageX - event.touches[ 1 ].pageX;
+            var dy = event.touches[ 0 ].pageY - event.touches[ 1 ].pageY;
+            var distance = Math.sqrt( dx * dx + dy * dy );
+            if(scope.preDistance>=0)
+              scope.dragDouble(distance-scope.preDistance);
+            scope.preDistance=distance;
+        }
+    }
+    this.onTouchEnd=function () {
+        scope.preX=-1;
+        scope.preY=-1;
+        scope.preDistance=-1;
+    }
+    this.init=function(){
+        /*function test(){
+            console.log(scope.preY);
+            requestAnimationFrame(test);
+        }test();*/
+        document.addEventListener( 'touchmove', scope.onTouchMove, false );
+        document.addEventListener( 'touchend', scope.onTouchEnd, false );
     }
 }
