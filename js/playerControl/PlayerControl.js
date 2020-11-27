@@ -6,15 +6,22 @@ function PlayerControl(camera){
         scope.rotation1(-0.02*dx);
         scope.rotation2(-0.02*dy);
     }
+    myMouseManager.onMouseWheel=function(event){
+        var delta = 0;
+        if ( event.wheelDelta !== undefined )delta = event.wheelDelta;
+        else if ( event.detail !== undefined )delta = - event.detail;
+        scope.forward(delta);
+    }
     var myKeyboardManager=new KeyboardManager();
+    myMouseManager.init();
     myKeyboardManager.onKeyDown=function(event){
         var step=30;
-        if(event.key==="W"||event.key==="w")scope.forward(step);
-        else if(event.key==="S"||event.key==="s")scope.forward(-step);
+        if(event.key==="ArrowUp"||event.key==="W"||event.key==="w")scope.forward(step);
+        else if(event.key==="ArrowDown"||event.key==="S"||event.key==="s")scope.forward(-step);
         else if(event.key==="Q"||event.key==="q")scope.up(step);
         else if(event.key==="E"||event.key==="e")scope.up(-step);
-        else if(event.key==="A"||event.key==="a")scope.left(step);
-        else if(event.key==="D"||event.key==="d")scope.left(-step);
+        else if(event.key==="ArrowLeft"||event.key==="A"||event.key==="a")scope.left(step);
+        else if(event.key==="ArrowRight"||event.key==="D"||event.key==="d")scope.left(-step);
     }
     myKeyboardManager.init();
 
@@ -108,12 +115,15 @@ function MouseManager(){
         scope.press=true;
         //console.log(2);
     }
+    this.onMouseWheel=function(event){
+        console.log(event);
+    }
     this.init=function(  ) {
         document.addEventListener( 'mousemove',scope.onMouseMove, false );
         document.addEventListener( 'mouseup', scope.onMouseUp, false );
         document.addEventListener( 'mousedown',scope.onMouseDown, false );
+        document.addEventListener( 'mousewheel', scope.onMouseWheel, false );
     }
-    this.init();
 }
 function KeyboardManager(){
     var scope=this;

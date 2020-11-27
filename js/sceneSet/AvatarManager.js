@@ -134,7 +134,7 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
     }
     this.loadGuest1=function () {
         //开始创建PM对象
-        var LODArray=[100,200]//4个数字表示距离，可以将模型分为5级;
+        var LODArray=[200,300]//4个数字表示距离，可以将模型分为5级;
         //var path='/myModel/childFemale_idle';//childFemale_crawl
         //var path='/myModel/childFemale_crawl';
         //var path='/myModel/Female01';
@@ -156,7 +156,7 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
     }
     this.loadGuest2=function () {
         //开始创建PM对象
-        var LODArray=[100,200]//4个数字表示距离，可以将模型分为5级;
+        var LODArray=[200,300]//4个数字表示距离，可以将模型分为5级;
         //var path='/myModel/childFemale_idle';//childFemale_crawl
         //var path='/myModel/childFemale_crawl';
         //var path='/myModel/Female01';

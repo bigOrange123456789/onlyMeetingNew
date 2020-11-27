@@ -1,5 +1,5 @@
 function Main(){
-    console.log(2);
+    //console.log(2);
     var scope=this;
     this.scene=new THREE.Scene();
     this.camera=new THREE.PerspectiveCamera( 70,window.innerWidth /window.innerHeight, 0.1, 1000 );;
@@ -26,8 +26,10 @@ function Main(){
         document.body.appendChild( renderer.domElement );
 
         // CAMERAS
-        this.camera.position.set(-156.5,43.42,24.47);
-        this.camera.rotation.set(0,-Math.PI/2,0);
+        //this.camera.position.set(-156.5,43.42,24.47);//292.53,  75.816565,  -17.442
+        //this.camera.rotation.set(0,-Math.PI/2,0);//-1.1548813,  1.3236362,1.14335
+        this.camera.position.set(244.34443312844505, 42.843887628791784, -27.54845717422918);//
+        this.camera.rotation.set(-1.7882514469445236,  1.4856737092086694, 1.78901685113194);//
         //this.camera.rotation.set(Math.PI/3,Math.PI/3,Math.PI/3);
 
         var ambient = new THREE.AmbientLight(0xffffff , 1 );
