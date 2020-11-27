@@ -4,8 +4,7 @@ function PlayerControl(camera){
     var myMouseManager=new MouseManager();
     myMouseManager.dragMouse=function (dx,dy) {
         scope.rotation1(-0.02*dx);
-        //scope.rotation2(-0.02*dy);
-        //console.log(scope.camera);
+        scope.rotation2(-0.02*dy);
     }
     var myKeyboardManager=new KeyboardManager();
     myKeyboardManager.onKeyDown=function(event){
@@ -18,40 +17,32 @@ function PlayerControl(camera){
         else if(event.key==="D"||event.key==="d")scope.left(-step);
     }
     myKeyboardManager.init();
-    //console.log(120)
 
     this.rotation1=function(step){//水平旋转
+        var direction0=this.camera.getWorldDirection();
         var direction = new THREE.Vector3(//up方向
-            this.camera.matrixWorld.elements[4]
-            ,this.camera.matrixWorld.elements[5]
-            ,this.camera.matrixWorld.elements[6]
+            0,1,0
         );
-        this.camera.rotateOnAxis(direction,step);
+        var pos=this.camera.position;
+        direction0.applyAxisAngle(direction,step);
+        this.camera.lookAt(pos.x+direction0.x,
+            pos.y+direction0.y,
+            pos.z+direction0.z);
+        this.camera.updateMatrix();
     }
     this.rotation2=function(step){//俯仰角
-        /*var direction1 = new THREE.Vector3(//forward
-            this.camera.matrixWorld.elements[8]
-            ,this.camera.matrixWorld.elements[9]
-            ,this.camera.matrixWorld.elements[10]
-        );
+        var direction1=this.camera.getWorldDirection();
         var direction2 = new THREE.Vector3(//up方向
-            this.camera.matrixWorld.elements[4]
-            ,this.camera.matrixWorld.elements[5]
-            ,this.camera.matrixWorld.elements[6]
+            0,1,0
         );
-        console.log(10)
-        var direction=direction1.cross(direction2);
-        this.camera.rotateOnAxis(direction,step);*/
-        var dummy=new THREE.Object3D()//dummy仿制品
-        dummy.rotation.set(step,0,0);
-        dummy.updateMatrix();
+        var direction=new THREE.Vector3();
+        direction=direction.crossVectors(direction1,direction2);
+        var pos=this.camera.position;
+        direction1.applyAxisAngle(direction,step);
+        this.camera.lookAt(pos.x+direction1.x,
+            pos.y+direction1.y,
+            pos.z+direction1.z);
         this.camera.updateMatrix();
-        dummy.matrix.multiply(this.camera.matrix);
-        //this.camera.matrix.multiply(dummy.matrix);
-        console.log(this.camera);
-        //this.camera.matrix.multiply(dummy.matrix);
-        this.camera.matrix=dummy.matrix;
-        this.camera.rotation.setFromRotationMatrix(this.camera.matrix)
     }
     this.move=function(x,y,z){
         this.forward(x);

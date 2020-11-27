@@ -27,6 +27,7 @@ function Main(){
         // CAMERAS
         this.camera.position.set(-156.5,43.42,24.47);
         this.camera.rotation.set(0,-Math.PI/2,0);
+        this.camera.rotation.set(Math.PI/3,Math.PI/3,Math.PI/3);
 
         var ambient = new THREE.AmbientLight(0xffffff , 1 );
         this.scene.add( ambient );
