@@ -40,25 +40,6 @@ function Main(){
         //console.log(10)
 
 
-        //开始创建PM对象
-        var LODArray=[45,46,50,55]//4个数字表示距离，可以将模型分为5级;
-        //var path='/myModel/childFemale_idle';//childFemale_crawl
-        //var path='/myModel/childFemale_crawl';
-        //var path='/myModel/Female01';
-        var path='/myModel/dongshizhang5';
-        var pmLoader = new MyPMLoader(
-            path,    //模型路径
-            LODArray,//LOD等级的数组
-            this.camera,  //LOD需要判断到相机的距离
-            0,       //有多个动画时,表示第0个动画//可以通过pmLoader.updateAnimation(i)来切换动画
-            0.02     //动画播放速度//可以通过调整pmLoader.animationSpeed来调整速度
-        );//pmLoader = new myPMLoader('myModel/dongshizhang', LODNumber);//pmLoader = new THREE.PMLoader();//加载PM文件
-        var myModel=pmLoader.obj;
-        myModel.scale.set(1.5,1.5,1.5);
-        myModel.position.set(0,-11.5,25);
-        myModel.rotation.set(0,-Math.PI/2,0);
-        this.scene.add(myModel);
-        //完成创建PM对象
 
         var ambient = new THREE.AmbientLight(0xffffff , 1 );
         this.scene.add( ambient );
@@ -80,7 +61,7 @@ function Main(){
     this.animate=function()
     {
         renderer.render(scope.scene,scope.camera);
-        scope.divInfo.textContent='三角面数量(LOD变化范围3039-15990): ' + renderer.info.render.triangles;
+        scope.divInfo.textContent='场景中三角面个数:' + renderer.info.render.triangles;
         if (window.innerWidth !== scope.winWidth || window.innerHeight !== scope.winHeight) scope._onResize();
         requestAnimationFrame(scope.animate);
     }

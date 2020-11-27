@@ -23,6 +23,7 @@
 
 		<script src="js/sceneSet/RoomManager.js"></script>
 		<script src="js/sceneSet/SeatManager.js"></script>
+		<script src="js/sceneSet/AvatarManager.js"></script>
 
 		<script src="js/playerControl/PlayerControl.js"></script>
 
@@ -53,15 +54,10 @@
 			mySeatManager.init();
 			myMain.scene.add(mySeatManager.chairs);
 
-			/*var loader = new THREE.GLTFLoader();
-			loader.load('./myModel/avatar/Female01.glb', (gltf) => {
-				var obj=gltf.scene.children[0];
-				obj.scale.set(1,1,1);
-				console.log(window.scene);
-				console.log(obj);
-				window.scene.add(obj);
-				window.obj=obj;
-			})*/
+			var myAvatarManager=new AvatarManager(mySeatManager,myMain.camera);
+			myAvatarManager.init();
+			myMain.scene.add(myAvatarManager.obj);
+			//console.log(myAvatarManager.obj.parent);
 
 		</script>
 	</body>
