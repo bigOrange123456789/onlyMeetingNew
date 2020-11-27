@@ -15,27 +15,106 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
         this.host();
         this.loadGuest1();
         this.loadGuest2();
-        this.loadAvatarTool(1,'myModel/avatar/Man01_3.glb');
-        /*this.loadAvatarTool(2,'avatar/Female01.glb');
-        this.loadAvatarTool(3,'avatar/Ganpa01.glb');
-        this.loadAvatarTool(4,'avatar/Granny01.glb');*/
+        this.loadAvatarTool1('myModel/avatar/Man01_3.glb');
+        this.loadAvatarTool2('myModel/avatar/Female01_2.glb');
+        this.loadAvatarTool3('myModel/avatar/Ganpa01_2.glb');
+        this.loadAvatarTool4('myModel/avatar/Granny01_2.glb');/**/
     }
-    this.loadAvatarTool=function(type,url){
+    this.loadAvatarTool4=function(url){
+        var type=4;
         var loader= new THREE.GLTFLoader();
         loader.load(url, (glb) => {
-            /*console.log(glb);
-            for(var i=0;i<glb.scene.children.length;i++)
-                scope.obj.add(glb.scene.children[i]);//scenes*/
-            /*glb.scenes[0].position.set(198,9,-65);
-            glb.scenes[0].rotation.set(0,-Math.PI/2,0);
-            glb.scenes[0].scale.set(10,10,10);*/
-            //scope.obj.add(glb.scenes[0]);
-            //new ParamMeasure(glb.scenes[0],0);
-            //glb.scene.children
             console.log(glb);
-            //var mesh0=glb.scene.children[2];
-            var mesh0=glb.scenes[0].children[2];
-            console.log(mesh0);
+            var mesh0=glb.scene.children[0];//console.log(mesh0);
+            var geometry=mesh0.geometry;
+            var material=mesh0.material;
+            var l=0;for(var i=0;i<scope.positionsType.length;i++)
+                if(scope.positionsType[i]===type)l++;
+            var mesh=new THREE.InstancedMesh(geometry,material,l);//l
+
+            var dummy=new THREE.Object3D();
+            var j=0;
+            for(var i=0;i<scope.positions.length;i++)
+                if(scope.positionsType[i]===type){
+                    dummy.rotation.set(Math.PI/2,0,-Math.PI/2);
+                    dummy.position.set(
+                        scope.positions[i][0]+2.2,
+                        scope.positions[i][1]+3,
+                        scope.positions[i][2]);
+                    dummy.scale.set(5,5,5);//x-y-z
+                    //dummy.rotation.set(0,Math.PI/2,Math.PI/2);
+                    dummy.updateMatrix();
+                    mesh.setMatrixAt(j, dummy.matrix);
+                    j++;
+                }
+            scope.avatar1.add(mesh);
+        });
+    }
+    this.loadAvatarTool3=function(url){
+        var type=3;
+        var loader= new THREE.GLTFLoader();
+        loader.load(url, (glb) => {
+            console.log(glb);
+            var mesh0=glb.scene.children[0];//console.log(mesh0);
+            var geometry=mesh0.geometry;
+            var material=mesh0.material;
+            var l=0;for(var i=0;i<scope.positionsType.length;i++)
+                if(scope.positionsType[i]===type)l++;
+            var mesh=new THREE.InstancedMesh(geometry,material,l);//l
+
+            var dummy=new THREE.Object3D();
+            var j=0;
+            for(var i=0;i<scope.positions.length;i++)
+                if(scope.positionsType[i]===type){
+                    dummy.rotation.set(Math.PI/2,0,-Math.PI/2);
+                    dummy.position.set(
+                        scope.positions[i][0]+2.2,
+                        scope.positions[i][1]+3,
+                        scope.positions[i][2]);
+                    dummy.scale.set(5,5,5);//x-y-z
+                    //dummy.rotation.set(0,Math.PI/2,Math.PI/2);
+                    dummy.updateMatrix();
+                    mesh.setMatrixAt(j, dummy.matrix);
+                    j++;
+                }
+            scope.avatar1.add(mesh);
+        });
+    }
+    this.loadAvatarTool2=function(url){
+        var type=2;
+        var loader= new THREE.GLTFLoader();
+        loader.load(url, (glb) => {
+            console.log(glb);
+            var mesh0=glb.scene.children[0];//console.log(mesh0);
+            var geometry=mesh0.geometry;
+            var material=mesh0.material;
+            var l=0;for(var i=0;i<scope.positionsType.length;i++)
+                if(scope.positionsType[i]===type)l++;
+            var mesh=new THREE.InstancedMesh(geometry,material,l);//l
+
+            var dummy=new THREE.Object3D();
+            var j=0;
+            for(var i=0;i<scope.positions.length;i++)
+                if(scope.positionsType[i]===type){
+                    dummy.rotation.set(Math.PI/2,0,-Math.PI/2);
+                    dummy.position.set(
+                        scope.positions[i][0]+2.2,
+                        scope.positions[i][1]+3,
+                        scope.positions[i][2]);
+                    dummy.scale.set(5,5,5);//x-y-z
+                    //dummy.rotation.set(0,Math.PI/2,Math.PI/2);
+                    dummy.updateMatrix();
+                    mesh.setMatrixAt(j, dummy.matrix);
+                    j++;
+                }
+            scope.avatar1.add(mesh);
+        });
+    }
+    this.loadAvatarTool1=function(url){
+        var type=1;
+        var loader= new THREE.GLTFLoader();
+        loader.load(url, (glb) => {
+            var mesh0=glb.scenes[0].children[2];//console.log(mesh0);
             var geometry=mesh0.geometry;
             var material=mesh0.material;
             var l=0;for(var i=0;i<scope.positionsType.length;i++)
@@ -47,33 +126,16 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
             for(var i=0;i<scope.positions.length;i++)
             if(scope.positionsType[i]===type){
                 dummy.position.set(
-                    scope.positions[i][0],
-                    scope.positions[i][1]+2,
+                    scope.positions[i][0]+2.2,
+                    scope.positions[i][1]+3,
                     scope.positions[i][2]);
-                dummy.scale.set(10,10,10);
+                dummy.scale.set(5,5,5);
+                dummy.rotation.set(0,Math.PI/2,0);
                 dummy.updateMatrix();
                 mesh.setMatrixAt(j, dummy.matrix);
                 j++;
             }
-            /*dummy.position.set(
-                scope.positions[0][0],
-                scope.positions[0][1],
-                scope.positions[0][2]);
-            dummy.scale.set(10,10,10);
-            dummy.updateMatrix();
-            mesh.setMatrixAt(0, dummy.matrix);
-            dummy.position.set(0,0,0);
-            dummy.scale.set(10,10,10);
-            dummy.updateMatrix();
-            mesh.setMatrixAt(1, dummy.matrix);
-            console.log(l);
-            console.log(mesh);*/
-           // scope.obj.add(mesh0);mesh0.scale.set(10,10,10);
-
-            //mesh0.scale.set(10,10,10);
             scope.avatar1.add(mesh);
-            //for()
-
         });
     }
     this.host=function () {

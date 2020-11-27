@@ -7,31 +7,45 @@ function ParamMeasure(obj,type){
         //开始测试
         var This=this;//beforeKey = -1;
         document.onkeydown = function (e) {
-            console.log(obj.position);
-            if (e.key == "t") obj.position.x += step;
-            else if (e.key == "g") obj.position.x -= step;
-            else if (e.key == "r") obj.position.y += step;
-            else if (e.key == "y") obj.position.y -= step;
-            else if (e.key == "f") obj.position.z += step;
-            else if (e.key == "h") obj.position.z -= step;
-            else if (e.key == "v")
+            if (e.key === "t") obj.position.x += step;
+            else if (e.key === "g") obj.position.x -= step;
+            else if (e.key === "r") obj.position.y += step;
+            else if (e.key === "y") obj.position.y -= step;
+            else if (e.key === "f") obj.position.z += step;
+            else if (e.key === "h") obj.position.z -= step;
+            else if (e.key === "v")
                 console.log(
                     Math.round(obj.position.x*100)/100+','
-                +Math.round(obj.position.y*100)/100+','
-                +Math.round(obj.position.z*100)/100,
+                    +Math.round(obj.position.y*100)/100+','
+                    +Math.round(obj.position.z*100)/100,
+
                     Math.round(obj.scale.x*100)/100+','
                     +Math.round(obj.scale.y*100)/100+','
-                    +Math.round(obj.scale.z*100)/100);
-            if (e.key == '=') {
-                if (This.beforeKey == '1') obj.scale.x +=stepScale;
-                else if (This.beforeKey == '2') obj.scale.y +=stepScale;
-                else if (This.beforeKey == '3') obj.scale.z +=stepScale;
-            } else if (e.key == '-') {
-                if (This.beforeKey == '1') obj.scale.x -=stepScale;
-                else if (This.beforeKey == '2') obj.scale.y -=stepScale;
-                else if (This.beforeKey == '3') obj.scale.z -=stepScale;
+                    +Math.round(obj.scale.z*100)/100,
+
+                    Math.round(obj.rotation.x*10000)/10000+','
+                    +Math.round(obj.rotation.y*10000)/10000+','
+                    +Math.round(obj.rotation.z*10000)/10000
+                );
+            var rx=obj.rotation.x,ry=obj.rotation.y,rz=obj.rotation.z;
+            //console.log(obj.rotation,rx,ry,rz,1,"stepScale"+stepScale);
+            if (e.key === '=') {
+                if (This.beforeKey === '1') obj.scale.x +=stepScale;
+                else if (This.beforeKey === '2') obj.scale.y +=stepScale;
+                else if (This.beforeKey === '3') obj.scale.z +=stepScale;
+                else if (This.beforeKey === '4') rx +=stepScale;
+                else if (This.beforeKey === '5') ry +=stepScale;
+                else if (This.beforeKey === '6') rz +=stepScale;
+            } else if (e.key === '-') {
+                if (This.beforeKey === '1') obj.scale.x -=stepScale;
+                else if (This.beforeKey === '2') obj.scale.y -=stepScale;
+                else if (This.beforeKey === '3') obj.scale.z -=stepScale;
+                else if (This.beforeKey === '4') rx -=stepScale;
+                else if (This.beforeKey === '5') ry -=stepScale;
+                else if (This.beforeKey === '6') rz -=stepScale;
             }
-            if (e.key == '1' || e.key == '2' || e.key == '3') This.beforeKey = e.key;
+            obj.rotation.set(rx,ry,rz);
+            if (e.key === '1' || e.key === '2' || e.key === '3'||e.key === '4' || e.key === '5' || e.key === '6') This.beforeKey = e.key;
         }
         //完成测试
     }
