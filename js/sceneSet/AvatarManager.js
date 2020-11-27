@@ -15,7 +15,7 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
         this.host();
         this.loadGuest1();
         this.loadGuest2();
-        this.loadAvatarTool(1,'myModel/avatar/Man01.glb');
+        this.loadAvatarTool(1,'myModel/avatar/Man01_3.glb');
         /*this.loadAvatarTool(2,'avatar/Female01.glb');
         this.loadAvatarTool(3,'avatar/Ganpa01.glb');
         this.loadAvatarTool(4,'avatar/Granny01.glb');*/
@@ -32,7 +32,9 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
             //scope.obj.add(glb.scenes[0]);
             //new ParamMeasure(glb.scenes[0],0);
             //glb.scene.children
-            var mesh0=glb.scenes[0].children[0].children[1];
+            console.log(glb);
+            //var mesh0=glb.scene.children[2];
+            var mesh0=glb.scenes[0].children[2];
             console.log(mesh0);
             var geometry=mesh0.geometry;
             var material=mesh0.material;
@@ -48,7 +50,7 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
                     scope.positions[i][0],
                     scope.positions[i][1]+2,
                     scope.positions[i][2]);
-                dummy.scale.set(5,5,5);
+                dummy.scale.set(10,10,10);
                 dummy.updateMatrix();
                 mesh.setMatrixAt(j, dummy.matrix);
                 j++;
@@ -67,6 +69,8 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
             console.log(l);
             console.log(mesh);*/
            // scope.obj.add(mesh0);mesh0.scale.set(10,10,10);
+
+            //mesh0.scale.set(10,10,10);
             scope.avatar1.add(mesh);
             //for()
 
