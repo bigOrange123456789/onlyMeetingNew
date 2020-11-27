@@ -8,7 +8,6 @@ function Main(){
     this.start=function () {
         this.init();
         this.animate();
-
     }
     this.init=function()
     {
@@ -26,27 +25,11 @@ function Main(){
         document.body.appendChild( renderer.domElement );
 
         // CAMERAS
-        //this.camera = new THREE.PerspectiveCamera( 70, winWidth / winHeight, 0.1, 1000 );
-
-        //console.log(this.camera)
-        //camera.position.set(0,0.42,0);
-        this.camera.position.set(-156.5,43.42,24.47);//copy(new THREE.Vector3(-30, 0.5, 25));
-        //this.camera.rotation.set(Math.PI/3,Math.PI/7,Math.PI);
-
-        //controls= new OrbitControls(camera , renderer.domElement);
-        //controls.target.copy(new THREE.Vector3(-156.0,43.42,24.47));
+        this.camera.position.set(-156.5,43.42,24.47);
         this.camera.rotation.set(0,-Math.PI/2,0);
-        //console.log(1122);
-        //console.log(10)
-
-
 
         var ambient = new THREE.AmbientLight(0xffffff , 1 );
         this.scene.add( ambient );
-
-
-        var targetObject = new THREE.Object3D();
-        this.scene.add(targetObject);
     }
     this._onResize=function()
     {
