@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>MEETING</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<style>
+			body {overflow:hidden;}
+		</style>
+	</head>
+
+	<body>
+
+	    <!--下面这个div标签用于显示三角面的个数-->
+		<div id="pminfo" style="position:absolute; z-index:2; left:10px; top:10px;display:inline;color:red;size:20px"></div>
+
+		<script src="lib/threeJS/three.js"></script>
+		<script src="lib/threeJS/OrbitControls.js"></script>
+		<script src="lib/threeJS/GLTFLoader.js"></script>
+
+		<script src="lib/pmLib/PMAnimLoader.js"></script>
+		<script src="lib/pmLib/MyPMLoader.js"></script>
+
+		<script src="js/sceneSet/RoomManager.js"></script>
+		<script src="js/sceneSet/SeatManager.js"></script>
+
+		<script src="js/playerControl/PlayerControl.js"></script>
+
+		<script src="js/ParamMeasure.js"></script>
+		<script src="js/Main.js"></script>
+
+
+
+		<script>
+			var myRoomManager=new RoomManager();
+			myRoomManager.loadRoom();
+
+			var myMain=new Main();
+			myMain.start();
+			myMain.scene.add(myRoomManager.room);
+
+			//console.log(myMain.camera,1);
+			var myPlayerControl=new PlayerControl(myMain.camera);
+			/*function test(){
+				//myPlayerControl.forward(1);
+				//myPlayerControl.up(1);
+				//console.log(222);
+				myPlayerControl.rotation2(0.01);
+				requestAnimationFrame(test);
+			}test();*/
+
+			var mySeatManager=new SeatManager();
+			mySeatManager.init();
+			myMain.scene.add(mySeatManager.chairs);
+
+			/*var loader = new THREE.GLTFLoader();
+			loader.load('./myModel/avatar/Female01.glb', (gltf) => {
+				var obj=gltf.scene.children[0];
+				obj.scale.set(1,1,1);
+				console.log(window.scene);
+				console.log(obj);
+				window.scene.add(obj);
+				window.obj=obj;
+			})*/
+
+		</script>
+	</body>
+</html>
