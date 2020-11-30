@@ -3,6 +3,7 @@ function Main(){
     var scope=this;
     this.scene=new THREE.Scene();
     this.camera=new THREE.PerspectiveCamera( 70,window.innerWidth /window.innerHeight, 0.1, 1000 );;
+    //this.camera = new THREE.OrthographicCamera(window.innerWidth/ - 1,window.innerWidth,window.innerHeight,window.innerHeight/ - 1, 0, 100000 );
     this.winWidth = window.innerWidth;
     this.winHeight = window.innerHeight;
     this.divInfo = document.getElementById('pminfo');//用于呈现文字
@@ -26,11 +27,10 @@ function Main(){
         document.body.appendChild( renderer.domElement );
 
         // CAMERAS
-        //this.camera.position.set(-156.5,43.42,24.47);//292.53,  75.816565,  -17.442
-        //this.camera.rotation.set(0,-Math.PI/2,0);//-1.1548813,  1.3236362,1.14335
-        this.camera.position.set(244.34443312844505, 42.843887628791784, -27.54845717422918);//
-        this.camera.rotation.set(-1.7882514469445236,  1.4856737092086694, 1.78901685113194);//
-        //this.camera.rotation.set(Math.PI/3,Math.PI/3,Math.PI/3);
+        //this.camera.position.set(244.34443312844505, 42.843887628791784, -27.54845717422918);//
+        //this.camera.rotation.set(-1.7882514469445236,  1.4856737092086694, 1.78901685113194);//
+        this.camera.position.set(-155,41,22,-2.07);//-155,41,22,-2.07,-1.49,-2.07
+        this.camera.rotation.set(-1.5572,-1.47875,-1.55714);//
 
         var ambient = new THREE.AmbientLight(0xffffff , 1 );
         this.scene.add( ambient );

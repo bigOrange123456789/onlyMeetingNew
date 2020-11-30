@@ -1,4 +1,13 @@
 function PlayerControl(camera){
+    /*
+    function test(){
+    //myPlayerControl.forward(1);
+    //myPlayerControl.up(1);
+    //console.log(222);
+    myPlayerControl.rotation1(0.01);
+    requestAnimationFrame(test);
+    }test();
+    */
     this.camera=camera;
     var scope=this;
 
@@ -24,6 +33,16 @@ function PlayerControl(camera){
         else if(event.key==="E"||event.key==="e")scope.up(-step);
         else if(event.key==="ArrowLeft"||event.key==="A"||event.key==="a")scope.left(step);
         else if(event.key==="ArrowRight"||event.key==="D"||event.key==="d")scope.left(-step);
+
+        else if(event.key==="v"||event.key==="V")
+            console.log(
+                Math.floor(scope.camera.position.x)+","+
+                Math.floor(scope.camera.position.y)+","+
+                Math.floor(scope.camera.position.z),
+                Math.floor(scope.camera.rotation.x*100000)/100000+","+
+                Math.floor(scope.camera.rotation.y*100000)/100000+","+
+                Math.floor(scope.camera.rotation.z*100000)/100000
+            );
     }
     myKeyboardManager.init();
 

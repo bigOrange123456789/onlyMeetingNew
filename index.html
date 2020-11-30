@@ -26,6 +26,7 @@
 		<script src="js/sceneSet/AvatarManager.js"></script>
 
 		<script src="js/playerControl/PlayerControl.js"></script>
+		<script src="js/playerControl/PreviewManager.js"></script>
 
 		<script src="js/ParamMeasure.js"></script>
 		<script src="js/Main.js"></script>
@@ -40,15 +41,7 @@
 			myMain.start();
 			myMain.scene.add(myRoomManager.room);
 
-			//console.log(myMain.camera,1);
-			var myPlayerControl=new PlayerControl(myMain.camera);
-			/*function test(){
-				//myPlayerControl.forward(1);
-				//myPlayerControl.up(1);
-				//console.log(222);
-				myPlayerControl.rotation1(0.01);
-				requestAnimationFrame(test);
-			}test();*/
+			new PlayerControl(myMain.camera);
 
 			var mySeatManager=new SeatManager();
 			mySeatManager.init();
@@ -59,6 +52,33 @@
 			myMain.scene.add(myAvatarManager.obj);
 			//console.log(myAvatarManager.obj.parent);
 
+			//开始自动漫游路径
+			var mydata = [//自动漫游路径
+				//x         y      z      angel       time  展板编号  展板初始旋转(单位是90度)
+				//[   -15   ,15   , 0       ,0,0,0         ,200]//初始位置
+				//,[-15.1   ,20  , 1      ,0,1,0         ,200]//拉近镜头
+				/*,[-15.1   ,20  , 1      ,0,1,0         ,200]
+				,[-15.1   ,20  , 1      ,0,1,0         ,200]
+				,[-15.1   ,20  , 1      ,0,1,0         ,200]
+				,[-15.1   ,20  , 1      ,0,1,0         ,200]
+				,[-15.1   ,20  , 1      ,0,1,0         ,200]
+				,[218,21,-21 1.46,1.45,-1.47        ,200]
+				,[166,98,-18 -1.68,1.13,1.68         ,200]*/
+
+				[-155,41,22,-1.5572,-1.47875,-1.55714,200]
+				,[-119,39,24,-0.91,-1.48,-0.91,100]
+				,[-59,48,-14,-1.25,-1.52,-1.24,100]
+				,[129,37,-66,-1.25,-1.52,-1.24,100]
+				,[130,37,-12,-1.25,-1.52,-1.24,100]
+				,[129,37,-27,-1.25,-1.52,-1.24,200]
+				,[229,29,-19,-1.21,1.46,1.19,200]
+				,[183,63,-19,-1.67,1.35,1.66,200]
+			];
+			var myPreviewManager=new PreviewManager(myMain.camera,mydata);
+			myPreviewManager.isLoop=false;
+			//myPreviewManager.autoRoam();
+			//console.log(12345);
+			//结束自动漫游路径
 		</script>
 	</body>
 </html>
