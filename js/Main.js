@@ -27,8 +27,6 @@ function Main(){
         document.body.appendChild( renderer.domElement );
 
         // CAMERAS
-        //this.camera.position.set(244.34443312844505, 42.843887628791784, -27.54845717422918);//
-        //this.camera.rotation.set(-1.7882514469445236,  1.4856737092086694, 1.78901685113194);//
         this.camera.position.set(-155,41,22,-2.07);//-155,41,22,-2.07,-1.49,-2.07
         this.camera.rotation.set(-1.5572,-1.47875,-1.55714);//
 
