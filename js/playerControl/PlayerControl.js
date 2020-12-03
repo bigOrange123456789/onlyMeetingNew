@@ -27,12 +27,19 @@ function PlayerControl(camera){
     myMouseManager.init();
     myKeyboardManager.onKeyDown=function(event){
         var step=30;
-        if(event.key==="ArrowUp"||event.key==="W"||event.key==="w")scope.forward(step);
-        else if(event.key==="ArrowDown"||event.key==="S"||event.key==="s")scope.forward(-step);
-        else if(event.key==="Q"||event.key==="q")scope.up(step);
-        else if(event.key==="E"||event.key==="e")scope.up(-step);
-        else if(event.key==="ArrowLeft"||event.key==="A"||event.key==="a")scope.left(step);
-        else if(event.key==="ArrowRight"||event.key==="D"||event.key==="d")scope.left(-step);
+        if(event.key==="ArrowUp"||event.key==="w")scope.forward(step);
+        else if(event.key==="ArrowDown"||event.key==="s")scope.forward(-step);
+        else if(event.key==="q")scope.up(step);
+        else if(event.key==="e")scope.up(-step);
+        else if(event.key==="ArrowLeft"||event.key==="a")scope.left(step);
+        else if(event.key==="ArrowRight"||event.key==="d")scope.left(-step);
+
+        else if(event.key==="W")scope.forward_horizon(step);
+        else if(event.key==="S")scope.forward_horizon(-step);
+        else if(event.key==="Q")scope.camera.position.y+=(step/2);//scope.up(step);
+        else if(event.key==="E")scope.camera.position.y-=(step/2);
+        else if(event.key==="A")scope.left_horizon(step);
+        else if(event.key==="D")scope.left_horizon(-step);
 
         else if(event.key==="v"||event.key==="V")
             console.log(
@@ -98,12 +105,36 @@ function PlayerControl(camera){
             this.camera.position.y+direction.y,
             this.camera.position.z+direction.z
         );
+    }//horizon
+    this.forward_horizon=function (step) {//相机的初始方向是（0，0，-1）//对y旋转-90度后相机为水平方向camera.rotation.set(0,-Math.PI/2,0);
+        var direction = new THREE.Vector3(
+            -0.1*this.camera.matrixWorld.elements[8]*step
+            ,0
+            ,-0.1*this.camera.matrixWorld.elements[10]*step
+        );
+        this.camera.position.set(
+            this.camera.position.x+direction.x,
+            this.camera.position.y+direction.y,
+            this.camera.position.z+direction.z
+        );
     }
     this.up=function (step) {//相机的上方向是（0，1，0）
         var direction = new THREE.Vector3(
             0.1*this.camera.matrixWorld.elements[4]*step
             ,0.1*this.camera.matrixWorld.elements[5]*step
             ,0.1*this.camera.matrixWorld.elements[6]*step
+        );
+        this.camera.position.set(
+            this.camera.position.x+direction.x,
+            this.camera.position.y+direction.y,
+            this.camera.position.z+direction.z
+        );
+    }
+    this.left_horizon=function (step) {//相机的左方向是（-1，0，0）
+        var direction = new THREE.Vector3(
+            -0.1*this.camera.matrixWorld.elements[0]*step
+            ,0
+            ,-0.1*this.camera.matrixWorld.elements[2]*step
         );
         this.camera.position.set(
             this.camera.position.x+direction.x,

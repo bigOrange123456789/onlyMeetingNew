@@ -31,5 +31,10 @@ function RoomManager(){
              urls.push('myModel/room/component/00'+i+'.glb');
         urls.push('myModel/room/room.glb');
         for(var i=0;i<urls.length;i++)this.myLoad(urls[i]);
+        console.log(1122);
+        console.log(this.room);
+        var test=new THREE.Box3();
+        console.log(test);
+        var test2=new THREE.Sphere();
     }
 }
