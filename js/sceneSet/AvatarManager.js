@@ -65,6 +65,17 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
         var loader1= new THREE.GLTFLoader();
         loader1.load(url, (glb) => {
             var mesh0=glb.scene.children[0];//console.log(mesh0);
+            console.log(glb);
+            //导入后的对象是Object类型
+            //  animations
+            //  scenes
+            //  scene//Group类型//核心//的内容
+            //      children//
+            //          mesh
+            //              geometry
+            //                  attributes(normal position uv)\index
+            //              material
+            //                  map(image)
             var geometry=mesh0.geometry;
             var material=mesh0.material;
             var l=0;for(var i=0;i<scope.positionsType.length;i++)

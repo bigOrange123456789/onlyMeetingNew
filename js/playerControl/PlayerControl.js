@@ -1,13 +1,4 @@
 function PlayerControl(camera){
-    /*
-    function test(){
-    //myPlayerControl.forward(1);
-    //myPlayerControl.up(1);
-    //console.log(222);
-    myPlayerControl.rotation1(0.01);
-    requestAnimationFrame(test);
-    }test();
-    */
     this.camera=camera;
     var scope=this;
 
