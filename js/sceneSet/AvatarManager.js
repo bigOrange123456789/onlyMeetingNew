@@ -55,27 +55,35 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
         this.host();
         this.loadGuest1();
         this.loadGuest2();
-        this.loadAvatarTool(1,'myModel/avatar/Man01_2.glb','myModel/avatar/Man02.glb');
-        this.loadAvatarTool(2,'myModel/avatar/Female01_2.glb','myModel/avatar/Female02.glb');
-        this.loadAvatarTool(3,'myModel/avatar/Ganpa01_2.glb','myModel/avatar/Ganpa02.glb');
-        this.loadAvatarTool(4,'myModel/avatar/Granny01_2.glb','myModel/avatar/Granny02.glb');/**/
+        //this.loadAvatarTool(1,'myModel/avatar/Man01_2.glb','myModel/avatar/Man02.glb');
+        //this.loadAvatarTool(2,'myModel/avatar/Female01_2.glb','myModel/avatar/Female02.glb');
+        //this.loadAvatarTool(3,'myModel/avatar/Ganpa01_2.glb','myModel/avatar/Ganpa02.glb');
+        //this.loadAvatarTool(4,'myModel/avatar/Granny01_2.glb','myModel/avatar/Granny02.glb');/**/
+
+        /*var peoples=new InstancedGroup(4);
+        peoples.init(glb.scene.children[0].children[1],glb.animations);
+        for(var i=0;i<4;i++){
+            peoples.scaleSet(i,[Math.random()/2+0.75,Math.random()/2+0.75,Math.random()/2+0.75]);
+            peoples.positionSet(i,[i,0,0]);
+        }
+        scene.add(peoples.obj);
+        */
+        var loader= new THREE.GLTFLoader();
+        loader.load('myModel/avatar/test2.glb', (glb) => {
+            var peoples=new InstancedGroup(4);
+            peoples.init(glb.scene.children[0].children[1],glb.animations);
+            for(var i=0;i<4;i++){
+                peoples.scaleSet(i,[Math.random()/2+0.75,Math.random()/2+0.75,Math.random()/2+0.75]);
+                peoples.positionSet(i,[i,0,0]);
+            }
+            scope.obj.add(peoples.obj);
+        });
     }
     this.loadAvatarTool=function(type,url,url2){
         //var type=4;
         var loader1= new THREE.GLTFLoader();
         loader1.load(url, (glb) => {
             var mesh0=glb.scene.children[0];//console.log(mesh0);
-            console.log(glb);
-            //导入后的对象是Object类型
-            //  animations
-            //  scenes
-            //  scene//Group类型//核心//的内容
-            //      children//
-            //          mesh
-            //              geometry
-            //                  attributes(normal position uv)\index
-            //              material
-            //                  map(image)
             var geometry=mesh0.geometry;
             var material=mesh0.material;
             var l=0;for(var i=0;i<scope.positionsType.length;i++)
