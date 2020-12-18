@@ -61,14 +61,14 @@ function InstancedGroup(instanceCount){
 
         let texs=[];
         for(i=0;i<texs_length;i++){
-            texs.push( THREE.ImageUtils.loadTexture('texture/'+i+'.jpg') ) ;
+            texs.push( THREE.ImageUtils.loadTexture('./texture/'+i+'.jpg') ) ;
             texs[i].flipY=false;
             texs[i].wrapS = texs[i].wrapT = THREE.ClampToEdgeWrapping;
         }
 
         var skeletonData=[];//16*25//400
         for(i=0;i<originMesh.skeleton.boneInverses.length;i++){
-            var temp1=originMesh.skeleton.boneInverses[i].clone();//.toArray();
+            var temp1=originMesh.skeleton.boneInverses[i];//.toArray();
             var temp2=originMesh.skeleton.bones[i].matrix.clone();//.toArray();
             var temp=temp2.multiply(temp1);
             temp=temp.toArray();

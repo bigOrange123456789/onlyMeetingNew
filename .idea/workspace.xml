@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="b7b6123d-caec-4b82-a432-424a6b5be5dd" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/js/InstancedGroup.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/InstancedGroup.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/sceneSet/AvatarManager.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/sceneSet/AvatarManager.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/sceneSet/RoomManager.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/sceneSet/RoomManager.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/threeJS/three.js" beforeDir="false" afterPath="$PROJECT_DIR$/lib/threeJS/three.js" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1koKR36P3hxtdIuZ2E2iUDrJBwx" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="b7b6123d-caec-4b82-a432-424a6b5be5dd" name="Default Changelist" comment="" />
+      <created>1606361492279</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1606361492279</updated>
+      <workItem from="1606361493570" duration="17142000" />
+      <workItem from="1606384983378" duration="58575000" />
+      <workItem from="1606489817059" duration="1787000" />
+      <workItem from="1606712801648" duration="10169000" />
+      <workItem from="1606740010691" duration="1151000" />
+      <workItem from="1606745058605" duration="1503000" />
+      <workItem from="1606781949658" duration="243000" />
+      <workItem from="1606803492340" duration="9517000" />
+      <workItem from="1606813984548" duration="4373000" />
+      <workItem from="1606874918196" duration="3258000" />
+      <workItem from="1606990145541" duration="2760000" />
+      <workItem from="1607000184491" duration="10000" />
+      <workItem from="1607064732621" duration="9572000" />
+      <workItem from="1607312187867" duration="102000" />
+      <workItem from="1607312334001" duration="779000" />
+      <workItem from="1607395396556" duration="1035000" />
+      <workItem from="1607421228536" duration="16000" />
+      <workItem from="1607480343453" duration="8000" />
+      <workItem from="1607480366993" duration="10000" />
+      <workItem from="1607491074051" duration="112000" />
+      <workItem from="1607669979559" duration="69000" />
+      <workItem from="1608029380231" duration="2727000" />
+      <workItem from="1608270050636" duration="894000" />
+      <workItem from="1608271489264" duration="12000" />
+      <workItem from="1608280933097" duration="4661000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="2" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="523" y="120" key="FileChooserDialogImpl" timestamp="1608283419866">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="523" y="120" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1608283419866" />
+    <state x="297" y="151" key="run.anything.popup" timestamp="1606378711856">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="297" y="151" key="run.anything.popup/0.0.1280.680@0.0.1280.680" timestamp="1606378711856" />
+    <state x="303" y="1" width="672" height="678" key="search.everywhere.popup" timestamp="1606716683883">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="303" y="1" width="672" height="678" key="search.everywhere.popup/0.0.1280.680@0.0.1280.680" timestamp="1606716683883" />
+  </component>
+</project>

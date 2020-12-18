@@ -73,8 +73,8 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
             var peoples=new InstancedGroup(4);
             peoples.init(glb.scene.children[0].children[1],glb.animations);
             for(var i=0;i<4;i++){
-                peoples.scaleSet(i,[Math.random()/2+0.75,Math.random()/2+0.75,Math.random()/2+0.75]);
-                peoples.positionSet(i,[i,0,0]);
+                peoples.scaleSet(i,[Math.random()/2+10.75,Math.random()/2+20.75,Math.random()/2+10.75]);
+                peoples.positionSet(i,[i*10,0,0]);
             }
             scope.obj.add(peoples.obj);
         });

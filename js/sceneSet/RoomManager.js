@@ -3,6 +3,7 @@ function RoomManager(){
     this.room=new THREE.Object3D();
     this.myLoad=function(url){
         var scope=this;
+        //var door1=new THREE.
         this.loader.load(url, (gltf) => {
             var obj=gltf.scene.children[0];
             obj.traverse(node=>{
@@ -28,8 +29,8 @@ function RoomManager(){
         var urls=[];
         //urls.push('myModel/room/component/0010.glb');
         for(var i=1;i<=9;i++)
-             urls.push('myModel/room/component/00'+i+'.glb');
-        urls.push('myModel/room/room.glb');
+             ;//urls.push('myModel/room/component/00'+i+'.glb');
+        //urls.push('myModel/room/room.glb');
         for(var i=0;i<urls.length;i++)this.myLoad(urls[i]);
         console.log(1122);
         console.log(this.room);
