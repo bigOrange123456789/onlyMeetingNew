@@ -43,6 +43,7 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
     this.camera=camera;
     this.positionsType=[];
 
+
     this.init=function () {
         this.obj.name="AvatarManager_obj";
         for(var i=0;i<this.positions.length;i++)
@@ -70,22 +71,23 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
         */
         var loader= new THREE.GLTFLoader();
         loader.load('myModel/avatar/test2.glb', (glb) => {
-            var peoples=new InstancedGroup(4);
+
+            var peoples=new InstancedGroup(1000);
+            var texSrc=[];
+            for(i=0;i<16;i++)texSrc.push('./texture/'+i+'.jpg');
             peoples.init(
-                glb.scene.children[0].children[1],
-                glb.animations
+                glb.scene.children[0].children[1],//skinnedMesh
+                glb.animations,//animations
+                texSrc
             );
-            for(var i=0;i<4;i++){
-                peoples.scaleSet(i,[Math.random()/2+10.75,Math.random()/2+20.75,Math.random()/2+10.75]);
-                peoples.positionSet(i,[i*10,0,0]);
+            for(var i=0;i<1000;i++){
+                    peoples.rotationSet(i,[3*Math.PI/2,0,3*Math.PI/2]);
+                    peoples.positionSet(i,[scope.positions[i][0]-8,scope.positions[i][1]+2.5,scope.positions[i][2]+29.3]);
+                    peoples.scaleSet(i,[0.045,0.045,0.045]);
             }
+            //peoples.obj.rotation.set(Math.PI/2,0,0);
+            peoples.animationSpeed=0.1;
             scope.obj.add(peoples.obj);
-
-
-            /*var mytest=new AnimationMesh(
-                glb.scene.children[0].children[1],
-                glb.animations);
-            scope.obj.add(mytest.mesh);*/
         });
     }
     this.loadAvatarTool=function(type,url,url2){

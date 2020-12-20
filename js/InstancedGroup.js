@@ -8,11 +8,18 @@ function InstancedGroup(instanceCount){
     this.mcol1;
     this.mcol2;
     this.mcol3;
+    this.scales=[];
+    this.rotations=[];
+    this.animationSpeed=0.05;
 
     this.dummy=new THREE.Object3D();//dummy仿制品//工具对象
 
     //this.instanceMatrix=null;
-    this.init=function (originMesh,animations){
+    this.init=function (originMesh,animations,texSrc){
+        for(var i=0;i<this.instanceCount;i++){
+            this.scales.push([1,1,1]);
+            this.rotations.push([0,0,0]);
+        }
         //const instanceCount =2*2;//10 0000//1089
         let texs_length=16;
 
@@ -32,22 +39,19 @@ function InstancedGroup(instanceCount){
 
         var type=new THREE.InstancedBufferAttribute(new Uint16Array(this.instanceCount*3), 3);
 
-        /*for(var k=0,kl=2,il=this.instanceCount ,i=0;k<kl&&i<il;k++)
-            for(var b=0,bl=2;b<bl&&i<il;b++,i++){
 
-                this.mcol0.setXYZ(i, Math.random()/2+0.75,0,0);//随机长宽高
-                this.mcol1.setXYZ(i, 0,Math.random()/2+0.75,0);//四元数、齐次坐标
-                this.mcol2.setXYZ(i, 0,0,Math.random()/2+0.75);//mcol3.setXYZ(i, 0,0,0);
-                this.mcol3.setXYZ(i, k-kl/2,b-bl/2,0);//500*200//type.setX(i, 1.0);
-                this.mcol3.setXYZ(i, k-kl/2,b-bl/2,0);
-
-                type.setXYZ(i, Math.floor(Math.random() * texs_length), Math.floor(Math.random() * texs_length),Math.floor(Math.random() * texs_length));
-            }*/
         for(var i=0;i<this.instanceCount;i++){
+
                 this.mcol0.setXYZ(i, 1,0,0);//随机长宽高
                 this.mcol1.setXYZ(i, 0,1,0);//四元数、齐次坐标
                 this.mcol2.setXYZ(i, 0,0,1);//mcol3.setXYZ(i, 0,0,0);
-                this.mcol3.setXYZ(i, 0,0,0);//500*200//type.setX(i, 1.0);
+
+            /*this.mcol0.setXYZ(i, 1,0,0);//随机长宽高
+            this.mcol1.setXYZ(i, 0,1,0);//四元数、齐次坐标
+            this.mcol2.setXYZ(i, 0,0,1);//mcol3.setXYZ(i, 0,0,0);
+        */
+            this.mcol3.setXYZ(i, 0,0,0);//500*200//type.setX(i, 1.0);
+
                 type.setXYZ(i, Math.floor(Math.random() * texs_length), Math.floor(Math.random() * texs_length),Math.floor(Math.random() * texs_length));
         }
 
@@ -61,7 +65,7 @@ function InstancedGroup(instanceCount){
 
         let texs=[];
         for(i=0;i<texs_length;i++){
-            texs.push( THREE.ImageUtils.loadTexture('./texture/'+i+'.jpg') ) ;
+            texs.push( THREE.ImageUtils.loadTexture(texSrc[i]) ) ;
             texs[i].flipY=false;
             texs[i].wrapS = texs[i].wrapT = THREE.ClampToEdgeWrapping;
         }
@@ -127,10 +131,10 @@ function InstancedGroup(instanceCount){
         var myAnimationAction0=animationMixer0.clipAction(animations[0]);
         myAnimationAction0.play();
         var scope=this;//scope范围//为了避免this重名
-        function test12() {
+        function updateAnimation() {//每帧更新一次动画
 
-            animationMixer0.update( 0.05 );
-            requestAnimationFrame(test12);
+            animationMixer0.update( scope.animationSpeed );
+            requestAnimationFrame(updateAnimation);
 
             skeletonData=[];//16*25//400
             for(i=0;i<originMesh.skeleton.boneInverses.length;i++){
@@ -143,15 +147,28 @@ function InstancedGroup(instanceCount){
             }
             scope.mesh.material.uniforms.skeletonData={value: skeletonData};
 
-        }test12();
-        //完成设置动画
+        }updateAnimation();
 
-        originMesh.scale.set(0.01,0.01,0.01);
-
-        this.obj.add(originMesh);
+        originMesh.visible=false;
+        this.obj.add(originMesh);//threeJS中模型的位置尺寸角度变化，似乎是通过骨骼来实现的
         this.obj.add(this.mesh);
-        //this.positionSet(1,[1,0,0])
+
         //完成进行实例化渲染
+    }
+    this.updateBuffer=function(i){//更新第i个对象对应的缓冲区
+        var pos=[
+            this.mcol3.array[3*i  ],
+            this.mcol3.array[3*i+1],
+            this.mcol3.array[3*i+2]
+        ];//记录位置
+        this.dummy.scale.set(this.scales[i][0],this.scales[i][1],this.scales[i][2]);
+        this.dummy.rotation.set(this.rotations[i][0],this.rotations[i][1],this.rotations[i][2]);
+        this.dummy.updateMatrix();
+
+        this.dummy.matrix.elements[12]=pos[0];
+        this.dummy.matrix.elements[13]=pos[1];
+        this.dummy.matrix.elements[14]=pos[2];//恢复位置
+        this.setMatrix(i,this.dummy.matrix);
     }
     this.setMatrix=function (i,matrix){//获取实例化对象第i个成员的变换矩阵
         this.mcol0.array[3*i  ]=matrix.elements[0];
@@ -180,56 +197,41 @@ function InstancedGroup(instanceCount){
         );
         return matrix;
     }
-    this.move=function (i,dPos){//第几个对象，位置数组【x,y,z】
-        this.dummy.applyMatrix(this.getMatrix(i));
-        this.dummy.position.set(dPos[0],dPos[1],dPos[2]);
-        this.dummy.updateMatrix();
-        this.setMatrix(i,this.dummy.matrix);
+
+    this.positionGet=function(i){
+        return [this.mcol3.array[3*i],this.mcol3.array[3*i+1],this.mcol3.array[3*i+2]];
     }
+    this.rotationGet=function(i){
+        return this.rotations[i];
+    }
+    this.scaleGet=function(i){
+        return this.scales[i];
+    }
+
     this.positionSet=function (i,pos){
-        this.dummy.applyMatrix(this.getMatrix(i));
-        this.dummy.position.set(
-            pos[0],
-            pos[1],
-            pos[2]);
-        this.dummy.updateMatrix();
-        this.setMatrix(i,this.dummy.matrix);
+        this.mcol3.array[3*i  ]=pos[0];
+        this.mcol3.array[3*i+1]=-pos[1];
+        this.mcol3.array[3*i+2]=pos[2];
     }
     this.rotationSet=function (i,rot){
-        this.dummy.applyMatrix(this.getMatrix(i));
-        this.dummy.rotation.set(
-            rot[0],
-            rot[1],
-            rot[2]);
-        this.dummy.updateMatrix();
-        this.setMatrix(i,this.dummy.matrix);
+        this.rotations[i][0]=rot[0];
+        this.rotations[i][1]=rot[1];
+        this.rotations[i][2]=rot[2];
+        this.updateBuffer(i);
     }
-    this.scaleSet=function (i,size){
-        this.dummy.applyMatrix(this.getMatrix(i));
-        this.dummy.scale.set(
-            size[0],
-            size[1],
-            size[2]);
-        this.dummy.updateMatrix();
-        this.setMatrix(i,this.dummy.matrix);
+    this.scaleSet=function(i,scale){
+        this.scales[i][0]=scale[0];
+        this.scales[i][1]=scale[1];
+        this.scales[i][2]=scale[2];
+        this.updateBuffer(i);
     }
-}
-function AnimationMesh(originMesh,animations){
-    this.mesh=originMesh;
-    this.init=function () {
-        this.mesh.add(this.mesh.skeleton.bones[0]);//添加骨骼
-        this.mesh.bind(this.mesh.skeleton,this.mesh.matrixWorld);//
 
-
-        //开始设置动画//进行这个动画设置的时候可能还只是一个基模
-        var animationMixer0=new THREE.AnimationMixer(this.mesh);
-        var myAnimationAction0=animationMixer0.clipAction(animations[0]);
-        myAnimationAction0.play();
-
-        function test() {
-            animationMixer0.update( 0.05 );
-            requestAnimationFrame(test);
-        }test();
+    this.move=function (i,dPos){
+        var pos=this.positionGet(i);
+        this.positionSet(i,[pos[0]+dPos[0],pos[1]+dPos[1],pos[2]+dPos[2]]);
     }
-    this.init();
+    this.rotation=function (i,dRot){
+        var rot=this.rotationGet(i);
+        this.rotationSet(i,[rot[0]+dRot[0],rot[1]+dRot[1],rot[2]+dRot[2]]);
+    }
 }

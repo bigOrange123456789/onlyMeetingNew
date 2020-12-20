@@ -135,11 +135,11 @@
 			else if(type>11.9&&type<12.1)myTexture =texture2D(text12, outUV);
 			else if(type>12.9&&type<13.1)myTexture =texture2D(text13, outUV);
 			else if(type>13.9&&type<14.1)myTexture =texture2D(text14, outUV);
-			else if(type>14.9&&type<15.1)myTexture =texture2D(text15, outUV);
+			else myTexture =texture2D(text15, outUV);
 
             float mytest0=varyType[1]*0.01;
-            //gl_FragColor = vec4 (myTexture.r,myTexture.g,myTexture.b,0);//varyType[0]
-            gl_FragColor =vec4 (0,0.5,1,0);
+            gl_FragColor = vec4 (myTexture.r,myTexture.g,myTexture.b,1.0);//varyType[0]
+            //gl_FragColor =vec4 (0,0.5,1,1.0);
 		}
 </script>
 	    <!--下面这个div标签用于显示三角面的个数-->

@@ -27,10 +27,10 @@ function RoomManager(){
     this.loadRoom=function(){
         this.room.scale.set(10,10,10);
         var urls=[];
-        //urls.push('myModel/room/component/0010.glb');
+        urls.push('myModel/room/component/0010.glb');
         for(var i=1;i<=9;i++)
-             ;//urls.push('myModel/room/component/00'+i+'.glb');
-        //urls.push('myModel/room/room.glb');
+             urls.push('myModel/room/component/00'+i+'.glb');
+        urls.push('myModel/room/room.glb');
         for(var i=0;i<urls.length;i++)this.myLoad(urls[i]);
         console.log(1122);
         console.log(this.room);
