@@ -71,12 +71,21 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
         var loader= new THREE.GLTFLoader();
         loader.load('myModel/avatar/test2.glb', (glb) => {
             var peoples=new InstancedGroup(4);
-            peoples.init(glb.scene.children[0].children[1],glb.animations);
+            peoples.init(
+                glb.scene.children[0].children[1],
+                glb.animations
+            );
             for(var i=0;i<4;i++){
                 peoples.scaleSet(i,[Math.random()/2+10.75,Math.random()/2+20.75,Math.random()/2+10.75]);
                 peoples.positionSet(i,[i*10,0,0]);
             }
             scope.obj.add(peoples.obj);
+
+
+            /*var mytest=new AnimationMesh(
+                glb.scene.children[0].children[1],
+                glb.animations);
+            scope.obj.add(mytest.mesh);*/
         });
     }
     this.loadAvatarTool=function(type,url,url2){

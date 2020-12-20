@@ -214,3 +214,22 @@ function InstancedGroup(instanceCount){
         this.setMatrix(i,this.dummy.matrix);
     }
 }
+function AnimationMesh(originMesh,animations){
+    this.mesh=originMesh;
+    this.init=function () {
+        this.mesh.add(this.mesh.skeleton.bones[0]);//添加骨骼
+        this.mesh.bind(this.mesh.skeleton,this.mesh.matrixWorld);//
+
+
+        //开始设置动画//进行这个动画设置的时候可能还只是一个基模
+        var animationMixer0=new THREE.AnimationMixer(this.mesh);
+        var myAnimationAction0=animationMixer0.clipAction(animations[0]);
+        myAnimationAction0.play();
+
+        function test() {
+            animationMixer0.update( 0.05 );
+            requestAnimationFrame(test);
+        }test();
+    }
+    this.init();
+}
