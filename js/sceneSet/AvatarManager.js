@@ -1,6 +1,8 @@
 function AvatarManager(mySeatManager,camera){//camera用于LOD
     var scope=this;
     this.obj=new THREE.Object3D();
+    this.obj1=new THREE.Object3D();
+    this.obj2=new THREE.Object3D();
 
     this.avatar1=[null,null,null,null];//new Array(4);
     this.avatar2=[null,null,null,null];//new Array(4);
@@ -60,15 +62,36 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
         //this.loadAvatarTool(2,'myModel/avatar/Female01_2.glb','myModel/avatar/Female02.glb');
         //this.loadAvatarTool(3,'myModel/avatar/Ganpa01_2.glb','myModel/avatar/Ganpa02.glb');
         //this.loadAvatarTool(4,'myModel/avatar/Granny01_2.glb','myModel/avatar/Granny02.glb');/**/
-        this.createPeople();
+
+        //obj1.visible=true;
+        //obj2.visible=false;
+        //this.obj.add(this.obj1);
+        //this.obj.add(this.obj2);
+        this.createPeopleDouble('myModel/avatar/Female02.glb','myModel/avatar/Female01_2.glb',2);
+        // flag=1;
+        /*function test() {
+            requestAnimationFrame(test);
+            if(flag<3){
+                flag++;
+            }else{
+                obj1.visible=obj2.visible;
+                obj2.visible=!obj1.visible;
+                flag=0;
+            }
+
+        }test();*/
     }
-    this.createPeople=function(){
+    this.createPeopleDouble=function(src1,src2,index){
+        var src;
+        if(index===2)src=src2;
+        else if(index===1)src=src1;
+        else return;
+        console.log(src);
         var loader= new THREE.GLTFLoader();
-        loader.load('myModel/avatar/Female01_2.glb', (glb) => {
-            //console.log(glb.scene.children[0]);//scene.children[0]
-            //测试
+        loader.load(src, (glb) => {
+            console.log(glb);
             var peoples=new InstancedGroup(
-                1000,
+                scope.positions.length,
                 [glb.scene.children[0],glb.scene.children[0]],//这些mesh的网格应该一致
                 false
             );
@@ -77,14 +100,66 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
             peoples.init(
                 texSrc
             );
-            for(var i=0;i<1000;i++){
+            for(var i=0;i<scope.positions.length;i++){
                 peoples.rotationSet(i,[Math.PI/2,0,3*Math.PI/2]);
-                peoples.positionSet(i,[scope.positions[i][0],scope.positions[i][1]+1.5,scope.positions[i][2]]);
+                peoples.positionSet(i,[scope.positions[i][0]+2,scope.positions[i][1]+1.5,scope.positions[i][2]]);
                 peoples.scaleSet(i,[4.5,4.5,4.5]);
             }
-            //peoples.obj.rotation.set(Math.PI/2,0,0);
             peoples.animationSpeed=0.1;
-            scope.obj.add(peoples.obj);
+            console.log(glb.scene.children[0]);
+            if(index===2){
+                scope.obj2.add(peoples.obj);
+                scope.obj.add(scope.obj2);
+            }else if(index===1){
+                scope.obj1.add(peoples.obj);
+                scope.obj.add(scope.obj1);
+                scope.obj1.visible=false;
+                var flag=0;
+
+                console.log(0.12);
+                function mytest000() {
+                    console.log(12345);
+                    requestAnimationFrame(mytest000);
+                    console.log(scope.obj1);
+                    if(flag<3){
+                        flag++;
+                    }else{
+                        scope.obj1.visible=scope.obj2.visible;
+                        scope.obj2.visible=!scope.obj1.visible;
+                        flag=0;
+                    }
+                }
+                mytest000();
+                console.log(123);
+            }
+            console.log("index",index)
+            scope.createPeopleDouble(
+                'myModel/avatar/Female02.glb',
+                'myModel/avatar/Female01_2.glb',
+                index-1
+            );
+        });
+    }
+    this.createPeople=function(src,parentObj){
+        var loader= new THREE.GLTFLoader();
+        loader.load(src, (glb) => {
+            var peoples=new InstancedGroup(
+                scope.positions.length,
+                [glb.scene.children[0],glb.scene.children[0]],//这些mesh的网格应该一致
+                false
+            );
+            var texSrc=[];
+            for(i=0;i<16;i++)texSrc.push('./texture/'+i+'.jpg');
+            peoples.init(
+                texSrc
+            );
+            for(var i=0;i<scope.positions.length;i++){
+                peoples.rotationSet(i,[Math.PI/2,0,3*Math.PI/2]);
+                peoples.positionSet(i,[scope.positions[i][0]+2,scope.positions[i][1]+1.5,scope.positions[i][2]]);
+                peoples.scaleSet(i,[4.5,4.5,4.5]);
+            }
+            peoples.animationSpeed=0.1;
+            parentObj.add(peoples.obj);
         });
     }
     this.createPeople_haveAnimation=function(){

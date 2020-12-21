@@ -51,7 +51,7 @@ function SeatManager(){
                     scope.positions[i][1],
                     scope.positions[i][2]);
                 dummy.rotation.set(0,-Math.PI/2,0);
-                dummy.scale.set(0.95,0.4,0.95);
+                dummy.scale.set(0.95,0.35,0.95);
                 dummy.updateMatrix();//由位置计算齐次坐标变换矩阵
                 mesh1.setMatrixAt(i, dummy.matrix);
                 mesh2.setMatrixAt(i, dummy.matrix);

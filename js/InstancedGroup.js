@@ -34,7 +34,6 @@ function InstancedGroup(instanceCount,originMesh,haveSkeleton){
             geometry.setAttribute('skinIndex',this.originMeshs[0].geometry.attributes.skinIndex);
             geometry.setAttribute('skinWeight',this.originMeshs[0].geometry.attributes.skinWeight);
         }
-        //console.log(geometry);
         var randoms=new Float32Array(this.originMeshs[0].geometry.attributes.position.count);
         for(i=0;i<randoms.length;i++)
             randoms[i]=Math.random();
