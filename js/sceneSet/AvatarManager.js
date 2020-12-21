@@ -46,7 +46,8 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
     this.positions=mySeatManager.positions;
     this.types=[];
     this.colors=[];
-    for(var i=0;i<scope.positions.length;i++){
+    //console.log(scope.positions.length);
+    for(var i=0;i<scope.positions.length;i++){//共有1677张椅子
         this.types.push([
             Math.floor(Math.random() * 16),
             Math.floor(Math.random() * 16),

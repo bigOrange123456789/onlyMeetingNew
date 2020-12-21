@@ -6,7 +6,7 @@ function Main(){
     //this.camera = new THREE.OrthographicCamera(window.innerWidth/ - 1,window.innerWidth,window.innerHeight,window.innerHeight/ - 1, 0, 100000 );
     this.winWidth = window.innerWidth;
     this.winHeight = window.innerHeight;
-    this.divInfo = document.getElementById('pminfo');//用于呈现文字
+    //this.divInfo = document.getElementById('pminfo');//用于呈现文字
     this.start=function () {
         this.init();
         this.animate();
@@ -46,7 +46,7 @@ function Main(){
     this.animate=function()
     {
         renderer.render(scope.scene,scope.camera);
-        scope.divInfo.textContent='场景中三角面个数:' + renderer.info.render.triangles;
+        //scope.divInfo.textContent='场景中三角面个数:' + renderer.info.render.triangles;
         if (window.innerWidth !== scope.winWidth || window.innerHeight !== scope.winHeight) scope._onResize();
         requestAnimationFrame(scope.animate);
     }
