@@ -32,6 +32,11 @@ function InstancedGroup(instanceCount,skinnedMeshs){
         geometry.setAttribute('inUV',originMesh.geometry.attributes.uv);
         geometry.setAttribute('skinIndex',originMesh.geometry.attributes.skinIndex);
         geometry.setAttribute('skinWeight',originMesh.geometry.attributes.skinWeight);
+        console.log(geometry);
+        var randoms=new Float32Array(originMesh.geometry.attributes.position.count);
+        for(i=0;i<randoms.length;i++)
+            randoms[i]=Math.random();
+        geometry.setAttribute('random',new THREE.BufferAttribute(randoms,1));
 
         this.mcol0=new THREE.InstancedBufferAttribute(new Float32Array(this.instanceCount * 3), 3);
         this.mcol1=new THREE.InstancedBufferAttribute(new Float32Array(this.instanceCount * 3), 3);
@@ -55,7 +60,12 @@ function InstancedGroup(instanceCount,skinnedMeshs){
 
                 this.mcol3.setXYZ(i, 0,0,0);//500*200//type.setX(i, 1.0);
 
-                type.setXYZW(i, Math.floor(Math.random() * texs_length), Math.floor(Math.random() * texs_length),Math.floor(Math.random() * texs_length),Math.random() );
+                type.setXYZW(i,
+                    Math.floor(Math.random() * texs_length),
+                    Math.floor(Math.random() * texs_length),
+                    Math.floor(Math.random() * texs_length),
+                    0.5//Math.random()
+                );
         }
 
 

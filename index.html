@@ -23,6 +23,8 @@
         attribute vec4 skinIndex;
         attribute vec4 skinWeight;
 
+        attribute float random;
+
 		attribute vec3 mcol0;
 		attribute vec3 mcol1;
 		attribute vec3 mcol2;
@@ -32,21 +34,24 @@
 
         varying vec2 outUV;
         varying vec3 varyType;
-        varying float varyMyTest0;
+        varying float type_part;
+        varying float myTest00;
 
 		void main(){
 			vec3 vPosition = position;
-			//if(vPosition.y<1.8){//
-			if(vPosition.y>0.61&&vPosition.x>0.0){
+			if(vPosition.y<1.8){//全身显示
+			//if(vPosition.y>0.61&&vPosition.x>0.0){//只显示脸
 				outUV = inUV;
 				varyType=vec3(type[0],type[1],type[2]);
+				myTest00=type[3];
 
-				if(vPosition.y<0.15)varyMyTest0=0.0;//下身
-				else if(vPosition.y<0.59) varyMyTest0=1.0;//上身
-				else varyMyTest0=2.0;//头部
+				if(vPosition.y<0.15)type_part=0.0;//下身
+				else if(vPosition.y<0.59) type_part=1.0;//上身
+				else type_part=2.0;//头部
 
+				//判断使用哪一种动画
 				float skeletonData[400];
-				if(type[3]>0.5){
+				if(type[3]>0.0){
 					for(int i=0;i<400;i++)
 						skeletonData[i]=skeletonData0[i];
 				}else{
@@ -70,7 +75,6 @@
                 	for(int i=0;i<25;i++){
                    	if((skinIndex[j]-i0)>-0.5&&(skinIndex[j]-i0)<0.5){
                         	    mySkinIndex[j]=i;
-                    	        //if(i==2)varyMyTest0=1.0;
                    	}
                    	i0=i0+1.0;
                 	}
@@ -121,18 +125,20 @@
         uniform sampler2D text14;
         uniform sampler2D text15;
 
-        varying float varyMyTest0;
+        varying float type_part;
 
         varying vec3 varyType;
 		varying vec2 outUV;
+
+		varying float myTest00;
 
 		void main(){
 			vec4 myTexture;
 			float type;
 
-            if(floor(varyMyTest0)==0.0)type=varyType[0];//下身
-            else if(floor(varyMyTest0)==1.0)type=varyType[1];
-            else if(floor(varyMyTest0)==2.0)type=varyType[2];
+            if(floor(type_part)==0.0)type=varyType[0];//下身
+            else if(floor(type_part)==1.0)type=varyType[1];
+            else if(floor(type_part)==2.0)type=varyType[2];
 
                if (type>-0.1&&type<0.1)myTexture =texture2D(text0, outUV);
 			else if(type>0.9&&type<1.1)myTexture =texture2D(text1, outUV);
@@ -152,8 +158,8 @@
 			else myTexture =texture2D(text15, outUV);
 
             float mytest0=varyType[1]*0.01;
-            gl_FragColor = vec4 (myTexture.r,myTexture.g,myTexture.b,1.0);//varyType[0]
-            //gl_FragColor =vec4 (0,0.5,1,1.0);
+            //gl_FragColor = vec4 (myTexture.r,myTexture.g,myTexture.b,1.0);//varyType[0]
+            gl_FragColor =vec4 (0.0,0.5,myTest00,1.0);//myTest00值为0
 		}
 </script>
 	    <!--下面这个div标签用于显示三角面的个数-->
