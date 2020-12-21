@@ -30,7 +30,7 @@
 		attribute vec3 mcol2;
 		attribute vec3 mcol3;
 
-		attribute vec4 type;   //type[3]是一个[0-1)的小数
+		attribute vec4 type;   //type[3]是0或1，用于表示动画
 
         varying vec2 outUV;
         varying vec3 varyType;
@@ -51,7 +51,7 @@
 
 				//判断使用哪一种动画
 				float skeletonData[400];
-				if(type[3]>0.0){
+				if(type[3]>-0.5&&type[3]<0.5){
 					for(int i=0;i<400;i++)
 						skeletonData[i]=skeletonData0[i];
 				}else{
@@ -158,8 +158,8 @@
 			else myTexture =texture2D(text15, outUV);
 
             float mytest0=varyType[1]*0.01;
-            //gl_FragColor = vec4 (myTexture.r,myTexture.g,myTexture.b,1.0);//varyType[0]
-            gl_FragColor =vec4 (0.0,0.5,myTest00,1.0);//myTest00值为0
+            gl_FragColor = vec4 (myTexture.r,myTexture.g,myTexture.b,1.0);//varyType[0]
+            //gl_FragColor =vec4 (0.0,0.5,myTest00,1.0);//myTest00值为0
 		}
 </script>
 	    <!--下面这个div标签用于显示三角面的个数-->

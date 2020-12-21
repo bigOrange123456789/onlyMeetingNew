@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b7b6123d-caec-4b82-a432-424a6b5be5dd" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/js/InstancedGroup.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/InstancedGroup.js" afterDir="false" />
     </list>
@@ -24,6 +25,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../onlyPMTest" />
+    <property name="nodejs_package_manager_path" value="npm" />
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -71,10 +73,10 @@
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="523" y="120" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1608517264518" />
-    <state x="297" y="151" key="run.anything.popup" timestamp="1606378711856">
+    <state x="297" y="151" key="run.anything.popup" timestamp="1608547026083">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state x="297" y="151" key="run.anything.popup/0.0.1280.680@0.0.1280.680" timestamp="1606378711856" />
+    <state x="297" y="151" key="run.anything.popup/0.0.1280.680@0.0.1280.680" timestamp="1608547026083" />
     <state x="303" y="1" width="672" height="678" key="search.everywhere.popup" timestamp="1608511439725">
       <screen x="0" y="0" width="1280" height="680" />
     </state>

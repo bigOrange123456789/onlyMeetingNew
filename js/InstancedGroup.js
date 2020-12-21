@@ -64,7 +64,7 @@ function InstancedGroup(instanceCount,skinnedMeshs){
                     Math.floor(Math.random() * texs_length),
                     Math.floor(Math.random() * texs_length),
                     Math.floor(Math.random() * texs_length),
-                    0.5//Math.random()
+                    Math.floor(Math.random() *2)//Math.random()//这个缓冲区是int类型的//所以这里不能传小数
                 );
         }
 
