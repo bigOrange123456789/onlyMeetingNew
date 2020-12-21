@@ -28,7 +28,7 @@
 		attribute vec3 mcol2;
 		attribute vec3 mcol3;
 
-		attribute vec3 type;
+		attribute vec4 type;
 
         varying vec2 outUV;
         varying vec3 varyType;
@@ -37,15 +37,20 @@
 		void main(){
 			vec3 vPosition = position;
 			outUV = inUV;
-			varyType=type;
+			varyType=vec3(type[0],type[1],type[2]);
 
 			if(vPosition.y<0.15)varyMyTest0=0.0;//下身
 			else if(vPosition.y<0.59) varyMyTest0=1.0;//上身
 			else varyMyTest0=2.0;//头部
 
 			float skeletonData[400];
-			for(int i=0;i<400;i++)
-				skeletonData[i]=skeletonData1[i];
+			if(type[3]>0.5&&type[3]<1.5){
+				for(int i=0;i<400;i++)
+					skeletonData[i]=skeletonData0[i];
+			}else{
+				for(int i=0;i<400;i++)
+					skeletonData[i]=skeletonData1[i];
+			}
 
             mat4 matrixs[25];//25个骨骼的变换矩阵
 			for(int i=0;i<25;i++){
@@ -121,6 +126,7 @@
 		void main(){
 			vec4 myTexture;
 			float type;
+
             if(varyMyTest0>-0.5&&varyMyTest0<0.5)type=varyType[0];//下身
             else if(varyMyTest0>0.5&&varyMyTest0<1.5)type=varyType[1];
             else if(varyMyTest0>1.5&&varyMyTest0<2.5)type=varyType[2];

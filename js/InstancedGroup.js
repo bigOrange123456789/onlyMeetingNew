@@ -38,7 +38,7 @@ function InstancedGroup(instanceCount,skinnedMeshs){
         this.mcol2=new THREE.InstancedBufferAttribute(new Float32Array(this.instanceCount * 3), 3);
         this.mcol3=new THREE.InstancedBufferAttribute(new Float32Array(this.instanceCount * 3), 3);
 
-        var type=new THREE.InstancedBufferAttribute(new Uint16Array(this.instanceCount*3), 3);
+        var type=new THREE.InstancedBufferAttribute(new Uint16Array(this.instanceCount*4), 4);//头部、上衣、裤子、动作
 
 
         for(var i=0;i<this.instanceCount;i++){
@@ -47,13 +47,15 @@ function InstancedGroup(instanceCount,skinnedMeshs){
                 this.mcol1.setXYZ(i, 0,1,0);//四元数、齐次坐标
                 this.mcol2.setXYZ(i, 0,0,1);//mcol3.setXYZ(i, 0,0,0);
 
-            /*this.mcol0.setXYZ(i, 1,0,0);//随机长宽高
-            this.mcol1.setXYZ(i, 0,1,0);//四元数、齐次坐标
-            this.mcol2.setXYZ(i, 0,0,1);//mcol3.setXYZ(i, 0,0,0);
-        */
-            this.mcol3.setXYZ(i, 0,0,0);//500*200//type.setX(i, 1.0);
+                /*
+                this.mcol0.setXYZ(i, 1,0,0);//随机长宽高
+                this.mcol1.setXYZ(i, 0,1,0);//四元数、齐次坐标
+                this.mcol2.setXYZ(i, 0,0,1);//mcol3.setXYZ(i, 0,0,0);
+                */
 
-                type.setXYZ(i, Math.floor(Math.random() * texs_length), Math.floor(Math.random() * texs_length),Math.floor(Math.random() * texs_length));
+                this.mcol3.setXYZ(i, 0,0,0);//500*200//type.setX(i, 1.0);
+
+                type.setXYZW(i, Math.floor(Math.random() * texs_length), Math.floor(Math.random() * texs_length),Math.floor(Math.random() * texs_length),Math.floor(Math.random() * 2));
         }
 
 
