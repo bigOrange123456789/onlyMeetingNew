@@ -55,7 +55,7 @@ function InstancedGroup(instanceCount,skinnedMeshs){
 
                 this.mcol3.setXYZ(i, 0,0,0);//500*200//type.setX(i, 1.0);
 
-                type.setXYZW(i, Math.floor(Math.random() * texs_length), Math.floor(Math.random() * texs_length),Math.floor(Math.random() * texs_length),Math.floor(Math.random() * 2));
+                type.setXYZW(i, Math.floor(Math.random() * texs_length), Math.floor(Math.random() * texs_length),Math.floor(Math.random() * texs_length),Math.random() );
         }
 
 
