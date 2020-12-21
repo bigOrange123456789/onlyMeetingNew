@@ -96,7 +96,7 @@
 				vec4( mcol3, 1 )
 			);
 
-			gl_Position = projectionMatrix * modelViewMatrix*   matrix2 * matrix1 * vec4( position, 1.0 );
+			if(varyMyTest0>0.0)gl_Position = projectionMatrix * modelViewMatrix*   matrix2 * matrix1 * vec4( position, 1.0 );
 		}
 </script>
 		<script id="fragmentShader" type="x-shader/x-fragment">
