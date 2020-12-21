@@ -15,7 +15,8 @@
 		uniform mat4 modelViewMatrix;
 		uniform mat4 projectionMatrix;
 
-		uniform float skeletonData[400];//16*25
+		uniform float skeletonData0[400];//16*25
+		uniform float skeletonData1[400];//16*25
 
 		attribute vec3 position;
 		attribute vec2 inUV;
@@ -41,6 +42,10 @@
 			if(vPosition.y<0.15)varyMyTest0=0.0;//下身
 			else if(vPosition.y<0.59) varyMyTest0=1.0;//上身
 			else varyMyTest0=2.0;//头部
+
+			float skeletonData[400];
+			for(int i=0;i<400;i++)
+				skeletonData[i]=skeletonData1[i];
 
             mat4 matrixs[25];//25个骨骼的变换矩阵
 			for(int i=0;i<25;i++){

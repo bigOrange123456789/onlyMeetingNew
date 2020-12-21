@@ -1,6 +1,7 @@
-function InstancedGroup(instanceCount){
+function InstancedGroup(instanceCount,skinnedMeshs){
     this.obj=new THREE.Object3D();
     this.instanceCount=instanceCount;
+    this.skinnedMeshs=skinnedMeshs;
 
     this.mesh=null;//实例化渲染对象的网格
 
@@ -72,12 +73,8 @@ function InstancedGroup(instanceCount){
 
         var skeletonData=[];//16*25//400
         for(i=0;i<originMesh.skeleton.boneInverses.length;i++){
-            var temp1=originMesh.skeleton.boneInverses[i];//.toArray();
-            var temp2=originMesh.skeleton.bones[i].matrix.clone();//.toArray();
-            var temp=temp2.multiply(temp1);
-            temp=temp.toArray();
-            for(j=0;j<temp.length;j++)
-                skeletonData.push(temp[j]);
+            for(j=0;j<originMesh.skeleton.boneInverses[i].length;j++)
+                skeletonData.push(0);
         }
         //全是0矩阵
 
@@ -101,7 +98,8 @@ function InstancedGroup(instanceCount){
                 ,text14: {type: 't', value: texs[14]}
                 ,text15: {type: 't', value: texs[15]}
 
-                ,skeletonData:{value: skeletonData}
+                ,skeletonData0:{value: skeletonData}
+                ,skeletonData1:{value: skeletonData}
             },
             vertexShader: document.getElementById('vertexShader').textContent,
             fragmentShader: document.getElementById('fragmentShader').textContent,
@@ -118,39 +116,51 @@ function InstancedGroup(instanceCount){
         this.mesh.rotation.set(Math.PI,0,0);
         this.mesh.frustumCulled=false;
 
-        handleOriginMesh(originMesh,animations);
+        /*handleOriginMesh(originMesh,animations);
         function handleOriginMesh(myOriginMesh,myAnimations){
             myOriginMesh.add(myOriginMesh.skeleton.bones[0]);//添加骨骼
             myOriginMesh.bind(myOriginMesh.skeleton,myOriginMesh.matrixWorld);//绑定骨架
-
-        }
+        }*/
 
 
         //开始设置动画//进行这个动画设置的时候可能还只是一个基模
-        var animationMixer0=new THREE.AnimationMixer(originMesh);
+        /*var animationMixer0=new THREE.AnimationMixer(originMesh);
         var myAnimationAction0=animationMixer0.clipAction(animations[0]);
-        myAnimationAction0.play();
+        myAnimationAction0.play();*/
         var scope=this;//scope范围//为了避免this重名
         function updateAnimation() {//每帧更新一次动画
 
-            animationMixer0.update( scope.animationSpeed );
+            //animationMixer0.update( scope.animationSpeed );
             requestAnimationFrame(updateAnimation);
 
-            skeletonData=[];//16*25//400
-            for(i=0;i<originMesh.skeleton.boneInverses.length;i++){
-                temp1=originMesh.skeleton.boneInverses[i];//.toArray();
-                temp2=originMesh.skeleton.bones[i].matrixWorld.clone();//.toArray();
+            skeletonData0=[];//16*25//400
+            for(i=0;i<scope.skinnedMeshs[0].skeleton.boneInverses.length;i++){
+                temp1=scope.skinnedMeshs[0].skeleton.boneInverses[i];//.toArray();
+                temp2=scope.skinnedMeshs[0].skeleton.bones[i].matrixWorld.clone();//.toArray();
                 temp=temp2.multiply(temp1);//逆矩阵在右
                 temp=temp.toArray();
                 for(j=0;j<temp.length;j++)
-                    skeletonData.push(temp[j]);
+                    skeletonData0.push(temp[j]);
             }
-            scope.mesh.material.uniforms.skeletonData={value: skeletonData};
+            scope.mesh.material.uniforms.skeletonData0={value: skeletonData0};
+
+            skeletonData1=[];//16*25//400
+            for(i=0;i<scope.skinnedMeshs[1].skeleton.boneInverses.length;i++){
+                temp1=scope.skinnedMeshs[1].skeleton.boneInverses[i];//.toArray();
+                temp2=scope.skinnedMeshs[1].skeleton.bones[i].matrixWorld.clone();//.toArray();
+                temp=temp2.multiply(temp1);//逆矩阵在右
+                temp=temp.toArray();
+                for(j=0;j<temp.length;j++)
+                    skeletonData1.push(temp[j]);
+            }
+            scope.mesh.material.uniforms.skeletonData1={value: skeletonData1};
 
         }updateAnimation();
 
-        originMesh.visible=false;
-        this.obj.add(originMesh);//threeJS中模型的位置尺寸角度变化，似乎是通过骨骼来实现的
+        for(var i=0;i<this.skinnedMeshs.length;i++){
+            this.skinnedMeshs[i].visible=false;
+            this.obj.add(this.skinnedMeshs[i]);//threeJS中模型的位置尺寸角度变化，似乎是通过骨骼来实现的
+        }
         this.obj.add(this.mesh);
 
         //完成进行实例化渲染
