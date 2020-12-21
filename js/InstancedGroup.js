@@ -13,6 +13,7 @@ function InstancedGroup(instanceCount,originMesh,haveSkeleton){
     this.mcol3;
     this.scales=[];
     this.rotations=[];
+    this.type;
 
     this.dummy=new THREE.Object3D();//dummy仿制品//工具对象
 
@@ -44,7 +45,7 @@ function InstancedGroup(instanceCount,originMesh,haveSkeleton){
         this.mcol2=new THREE.InstancedBufferAttribute(new Float32Array(this.instanceCount * 3), 3);
         this.mcol3=new THREE.InstancedBufferAttribute(new Float32Array(this.instanceCount * 3), 3);
 
-        var type=new THREE.InstancedBufferAttribute(new Uint16Array(this.instanceCount*4), 4);//头部、上衣、裤子、动作
+        this.type=new THREE.InstancedBufferAttribute(new Uint16Array(this.instanceCount*4), 4);//头部、上衣、裤子、动作
 
 
         for(var i=0;i<this.instanceCount;i++){
@@ -52,9 +53,9 @@ function InstancedGroup(instanceCount,originMesh,haveSkeleton){
                 this.mcol1.setXYZ(i, 0,1,0);//四元数、齐次坐标
                 this.mcol2.setXYZ(i, 0,0,1);//mcol3.setXYZ(i, 0,0,0);
 
-                this.mcol3.setXYZ(i, 0,0,0);//500*200//type.setX(i, 1.0);
+                this.mcol3.setXYZ(i, 0,0,0);
 
-                type.setXYZW(i,
+                this.type.setXYZW(i,
                     Math.floor(Math.random() * texs_length),
                     Math.floor(Math.random() * texs_length),
                     Math.floor(Math.random() * texs_length),
@@ -67,7 +68,7 @@ function InstancedGroup(instanceCount,originMesh,haveSkeleton){
         geometry.setAttribute('mcol2', this.mcol2);
         geometry.setAttribute('mcol3', this.mcol3);
 
-        geometry.setAttribute('type', type);
+        geometry.setAttribute('type', this.type);
 
         let texs=[];
         for(i=0;i<texs_length;i++){
@@ -249,6 +250,12 @@ function InstancedGroup(instanceCount,originMesh,haveSkeleton){
         return this.scales[i];
     }
 
+    this.typeSet=function (i,type) {
+        this.type.array[4*i  ]=type[0];
+        this.type.array[4*i+1]=type[1];
+        this.type.array[4*i+2]=type[2];
+        this.type.array[4*i+3]=type[3];
+    }
     this.positionSet=function (i,pos){
         this.mcol3.array[3*i  ]=pos[0];
         this.mcol3.array[3*i+1]=pos[1];
