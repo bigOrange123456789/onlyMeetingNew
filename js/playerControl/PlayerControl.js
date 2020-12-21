@@ -16,6 +16,8 @@ function PlayerControl0(camera){
     this.KeyboardMoveStep=3;
     this.autoPath=[];
 
+    this.onceClicked=false;
+
     this.dposition={
         left:0,
         forward:0,
@@ -31,6 +33,7 @@ function PlayerControl0(camera){
 
     var myMouseManager=new MouseManager();
     myMouseManager.dragMouse=function (dx,dy) {
+        scope.onceClicked=true;
         if(!scope.ableRotation)return;
         scope.rotation1(-0.015*dx);
         scope.rotation2(-0.015*dy);

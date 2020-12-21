@@ -3,7 +3,7 @@ function PreviewManager(camera,roamPath){//var myPreviewManager=new PreviewManag
     this.camera=camera;
     this.roamPath=roamPath;
     this.myPreviewflag=1;//确定目标节点
-    this.stopFlag=false;
+    this.stopFlag=true;
     this.isLoop=false;//如果不进行循环漫游的话，第一行的初始状态就没用了
 
     this.myMakeOneRoamStep=new MakeOneRoamStep();
@@ -89,7 +89,7 @@ function PreviewManager(camera,roamPath){//var myPreviewManager=new PreviewManag
     this.createCameraButton=function(src1,src2){
         this.cameraImg1=new ImageMove(src1,window.innerHeight/13,window.innerHeight/13,window.innerWidth/25,window.innerHeight-80,document.body);
         this.cameraImg2=new ImageMove(src2,window.innerHeight/13,window.innerHeight/13,window.innerWidth/25,window.innerHeight-80,document.body);
-        this.cameraImg2.img.style.display='none';
+        if(!this.stopFlag)this.cameraImg2.img.style.display='none';
         this.cameraImg1.img.onclick = function () {
             if (scope.stopFlag=== true) {
                 scope.stopFlag = false;

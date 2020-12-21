@@ -8,7 +8,7 @@ function SeatManager(){
         for(k=0;k<3;k++)//3部分
             for(i=0;i<12;i++)//后小前大
                 for(j=0;j<13;j++)//右小左大
-                    this.positions.push([103-5*i,0.01+i*0.09,85-4.1*j-k*75]);//前后、上下、左右
+                    this.positions.push([103-5*i,0.01+i*0.25,85-4.1*j-k*75]);//前后、上下、左右
         for(k=0;k<3;k++)//一楼后部分
             for(i=0;i<17;i++)
                 for(j=0;j<13;j++)
