@@ -14,6 +14,7 @@ function InstancedGroup(instanceCount,originMesh,haveSkeleton){
     this.scales=[];
     this.rotations=[];
     this.type;
+    this.colors;
 
     this.dummy=new THREE.Object3D();//dummy仿制品//工具对象
 
@@ -46,6 +47,7 @@ function InstancedGroup(instanceCount,originMesh,haveSkeleton){
         this.mcol3=new THREE.InstancedBufferAttribute(new Float32Array(this.instanceCount * 3), 3);
 
         this.type=new THREE.InstancedBufferAttribute(new Uint16Array(this.instanceCount*4), 4);//头部、上衣、裤子、动作
+        this.colors=new THREE.InstancedBufferAttribute(new Float32Array(this.instanceCount*3), 3);
 
 
         for(var i=0;i<this.instanceCount;i++){
@@ -61,6 +63,9 @@ function InstancedGroup(instanceCount,originMesh,haveSkeleton){
                     Math.floor(Math.random() * texs_length),
                     Math.floor(Math.random() *2)//Math.random()//这个缓冲区是int类型的//所以这里不能传小数
                 );
+            this.colors.setXYZ(i,
+                0.0,0.0,0.0
+            );
         }
 
         geometry.setAttribute('mcol0', this.mcol0);//四元数、齐次坐标
@@ -69,6 +74,7 @@ function InstancedGroup(instanceCount,originMesh,haveSkeleton){
         geometry.setAttribute('mcol3', this.mcol3);
 
         geometry.setAttribute('type', this.type);
+        geometry.setAttribute('color', this.colors);
 
         let texs=[];
         for(i=0;i<texs_length;i++){
@@ -255,6 +261,11 @@ function InstancedGroup(instanceCount,originMesh,haveSkeleton){
         this.type.array[4*i+1]=type[1];
         this.type.array[4*i+2]=type[2];
         this.type.array[4*i+3]=type[3];
+    }
+    this.colorSet=function (i,color) {
+        this.colors.array[3*i  ]=color[0];
+        this.colors.array[3*i+1]=color[1];
+        this.colors.array[3*i+2]=color[2];
     }
     this.positionSet=function (i,pos){
         this.mcol3.array[3*i  ]=pos[0];

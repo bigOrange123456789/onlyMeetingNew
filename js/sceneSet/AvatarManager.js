@@ -45,13 +45,21 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
 
     this.positions=mySeatManager.positions;
     this.types=[];
-    for(var i=0;i<scope.positions.length;i++)
+    this.colors=[];
+    for(var i=0;i<scope.positions.length;i++){
         this.types.push([
             Math.floor(Math.random() * 16),
             Math.floor(Math.random() * 16),
             Math.floor(Math.random() * 16),
             Math.floor(Math.random() *2)
         ]);
+        this.colors.push([
+            Math.random()/4 ,
+            Math.random()/4 ,
+            Math.random()/4
+        ]);
+    }
+
 
 
     this.camera=camera;
@@ -95,6 +103,7 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
                 peoples.positionSet(i,[scope.positions[i][0]+2,scope.positions[i][1]+1.5,scope.positions[i][2]]);
                 peoples.scaleSet(i,[4.5,4.5,4.5]);
                 peoples.typeSet(i,scope.types[i]);
+                peoples.colorSet(i,scope.colors[i]);
             }
             peoples.animationSpeed=0.1;
             if(index===2){
