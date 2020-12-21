@@ -71,8 +71,35 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
         */
         var loader= new THREE.GLTFLoader();
         loader.load('myModel/avatar/test2.glb', (glb) => {
+            //测试
+            console.log(glb);
+            console.log(glb.scene.children[0].children[1]);
+            var mesh00=glb.scene.children[0].children[1];
 
-            var peoples=new InstancedGroup(1000);
+            var myMesh=new MySkinnedMesh();
+             myMesh.init(
+                 mesh00,//skinnedMesh
+                 glb.animations[0]
+             );
+             console.log(glb.animations);
+             //console.log(myMesh.mesh)
+             myMesh.mesh.scale.set(0.5,0.5,0.5);
+             scope.obj.add(myMesh.mesh);/**/
+
+
+            var myMesh2=new MySkinnedMesh();
+            myMesh2.init(
+                mesh00.clone(),//skinnedMesh
+                glb.animations[1]
+            );
+            myMesh2.mesh.rotation.set(0,Math.PI,0);
+            //myMesh2.mesh.position.set(-30,-30,-30);
+            scope.obj.add(myMesh2.mesh);
+            //测试
+
+
+
+            /*var peoples=new InstancedGroup(500);
             var texSrc=[];
             for(i=0;i<16;i++)texSrc.push('./texture/'+i+'.jpg');
             peoples.init(
@@ -80,14 +107,16 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
                 glb.animations,//animations
                 texSrc
             );
-            for(var i=0;i<1000;i++){
+            for(var i=0;i<500;i++){
                     peoples.rotationSet(i,[3*Math.PI/2,0,3*Math.PI/2]);
                     peoples.positionSet(i,[scope.positions[i][0]-8,scope.positions[i][1]+2.5,scope.positions[i][2]+29.3]);
                     peoples.scaleSet(i,[0.045,0.045,0.045]);
             }
             //peoples.obj.rotation.set(Math.PI/2,0,0);
             peoples.animationSpeed=0.1;
-            scope.obj.add(peoples.obj);
+            scope.obj.add(peoples.obj);*/
+
+
         });
     }
     this.loadAvatarTool=function(type,url,url2){

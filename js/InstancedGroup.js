@@ -56,12 +56,12 @@ function InstancedGroup(instanceCount){
         }
 
 
-        geometry.addAttribute('mcol0', this.mcol0);//四元数、齐次坐标
-        geometry.addAttribute('mcol1', this.mcol1);
-        geometry.addAttribute('mcol2', this.mcol2);
-        geometry.addAttribute('mcol3', this.mcol3);
+        geometry.setAttribute('mcol0', this.mcol0);//四元数、齐次坐标
+        geometry.setAttribute('mcol1', this.mcol1);
+        geometry.setAttribute('mcol2', this.mcol2);
+        geometry.setAttribute('mcol3', this.mcol3);
 
-        geometry.addAttribute('type', type);
+        geometry.setAttribute('type', type);
 
         let texs=[];
         for(i=0;i<texs_length;i++){
@@ -109,8 +109,8 @@ function InstancedGroup(instanceCount){
         });
 
         //开始设置骨骼
-        geometry.addAttribute('skinIndex' ,originMesh.geometry.attributes.skinIndex);
-        geometry.addAttribute('skinWeight',originMesh.geometry.attributes.skinWeight);
+        geometry.setAttribute('skinIndex' ,originMesh.geometry.attributes.skinIndex);
+        geometry.setAttribute('skinWeight',originMesh.geometry.attributes.skinWeight);
         //完成设置骨骼
 
         this.mesh = new THREE.Mesh(geometry, material);//重要
@@ -233,5 +233,43 @@ function InstancedGroup(instanceCount){
     this.rotation=function (i,dRot){
         var rot=this.rotationGet(i);
         this.rotationSet(i,[rot[0]+dRot[0],rot[1]+dRot[1],rot[2]+dRot[2]]);
+    }
+}
+function MySkinnedMesh() {
+    this.mesh;
+    this.init=function (originMesh,animation) {
+
+        //console.log(originMesh);
+        this.mesh=originMesh.clone();//new THREE.SkinnedMesh(originMesh.geometry.clone(),originMesh.material)
+
+        this.mesh.geometry=this.mesh.geometry.clone();
+        this.mesh.material=this.mesh.material.clone();
+        this.mesh.skeleton=this.mesh.skeleton.clone();
+        this.mesh.matrixWorld=this.mesh.matrixWorld.clone();
+        var bones = [];
+        cloneBones(this.mesh.skeleton.bones[0], bones);
+        this.mesh.skeleton=new THREE.Skeleton(bones, this.mesh.skeleton.boneInverses);
+
+        //this.mesh.skeleton.bones[0]=this.mesh.skeleton.bones[0].clone();
+        this.mesh.add(this.mesh.skeleton.bones[0]);//添加骨骼
+        this.mesh.bind(this.mesh.skeleton,this.mesh.matrixWorld);//绑定骨架
+
+        //开始设置动画//进行这个动画设置的时候可能还只是一个基模
+        var animationMixer0=new THREE.AnimationMixer(this.mesh);
+        var myAnimationAction0=animationMixer0.clipAction(animation);
+        myAnimationAction0.play();
+
+        function updateAnimation() {//每帧更新一次动画
+            animationMixer0.update(0.1);
+            requestAnimationFrame(updateAnimation);
+        }updateAnimation();
+        function cloneBones(rootBone, boneArray){//用于加载完gltf文件后的骨骼动画的处理
+            var rootBoneClone=rootBone.clone();
+            rootBoneClone.children.splice(0,rootBoneClone.children.length);
+            boneArray.push(rootBoneClone);
+            for (var i = 0 ; i < rootBone.children.length ; ++i)
+                rootBoneClone.add(cloneBones(rootBone.children[i], boneArray));
+            return rootBoneClone;
+        }
     }
 }
