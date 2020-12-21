@@ -32,7 +32,7 @@ function InstancedGroup(instanceCount,skinnedMeshs){
         geometry.setAttribute('inUV',originMesh.geometry.attributes.uv);
         geometry.setAttribute('skinIndex',originMesh.geometry.attributes.skinIndex);
         geometry.setAttribute('skinWeight',originMesh.geometry.attributes.skinWeight);
-        console.log(geometry);
+        //console.log(geometry);
         var randoms=new Float32Array(originMesh.geometry.attributes.position.count);
         for(i=0;i<randoms.length;i++)
             randoms[i]=Math.random();

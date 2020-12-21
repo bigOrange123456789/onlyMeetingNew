@@ -10,7 +10,7 @@
 	</head>
 
 	<body>
-	<script id="vertexShader" type="x-shader/x-vertex">
+	<script id="vertexShader" type="x-shader/x-vertex">//
 		precision highp float;
 		uniform mat4 modelViewMatrix;
 		uniform mat4 projectionMatrix;
@@ -39,8 +39,15 @@
 
 		void main(){
 			vec3 vPosition = position;
-			if(vPosition.y<1.8){//全身显示
-			//if(vPosition.y>0.61&&vPosition.x>0.0){//只显示脸
+			//if(random<0.8)//显示百分之80三角面
+			//if(vPosition.y<1.8)//全身显示
+			//if(vPosition.y>0.61&&vPosition.x>0.0)//只显示脸
+
+			if(true)//全身显示
+			//if(vPosition.x>-0.09)//前半部分
+			//if((vPosition.x>-0.01&&vPosition.y>0.1)||vPosition.y>0.65)//只显示前半部分的上半身和头
+			//if(vPosition.x>-0.01&&vPosition.y>0.1)//只显示前半部分的上半身
+			{
 				outUV = inUV;
 				varyType=vec3(type[0],type[1],type[2]);
 				myTest00=type[3];
@@ -158,7 +165,7 @@
 			else myTexture =texture2D(text15, outUV);
 
             float mytest0=varyType[1]*0.01;
-            gl_FragColor = vec4 (myTexture.r,myTexture.g,myTexture.b,1.0);//varyType[0]
+            gl_FragColor = vec4 (myTexture.r,myTexture.g+0.2,myTexture.b,1.0);//varyType[0]
             //gl_FragColor =vec4 (0.0,0.5,myTest00,1.0);//myTest00值为0
 		}
 </script>

@@ -83,7 +83,7 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
                 glb.animations[1]
             );
             //测试
-            var peoples=new InstancedGroup(100,[myMesh.mesh,myMesh2.mesh]);
+            var peoples=new InstancedGroup(400,[myMesh.mesh,myMesh2.mesh]);
             var texSrc=[];
             for(i=0;i<16;i++)texSrc.push('./texture/'+i+'.jpg');
             peoples.init(
@@ -91,7 +91,7 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
                 glb.animations,//animations
                 texSrc
             );
-            for(var i=0;i<100;i++){
+            for(var i=0;i<400;i++){
                     peoples.rotationSet(i,[3*Math.PI/2,0,3*Math.PI/2]);
                     peoples.positionSet(i,[scope.positions[i][0]-8,scope.positions[i][1]+2.5,scope.positions[i][2]+29.3]);
                     peoples.scaleSet(i,[0.045,0.045,0.045]);
