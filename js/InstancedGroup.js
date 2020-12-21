@@ -1,7 +1,9 @@
-function InstancedGroup(instanceCount,skinnedMeshs){
+function InstancedGroup(instanceCount,originMesh,haveSkeleton){
+    //若有骨骼，则需要源mesh是skinnedMesh
     this.obj=new THREE.Object3D();
     this.instanceCount=instanceCount;
-    this.skinnedMeshs=skinnedMeshs;
+    this.haveSkeleton=haveSkeleton;
+    this.originMeshs=originMesh;//这是一个数组，每个元素播放一种动画
 
     this.mesh=null;//实例化渲染对象的网格
 
@@ -11,12 +13,10 @@ function InstancedGroup(instanceCount,skinnedMeshs){
     this.mcol3;
     this.scales=[];
     this.rotations=[];
-    //this.animationSpeed=0.05;
 
     this.dummy=new THREE.Object3D();//dummy仿制品//工具对象
 
-    //this.instanceMatrix=null;
-    this.init=function (originMesh,animations,texSrc){
+    this.init=function (texSrc){
         for(var i=0;i<this.instanceCount;i++){
             this.scales.push([1,1,1]);
             this.rotations.push([0,0,0]);
@@ -24,16 +24,18 @@ function InstancedGroup(instanceCount,skinnedMeshs){
         //const instanceCount =2*2;//10 0000//1089
         let texs_length=16;
 
-        originMesh.geometry=originMesh.geometry.toNonIndexed();
+        this.originMeshs[0].geometry=this.originMeshs[0].geometry.toNonIndexed();
 
         var geometry = new THREE.InstancedBufferGeometry();//console.log(geometry);
         geometry.instanceCount = this.instanceCount; // set so its initalized for dat.GUI, will be set in first draw otherwise
-        geometry.setAttribute('position', originMesh.geometry.attributes.position);//Float32Array
-        geometry.setAttribute('inUV',originMesh.geometry.attributes.uv);
-        geometry.setAttribute('skinIndex',originMesh.geometry.attributes.skinIndex);
-        geometry.setAttribute('skinWeight',originMesh.geometry.attributes.skinWeight);
+        geometry.setAttribute('position', this.originMeshs[0].geometry.attributes.position);//Float32Array
+        geometry.setAttribute('inUV',this.originMeshs[0].geometry.attributes.uv);
+        if(this.haveSkeleton){
+            geometry.setAttribute('skinIndex',this.originMeshs[0].geometry.attributes.skinIndex);
+            geometry.setAttribute('skinWeight',this.originMeshs[0].geometry.attributes.skinWeight);
+        }
         //console.log(geometry);
-        var randoms=new Float32Array(originMesh.geometry.attributes.position.count);
+        var randoms=new Float32Array(this.originMeshs[0].geometry.attributes.position.count);
         for(i=0;i<randoms.length;i++)
             randoms[i]=Math.random();
         geometry.setAttribute('random',new THREE.BufferAttribute(randoms,1));
@@ -47,16 +49,9 @@ function InstancedGroup(instanceCount,skinnedMeshs){
 
 
         for(var i=0;i<this.instanceCount;i++){
-
                 this.mcol0.setXYZ(i, 1,0,0);//随机长宽高
                 this.mcol1.setXYZ(i, 0,1,0);//四元数、齐次坐标
                 this.mcol2.setXYZ(i, 0,0,1);//mcol3.setXYZ(i, 0,0,0);
-
-                /*
-                this.mcol0.setXYZ(i, 1,0,0);//随机长宽高
-                this.mcol1.setXYZ(i, 0,1,0);//四元数、齐次坐标
-                this.mcol2.setXYZ(i, 0,0,1);//mcol3.setXYZ(i, 0,0,0);
-                */
 
                 this.mcol3.setXYZ(i, 0,0,0);//500*200//type.setX(i, 1.0);
 
@@ -67,7 +62,6 @@ function InstancedGroup(instanceCount,skinnedMeshs){
                     Math.floor(Math.random() *2)//Math.random()//这个缓冲区是int类型的//所以这里不能传小数
                 );
         }
-
 
         geometry.setAttribute('mcol0', this.mcol0);//四元数、齐次坐标
         geometry.setAttribute('mcol1', this.mcol1);
@@ -83,72 +77,105 @@ function InstancedGroup(instanceCount,skinnedMeshs){
             texs[i].wrapS = texs[i].wrapT = THREE.ClampToEdgeWrapping;
         }
 
-        var skeletonData=[];//16*25//400
-        for(i=0;i<originMesh.skeleton.boneInverses.length;i++){
-            for(j=0;j<originMesh.skeleton.boneInverses[i].length;j++)
-                skeletonData.push(0);
+        let material;
+        if(this.haveSkeleton){
+            var skeletonData=[];//16*25//400
+            for(i=0;i<this.originMeshs[0].skeleton.boneInverses.length;i++){
+                for(j=0;j<this.originMeshs[0].skeleton.boneInverses[i].length;j++)
+                    skeletonData.push(0);//全是0矩阵
+            }
+
+            material = new THREE.RawShaderMaterial({//原始着色器材质
+                uniforms: {
+                    text0: {type: 't', value: texs[0]}//textureHandle
+                    ,text1: {type: 't', value: texs[1]}
+                    ,text2: {type: 't', value: texs[2]}
+                    ,text3: {type: 't', value: texs[3]}
+                    ,text4: {type: 't', value: texs[4]}
+                    ,text5: {type: 't', value: texs[5]}
+                    ,text6: {type: 't', value: texs[6]}
+                    ,text7: {type: 't', value: texs[7]}
+                    ,text8: {type: 't', value: texs[8]}
+                    ,text9: {type: 't', value: texs[9]}
+                    ,text10: {type: 't', value: texs[10]}//textureHandle
+                    ,text11: {type: 't', value: texs[11]}
+                    ,text12: {type: 't', value: texs[12]}
+                    ,text13: {type: 't', value: texs[13]}
+                    ,text14: {type: 't', value: texs[14]}
+                    ,text15: {type: 't', value: texs[15]}
+
+                    ,skeletonData0:{value: skeletonData}
+                    ,skeletonData1:{value: skeletonData}
+                },
+                vertexShader: document.getElementById('vertexShader').textContent,
+                fragmentShader: document.getElementById('fragmentShader').textContent,
+                side: THREE.DoubleSide
+            });
+        }else{
+            material = new THREE.RawShaderMaterial({//原始着色器材质
+                uniforms: {
+                    text0: {type: 't', value: texs[0]}//textureHandle
+                    ,text1: {type: 't', value: texs[1]}
+                    ,text2: {type: 't', value: texs[2]}
+                    ,text3: {type: 't', value: texs[3]}
+                    ,text4: {type: 't', value: texs[4]}
+                    ,text5: {type: 't', value: texs[5]}
+                    ,text6: {type: 't', value: texs[6]}
+                    ,text7: {type: 't', value: texs[7]}
+                    ,text8: {type: 't', value: texs[8]}
+                    ,text9: {type: 't', value: texs[9]}
+                    ,text10: {type: 't', value: texs[10]}//textureHandle
+                    ,text11: {type: 't', value: texs[11]}
+                    ,text12: {type: 't', value: texs[12]}
+                    ,text13: {type: 't', value: texs[13]}
+                    ,text14: {type: 't', value: texs[14]}
+                    ,text15: {type: 't', value: texs[15]}
+                },
+                vertexShader: document.getElementById('vertexShader0').textContent,
+                fragmentShader: document.getElementById('fragmentShader0').textContent,
+                side: THREE.DoubleSide
+            });
         }
-        //全是0矩阵
 
-        //test10[0]=0.1;
-        let material = new THREE.RawShaderMaterial({//原始着色器材质
-            uniforms: {
-                text0: {type: 't', value: texs[0]}//textureHandle
-                ,text1: {type: 't', value: texs[1]}
-                ,text2: {type: 't', value: texs[2]}
-                ,text3: {type: 't', value: texs[3]}
-                ,text4: {type: 't', value: texs[4]}
-                ,text5: {type: 't', value: texs[5]}
-                ,text6: {type: 't', value: texs[6]}
-                ,text7: {type: 't', value: texs[7]}
-                ,text8: {type: 't', value: texs[8]}
-                ,text9: {type: 't', value: texs[9]}
-                ,text10: {type: 't', value: texs[10]}//textureHandle
-                ,text11: {type: 't', value: texs[11]}
-                ,text12: {type: 't', value: texs[12]}
-                ,text13: {type: 't', value: texs[13]}
-                ,text14: {type: 't', value: texs[14]}
-                ,text15: {type: 't', value: texs[15]}
 
-                ,skeletonData0:{value: skeletonData}
-                ,skeletonData1:{value: skeletonData}
-            },
-            vertexShader: document.getElementById('vertexShader').textContent,
-            fragmentShader: document.getElementById('fragmentShader').textContent,
-            side: THREE.DoubleSide
-        });
 
-        //开始设置骨骼
-        geometry.setAttribute('skinIndex' ,originMesh.geometry.attributes.skinIndex);
-        geometry.setAttribute('skinWeight',originMesh.geometry.attributes.skinWeight);
-        //完成设置骨骼
+
+        if(this.haveSkeleton){
+            geometry.setAttribute('skinIndex' ,this.originMeshs[0].geometry.attributes.skinIndex);
+            geometry.setAttribute('skinWeight',this.originMeshs[0].geometry.attributes.skinWeight);
+        }
 
         this.mesh = new THREE.Mesh(geometry, material);//重要
-        this.mesh.position.set(10,0,0);
-        this.mesh.rotation.set(Math.PI,0,0);
         this.mesh.frustumCulled=false;
 
-        /*handleOriginMesh(originMesh,animations);
-        function handleOriginMesh(myOriginMesh,myAnimations){
-            myOriginMesh.add(myOriginMesh.skeleton.bones[0]);//添加骨骼
-            myOriginMesh.bind(myOriginMesh.skeleton,myOriginMesh.matrixWorld);//绑定骨架
-        }*/
+        if(this.haveSkeleton){
+            this.handleSkeletonAnimation(geometry);
+            for(var i=0;i<this.originMeshs.length;i++){
+                this.originMeshs[i].visible=false;
+                this.obj.add(this.originMeshs[i]);//threeJS中模型的位置尺寸角度变化，似乎是通过骨骼来实现的
+            }
+        }
 
 
-        //开始设置动画//进行这个动画设置的时候可能还只是一个基模
-        /*var animationMixer0=new THREE.AnimationMixer(originMesh);
-        var myAnimationAction0=animationMixer0.clipAction(animations[0]);
-        myAnimationAction0.play();*/
+
+
+        this.obj.add(this.mesh);
+
+        //完成进行实例化渲染
+    }
+    this.handleSkeletonAnimation=function(geometry){
+
+
+
+
         var scope=this;//scope范围//为了避免this重名
         function updateAnimation() {//每帧更新一次动画
-
-            //animationMixer0.update( scope.animationSpeed );
             requestAnimationFrame(updateAnimation);
 
-            skeletonData0=[];//16*25//400
-            for(i=0;i<scope.skinnedMeshs[0].skeleton.boneInverses.length;i++){
-                temp1=scope.skinnedMeshs[0].skeleton.boneInverses[i];//.toArray();
-                temp2=scope.skinnedMeshs[0].skeleton.bones[i].matrixWorld.clone();//.toArray();
+            var skeletonData0=[];//16*25//400
+            for(i=0;i<scope.originMeshs[0].skeleton.boneInverses.length;i++){
+                temp1=scope.originMeshs[0].skeleton.boneInverses[i];//.toArray();
+                temp2=scope.originMeshs[0].skeleton.bones[i].matrixWorld.clone();//.toArray();
                 temp=temp2.multiply(temp1);//逆矩阵在右
                 temp=temp.toArray();
                 for(j=0;j<temp.length;j++)
@@ -157,9 +184,9 @@ function InstancedGroup(instanceCount,skinnedMeshs){
             scope.mesh.material.uniforms.skeletonData0={value: skeletonData0};
 
             skeletonData1=[];//16*25//400
-            for(i=0;i<scope.skinnedMeshs[1].skeleton.boneInverses.length;i++){
-                temp1=scope.skinnedMeshs[1].skeleton.boneInverses[i];//.toArray();
-                temp2=scope.skinnedMeshs[1].skeleton.bones[i].matrixWorld.clone();//.toArray();
+            for(i=0;i<scope.originMeshs[1].skeleton.boneInverses.length;i++){
+                temp1=scope.originMeshs[1].skeleton.boneInverses[i];//.toArray();
+                temp2=scope.originMeshs[1].skeleton.bones[i].matrixWorld.clone();//.toArray();
                 temp=temp2.multiply(temp1);//逆矩阵在右
                 temp=temp.toArray();
                 for(j=0;j<temp.length;j++)
@@ -168,15 +195,8 @@ function InstancedGroup(instanceCount,skinnedMeshs){
             scope.mesh.material.uniforms.skeletonData1={value: skeletonData1};
 
         }updateAnimation();
-
-        for(var i=0;i<this.skinnedMeshs.length;i++){
-            this.skinnedMeshs[i].visible=false;
-            this.obj.add(this.skinnedMeshs[i]);//threeJS中模型的位置尺寸角度变化，似乎是通过骨骼来实现的
-        }
-        this.obj.add(this.mesh);
-
-        //完成进行实例化渲染
     }
+
     this.updateBuffer=function(i){//更新第i个对象对应的缓冲区
         var pos=[
             this.mcol3.array[3*i  ],
@@ -232,7 +252,7 @@ function InstancedGroup(instanceCount,skinnedMeshs){
 
     this.positionSet=function (i,pos){
         this.mcol3.array[3*i  ]=pos[0];
-        this.mcol3.array[3*i+1]=-pos[1];
+        this.mcol3.array[3*i+1]=pos[1];
         this.mcol3.array[3*i+2]=pos[2];
     }
     this.rotationSet=function (i,rot){
@@ -275,6 +295,9 @@ function MySkinnedMesh() {
         //this.mesh.skeleton.bones[0]=this.mesh.skeleton.bones[0].clone();
         this.mesh.add(this.mesh.skeleton.bones[0]);//添加骨骼
         this.mesh.bind(this.mesh.skeleton,this.mesh.matrixWorld);//绑定骨架
+
+        //this.mesh.add(this.mesh.skeleton.bones[0]);//添加骨骼
+        //this.mesh.bind(this.mesh.skeleton,this.mesh.matrixWorld);
 
         //开始设置动画//进行这个动画设置的时候可能还只是一个基模
         var animationMixer0=new THREE.AnimationMixer(this.mesh);

@@ -60,22 +60,41 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
         //this.loadAvatarTool(2,'myModel/avatar/Female01_2.glb','myModel/avatar/Female02.glb');
         //this.loadAvatarTool(3,'myModel/avatar/Ganpa01_2.glb','myModel/avatar/Ganpa02.glb');
         //this.loadAvatarTool(4,'myModel/avatar/Granny01_2.glb','myModel/avatar/Granny02.glb');/**/
-
-        /*var peoples=new InstancedGroup(4);
-        peoples.init(glb.scene.children[0].children[1],glb.animations);
-        for(var i=0;i<4;i++){
-            peoples.scaleSet(i,[Math.random()/2+0.75,Math.random()/2+0.75,Math.random()/2+0.75]);
-            peoples.positionSet(i,[i,0,0]);
-        }
-        scene.add(peoples.obj);
-        */
+        this.createPeople();
+    }
+    this.createPeople=function(){
+        var loader= new THREE.GLTFLoader();
+        loader.load('myModel/avatar/Female01_2.glb', (glb) => {
+            //console.log(glb.scene.children[0]);//scene.children[0]
+            //测试
+            var peoples=new InstancedGroup(
+                1000,
+                [glb.scene.children[0],glb.scene.children[0]],//这些mesh的网格应该一致
+                false
+            );
+            var texSrc=[];
+            for(i=0;i<16;i++)texSrc.push('./texture/'+i+'.jpg');
+            peoples.init(
+                texSrc
+            );
+            for(var i=0;i<1000;i++){
+                peoples.rotationSet(i,[Math.PI/2,0,3*Math.PI/2]);
+                peoples.positionSet(i,[scope.positions[i][0],scope.positions[i][1]+1.5,scope.positions[i][2]]);
+                peoples.scaleSet(i,[4.5,4.5,4.5]);
+            }
+            //peoples.obj.rotation.set(Math.PI/2,0,0);
+            peoples.animationSpeed=0.1;
+            scope.obj.add(peoples.obj);
+        });
+    }
+    this.createPeople_haveAnimation=function(){
         var loader= new THREE.GLTFLoader();
         loader.load('myModel/avatar/test2.glb', (glb) => {
             //测试
             var myMesh=new MySkinnedMesh();
             myMesh.init(
-                 glb.scene.children[0].children[1],
-                 glb.animations[0]
+                glb.scene.children[0].children[1],
+                glb.animations[0]
             );
             var myMesh2=new MySkinnedMesh();
             myMesh2.init(
@@ -83,80 +102,24 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
                 glb.animations[1]
             );
             //测试
-            var peoples=new InstancedGroup(400,[myMesh.mesh,myMesh2.mesh]);
+            var peoples=new InstancedGroup(
+                10,
+                [myMesh.mesh,myMesh2.mesh],//这些mesh的网格应该一致
+                true
+            );
             var texSrc=[];
             for(i=0;i<16;i++)texSrc.push('./texture/'+i+'.jpg');
             peoples.init(
-                glb.scene.children[0].children[1],//skinnedMesh
-                glb.animations,//animations
                 texSrc
             );
-            for(var i=0;i<400;i++){
-                    peoples.rotationSet(i,[3*Math.PI/2,0,3*Math.PI/2]);
-                    peoples.positionSet(i,[scope.positions[i][0]-8,scope.positions[i][1]+2.5,scope.positions[i][2]+29.3]);
-                    peoples.scaleSet(i,[0.045,0.045,0.045]);
+            for(var i=0;i<10;i++){
+                peoples.rotationSet(i,[Math.PI/2,0,3*Math.PI/2]);
+                peoples.positionSet(i,[scope.positions[i][0],scope.positions[i][1]+1.5,scope.positions[i][2]]);
+                peoples.scaleSet(i,[0.045,0.045,0.045]);
             }
             //peoples.obj.rotation.set(Math.PI/2,0,0);
             peoples.animationSpeed=0.1;
             scope.obj.add(peoples.obj);
-        });
-    }
-    this.loadAvatarTool=function(type,url,url2){
-        //var type=4;
-        var loader1= new THREE.GLTFLoader();
-        loader1.load(url, (glb) => {
-            var mesh0=glb.scene.children[0];//console.log(mesh0);
-            var geometry=mesh0.geometry;
-            var material=mesh0.material;
-            var l=0;for(var i=0;i<scope.positionsType.length;i++)
-                if(scope.positionsType[i]===type)l++;
-            var mesh=new THREE.InstancedMesh(geometry,material,l);//l
-
-            var dummy=new THREE.Object3D();
-            var j=0;
-            for(var i=0;i<scope.positions.length;i++)
-                if(scope.positionsType[i]===type){
-                    dummy.rotation.set(Math.PI/2,0,-Math.PI/2);
-                    dummy.position.set(
-                        scope.positions[i][0]+2.2,
-                        scope.positions[i][1]+3,
-                        scope.positions[i][2]);
-                    dummy.scale.set(5,5,5);//x-y-z
-                    //dummy.rotation.set(0,Math.PI/2,Math.PI/2);
-                    dummy.updateMatrix();
-                    mesh.setMatrixAt(j, dummy.matrix);
-                    j++;
-                }
-            scope.obj.add(mesh);
-            scope.avatar1[type-1]=mesh;
-            //开始加载另外一帧模型
-            var loader2= new THREE.GLTFLoader();
-            loader2.load(url2, (glb) => {
-                var mesh0=glb.scene.children[0];//console.log(mesh0);
-                var geometry=mesh0.geometry;
-                var material=mesh0.material;
-                var l=0;for(var i=0;i<scope.positionsType.length;i++)
-                    if(scope.positionsType[i]===type)l++;
-                var mesh=new THREE.InstancedMesh(geometry,material,l);//l
-
-                var dummy=new THREE.Object3D();
-                var j=0;
-                for(var i=0;i<scope.positions.length;i++)
-                    if(scope.positionsType[i]===type){
-                        dummy.rotation.set(Math.PI/2,0,-Math.PI/2);
-                        dummy.position.set(
-                            scope.positions[i][0]+2.2,
-                            scope.positions[i][1]+3,
-                            scope.positions[i][2]);
-                        dummy.scale.set(5,5,5);//x-y-z
-                        dummy.updateMatrix();
-                        mesh.setMatrixAt(j, dummy.matrix);
-                        j++;
-                    }
-                //scope.obj.add(mesh);
-                scope.avatar2[type-1]=mesh;
-            });
-            //完成加载另外一帧模型
         });
     }
     this.host=function () {
