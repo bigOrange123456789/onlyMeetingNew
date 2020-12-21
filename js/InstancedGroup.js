@@ -11,7 +11,7 @@ function InstancedGroup(instanceCount,skinnedMeshs){
     this.mcol3;
     this.scales=[];
     this.rotations=[];
-    this.animationSpeed=0.05;
+    //this.animationSpeed=0.05;
 
     this.dummy=new THREE.Object3D();//dummy仿制品//工具对象
 
