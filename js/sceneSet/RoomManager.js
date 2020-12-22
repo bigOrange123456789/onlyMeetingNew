@@ -5,6 +5,7 @@ function RoomManager(){
         var scope=this;
         //var door1=new THREE.
         this.loader.load(url, (gltf) => {
+            console.log(gltf);
             var obj=gltf.scene.children[0];
             obj.traverse(node=>{
                 if(node.material){
@@ -24,18 +25,25 @@ function RoomManager(){
             scope.room.add(obj);
         })
     }
+    this.myLoad2=function(url){
+        var scope=this;
+        this.loader.load(url, (gltf) => {
+            var obj=gltf.scene;
+            scope.room.add(obj);
+        })
+    }
     this.loadRoom=function(){
         this.room.scale.set(10,10,10);
-        var urls=[];
-        urls.push('myModel/room/component/0010.glb');
+        /*var urls=[];
+        //urls.push('myModel/room/component/0010.glb');
         for(var i=1;i<=9;i++)
              urls.push('myModel/room/component/00'+i+'.glb');
         urls.push('myModel/room/room.glb');
-        for(var i=0;i<urls.length;i++)this.myLoad(urls[i]);
-        console.log(1122);
-        console.log(this.room);
-        var test=new THREE.Box3();
-        console.log(test);
-        var test2=new THREE.Sphere();
+        for(var i=0;i<urls.length;i++)this.myLoad(urls[i]);*/
+
+        this.myLoad2('myModel/room/new.glb');
+        //var test=new THREE.Box3();
+        //console.log(test);
+        //var test2=new THREE.Sphere();
     }
 }

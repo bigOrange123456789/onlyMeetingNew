@@ -16,7 +16,7 @@ function SeatManager(){
         for(var k=0;k<3;k++)//二楼//
             for(var i=0;i<14;i++)
                 for(var j=0;j<13;j++)
-                    this.positions.push([-15-9*i,84.55+i*5.0,85-4.1*j-k*75]);//前后、上下、左右
+                    this.positions.push([-15-9*i,88.55+i*5.0,85-4.1*j-k*75]);//前后、上下、左右
         /**/
         this.myLoad("myModel/chair.glb");
 
