@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="b7b6123d-caec-4b82-a432-424a6b5be5dd" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,7 +22,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../myFile/ManvsFire_new" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../InstanceRenderingTest" />
     <property name="nodejs_package_manager_path" value="npm" />
   </component>
   <component name="SvnConfiguration">
@@ -63,7 +62,7 @@
       <workItem from="1608280933097" duration="4661000" />
       <workItem from="1608603525088" duration="1357000" />
       <workItem from="1608641609218" duration="279000" />
-      <workItem from="1608687487632" duration="104000" />
+      <workItem from="1608687487632" duration="2767000" />
     </task>
     <servers />
   </component>
@@ -71,10 +70,10 @@
     <option name="version" value="2" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="523" y="120" key="FileChooserDialogImpl" timestamp="1608608928843">
+    <state x="523" y="120" key="FileChooserDialogImpl" timestamp="1608687641967">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state x="523" y="120" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1608608928843" />
+    <state x="523" y="120" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1608687641967" />
     <state x="297" y="151" key="run.anything.popup" timestamp="1608547026083">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
