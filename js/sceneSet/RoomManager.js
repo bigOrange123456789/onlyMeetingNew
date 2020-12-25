@@ -28,8 +28,27 @@ function RoomManager(){
     this.myLoad2=function(url){
         var scope=this;
         this.loader.load(url, (gltf) => {
+            console.log(gltf);//scene.children[29]
+            gltf.scene.children[29].rotation.set(0,Math.PI/2,0);
             var obj=gltf.scene;
+            var door1,door2;
+            for(var i=0;i<gltf.scene.children.length;i++){
+                if(gltf.scene.children[i].name==="室内-可动门01")door1=gltf.scene.children[i];
+                else if(gltf.scene.children[i].name==="室内-可动门02")door2=gltf.scene.children[i];
+            }
             scope.room.add(obj);
+            var z=Math.PI/2;
+            function test(){
+                //console.log(door1.rotation.z,door2.rotation.y)
+                if(door1.rotation.z>0){
+                    z-=0.01;
+                    door1.rotation.z=z;
+
+                    door2.rotation.z+=0.01;//-1*gltf.scene.children[30].rotation.z;
+
+                }
+                requestAnimationFrame(test);
+            }test();
         })
     }
     this.loadRoom=function(){
