@@ -138,6 +138,7 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
         var loader= new THREE.GLTFLoader();
         loader.load(src, (glb) => {
             var peoples=new InstancedGroup(
+                THREE,
                 scope.positions.length,
                 [glb.scene.children[0],glb.scene.children[0]],//这些mesh的网格应该一致
                 false

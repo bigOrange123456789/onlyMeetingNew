@@ -3,8 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="b7b6123d-caec-4b82-a432-424a6b5be5dd" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/js/sceneSet/RoomManager.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/sceneSet/RoomManager.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/myModel/room/new.glb" beforeDir="false" afterPath="$PROJECT_DIR$/myModel/room/new.glb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/InstancedGroup.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/InstancedGroup.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/sceneSet/AvatarManager.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/sceneSet/AvatarManager.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/new0.glb" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -65,7 +66,8 @@
       <workItem from="1608603525088" duration="1357000" />
       <workItem from="1608641609218" duration="279000" />
       <workItem from="1608687487632" duration="2767000" />
-      <workItem from="1608884254356" duration="3432000" />
+      <workItem from="1608884254356" duration="4773000" />
+      <workItem from="1609160975028" duration="2154000" />
     </task>
     <servers />
   </component>
@@ -73,10 +75,10 @@
     <option name="version" value="2" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="523" y="120" key="FileChooserDialogImpl" timestamp="1608687641967">
+    <state x="523" y="120" key="FileChooserDialogImpl" timestamp="1608900976987">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state x="523" y="120" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1608687641967" />
+    <state x="523" y="120" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1608900976987" />
     <state x="297" y="151" key="run.anything.popup" timestamp="1608547026083">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
