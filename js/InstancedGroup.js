@@ -1,4 +1,4 @@
-function InstancedGroup(THREE,instanceCount,originMesh,haveSkeleton){
+function InstancedGroup(instanceCount,originMesh,haveSkeleton){
     //若有骨骼，则需要源mesh是skinnedMesh
     this.obj=new THREE.Object3D();
     this.instanceCount=instanceCount;
@@ -335,4 +335,3 @@ function MySkinnedMesh() {
         }
     }
 }
-module.exports = InstancedGroup;

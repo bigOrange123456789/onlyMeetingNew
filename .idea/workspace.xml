@@ -5,7 +5,89 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/js/InstancedGroup.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/InstancedGroup.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/js/sceneSet/AvatarManager.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/sceneSet/AvatarManager.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/myModel/room/new0.glb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/assertion-error/History.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/assertion-error/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/assertion-error/index.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/assertion-error/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/assertion-error/package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/chai/CODEOWNERS" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/chai/CODE_OF_CONDUCT.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/chai/CONTRIBUTING.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/chai/History.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/chai/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/chai/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/chai/ReleaseNotes.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/chai/bower.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/chai/chai.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/chai/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/chai/karma.conf.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/chai/karma.sauce.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/chai/lib/chai.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/chai/lib/chai/assertion.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/chai/lib/chai/config.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/chai/lib/chai/core/assertions.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/chai/lib/chai/interface/assert.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/chai/lib/chai/interface/expect.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/chai/lib/chai/interface/should.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/chai/lib/chai/utils/addChainableMethod.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/chai/lib/chai/utils/addLengthGuard.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/chai/lib/chai/utils/addMethod.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/chai/lib/chai/utils/addProperty.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/chai/lib/chai/utils/compareByInspect.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/chai/lib/chai/utils/expectTypes.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/chai/lib/chai/utils/flag.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/chai/lib/chai/utils/getActual.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/chai/lib/chai/utils/getEnumerableProperties.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/chai/lib/chai/utils/getMessage.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/chai/lib/chai/utils/getOwnEnumerableProperties.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/chai/lib/chai/utils/getOwnEnumerablePropertySymbols.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/chai/lib/chai/utils/getProperties.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/chai/lib/chai/utils/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/chai/lib/chai/utils/inspect.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/chai/lib/chai/utils/isNaN.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/chai/lib/chai/utils/isProxyEnabled.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/chai/lib/chai/utils/objDisplay.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/chai/lib/chai/utils/overwriteChainableMethod.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/chai/lib/chai/utils/overwriteMethod.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/chai/lib/chai/utils/overwriteProperty.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/chai/lib/chai/utils/proxify.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/chai/lib/chai/utils/test.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/chai/lib/chai/utils/transferFlags.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/chai/package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/chai/register-assert.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/chai/register-expect.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/chai/register-should.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/chai/sauce.browsers.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/check-error/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/check-error/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/check-error/check-error.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/check-error/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/check-error/package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/deep-eql/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/deep-eql/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/deep-eql/deep-eql.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/deep-eql/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/deep-eql/package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/get-func-name/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/get-func-name/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/get-func-name/get-func-name.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/get-func-name/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/get-func-name/package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/pathval/CHANGELOG.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/pathval/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/pathval/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/pathval/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/pathval/package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/pathval/pathval.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/type-detect/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/type-detect/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/type-detect/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/type-detect/package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/type-detect/type-detect.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/InstancedGroup.test.js" beforeDir="false" afterPath="$PROJECT_DIR$/test/InstancedGroup.test.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/Template.test.js" beforeDir="false" afterPath="$PROJECT_DIR$/test/Template.test.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/lib/three.js" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,7 +107,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../showRoom" />
     <property name="nodejs_package_manager_path" value="npm" />
   </component>
   <component name="SvnConfiguration">
@@ -67,7 +149,7 @@
       <workItem from="1608641609218" duration="279000" />
       <workItem from="1608687487632" duration="2767000" />
       <workItem from="1608884254356" duration="4773000" />
-      <workItem from="1609160975028" duration="2154000" />
+      <workItem from="1609160975028" duration="11532000" />
     </task>
     <servers />
   </component>
@@ -75,10 +157,10 @@
     <option name="version" value="2" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="523" y="120" key="FileChooserDialogImpl" timestamp="1608900976987">
+    <state x="523" y="120" key="FileChooserDialogImpl" timestamp="1609208223231">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state x="523" y="120" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1608900976987" />
+    <state x="523" y="120" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1609208223231" />
     <state x="297" y="151" key="run.anything.popup" timestamp="1608547026083">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
