@@ -91,6 +91,9 @@ function PreviewManager(camera,roamPath){//var myPreviewManager=new PreviewManag
         this.cameraImg2=new ImageMove(src2,window.innerHeight/13,window.innerHeight/13,window.innerWidth/25,window.innerHeight-80,document.body);
         if(!this.stopFlag)this.cameraImg2.img.style.display='none';
         this.cameraImg1.img.onclick = function () {
+            var vedio=document.getElementById('video');
+            vedio.volume=0.7;
+            vedio.play();
             if (scope.stopFlag=== true) {
                 scope.stopFlag = false;
                 scope.cameraImg2.img.style.display = 'none';
@@ -100,6 +103,9 @@ function PreviewManager(camera,roamPath){//var myPreviewManager=new PreviewManag
             }
         };
         this.cameraImg2.img.onclick = function () {
+            var vedio=document.getElementById('video');
+            vedio.volume=0.7;
+            vedio.play();
             if (scope.stopFlag === true) {
                 scope.stopFlag = false;
                 scope.cameraImg2.img.style.display = 'none';

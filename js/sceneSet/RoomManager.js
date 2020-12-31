@@ -30,9 +30,36 @@ function RoomManager(){
         this.loader.load(url, (gltf) => {
             var obj=gltf.scene;
             var door1,door2;
+            console.log(gltf)
             for(var i=0;i<gltf.scene.children.length;i++){
                 if(gltf.scene.children[i].name==="室内-可动门01")door1=gltf.scene.children[i];
                 else if(gltf.scene.children[i].name==="室内-可动门02")door2=gltf.scene.children[i];
+                else if(//gltf.scene.children[i].name==="室内-电子显示屏（非）"||
+                    //室内-小显示器屏幕（非）
+                    gltf.scene.children[i].name==="室内-小显示器屏幕（非）"||
+                    gltf.scene.children[i].name==="室内-大显示器屏幕（非）"){//室内-大显示器屏幕（非）
+                    var screen=gltf.scene.children[i];
+                    var vedio=document.getElementById('video');
+                    var texture=new THREE.VideoTexture(vedio);
+                    texture.flipY=false;
+                    texture.wrapS=texture.wrapT=THREE.ClampToEdgeWrapping;
+                    texture.minFilter=THREE.LinearFilter;
+                    texture.magFilter=THREE.LinearFilter;
+                    texture.format=THREE.RGBFormat;
+                    screen.material=new THREE.MeshStandardMaterial();
+                    screen.material.map=texture;
+
+                    //var vedio=document.getElementById('video');
+                    /*vedio.volume=0.7;
+                    vedio.play();
+                    console.log(screen);*/
+                }
+
+
+                //室内-电子显示屏（非）
+
+
+
             }/**/
             scope.room.add(obj);
             var z=Math.PI/2;
