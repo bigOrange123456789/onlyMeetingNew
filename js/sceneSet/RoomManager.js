@@ -30,7 +30,7 @@ function RoomManager(){//myVideoManager_
     this.myLoad2=function(url){
         this.loader.load(url, (gltf) => {
             var obj=gltf.scene;
-            var door1,door2;
+            /*var door1,door2;
             console.log(gltf)
             for(var i=0;i<gltf.scene.children.length;i++){
                 if(gltf.scene.children[i].name==="室内-可动门01")door1=gltf.scene.children[i];
@@ -48,9 +48,7 @@ function RoomManager(){//myVideoManager_
                     myVideoManager.setMaterial(screen);
 
                     //var vedio=document.getElementById('video');
-                    /*vedio.volume=0.7;
-                    vedio.play();
-                    console.log(screen);*/
+
                 }
 
 
@@ -58,9 +56,9 @@ function RoomManager(){//myVideoManager_
 
 
 
-            }/**/
+            }*/
             scope.room.add(obj);
-            var z=Math.PI/2;
+            /*var z=Math.PI/2;
             function test(){
                 //console.log(door1.rotation.z,door2.rotation.y)
                 if(door1.rotation.z>0){
@@ -69,7 +67,7 @@ function RoomManager(){//myVideoManager_
                     door2.rotation.z+=0.01;//-1*gltf.scene.children[30].rotation.z;
                 }
                 requestAnimationFrame(test);
-            }test();/**/
+            }test();*/
         })
     }
     this.loadRoom=function(){
@@ -81,7 +79,10 @@ function RoomManager(){//myVideoManager_
         urls.push('myModel/room/room.glb');
         for(var i=0;i<urls.length;i++)this.myLoad(urls[i]);*/
 
-        this.myLoad2('myModel/room/new.glb');
+        for(var i=0;i<53;i++)
+        //for(var i=45;i<50;i++)
+        //for(var i=52;i>30;i++)
+        this.myLoad2('myModel/room/new'+i+'.gltf');
         //this.myLoad3('myModel/room/door.glb');
         //var test=new THREE.Box3();
         //console.log(test);

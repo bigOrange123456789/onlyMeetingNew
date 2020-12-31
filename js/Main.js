@@ -30,7 +30,7 @@ function Main(){
         this.camera.position.set(-155,41,22,-2.07);//-155,41,22,-2.07,-1.49,-2.07
         this.camera.rotation.set(-1.5572,-1.47875,-1.55714);//
 
-        var ambient = new THREE.AmbientLight(0xffffff , 1 );
+        var ambient = new THREE.AmbientLight(0xffff00 , 1 );
         this.scene.add( ambient );
     }
     this._onResize=function()
