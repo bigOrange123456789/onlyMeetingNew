@@ -77,8 +77,12 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
 
     this.loadAvatar=function () {
         this.host();
-        this.loadGuest1();
-        this.loadGuest2();
+        var loader= new THREE.GLTFLoader();
+        loader.load('./myModel/skeleton/scene.gltf', (glbObj) => {
+            this.loadGuest1(glbObj);
+            this.loadGuest2(glbObj);
+        });
+
 
         this.createPeopleDouble('myModel/avatar/Female02.glb','myModel/avatar/Female01_2.glb',2);
     }
@@ -201,7 +205,7 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
         });
         //new ParamMeasure(this.obj,0);
     }
-    this.loadGuest1=function () {
+    this.loadGuest1=function (glbObj) {
         //开始创建PM对象
         var LODArray=[200,300]//4个数字表示距离，可以将模型分为5级;
         //var path='/myModel/childFemale_idle';//childFemale_crawl
@@ -209,6 +213,7 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
         //var path='/myModel/Female01';
         var path='./myModel/zhao1';
         var pmLoader = new MyPMLoader(
+            glbObj,
             path,    //模型路径
             LODArray,//LOD等级的数组
             this.camera,  //LOD需要判断到相机的距离
@@ -223,7 +228,7 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
         this.obj.add(myModel);
         //完成创建PM对象
     }
-    this.loadGuest2=function () {
+    this.loadGuest2=function (glbObj) {
         //开始创建PM对象
         var LODArray=[200,300]//4个数字表示距离，可以将模型分为5级;
         //var path='/myModel/childFemale_idle';//childFemale_crawl
@@ -231,6 +236,7 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
         //var path='/myModel/Female01';
         var path='./myModel/dongshizhang5';
         var pmLoader = new MyPMLoader(
+            glbObj,
             path,    //模型路径
             LODArray,//LOD等级的数组
             this.camera,  //LOD需要判断到相机的距离
