@@ -46,7 +46,7 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
     this.positions=mySeatManager.positions;
     this.types=[];
     this.colors=[];
-    //console.log(scope.positions.length);
+
     for(var i=0;i<scope.positions.length;i++){//共有1677张椅子
         this.types.push([
             Math.floor(Math.random() * 16),
@@ -77,10 +77,13 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
 
     this.loadAvatar=function () {
         this.host();
-        var loader= new THREE.GLTFLoader();
-        loader.load('./myModel/skeleton/scene.gltf', (glbObj) => {
-            this.loadGuest1(glbObj);
-            this.loadGuest2(glbObj);
+        var animLoader = new PMAnimLoader();//估计是通过gltf文件加载的动画
+        animLoader.load('./myModel/skeleton/scene.gltf', function (glbObj){
+        //var loader= new THREE.GLTFLoader();
+        //loader.load('./myModel/skeleton/scene.gltf', (glbObj) => {
+            glbObj.scene.visible=false;
+            scope.loadGuest1(glbObj);
+            scope.loadGuest2(glbObj);
         });
 
 
