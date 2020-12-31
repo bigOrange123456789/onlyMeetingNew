@@ -207,7 +207,7 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
         //var path='/myModel/childFemale_idle';//childFemale_crawl
         //var path='/myModel/childFemale_crawl';
         //var path='/myModel/Female01';
-        var path='/myModel/zhao1';
+        var path='./myModel/zhao1';
         var pmLoader = new MyPMLoader(
             path,    //模型路径
             LODArray,//LOD等级的数组
@@ -229,7 +229,7 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
         //var path='/myModel/childFemale_idle';//childFemale_crawl
         //var path='/myModel/childFemale_crawl';
         //var path='/myModel/Female01';
-        var path='/myModel/dongshizhang5';
+        var path='./myModel/dongshizhang5';
         var pmLoader = new MyPMLoader(
             path,    //模型路径
             LODArray,//LOD等级的数组
