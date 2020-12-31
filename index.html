@@ -322,6 +322,8 @@
 		<script src="lib/pmLib/PMAnimLoader.js"></script>
 		<script src="lib/pmLib/MyPMLoader.js"></script>
 
+		<script src="js/VideoManager.js"></script>
+
 		<script src="js/sceneSet/RoomManager.js"></script>
 		<script src="js/sceneSet/SeatManager.js"></script>
 		<script src="js/sceneSet/AvatarManager.js"></script>
@@ -333,13 +335,12 @@
 		<script src="js/ParamMeasure.js"></script>
 		<script src="js/Main.js"></script>
 
-	    <div style="display:none">
-			<video id="video" controls="controls" loop src="vedio.mp4"></video>
-		</div>>
-
 		<script>
+			var myVideoManager=new VideoManager();
+			myVideoManager.init();
+
 			var myRoomManager=new RoomManager();
-			myRoomManager.loadRoom();
+			myRoomManager.loadRoom();//myVideoManager
 
 			var myMain=new Main();
 			myMain.start();
@@ -368,7 +369,7 @@
 				,[229,29,-19,-1.21,1.46,1.19,80]
 				,[183,63,-19,-1.67,1.35,1.66,80]
 			];
-			var myPreviewManager=new PreviewManager(myMain.camera,mydata);
+			var myPreviewManager=new PreviewManager(myMain.camera,mydata,myVideoManager);
 			myPreviewManager.createCameraButton('./img/1.png','./img/2.png');
 			//myPreviewManager.isLoop=true;
 			//myPreviewManager.autoRoam();

@@ -1,4 +1,6 @@
-function RoomManager(){
+function RoomManager(){//myVideoManager_
+    var scope=this;
+    //this.myVideoManager=myVideoManager_;
     this.loader= new THREE.GLTFLoader();
     this.room=new THREE.Object3D();
     this.myLoad=function(url){
@@ -26,7 +28,6 @@ function RoomManager(){
         })
     }
     this.myLoad2=function(url){
-        var scope=this;
         this.loader.load(url, (gltf) => {
             var obj=gltf.scene;
             var door1,door2;
@@ -38,16 +39,13 @@ function RoomManager(){
                     //室内-小显示器屏幕（非）
                     gltf.scene.children[i].name==="室内-小显示器屏幕（非）"||
                     gltf.scene.children[i].name==="室内-大显示器屏幕（非）"){//室内-大显示器屏幕（非）
+
                     var screen=gltf.scene.children[i];
-                    var vedio=document.getElementById('video');
-                    var texture=new THREE.VideoTexture(vedio);
-                    texture.flipY=false;
-                    texture.wrapS=texture.wrapT=THREE.ClampToEdgeWrapping;
-                    texture.minFilter=THREE.LinearFilter;
-                    texture.magFilter=THREE.LinearFilter;
-                    texture.format=THREE.RGBFormat;
-                    screen.material=new THREE.MeshStandardMaterial();
-                    screen.material.map=texture;
+                    //setMaterial
+                    //scope.
+                    //myVideoManager.init();
+                    //scope.
+                    myVideoManager.setMaterial(screen);
 
                     //var vedio=document.getElementById('video');
                     /*vedio.volume=0.7;
