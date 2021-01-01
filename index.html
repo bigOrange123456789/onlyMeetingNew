@@ -212,7 +212,7 @@
 				varyColor=vec3(color[0],color[1],color[2]);
 				myTest00=type[3];
 
-				if(position.z<-0.95)type_part=2.0;//头部
+				if(position.z<-0.95)  type_part=2.0;//头部
 				else if(position.z<-0.60) type_part=1.0;//上身
 				else type_part=0.0;//下身
 
@@ -262,9 +262,9 @@
 			vec4 myTexture;
 			float type;
 
-            if(floor(type_part)==0.0)type=varyType[0];//下身
-            else if(floor(type_part)==1.0)type=varyType[1];
-            else if(floor(type_part)==2.0)type=varyType[2];
+            if(-0.1<type_part&&type_part<0.1)type=varyType[0];//0.0下身
+            else if(0.9<type_part&&type_part<1.1)type=varyType[1];//1.0上身
+            else if(1.9<type_part&&type_part<2.1)type=varyType[2];
 
                if (type>-0.1&&type<0.1)myTexture =texture2D(text0, outUV);
 			else if(type>0.9&&type<1.1)myTexture =texture2D(text1, outUV);
@@ -285,19 +285,20 @@
 
             float mytest0=varyType[1]*0.01;
 
-            /**/if(floor(type_part)==0.0){//下身
+            /**/
+            if(-0.1<type_part&&type_part<0.1){//下身
             	gl_FragColor = vec4 (
             					 myTexture.r+varyColor[0],
             					 myTexture.g+varyColor[1],
             					 myTexture.b+varyColor[2],
             					 1.0);
-            }else if(floor(type_part)==1.0){//上身
+            }else if(0.9<type_part&&type_part<1.1){//上身
             	gl_FragColor = vec4 (
             					 myTexture.r,
             					 myTexture.g,
             					 myTexture.b,
             					 1.0);
-            }else if(floor(type_part)==2.0){//头部
+            }else if(1.9<type_part&&type_part<2.1){//头部
             	gl_FragColor = vec4 (
             					 myTexture.r,
             					 myTexture.g,
