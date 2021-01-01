@@ -30,35 +30,31 @@ function RoomManager(){//myVideoManager_
     this.myLoad2=function(url){
         this.loader.load(url, (gltf) => {
             var obj=gltf.scene;
-            /*var door1,door2;
+            //console.log(url+":"+gltf.scene.children[0].name);
+            for(var i=0;i<gltf.scene.children.length;i++){
+                if( gltf.scene.children[i].name==="室内-小显示器屏幕（非）"||
+                    gltf.scene.children[i].name==="室内-大显示器屏幕（非）"){//室内-大显示器屏幕（非）
+                    var screen=gltf.scene.children[i];
+                    myVideoManager.setMaterial(screen);
+                }
+                //室内-电子显示屏（非）
+            }
+            scope.room.add(obj);
+        })
+    }
+    this.myLoad_door=function(url){
+        this.loader.load(url, (gltf) => {
+            var obj=gltf.scene;
+            //console.log(url);
+            //alert(url+":"+gltf.scene.children[0].name);
+            var door1,door2;
             console.log(gltf)
             for(var i=0;i<gltf.scene.children.length;i++){
                 if(gltf.scene.children[i].name==="室内-可动门01")door1=gltf.scene.children[i];
                 else if(gltf.scene.children[i].name==="室内-可动门02")door2=gltf.scene.children[i];
-                else if(//gltf.scene.children[i].name==="室内-电子显示屏（非）"||
-                    //室内-小显示器屏幕（非）
-                    gltf.scene.children[i].name==="室内-小显示器屏幕（非）"||
-                    gltf.scene.children[i].name==="室内-大显示器屏幕（非）"){//室内-大显示器屏幕（非）
-
-                    var screen=gltf.scene.children[i];
-                    //setMaterial
-                    //scope.
-                    //myVideoManager.init();
-                    //scope.
-                    myVideoManager.setMaterial(screen);
-
-                    //var vedio=document.getElementById('video');
-
-                }
-
-
-                //室内-电子显示屏（非）
-
-
-
-            }*/
+            }
             scope.room.add(obj);
-            /*var z=Math.PI/2;
+            var z=Math.PI/2;
             function test(){
                 //console.log(door1.rotation.z,door2.rotation.y)
                 if(door1.rotation.z>0){
@@ -67,7 +63,7 @@ function RoomManager(){//myVideoManager_
                     door2.rotation.z+=0.01;//-1*gltf.scene.children[30].rotation.z;
                 }
                 requestAnimationFrame(test);
-            }test();*/
+            }test();/**/
         })
     }
     this.loadRoom=function(){
@@ -79,13 +75,38 @@ function RoomManager(){//myVideoManager_
         urls.push('myModel/room/room.glb');
         for(var i=0;i<urls.length;i++)this.myLoad(urls[i]);*/
 
-        for(var i=0;i<53;i++)
+        for(var i=0;i<90;i++)
+
+
+        //for(var i=60;i<90;i++)
+        //for(var i=80;i<85;i++)
         //for(var i=45;i<50;i++)
-        //for(var i=52;i>30;i++)
+        //i=46;
+        if(!fileError(i))
         this.myLoad2('myModel/room/new'+i+'.gltf');
+        this.myLoad_door('myModel/room/door.glb');
         //this.myLoad3('myModel/room/door.glb');
         //var test=new THREE.Box3();
         //console.log(test);
         //var test2=new THREE.Sphere();
+        function fileError(k){
+            var arr=[
+                41,37
+            ];
+            var arrRange=[
+                41,42,
+                43,44,
+                45,59,
+                60,69,
+                70,79,
+                80,84
+
+            ];
+            for(var i=0;i<arr.length;i++)
+                if(arr[i]===k)return true;
+            for(var i=0;i<arrRange.length/2;i++)
+                if(arrRange[2*i]<=k&&k<=arrRange[2*i+1])return true;
+            return false;
+        }
     }
 }

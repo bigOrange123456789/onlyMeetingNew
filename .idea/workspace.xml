@@ -1,10 +1,81 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="b7b6123d-caec-4b82-a432-424a6b5be5dd" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/js/Main.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/Main.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/js/sceneSet/RoomManager.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/sceneSet/RoomManager.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/new1.gltf" beforeDir="false" afterPath="$PROJECT_DIR$/myModel/room/new1.gltf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/new10.gltf" beforeDir="false" afterPath="$PROJECT_DIR$/myModel/room/new10.gltf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/new11.gltf" beforeDir="false" afterPath="$PROJECT_DIR$/myModel/room/new11.gltf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/new12.gltf" beforeDir="false" afterPath="$PROJECT_DIR$/myModel/room/new12.gltf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/new13.gltf" beforeDir="false" afterPath="$PROJECT_DIR$/myModel/room/new13.gltf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/new14.gltf" beforeDir="false" afterPath="$PROJECT_DIR$/myModel/room/new14.gltf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/new15.gltf" beforeDir="false" afterPath="$PROJECT_DIR$/myModel/room/new15.gltf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/new16.gltf" beforeDir="false" afterPath="$PROJECT_DIR$/myModel/room/new16.gltf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/new17.gltf" beforeDir="false" afterPath="$PROJECT_DIR$/myModel/room/new17.gltf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/new18.gltf" beforeDir="false" afterPath="$PROJECT_DIR$/myModel/room/new18.gltf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/new19.gltf" beforeDir="false" afterPath="$PROJECT_DIR$/myModel/room/new19.gltf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/new2.gltf" beforeDir="false" afterPath="$PROJECT_DIR$/myModel/room/new2.gltf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/new20.gltf" beforeDir="false" afterPath="$PROJECT_DIR$/myModel/room/new20.gltf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/new21.gltf" beforeDir="false" afterPath="$PROJECT_DIR$/myModel/room/new21.gltf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/new22.gltf" beforeDir="false" afterPath="$PROJECT_DIR$/myModel/room/new22.gltf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/new23.gltf" beforeDir="false" afterPath="$PROJECT_DIR$/myModel/room/new23.gltf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/new24.gltf" beforeDir="false" afterPath="$PROJECT_DIR$/myModel/room/new24.gltf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/new25.gltf" beforeDir="false" afterPath="$PROJECT_DIR$/myModel/room/new25.gltf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/new26.gltf" beforeDir="false" afterPath="$PROJECT_DIR$/myModel/room/new26.gltf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/new27.gltf" beforeDir="false" afterPath="$PROJECT_DIR$/myModel/room/new27.gltf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/new28.gltf" beforeDir="false" afterPath="$PROJECT_DIR$/myModel/room/new28.gltf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/new29.gltf" beforeDir="false" afterPath="$PROJECT_DIR$/myModel/room/new29.gltf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/new3.gltf" beforeDir="false" afterPath="$PROJECT_DIR$/myModel/room/new3.gltf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/new30.gltf" beforeDir="false" afterPath="$PROJECT_DIR$/myModel/room/new30.gltf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/new31.gltf" beforeDir="false" afterPath="$PROJECT_DIR$/myModel/room/new31.gltf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/new32.gltf" beforeDir="false" afterPath="$PROJECT_DIR$/myModel/room/new32.gltf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/new33.gltf" beforeDir="false" afterPath="$PROJECT_DIR$/myModel/room/new33.gltf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/new34.gltf" beforeDir="false" afterPath="$PROJECT_DIR$/myModel/room/new34.gltf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/new35.gltf" beforeDir="false" afterPath="$PROJECT_DIR$/myModel/room/new35.gltf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/new36.gltf" beforeDir="false" afterPath="$PROJECT_DIR$/myModel/room/new36.gltf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/new37.gltf" beforeDir="false" afterPath="$PROJECT_DIR$/myModel/room/new37.gltf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/new38.gltf" beforeDir="false" afterPath="$PROJECT_DIR$/myModel/room/new38.gltf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/new39.gltf" beforeDir="false" afterPath="$PROJECT_DIR$/myModel/room/new39.gltf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/new4.gltf" beforeDir="false" afterPath="$PROJECT_DIR$/myModel/room/new4.gltf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/new40.gltf" beforeDir="false" afterPath="$PROJECT_DIR$/myModel/room/new40.gltf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/new41.gltf" beforeDir="false" afterPath="$PROJECT_DIR$/myModel/room/new41.gltf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/new42.gltf" beforeDir="false" afterPath="$PROJECT_DIR$/myModel/room/new42.gltf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/new43.gltf" beforeDir="false" afterPath="$PROJECT_DIR$/myModel/room/new43.gltf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/new44.gltf" beforeDir="false" afterPath="$PROJECT_DIR$/myModel/room/new44.gltf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/new45.gltf" beforeDir="false" afterPath="$PROJECT_DIR$/myModel/room/new45.gltf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/new46.gltf" beforeDir="false" afterPath="$PROJECT_DIR$/myModel/room/new46.gltf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/new47.gltf" beforeDir="false" afterPath="$PROJECT_DIR$/myModel/room/new47.gltf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/new48.gltf" beforeDir="false" afterPath="$PROJECT_DIR$/myModel/room/new48.gltf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/new49.gltf" beforeDir="false" afterPath="$PROJECT_DIR$/myModel/room/new49.gltf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/new5.gltf" beforeDir="false" afterPath="$PROJECT_DIR$/myModel/room/new5.gltf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/new50.gltf" beforeDir="false" afterPath="$PROJECT_DIR$/myModel/room/new50.gltf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/new51.gltf" beforeDir="false" afterPath="$PROJECT_DIR$/myModel/room/new51.gltf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/new52.gltf" beforeDir="false" afterPath="$PROJECT_DIR$/myModel/room/new52.gltf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/new6.gltf" beforeDir="false" afterPath="$PROJECT_DIR$/myModel/room/new6.gltf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/new7.gltf" beforeDir="false" afterPath="$PROJECT_DIR$/myModel/room/new7.gltf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/new8.gltf" beforeDir="false" afterPath="$PROJECT_DIR$/myModel/room/new8.gltf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/new9.gltf" beforeDir="false" afterPath="$PROJECT_DIR$/myModel/room/new9.gltf" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,10 +94,19 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="npm" />
+    <property name="vue.rearranger.settings.migration" value="true" />
   </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -71,17 +151,34 @@
       <workItem from="1609425585355" duration="366000" />
       <workItem from="1609426269311" duration="441000" />
       <workItem from="1609426871832" duration="631000" />
+      <workItem from="1609427829391" duration="693000" />
+      <workItem from="1609433054141" duration="621000" />
+      <workItem from="1609482841963" duration="216000" />
+      <workItem from="1609483431506" duration="3818000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="2" />
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="523" y="120" key="FileChooserDialogImpl" timestamp="1609426710372">
-      <screen x="0" y="0" width="1280" height="680" />
+    <state x="785" y="184" key="FileChooserDialogImpl" timestamp="1609483059436">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="523" y="120" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1609426710372" />
+    <state x="785" y="184" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1609483059436" />
     <state x="297" y="151" key="run.anything.popup" timestamp="1608547026083">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
