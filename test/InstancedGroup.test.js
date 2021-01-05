@@ -241,29 +241,34 @@ InstancedGroupTest.prototype={
         },
         test4:function (contextType){
                 if(typeof(contextType)==="undefined")this.setContext();
-                var nameTest="非单元测试，测试能否删除网格上的点，以此来进行模型坍塌:可以压缩为原来的86.3%";
+                var nameTest="想要尝试一下与自己的初始位置相差为判断条件";
                 console.log('start test:'+nameTest);
                 //开始测试
                 var scope=this;
                 var loader= new THREE.GLTFLoader();
-                loader.load("dongshizhang.glb", (glb) => {
+                loader.load("zhao.glb", (glb) => {
                         console.log(glb)
-                        //console.log(glb.scene.children[0]);
-                        var mesh=glb.scene.children[3].children[3];//index 顶点个数2004//前三个点为：0，1，2
+                        //console.log(glb.scene.children[0]);//scene.children[1].children[3]
+                        //scene.children[1].children[2].children[0]
+                        //scene.children[1].children[3]
+                        var mesh=glb.scene.children[1].children[3];//index 顶点个数2004//前三个点为：0，1，2
                         var geometry=mesh.geometry;
                         var attributes=geometry.attributes;
-                        console.log(mesh.geometry.index.array.length/3)
-                        /*for(var k=0;k<60;k++){//1830//1731
-                                flag=false;
-                                while(!flag){
+                        console.log(mesh);
+                        console.log(geometry);//index 48612
+                        console.log(attributes);
+                        //console.log(mesh.geometry.index.array.length/3)
+                        for(var k=0;k<1300;k++){//1830//1731
+                                //flag=false;
+                                //while(!flag){//index 34077//14525
                                         var rand=Math.floor(Math.random()*mesh.geometry.index.array.length/3);
                                         flag=deleteMeshPoint(mesh,mesh.geometry.index.array[rand*3],mesh.geometry.index.array[rand*3+1]);
                                         console.log(mesh);
                                         console.log(geometry);
                                         console.log(attributes);
-                                }
+                                //}
 
-                        }*/
+                        }/**/
 
                         /*window.setInterval((function(){
                                 var rand=Math.floor(Math.random()*mesh.geometry.index.array.length/3);
@@ -273,7 +278,7 @@ InstancedGroupTest.prototype={
                                 console.log(attributes);
                         }),10);*/
 
-                        mesh.scale.set(7,7,7);
+                        mesh.scale.set(4,4,4);
                         //deleteMeshTriangle(mesh);
 
 
@@ -285,13 +290,13 @@ InstancedGroupTest.prototype={
                                  index2.array[i]=index.array[i];
                          mesh.geometry.index=index2;*/
 
-                        scope.scene.add(mesh);
+                        scope.scene.add(glb.scene.children[1]);
                         function deleteMeshPoint(mesh,p1,p2){//将mesh中的p1点删除，对应为p2点
                                 var distance=
                                     Math.pow(mesh.geometry.attributes.position.array[3*p1]-mesh.geometry.attributes.position.array[3*p2],2)+
                                     Math.pow(mesh.geometry.attributes.position.array[3*p1+1]-mesh.geometry.attributes.position.array[3*p2+1],2)+
                                     Math.pow(mesh.geometry.attributes.position.array[3*p1+2]-mesh.geometry.attributes.position.array[3*p2+2],2);
-                                if(distance>0.005)return false;
+                                //if(distance>0.005)return false;
                                 console.log(distance);
 
 
