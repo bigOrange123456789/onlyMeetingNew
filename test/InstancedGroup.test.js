@@ -1,12 +1,43 @@
 //InstancedGroup.test
 function InstancedGroupTest(){
-        this.testObj;
-        this.nameObject="";
+        this.scene;
+        this.camera;
 }
 InstancedGroupTest.prototype={
         setContext:function (testType) {
-                this.nameContext="固定姿势模型";
-                console.log("context:");
+                var nameContext="";
+                console.log('set context:'+nameContext);
+                var camera, scene, renderer;
+                var light;
+                init();
+                render();
+                function init() {
+                        camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.01, 10000);
+                        camera.position.z = 20;
+
+                        scene = new THREE.Scene();
+
+                        renderer = new THREE.WebGLRenderer();
+                        renderer.setPixelRatio(window.devicePixelRatio);
+                        renderer.setSize(window.innerWidth, window.innerHeight);
+                        renderer.setClearColor(0xffffff);
+                        document.body.appendChild( renderer.domElement );
+                        //container.appendChild(renderer.domElement);
+
+                        if (renderer.capabilities.isWebGL2 === false && renderer.extensions.has('ANGLE_instanced_arrays') === false) {
+                                document.getElementById('notSupported').style.display = '';
+                                return;
+                        }
+                        light = new THREE.AmbientLight(0xffffff,1.0)
+                        scene.add(light);
+                        new PlayerControl(camera);
+                }
+                function render(){
+                        renderer.render( scene, camera );
+                        requestAnimationFrame(render);
+                }
+                this.scene=scene;
+                this.camera=camera;
                 var scope=this;
                 var loader= new THREE.GLTFLoader();
                 loader.load("myModel/avatar/Female02.glb", (glb) => {
@@ -14,109 +45,75 @@ InstancedGroupTest.prototype={
                         if(testType===1)scope.test(glb.scene.children[0]);
                 });
         },
-        test:function (mesh) {
-                var nameObject="";
-                console.log('start test:'+this.nameObject);
-                function before(){
-                }before();//console.log("before");
-                function beforeEach(){
-                }//console.log("beforeEach");
-                //(function (){
-                if(1){
-                        beforeEach();
-                        console.log("测试用例01");
-                        //开始测试
-                        var peoples=new InstancedGroup(
+        test1:function (contextType){
+                if(typeof(contextType)==="undefined")this.setContext();
+                var nameTest="固定姿势模型";
+                console.log('start test:'+nameTest);
+                //开始测试
+                var scope=this;
+                var loader= new THREE.GLTFLoader();
+                loader.load("myModel/avatar/Female02.glb", (glb) => {
+                        //console.log(glb.scene.children[0]);
+                        var mesh=glb.scene.children[0];
+                        var peoples = new InstancedGroup(
                             2,
-                            [mesh,mesh],//这些mesh的网格应该一致
+                            [mesh, mesh],//这些mesh的网格应该一致
                             false
                         );
-                        var texSrc=[];
-                        for(i=0;i<16;i++)texSrc.push('./texture/'+i+'.jpg');
+                        var texSrc = [];
+                        for (i = 0; i < 16; i++) texSrc.push('./texture/' + i + '.jpg');
                         peoples.init(
                             texSrc
                         );
-                        for(var i=0;i<2;i++){
-                                peoples.rotationSet(i,[Math.PI/2,0,0]);
-                                peoples.positionSet(i,[3*i,0,0]);
-                                peoples.scaleSet(i,[4.5,4.5,4.5]);
+                        for (var i = 0; i < 2; i++) {
+                                peoples.rotationSet(i, [Math.PI / 2, 0, 0]);
+                                peoples.positionSet(i, [3 * i, 0, 0]);
+                                peoples.scaleSet(i, [4.5, 4.5, 4.5]);
                         }
-                        peoples.animationSpeed=0.1;
-                        scene.add(peoples.obj);
+                        peoples.animationSpeed = 0.1;
+                        scope.scene.add(peoples.obj);
                         console.log(mesh)
-                        console.log(scene);
-                        //完成测试
-                        console.log("测试用例01");
-                        afterEach();
-                }
-                //});
-                function afterEach(){
-                        //console.log("afterEach");
-                }
-                function after(){
-                        //console.log("after");
-                }after();
-                console.log('complete test:'+nameObject);
-        },
+                });//
 
-        setContext2:function (testType) {
-                var nameContext="分块模型测试";
-                console.log("start context:"+nameContext);
+                //完成测试
+        },
+        test2:function (contextType){
+                if(typeof(contextType)==="undefined")this.setContext();
+                var nameTest="多模块模型";
+                console.log('start test:'+nameTest);
+                //开始测试
                 var scope=this;
                 var loader= new THREE.GLTFLoader();
                 loader.load("myModel/avatar/host.glb", (glb) => {
-                        if(testType===2)scope.test2(glb);
-                        console.log("complete context:"+nameContext);
-                });
-        },
-        test2:function (glb) {
-                var nameTest="";
-                if(nameTest!=="")console.log('start test:'+nameTest);
-                function before(){
-                }before();//console.log("before");
-                function beforeEach(){
-                }//console.log("beforeEach");
-                if(1){
-                        var nameExample="";
-                        beforeEach();
-                        console.log("start case:"+nameExample);
-                        //开始测试
-                        glb.scene.traverse(node=>{
-                                if(node.geometry){
+                        glb.scene.traverse(node => {
+                                if (node.geometry) {
                                         createObj(node);
                                 }
                         });
+
                         function createObj(mesh) {
-                                var peoples=new InstancedGroup(
+                                var peoples = new InstancedGroup(
                                     2,
-                                    [mesh,mesh],//这些mesh的网格应该一致
+                                    [mesh, mesh],//这些mesh的网格应该一致
                                     false
                                 );
-                                var texSrc=[];
-                                for(i=0;i<16;i++)texSrc.push('./texture/'+i+'.jpg');
+                                var texSrc = [];
+                                for (i = 0; i < 16; i++) texSrc.push('./texture/' + i + '.jpg');
                                 peoples.init(
                                     texSrc
                                 );
-                                for(var i=0;i<2;i++){
+                                for (var i = 0; i < 2; i++) {
                                         //peoples.rotationSet(i,[Math.PI/2,0,0]);
-                                        peoples.positionSet(i,[3*i,0,0]);
-                                        peoples.scaleSet(i,[4.5,4.5,4.5]);
+                                        peoples.positionSet(i, [3 * i, 0, 0]);
+                                        peoples.scaleSet(i, [4.5, 4.5, 4.5]);
                                 }
-                                peoples.animationSpeed=0.1;
-                                scene.add(peoples.obj);
+                                peoples.animationSpeed = 0.1;
+                                scope.scene.add(peoples.obj);
                         }
-                        //完成测试
-                        console.log("complete case:"+nameExample);
-                        afterEach();
-                }
-                function afterEach(){
-                        //console.log("afterEach");
-                }
-                function after(){
-                        //console.log("after");
-                }after();
-                if(nameTest!=="")console.log('complete test:'+nameTest);
+                });//
+
+                //完成测试
         },
 }
 var myInstancedGroupTest=new InstancedGroupTest();
-myInstancedGroupTest.setContext2(2);
+myInstancedGroupTest.test2();

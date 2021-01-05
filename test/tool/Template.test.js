@@ -1,20 +1,50 @@
-function Describe(mainScene){
-        this.testObj;
-        mainScene.add(this.testObj);
+function Describe(){
+        this.scene;
+        this.camera;
 }
 Describe.prototype={
-        setContext1:function (testType) {
+        setContext:function () {
                 var nameContext="";
                 console.log('set context:'+nameContext);
-                if(testType===1)this.test1();
-                console.log('finish context:'+nameContext);
-        },
-        test1:function () {
+                var camera, scene, renderer;
+                var light;
+                init();
+                render();
+                function init() {
+                        camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.01, 10000);
+                        camera.position.z = 20;
+
+                        scene = new THREE.Scene();
+
+                        renderer = new THREE.WebGLRenderer();
+                        renderer.setPixelRatio(window.devicePixelRatio);
+                        renderer.setSize(window.innerWidth, window.innerHeight);
+                        renderer.setClearColor(0xffffff);
+                        document.body.appendChild( renderer.domElement );
+                        //container.appendChild(renderer.domElement);
+
+                        if (renderer.capabilities.isWebGL2 === false && renderer.extensions.has('ANGLE_instanced_arrays') === false) {
+                                document.getElementById('notSupported').style.display = '';
+                                return;
+                        }
+                        light = new THREE.AmbientLight(0xffffff,1.0)
+                        scene.add(light);
+                        new PlayerControl(camera);
+                }
+                function render(){
+                        renderer.render( scene, camera );
+                        requestAnimationFrame(render);
+                }
+                this.scene=scene;
+                this.camera=camera;
+        },//console.log('finish context:'+nameContext);
+        test1:function (contextType){
+                if(typeof(contextType)==="undefined")this.setContext();
                 var nameTest="";
                 console.log('start test:'+nameTest);
-
-                console.log('complete test:'+nameTest);
-        },
+                //开始测试
+                //完成测试
+        },//console.log('complete test:'+nameTest);
 }
 var myDescribe=new Describe();
-myDescribe.setContext1(1);
+myDescribe.test1();

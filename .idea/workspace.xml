@@ -21,12 +21,10 @@
   <component name="ChangeListManager">
     <list default="true" id="b7b6123d-caec-4b82-a432-424a6b5be5dd" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test/InstancedGroup.test.js" beforeDir="false" afterPath="$PROJECT_DIR$/test/InstancedGroup.test.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/Template.test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/log.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/MyPMLoader.test.js" beforeDir="false" afterPath="$PROJECT_DIR$/test/MyPMLoader.test.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test/testLaunch.js" beforeDir="false" afterPath="$PROJECT_DIR$/test/testLaunch.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/变换矩阵测试笔记.txt" beforeDir="false" afterPath="$PROJECT_DIR$/变换矩阵测试笔记.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/tool/Template.test.js" beforeDir="false" afterPath="$PROJECT_DIR$/test/tool/Template.test.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -108,7 +106,7 @@
       <workItem from="1609483431506" duration="4446000" />
       <workItem from="1609743944240" duration="1538000" />
       <workItem from="1609754929967" duration="655000" />
-      <workItem from="1609844452452" duration="2624000" />
+      <workItem from="1609844452452" duration="5799000" />
     </task>
     <servers />
   </component>
