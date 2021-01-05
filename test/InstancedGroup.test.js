@@ -4,14 +4,14 @@ function InstancedGroupTest(){
         this.nameObject="";
 }
 InstancedGroupTest.prototype={
-        setContext:function () {
+        setContext:function (testType) {
                 this.nameContext="固定姿势模型";
                 console.log("context:");
                 var scope=this;
                 var loader= new THREE.GLTFLoader();
                 loader.load("myModel/avatar/Female02.glb", (glb) => {
                         console.log(glb.scene.children[0]);
-                        scope.test(glb.scene.children[0]);
+                        if(testType===1)scope.test(glb.scene.children[0]);
                 });
         },
         test:function (mesh) {
@@ -59,13 +59,13 @@ InstancedGroupTest.prototype={
                 console.log('complete test:'+nameObject);
         },
 
-        setContext2:function () {
+        setContext2:function (testType) {
                 var nameContext="分块模型测试";
                 console.log("start context:"+nameContext);
                 var scope=this;
                 var loader= new THREE.GLTFLoader();
                 loader.load("myModel/avatar/host.glb", (glb) => {
-                        scope.test2(glb);
+                        if(testType===2)scope.test2(glb);
                         console.log("complete context:"+nameContext);
                 });
         },
@@ -119,4 +119,4 @@ InstancedGroupTest.prototype={
         },
 }
 var myInstancedGroupTest=new InstancedGroupTest();
-myInstancedGroupTest.setContext2();
+myInstancedGroupTest.setContext2(2);

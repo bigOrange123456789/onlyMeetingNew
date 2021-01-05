@@ -315,27 +315,27 @@
 		}
 </script>
 
-		<script src="lib/threeJS/three.js"></script>
-		<script src="lib/threeJS/OrbitControls.js"></script>
-		<script src="lib/threeJS/GLTFLoader.js"></script>
+	<script src="lib/threeJS/three.js"></script>
+	<script src="lib/threeJS/OrbitControls.js"></script>
+	<script src="lib/threeJS/GLTFLoader.js"></script>
 
-		<script src="lib/pmLib/PMAnimLoader.js"></script>
-		<script src="lib/pmLib/MyPMLoader.js"></script>
+	<script src="lib/pmLib/PMAnimLoader.js"></script>
+	<script src="lib/pmLib/MyPMLoader.js"></script>
 
-		<script src="js/VideoManager.js"></script>
+	<script src="js/VideoManager.js"></script>
 
-		<script src="js/sceneSet/RoomManager.js"></script>
-		<script src="js/sceneSet/SeatManager.js"></script>
-		<script src="js/sceneSet/AvatarManager.js"></script>
+	<script src="js/sceneSet/RoomManager.js"></script>
+	<script src="js/sceneSet/SeatManager.js"></script>
+	<script src="js/sceneSet/AvatarManager.js"></script>
 
-		<script src="js/playerControl/PlayerControl.js"></script>
-		<script src="js/playerControl/PreviewManager.js"></script>
+	<script src="js/playerControl/PlayerControl.js"></script>
+	<script src="js/playerControl/PreviewManager.js"></script>
 
-		<script src="js/InstancedGroup.js"></script>
-		<script src="js/ParamMeasure.js"></script>
-		<script src="js/Main.js"></script>
+	<script src="js/InstancedGroup.js"></script>
+	<script src="js/ParamMeasure.js"></script>
+	<script src="js/Main.js"></script>
 
-		<script>
+	<script>
 			var myVideoManager=new VideoManager();
 			myVideoManager.init();
 
@@ -355,7 +355,6 @@
 			var myAvatarManager=new AvatarManager(mySeatManager,myMain.camera);
 			myAvatarManager.init();
 			myMain.scene.add(myAvatarManager.obj);
-			//console.log(myAvatarManager.obj.parent);
 
 			//开始自动漫游路径
 			var mydata = [//自动漫游路径
@@ -371,9 +370,7 @@
 			];
 			var myPreviewManager=new PreviewManager(myMain.camera,mydata,myVideoManager);
 			myPreviewManager.createCameraButton('./img/1.png','./img/2.png');
-			//myPreviewManager.isLoop=true;
-			//myPreviewManager.autoRoam();
 			//结束自动漫游路径
-		</script>
+	</script>
 	</body>
 </html>

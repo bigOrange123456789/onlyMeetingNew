@@ -20,7 +20,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b7b6123d-caec-4b82-a432-424a6b5be5dd" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/InstancedGroup.test.js" beforeDir="false" afterPath="$PROJECT_DIR$/test/InstancedGroup.test.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/Template.test.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/log.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/testLaunch.js" beforeDir="false" afterPath="$PROJECT_DIR$/test/testLaunch.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/变换矩阵测试笔记.txt" beforeDir="false" afterPath="$PROJECT_DIR$/变换矩阵测试笔记.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -100,11 +106,14 @@
       <workItem from="1609433054141" duration="621000" />
       <workItem from="1609482841963" duration="216000" />
       <workItem from="1609483431506" duration="4446000" />
+      <workItem from="1609743944240" duration="1538000" />
+      <workItem from="1609754929967" duration="655000" />
+      <workItem from="1609844452452" duration="2624000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="3" />
+    <option name="version" value="2" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -119,10 +128,10 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="785" y="184" key="FileChooserDialogImpl" timestamp="1609483059436">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state x="523" y="120" key="FileChooserDialogImpl" timestamp="1609844494769">
+      <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state x="523" y="120" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1609426710372" />
+    <state x="523" y="120" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1609844494769" />
     <state x="785" y="184" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1609483059436" />
     <state x="335" y="92" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1609487862309">
       <screen x="0" y="0" width="1920" height="1040" />

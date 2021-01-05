@@ -29,7 +29,8 @@ function render(){
 }
 var  myTestFilePath=[
     //"Template",
-    "InstancedGroup"
+    //"InstancedGroup",
+    "MyPMLoader"
 ];
 for(var i=0;i<myTestFilePath.length;i++){
     document.write("<script language=javascript src=test/"+myTestFilePath[i]+".test.js></script>");
