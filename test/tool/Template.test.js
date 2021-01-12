@@ -1,11 +1,25 @@
 function Describe(){
         this.scene;
         this.camera;
+
+        this.tag;
+        this.button_flag;
+        this.referee;
 }
 Describe.prototype={
         setContext:function () {
                 var nameContext="";
                 console.log('set context:'+nameContext);
+
+                var scope=this;
+                this.referee=new Referee();
+                this.tag=new Text("","green",25);
+                this.button_flag=true;
+                var button=new Button("test","green",25);
+                button.addEvent(function () {
+                        scope.button_flag=!scope.button_flag;
+                });
+
                 var camera, scene, renderer;
                 var light;
                 init();
