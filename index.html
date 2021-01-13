@@ -58,23 +58,33 @@
 				else type_part=2.0;//头部
 
 				//判断使用哪一种动画
-				float skeletonData[400];
+				/*float skeletonData[400];
 				if(type[3]>-0.5&&type[3]<0.5){
 					for(int i=0;i<400;i++)
 						skeletonData[i]=skeletonData0[i];
 				}else{
 					for(int i=0;i<400;i++)
 						skeletonData[i]=skeletonData1[i];
-				}
+				}*/
 
             	mat4 matrixs[25];//25个骨骼的变换矩阵
 				for(int i=0;i<25;i++){
-			   	 matrixs[i]=mat4(//最后一行是：0 0 0 1
-			    	    skeletonData[i*16+0] ,skeletonData[i*16+1] ,skeletonData[i*16+2] ,skeletonData[i*16+3] ,
-			  	      	skeletonData[i*16+4] ,skeletonData[i*16+5] ,skeletonData[i*16+6] ,skeletonData[i*16+7] ,
-			    	    skeletonData[i*16+8] ,skeletonData[i*16+9] ,skeletonData[i*16+10],skeletonData[i*16+11],
-			    	    skeletonData[i*16+12],skeletonData[i*16+13],skeletonData[i*16+14],skeletonData[i*16+15]
+					//if(type[3]>-0.5&&type[3]<0.5){
+						matrixs[i]=mat4(//最后一行是：0 0 0 1
+				    	    skeletonData0[i*16+0] ,skeletonData0[i*16+1] ,skeletonData0[i*16+2] ,skeletonData0[i*16+3] ,
+				  	      	skeletonData0[i*16+4] ,skeletonData0[i*16+5] ,skeletonData0[i*16+6] ,skeletonData0[i*16+7] ,
+				    	    skeletonData0[i*16+8] ,skeletonData0[i*16+9] ,skeletonData0[i*16+10],skeletonData0[i*16+11],
+				    	    skeletonData0[i*16+12],skeletonData0[i*16+13],skeletonData0[i*16+14],skeletonData0[i*16+15]
 			    	    );
+					//}else{
+						/*matrixs[i]=mat4(//最后一行是：0 0 0 1
+				    	    skeletonData1[i*16+0] ,skeletonData1[i*16+1] ,skeletonData1[i*16+2] ,skeletonData1[i*16+3] ,
+				  	      	skeletonData1[i*16+4] ,skeletonData1[i*16+5] ,skeletonData1[i*16+6] ,skeletonData1[i*16+7] ,
+				    	    skeletonData1[i*16+8] ,skeletonData1[i*16+9] ,skeletonData1[i*16+10],skeletonData1[i*16+11],
+				    	    skeletonData1[i*16+12],skeletonData1[i*16+13],skeletonData1[i*16+14],skeletonData1[i*16+15]
+			    	    );*/
+					//}
+
 				}
 
             	int mySkinIndex[4];//求skinIndex的近似整数，结果存入mySkinIndex

@@ -322,7 +322,7 @@ function MySkinnedMesh() {
         myAnimationAction0.play();
 
         function updateAnimation() {//每帧更新一次动画
-            animationMixer0.update(0.1);
+            animationMixer0.update(0.05);
             requestAnimationFrame(updateAnimation);
         }updateAnimation();
         function cloneBones(rootBone, boneArray){//用于加载完gltf文件后的骨骼动画的处理

@@ -85,8 +85,8 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
         });
 
 
-        //this.createPeople_haveAnimation();
-        this.createPeopleDouble('myModel/avatar/Female02.glb','myModel/avatar/Female01_2.glb',2);
+        this.createPeople_haveAnimation();
+        //this.createPeopleDouble('myModel/avatar/Female02.glb','myModel/avatar/Female01_2.glb',2);
     }
     this.createPeopleDouble=function(src1,src2,index){
         var src;
@@ -166,7 +166,7 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
         var loader= new THREE.GLTFLoader();
         loader.load('myModel/avatar/Female.glb', (glb) => {
             //测试
-            console.log(glb);
+            //console.log(glb);
             var myMesh=new MySkinnedMesh();
             myMesh.init(
                 glb.scene.children[0].children[1],
@@ -174,7 +174,7 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
             );
             //测试
             var peoples=new InstancedGroup(
-                1000,
+                scope.positions.length,
                 [myMesh.mesh,myMesh.mesh],//这些mesh的网格应该一致
                 true
             );
@@ -183,9 +183,9 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
             peoples.init(
                 texSrc
             );
-            for(var i=0;i<1000;i++){
+            for(var i=0;i<scope.positions.length;i++){
                 peoples.rotationSet(i,[Math.PI/2,0,3*Math.PI/2]);
-                peoples.positionSet(i,[scope.positions[i][0],scope.positions[i][1]+1.5,scope.positions[i][2]]);
+                peoples.positionSet(i,[scope.positions[i][0]+1.5,scope.positions[i][1]+1.5,scope.positions[i][2]]);
                 peoples.scaleSet(i,[0.045,0.045,0.045]);
             }
             //peoples.obj.rotation.set(Math.PI/2,0,0);
