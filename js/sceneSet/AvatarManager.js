@@ -72,21 +72,20 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
         for(var i=0;i<this.positions.length;i++)
             this.positionsType.push(Math.floor(Math.random()*4)+1);//1-4
         this.loadAvatar();
-        this.frameAnimation();
+        //this.frameAnimation();
     }
 
     this.loadAvatar=function () {
         this.host();
         var animLoader = new PMAnimLoader();//估计是通过gltf文件加载的动画
         animLoader.load('./myModel/skeleton/scene.gltf', function (glbObj){
-        //var loader= new THREE.GLTFLoader();
-        //loader.load('./myModel/skeleton/scene.gltf', (glbObj) => {
             glbObj.scene.visible=false;
             scope.loadGuest1(glbObj);
             scope.loadGuest2(glbObj);
         });
 
 
+        //this.createPeople_haveAnimation();
         this.createPeopleDouble('myModel/avatar/Female02.glb','myModel/avatar/Female01_2.glb',2);
     }
     this.createPeopleDouble=function(src1,src2,index){
@@ -165,22 +164,18 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
     }
     this.createPeople_haveAnimation=function(){
         var loader= new THREE.GLTFLoader();
-        loader.load('myModel/avatar/test2.glb', (glb) => {
+        loader.load('myModel/avatar/Female.glb', (glb) => {
             //测试
+            console.log(glb);
             var myMesh=new MySkinnedMesh();
             myMesh.init(
                 glb.scene.children[0].children[1],
                 glb.animations[0]
             );
-            var myMesh2=new MySkinnedMesh();
-            myMesh2.init(
-                glb.scene.children[0].children[1],
-                glb.animations[1]
-            );
             //测试
             var peoples=new InstancedGroup(
-                10,
-                [myMesh.mesh,myMesh2.mesh],//这些mesh的网格应该一致
+                1000,
+                [myMesh.mesh,myMesh.mesh],//这些mesh的网格应该一致
                 true
             );
             var texSrc=[];
@@ -188,7 +183,7 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
             peoples.init(
                 texSrc
             );
-            for(var i=0;i<10;i++){
+            for(var i=0;i<1000;i++){
                 peoples.rotationSet(i,[Math.PI/2,0,3*Math.PI/2]);
                 peoples.positionSet(i,[scope.positions[i][0],scope.positions[i][1]+1.5,scope.positions[i][2]]);
                 peoples.scaleSet(i,[0.045,0.045,0.045]);
