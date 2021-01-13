@@ -85,8 +85,8 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
         });
 
 
-        //this.createPeople_haveAnimation();
-        this.createPeopleDouble('myModel/avatar/Female02.glb','myModel/avatar/Female01_2.glb',2);
+        this.createPeople_haveAnimation();
+        //this.createPeopleDouble('myModel/avatar/Female02.glb','myModel/avatar/Female01_2.glb',2);
     }
     this.createPeopleDouble=function(src1,src2,index){
         var src;
