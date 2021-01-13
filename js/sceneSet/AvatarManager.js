@@ -85,8 +85,8 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
         });
 
 
-        this.createPeople_haveAnimation();
-        //this.createPeopleDouble('myModel/avatar/Female02.glb','myModel/avatar/Female01_2.glb',2);
+        //this.createPeople_haveAnimation();
+        this.createPeopleDouble('myModel/avatar/Female02.glb','myModel/avatar/Female01_2.glb',2);
     }
     this.createPeopleDouble=function(src1,src2,index){
         var src;
@@ -185,8 +185,11 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
             );
             for(var i=0;i<scope.positions.length;i++){
                 peoples.rotationSet(i,[Math.PI/2,0,3*Math.PI/2]);
-                peoples.positionSet(i,[scope.positions[i][0]+1.5,scope.positions[i][1]+1.5,scope.positions[i][2]]);
-                peoples.scaleSet(i,[0.045,0.045,0.045]);
+                peoples.positionSet(i,[scope.positions[i][0]+1.8,scope.positions[i][1]+1.5,scope.positions[i][2]]);
+                peoples.scaleSet(i,[0.045,0.045,0.04+Math.random()*0.01]);
+
+                peoples.typeSet(i,scope.types[i]);
+                peoples.colorSet(i,scope.colors[i]);
             }
             //peoples.obj.rotation.set(Math.PI/2,0,0);
             peoples.animationSpeed=0.1;

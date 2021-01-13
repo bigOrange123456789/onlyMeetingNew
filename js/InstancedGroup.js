@@ -170,10 +170,6 @@ function InstancedGroup(instanceCount,originMesh,haveSkeleton){
         //完成进行实例化渲染
     }
     this.handleSkeletonAnimation=function(geometry){
-
-
-
-
         var scope=this;//scope范围//为了避免this重名
         function updateAnimation() {//每帧更新一次动画
             requestAnimationFrame(updateAnimation);
@@ -325,7 +321,7 @@ function MySkinnedMesh() {
             animationMixer0.update(0.05);
             requestAnimationFrame(updateAnimation);
         }updateAnimation();
-        function cloneBones(rootBone, boneArray){//用于加载完gltf文件后的骨骼动画的处理
+        function cloneBones(rootBone , boneArray){//用于加载完gltf文件后的骨骼动画的处理
             var rootBoneClone=rootBone.clone();
             rootBoneClone.children.splice(0,rootBoneClone.children.length);
             boneArray.push(rootBoneClone);

@@ -11,7 +11,7 @@
 
 	<body>
 	<!--有骨骼动画的着色器-->
-	<script id="vertexShader" type="x-shader/x-vertex">//
+	<script id="vertexShader" type="x-shader/x-vertex">
 		precision highp float;
 		uniform mat4 modelViewMatrix;
 		uniform mat4 projectionMatrix;
@@ -32,9 +32,11 @@
 		attribute vec3 mcol3;
 
 		attribute vec4 type;   //type[3]是0或1，用于表示动画
+		attribute vec3 color;
 
         varying vec2 outUV;
         varying vec3 varyType;
+        varying vec3 varyColor;
         varying float type_part;
         varying float myTest00;
 
@@ -51,6 +53,7 @@
 			{
 				outUV = inUV;
 				varyType=vec3(type[0],type[1],type[2]);
+				varyColor=vec3(color[0],color[1],color[2]);
 				myTest00=type[3];
 
 				if(vPosition.y<0.15)type_part=0.0;//下身
@@ -149,6 +152,7 @@
         varying float type_part;
 
         varying vec3 varyType;
+        varying vec3 varyColor;
 		varying vec2 outUV;
 
 		varying float myTest00;
@@ -179,8 +183,25 @@
 			else myTexture =texture2D(text15, outUV);
 
             float mytest0=varyType[1]*0.01;
-            gl_FragColor = vec4 (myTexture.r,myTexture.g,myTexture.b,1.0);//varyType[0]
-            //gl_FragColor =vec4 (0.0,0.5,myTest00,1.0);//myTest00值为0
+            if(floor(type_part)==0.0){//下身
+            	gl_FragColor = vec4 (
+            					 myTexture.r+varyColor[0],
+            					 myTexture.g+varyColor[1],
+            					 myTexture.b+varyColor[2],
+            					 1.0);
+            }else if(floor(type_part)==1.0){//上身
+            	gl_FragColor = vec4 (
+            					 myTexture.r,
+            					 myTexture.g,
+            					 myTexture.b,
+            					 1.0);
+            }else if(floor(type_part)==2.0){//头部
+            	gl_FragColor = vec4 (
+            					 myTexture.r,
+            					 myTexture.g,
+            					 myTexture.b,
+            					 1.0);
+            }
 		}
 </script>
 	<!--无骨骼动画的着色器-->
@@ -317,14 +338,6 @@
             					 myTexture.b,
             					 1.0);
             }
-            //gl_FragColor =vec4 (0.0,type_part,myTest00,1.0);//myTest00值为0
-
-            /*if(floor(type_part)==2.0)
-            			gl_FragColor = vec4 (
-            					 myTexture.r+0.5,
-            					 myTexture.g,
-            					 myTexture.b,
-            					 1.0);*/
 		}
 </script>
 
