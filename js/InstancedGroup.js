@@ -3,6 +3,8 @@ function InstancedGroup(instanceCount,originMesh,animationClip ){
     this.obj=new THREE.Object3D();
     this.instanceCount=instanceCount;
 
+    this.meshController;//=new SkinnedMeshController();
+
     if(typeof(animationClip)=="undefined"||animationClip===false)this.haveSkeleton=flase;
     else this.haveSkeleton=true;
     this.originMeshs=originMesh;//这是一个数组，每个元素播放一种动画
@@ -17,11 +19,20 @@ function InstancedGroup(instanceCount,originMesh,animationClip ){
     this.rotations=[];
     this.type;
     this.colors;
+    this.speeds=[];
 
     this.dummy=new THREE.Object3D();//dummy仿制品//工具对象
 
     this.init=function (texSrc){
+        this.meshController=new SkinnedMeshController();
+        this.meshController.init(
+            this.originMeshs[0],
+            this.animationClip
+        );
+        this.originMeshs[0]=this.meshController.mesh;
+
         for(var i=0;i<this.instanceCount;i++){
+            this.speeds.push(1);
             this.scales.push([1,1,1]);
             this.rotations.push([0,0,0]);
         }
@@ -194,33 +205,19 @@ function InstancedGroup(instanceCount,originMesh,animationClip ){
     }
     this.handleSkeletonAnimation2=function(animation){
         var scope=this;//scope范围//为了避免this重名
-        var t2=0;
+        var t=0;
         updateAnimation();
         function updateAnimation() {//每帧更新一次动画
             requestAnimationFrame(updateAnimation);
-            t2+=0.5;//t=0;
+            t+=0.5;//t=0;
+            var time=Math.floor(t%36);
 
-            var time=Math.floor(t2%36);
+            //var time=Math.floor(t2*scope.speed%36);
+            scope.meshController.setTime(time);
             var skeletonData0=[];//16*25//400
             for(i=0;i<scope.originMeshs[0].skeleton.boneInverses.length;i++){
                 temp1=scope.originMeshs[0].skeleton.boneInverses[i];//.toArray();
                 temp2=scope.originMeshs[0].skeleton.bones[i].matrixWorld.clone();//.toArray();
-                console.log(scope.originMeshs[0].skeleton.bones[i]);
-                //temp2=
-                    compose(
-                    animation.tracks[3*i+1].values[4*time],
-                    animation.tracks[3*i+1].values[4*time+1],
-                    animation.tracks[3*i+1].values[4*time+2],
-                    animation.tracks[3*i+1].values[4*time+3],
-
-                    animation.tracks[3*i+2].values[3*time],
-                    animation.tracks[3*i+2].values[3*time+1],
-                    animation.tracks[3*i+2].values[3*time+2],
-
-                    animation.tracks[3*i].values[3*time],
-                    animation.tracks[3*i].values[3*time+1],
-                    animation.tracks[3*i].values[3*time+2]
-                );//.toArray();
                 temp=temp2.multiply(temp1);//逆矩阵在右
                 temp=temp.toArray();
                 for(j=0;j<temp.length;j++)
@@ -354,6 +351,9 @@ function InstancedGroup(instanceCount,originMesh,animationClip ){
         this.scales[i][2]=scale[2];
         this.updateBuffer(i);
     }
+    this.speedSet=function (i,speed) {
+        this.speeds[i]=speed;
+    }
 
     this.move=function (i,dPos){
         var pos=this.positionGet(i);
@@ -390,7 +390,7 @@ function SkinnedMeshController() {
 
 
         var t=0;
-        updateAnimation2_2();
+        //updateAnimation2_2();
         function updateAnimation3() {//每帧更新一次动画--失败
             t+=0.2;
             var time=Math.floor(t%36);
@@ -458,13 +458,13 @@ function SkinnedMeshController() {
                     )
                 );
             }
-            requestAnimationFrame(updateAnimation2_2);
+            requestAnimationFrame(updateAnimation2_3);
         }
         function updateAnimation2_2() {//每帧更新一次动画--
             t+=0.5;//t=0;
             var time=Math.floor(t%36);
             scope.setTime(time);
-            requestAnimationFrame(updateAnimation2_2);
+            //requestAnimationFrame(updateAnimation2_2);
         }
         function updateAnimation2_1() {//每帧更新一次动画
             t+=0.5;
