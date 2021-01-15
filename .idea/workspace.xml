@@ -23,6 +23,8 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/js/InstancedGroup.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/InstancedGroup.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/sceneSet/AvatarManager.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/sceneSet/AvatarManager.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test.html" beforeDir="false" afterPath="$PROJECT_DIR$/test.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test/InstancedGroup.test.js" beforeDir="false" afterPath="$PROJECT_DIR$/test/InstancedGroup.test.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -115,7 +117,7 @@
       <workItem from="1610518613702" duration="90000" />
       <workItem from="1610518712864" duration="4064000" />
       <workItem from="1610524880037" duration="278000" />
-      <workItem from="1610534839740" duration="27010000" />
+      <workItem from="1610534839740" duration="39026000" />
     </task>
     <servers />
   </component>
@@ -135,6 +137,10 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="379" y="141" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1610685129999">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="379" y="141" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1280.680@0.0.1280.680" timestamp="1610685129999" />
     <state x="523" y="120" key="FileChooserDialogImpl" timestamp="1610537193022">
       <screen x="0" y="0" width="1280" height="680" />
     </state>

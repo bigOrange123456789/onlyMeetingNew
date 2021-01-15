@@ -11,13 +11,16 @@
 
 	<body>
 	<!--有骨骼动画的着色器-->
-	<script id="vertexShader" type="x-shader/x-vertex">//
-		precision highp float;
+	<script id="vertexShader" type="x-shader/x-vertex">
+		precision highp float;//highp
 		uniform mat4 modelViewMatrix;
 		uniform mat4 projectionMatrix;
 
 		uniform float skeletonData0[400];//16*25
 		uniform float skeletonData1[400];//16*25
+
+		uniform float skeletonData[3000];//uniform float[]最大长度4088
+		//uniform float skeletonData[9000000000088];
 
 		attribute vec3 position;
 		attribute vec2 inUV;
@@ -32,9 +35,11 @@
 		attribute vec3 mcol3;
 
 		attribute vec4 type;   //type[3]是0或1，用于表示动画
+		attribute vec3 color;
 
         varying vec2 outUV;
         varying vec3 varyType;
+        varying vec3 varyColor;
         varying float type_part;
         varying float myTest00;
 
@@ -51,31 +56,55 @@
 			{
 				outUV = inUV;
 				varyType=vec3(type[0],type[1],type[2]);
+				varyColor=vec3(color[0],color[1],color[2]);
 				myTest00=type[3];
 
 				if(vPosition.y<0.15)type_part=0.0;//下身
 				else if(vPosition.y<0.59) type_part=1.0;//上身
 				else type_part=2.0;//头部
 
-				//判断使用哪一种动画
-				float skeletonData[400];
-				if(type[3]>-0.5&&type[3]<0.5){
-					for(int i=0;i<400;i++)
-						skeletonData[i]=skeletonData0[i];
-				}else{
-					for(int i=0;i<400;i++)
-						skeletonData[i]=skeletonData1[i];
-				}
+				//开始求25个骨骼的变换矩阵
+				/*int time=0;
+				mat4 matrixs0[25];
+				for(int i=0;i<25;i++)//25个骨头
+				{
+					float x,y,z,w,sx,sy,sz,px,py,pz;
+					px=skeletonData[250*time+10*i+0];
+					py=skeletonData[250*time+10*i+1];
+					pz=skeletonData[250*time+10*i+2];
+					x=skeletonData[250*time+10*i+3];
+					y=skeletonData[250*time+10*i+4];
+					z=skeletonData[250*time+10*i+5];
+					w=skeletonData[250*time+10*i+6];
+					sx=skeletonData[250*time+10*i+7];
+					sy=skeletonData[250*time+10*i+8];
+					sz=skeletonData[250*time+10*i+9];
+					//px=py=pz=0.0;
+					sx=sy=sz=1.0;
+
+					float x2 = x + x,	y2 = y + y, z2 = z + z;
+                    float xx = x * x2, xy = x * y2, xz = x * z2;
+                    float yy = y * y2, yz = y * z2, zz = z * z2;
+                    float wx = w * x2, wy = w * y2, wz = w * z2;
+                    matrixs0[i]=mat4(
+                    	( 1.0-( yy + zz ) ) * sx,( xy - wz ) * sy        ,( xz + wy ) * sz        ,px,
+                    	( xy + wz ) * sx        ,( 1.0-( xx + zz ) ) * sy,( yz - wx ) * sz        ,py,
+                    	( xz - wy ) * sx        ,( yz + wx ) * sy        ,( 1.0-( xx + yy ) ) * sz,pz,
+                    	0.0                     ,0.0                     ,0.0                     ,1.0
+                    );
+				}*/
+
+
 
             	mat4 matrixs[25];//25个骨骼的变换矩阵
 				for(int i=0;i<25;i++){
-			   	 matrixs[i]=mat4(//最后一行是：0 0 0 1
-			    	    skeletonData[i*16+0] ,skeletonData[i*16+1] ,skeletonData[i*16+2] ,skeletonData[i*16+3] ,
-			  	      	skeletonData[i*16+4] ,skeletonData[i*16+5] ,skeletonData[i*16+6] ,skeletonData[i*16+7] ,
-			    	    skeletonData[i*16+8] ,skeletonData[i*16+9] ,skeletonData[i*16+10],skeletonData[i*16+11],
-			    	    skeletonData[i*16+12],skeletonData[i*16+13],skeletonData[i*16+14],skeletonData[i*16+15]
+						matrixs[i]=mat4(//最后一行是：0 0 0 1
+				    	    skeletonData0[i*16+0] ,skeletonData0[i*16+1] ,skeletonData0[i*16+2] ,skeletonData0[i*16+3] ,
+				  	      	skeletonData0[i*16+4] ,skeletonData0[i*16+5] ,skeletonData0[i*16+6] ,skeletonData0[i*16+7] ,
+				    	    skeletonData0[i*16+8] ,skeletonData0[i*16+9] ,skeletonData0[i*16+10],skeletonData0[i*16+11],
+				    	    skeletonData0[i*16+12],skeletonData0[i*16+13],skeletonData0[i*16+14],skeletonData0[i*16+15]
 			    	    );
-				}
+				}/**/
 
             	int mySkinIndex[4];//求skinIndex的近似整数，结果存入mySkinIndex
             	for(int j=0;j<4;j++){
@@ -91,17 +120,22 @@
             	//计算动画的变换矩阵：matrix1=skinWeight[0]*matrixs[mySkinIndex[0]]+...
             	mat4 matrix1=mat4(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
             	mat4 matrix_temp;
-            	for(int j=0;j<4;j++){
-                	for(int i=0;i<25;i++)if(i==mySkinIndex[j])matrix_temp=matrixs[i];
-                	matrix1=matrix1+skinWeight[j]*matrix_temp;
-            	}
+            	for(int i=0;i<25;i++)
+	                if(i==mySkinIndex[0]){
+    	                matrix_temp=matrixs[i];
+        	            matrix1=matrix1+skinWeight[0]*matrix_temp;
+            	    }else if(i==mySkinIndex[1]){
+                	    matrix_temp=matrixs[i];
+                    	matrix1=matrix1+skinWeight[1]*matrix_temp;
+	                }else if(i==mySkinIndex[2]){
+    	                matrix_temp=matrixs[i];
+        	            matrix1=matrix1+skinWeight[2]*matrix_temp;
+            	    }else if(i==mySkinIndex[3]){
+                	    matrix_temp=matrixs[i];
+                    	matrix1=matrix1+skinWeight[3]*matrix_temp;
+         	        }
 
-            	for(int i=0;i<4;i++)//对矩阵求转置
-                	for(int j=0;j<4;j++){
-                    	float temp=matrix1[i][j];
-                    	matrix1[i][j]=matrix1[j][i];
-                    	matrix1[j][i]=temp;
-                	}
+
 
 				mat4 matrix2 = mat4(//确定位置//最后一列是 0 0 0 1
 					vec4( mcol0, 0),
@@ -136,6 +170,7 @@
         varying float type_part;
 
         varying vec3 varyType;
+        varying vec3 varyColor;
 		varying vec2 outUV;
 
 		varying float myTest00;
@@ -166,8 +201,25 @@
 			else myTexture =texture2D(text15, outUV);
 
             float mytest0=varyType[1]*0.01;
-            gl_FragColor = vec4 (myTexture.r,myTexture.g,myTexture.b,1.0);//varyType[0]
-            //gl_FragColor =vec4 (0.0,0.5,myTest00,1.0);//myTest00值为0
+            if(floor(type_part)==0.0){//下身
+            	gl_FragColor = vec4 (
+            					 myTexture.r+varyColor[0],
+            					 myTexture.g+varyColor[1],
+            					 myTexture.b+varyColor[2],
+            					 1.0);
+            }else if(floor(type_part)==1.0){//上身
+            	gl_FragColor = vec4 (
+            					 myTexture.r,
+            					 myTexture.g,
+            					 myTexture.b,
+            					 1.0);
+            }else if(floor(type_part)==2.0){//头部
+            	gl_FragColor = vec4 (
+            					 myTexture.r,
+            					 myTexture.g,
+            					 myTexture.b,
+            					 1.0);
+            }
 		}
 </script>
 	<!--无骨骼动画的着色器-->

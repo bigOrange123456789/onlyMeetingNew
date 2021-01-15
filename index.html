@@ -12,14 +12,15 @@
 	<body>
 	<!--有骨骼动画的着色器-->
 	<script id="vertexShader" type="x-shader/x-vertex">
-		precision highp float;
+		precision highp float;//highp
 		uniform mat4 modelViewMatrix;
 		uniform mat4 projectionMatrix;
 
 		uniform float skeletonData0[400];//16*25
 		uniform float skeletonData1[400];//16*25
 
-		uniform float skeletonData[9000];
+		uniform float skeletonData[3000];//uniform float[]最大长度4088
+		//uniform float skeletonData[9000000000088];
 
 		attribute vec3 position;
 		attribute vec2 inUV;

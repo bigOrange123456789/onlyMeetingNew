@@ -4,8 +4,6 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
     this.obj1=new THREE.Object3D();
     this.obj2=new THREE.Object3D();
 
-
-
     this.avatar1=[null,null,null,null];//new Array(4);
     this.avatar2=[null,null,null,null];//new Array(4);
     this.frameFlag=1;//1-8
@@ -167,7 +165,7 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
         loader.load('myModel/avatar/Female.glb', (glb) => {
             //测试
             //console.log(glb);
-            var myMesh=new MySkinnedMesh();
+            var myMesh=new SkinnedMeshController();
             myMesh.init(
                 glb.scene.children[0].children[1],
                 glb.animations[0]
@@ -176,7 +174,7 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
             var peoples=new InstancedGroup(
                 scope.positions.length,
                 [myMesh.mesh,myMesh.mesh],//这些mesh的网格应该一致
-                true
+                glb.animations[0]
             );
             var texSrc=[];
             for(i=0;i<16;i++)texSrc.push('./texture/'+i+'.jpg');
