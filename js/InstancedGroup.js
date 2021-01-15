@@ -290,7 +290,7 @@ function InstancedGroup(instanceCount,originMesh,haveSkeleton){
         this.rotationSet(i,[rot[0]+dRot[0],rot[1]+dRot[1],rot[2]+dRot[2]]);
     }
 }
-function MySkinnedMesh() {
+function MySkinnedMesh() {//这是核心
     this.mesh;
     this.init=function (originMesh,animation) {
 
@@ -312,15 +312,168 @@ function MySkinnedMesh() {
         //this.mesh.add(this.mesh.skeleton.bones[0]);//添加骨骼
         //this.mesh.bind(this.mesh.skeleton,this.mesh.matrixWorld);
 
+        //搞清动画混合器AnimationMixer的作用至关重要
         //开始设置动画//进行这个动画设置的时候可能还只是一个基模
+        //var myBones=this.mesh.skeleton.bones;
+        //console.log(this.mesh.skeleton.boneInverses);
+        console.log(bones);
+        console.log(animation);
         var animationMixer0=new THREE.AnimationMixer(this.mesh);
-        var myAnimationAction0=animationMixer0.clipAction(animation);
-        myAnimationAction0.play();
+        animationMixer0.clipAction(animation).play();//不清楚这里的作用
 
+
+        var t=0;
+        updateAnimation2_1();
+        function updateAnimation3() {//每帧更新一次动画
+            t+=0.2;
+            var time=Math.floor(t%36);
+
+            //console.log(time);
+            for(i=0;i<bones.length;i++) {
+                //position
+                x = animation.tracks[3 * i].values[3 * time];
+                y = animation.tracks[3 * i].values[3 * time + 1];
+                z = animation.tracks[3 * i].values[3 * time + 2];
+                var m1 = new THREE.Matrix4();
+                m1.set(
+                    1, 0, 0, x,
+                    0, 1, 0, y,
+                    0, 0, 1, z,
+                    0, 0, 0, 1
+                );
+                //var test=m1.clone();
+
+                //Quaternion
+                x = animation.tracks[3 * i + 1].values[4 * time];
+                y = animation.tracks[3 * i + 1].values[4 * time + 1];
+                z = animation.tracks[3 * i + 1].values[4 * time + 2];
+                w = animation.tracks[3 * i + 1].values[4 * time + 3];
+                var m2 = new THREE.Matrix4();
+                m2.set(
+                    1 - 2 * y * y - 2 * z * z, 2 * x * y - 2 * z * w, 2 * x * z + 2 * y * w, 0,
+                    2 * x * y + 2 * z * w, 1 - 2 * x * x - 2 * z * z, 2 * y * z - 2 * x * w, 0,
+                    2 * x * z - 2 * y * w, 2 * y * z + 2 * x * w, 1 - 2 * x * x - 2 * y * y, 0,
+                    0, 0, 0, 1
+                );
+                //if(i===0)console.log(m2.elements[0])
+
+                //scale
+                x = animation.tracks[3 * i + 2].values[3 * time];
+                y = animation.tracks[3 * i + 2].values[3 * time + 1];
+                z = animation.tracks[3 * i + 2].values[3 * time + 2];
+                var m3 = new THREE.Matrix4();
+                m3.set(
+                    x, 0, 0, 0,
+                    0, y, 0, 0,
+                    0, 0, z, 0,
+                    0, 0, 0, 1
+                );
+                m1.multiply(m2.multiply(m3));
+                //bones[i].matrix.copy(m1);
+                for(j=0;j<16;j++)
+                    bones[i].matrix.elements[j]=m1.elements[j]*50;
+                //bones[i].matrixWorldNeedsUpdate = true;
+                if(i===0){
+                    //console.log(test,m1)
+                    console.log(bones[0].matrix.elements[0])
+                }
+            }
+            requestAnimationFrame(updateAnimation3);
+        }
+        function updateAnimation2_1() {//每帧更新一次动画
+            t+=0.5;
+            var time=Math.floor(t%36);
+
+            for(i=0;i<bones.length;i++){
+                bones[i].position.set(
+                    animation.tracks[3*i].values[3*time],
+                    animation.tracks[3*i].values[3*time+1],
+                    animation.tracks[3*i].values[3*time+2]
+                );
+                bones[i].setRotationFromQuaternion(
+                    new THREE.Quaternion(
+                        animation.tracks[3*i+1].values[4*time],
+                        animation.tracks[3*i+1].values[4*time+1],
+                        animation.tracks[3*i+1].values[4*time+2],
+                        animation.tracks[3*i+1].values[4*time+3]
+                    )
+                );
+                bones[i].scale.set(
+                    animation.tracks[3*i+2].values[3*time],
+                    animation.tracks[3*i+2].values[3*time+1],
+                    animation.tracks[3*i+2].values[3*time+2]
+                );
+                bones[i].matrix=compose(
+                    bones[i].position, bones[i].quaternion, bones[i].scale
+                );
+                function compose( position, quaternion, scale ) {
+
+                    const te = new THREE.Matrix4();
+
+                    const x = quaternion._x, y = quaternion._y, z = quaternion._z, w = quaternion._w;
+                    const x2 = x + x,	y2 = y + y, z2 = z + z;
+                    const xx = x * x2, xy = x * y2, xz = x * z2;
+                    const yy = y * y2, yz = y * z2, zz = z * z2;
+                    const wx = w * x2, wy = w * y2, wz = w * z2;
+
+                    const sx = scale.x, sy = scale.y, sz = scale.z;
+
+                    te[ 0 ] = ( 1 - ( yy + zz ) ) * sx;
+                    te[ 1 ] = ( xy + wz ) * sx;
+                    te[ 2 ] = ( xz - wy ) * sx;
+                    te[ 3 ] = 0;
+
+                    te[ 4 ] = ( xy - wz ) * sy;
+                    te[ 5 ] = ( 1 - ( xx + zz ) ) * sy;
+                    te[ 6 ] = ( yz + wx ) * sy;
+                    te[ 7 ] = 0;
+
+                    te[ 8 ] = ( xz + wy ) * sz;
+                    te[ 9 ] = ( yz - wx ) * sz;
+                    te[ 10 ] = ( 1 - ( xx + yy ) ) * sz;
+                    te[ 11 ] = 0;
+
+                    te[ 12 ] = position.x;
+                    te[ 13 ] = position.y;
+                    te[ 14 ] = position.z;
+                    te[ 15 ] = 1;
+                    return te;
+                }
+            }
+            requestAnimationFrame(updateAnimation2);
+        }
+        function updateAnimation2() {//每帧更新一次动画
+            t+=0.2;
+            var time=Math.floor(t%36);
+
+            for(i=0;i<bones.length;i++){
+                bones[i].position.set(
+                    animation.tracks[3*i].values[3*time],
+                    animation.tracks[3*i].values[3*time+1],
+                    animation.tracks[3*i].values[3*time+2]
+                );
+                bones[i].setRotationFromQuaternion(
+                    new THREE.Quaternion(
+                        animation.tracks[3*i+1].values[4*time],
+                        animation.tracks[3*i+1].values[4*time+1],
+                        animation.tracks[3*i+1].values[4*time+2],
+                        animation.tracks[3*i+1].values[4*time+3]
+                    )
+                );
+                bones[i].scale.set(
+                    animation.tracks[3*i+2].values[3*time],
+                    animation.tracks[3*i+2].values[3*time+1],
+                    animation.tracks[3*i+2].values[3*time+2]
+                );
+                bones[i].updateMatrix();
+            }
+            requestAnimationFrame(updateAnimation2);
+        }
         function updateAnimation() {//每帧更新一次动画
             animationMixer0.update(0.05);
             requestAnimationFrame(updateAnimation);
-        }updateAnimation();
+        }
+
         function cloneBones(rootBone , boneArray){//用于加载完gltf文件后的骨骼动画的处理
             var rootBoneClone=rootBone.clone();
             rootBoneClone.children.splice(0,rootBoneClone.children.length);

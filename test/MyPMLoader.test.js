@@ -178,4 +178,4 @@ MyPMLoaderTest.prototype={
     },
 }
 var myMyPMLoaderTest=new MyPMLoaderTest();
-myMyPMLoaderTest.test3();
+myMyPMLoaderTest.test1();
