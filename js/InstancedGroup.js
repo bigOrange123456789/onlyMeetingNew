@@ -1,8 +1,10 @@
-function InstancedGroup(instanceCount,originMesh,haveSkeleton){
+function InstancedGroup(instanceCount,originMesh,animationClip ){
     //若有骨骼，则需要源mesh是skinnedMesh
     this.obj=new THREE.Object3D();
     this.instanceCount=instanceCount;
-    this.haveSkeleton=haveSkeleton;
+    this.animationClip=animationClip;
+    if(typeof(animationClip)=="undefined"||animationClip===false)this.haveSkeleton=flase;
+    else this.haveSkeleton=true;
     this.originMeshs=originMesh;//这是一个数组，每个元素播放一种动画
 
     this.mesh=null;//实例化渲染对象的网格
@@ -30,17 +32,23 @@ function InstancedGroup(instanceCount,originMesh,haveSkeleton){
 
         var geometry = new THREE.InstancedBufferGeometry();//console.log(geometry);
         geometry.instanceCount = this.instanceCount; // set so its initalized for dat.GUI, will be set in first draw otherwise
+        //以下是使用geometry设置setAttribute(BufferAttribute/InstancedBufferAttribute)
+        //BufferAttribute为每个点分配一组数据:先准备数据再生成空间
+        //1-2
         geometry.setAttribute('position', this.originMeshs[0].geometry.attributes.position);//Float32Array
         geometry.setAttribute('inUV',this.originMeshs[0].geometry.attributes.uv);
-        if(this.haveSkeleton){
-            geometry.setAttribute('skinIndex',this.originMeshs[0].geometry.attributes.skinIndex);
-            geometry.setAttribute('skinWeight',this.originMeshs[0].geometry.attributes.skinWeight);
-        }
+        //3
         var randoms=new Float32Array(this.originMeshs[0].geometry.attributes.position.count);
         for(i=0;i<randoms.length;i++)
             randoms[i]=Math.random();
         geometry.setAttribute('random',new THREE.BufferAttribute(randoms,1));
-
+        //4-5
+        if(this.haveSkeleton){
+            geometry.setAttribute('skinIndex',this.originMeshs[0].geometry.attributes.skinIndex);
+            geometry.setAttribute('skinWeight',this.originMeshs[0].geometry.attributes.skinWeight);
+        }
+        //InstancedBufferAttribute为每个对象一组数据：先生成空间，再设置数据
+        //6-11
         this.mcol0=new THREE.InstancedBufferAttribute(new Float32Array(this.instanceCount * 3), 3);
         this.mcol1=new THREE.InstancedBufferAttribute(new Float32Array(this.instanceCount * 3), 3);
         this.mcol2=new THREE.InstancedBufferAttribute(new Float32Array(this.instanceCount * 3), 3);
@@ -48,7 +56,6 @@ function InstancedGroup(instanceCount,originMesh,haveSkeleton){
 
         this.type=new THREE.InstancedBufferAttribute(new Uint16Array(this.instanceCount*4), 4);//头部、上衣、裤子、动作
         this.colors=new THREE.InstancedBufferAttribute(new Float32Array(this.instanceCount*3), 3);
-
 
         for(var i=0;i<this.instanceCount;i++){
                 this.mcol0.setXYZ(i, 1,0,0);//随机长宽高
@@ -76,6 +83,7 @@ function InstancedGroup(instanceCount,originMesh,haveSkeleton){
         geometry.setAttribute('type', this.type);
         geometry.setAttribute('color', this.colors);
 
+        //以下是根据material设置的uniform
         let texs=[];
         for(i=0;i<texs_length;i++){
             texs.push( THREE.ImageUtils.loadTexture(texSrc[i]) ) ;
@@ -90,6 +98,26 @@ function InstancedGroup(instanceCount,originMesh,haveSkeleton){
                 for(j=0;j<this.originMeshs[0].skeleton.boneInverses[i].length;j++)
                     skeletonData.push(0);//全是0矩阵
             }
+
+            var skeletonDataArray=[];//10*25*36//400
+            //console.log(this.originMeshs);
+            for (i = 0; i < this.originMeshs[0].skeleton.boneInverses.length; i++)
+                for (j = 0; j < this.animationClip.tracks[0].times; j++) {//这个36是时间数
+                    //for(k=0;k<10;k++)
+                    //position
+                    skeletonDataArray.push(this.animationClip.tracks[i].values[3*j]);
+                    skeletonDataArray.push(this.animationClip.tracks[i].values[3*j+1]);
+                    skeletonDataArray.push(this.animationClip.tracks[i].values[3*j+2]);
+                    //quaternion
+                    skeletonDataArray.push(this.animationClip.tracks[i+1].values[4*j]);
+                    skeletonDataArray.push(this.animationClip.tracks[i+1].values[4*j+1]);
+                    skeletonDataArray.push(this.animationClip.tracks[i+1].values[4*j+2]);
+                    skeletonDataArray.push(this.animationClip.tracks[i+1].values[4*j+3]);
+                    //scale
+                    skeletonDataArray.push(this.animationClip.tracks[i+2].values[3*j]);
+                    skeletonDataArray.push(this.animationClip.tracks[i+2].values[3*j+1]);
+                    skeletonDataArray.push(this.animationClip.tracks[i+2].values[3*j+2]);
+                }
 
             material = new THREE.RawShaderMaterial({//原始着色器材质
                 uniforms: {
@@ -112,6 +140,8 @@ function InstancedGroup(instanceCount,originMesh,haveSkeleton){
 
                     ,skeletonData0:{value: skeletonData}
                     ,skeletonData1:{value: skeletonData}
+
+                    ,skeletonData:{value: skeletonDataArray}
                 },
                 vertexShader: document.getElementById('vertexShader').textContent,
                 fragmentShader: document.getElementById('fragmentShader').textContent,
@@ -141,14 +171,6 @@ function InstancedGroup(instanceCount,originMesh,haveSkeleton){
                 fragmentShader: document.getElementById('fragmentShader0').textContent,
                 side: THREE.DoubleSide
             });
-        }
-
-
-
-
-        if(this.haveSkeleton){
-            geometry.setAttribute('skinIndex' ,this.originMeshs[0].geometry.attributes.skinIndex);
-            geometry.setAttribute('skinWeight',this.originMeshs[0].geometry.attributes.skinWeight);
         }
 
         this.mesh = new THREE.Mesh(geometry, material);//重要

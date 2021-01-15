@@ -140,7 +140,7 @@ InstancedGroupTest.prototype={
                         var peoples = new InstancedGroup(
                             2,
                             [myMesh.mesh,myMesh.mesh],//这些mesh的网格应该一致
-                            true
+                            glb.animations[0]
                         );
                         var texSrc = [];
                         for (i = 0; i < 16; i++) texSrc.push('./texture/' + i + '.jpg');
