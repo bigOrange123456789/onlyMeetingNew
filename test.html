@@ -19,7 +19,7 @@
 		uniform float skeletonData0[400];//16*25
 		uniform float skeletonData1[400];//16*25
 
-		//uniform float skeletonData[3000];//uniform float[]最大长度4088
+		uniform float skeletonData[3000];//uniform float[]最大长度4088
 		//uniform float skeletonData[9000000000088];
 
 		attribute vec3 position;
@@ -44,6 +44,7 @@
         varying float type_part;
         varying float myTest00;
 
+
 		void main(){
 			vec3 vPosition = position;
 			//if(random<0.8)//显示百分之80三角面
@@ -65,7 +66,7 @@
 				else type_part=2.0;//头部
 
 				//开始求25个骨骼的变换矩阵
-				/*int time=0;
+				int time=0;
 				mat4 matrixs0[25];
 				for(int i=0;i<25;i++)//25个骨头
 				{
@@ -81,7 +82,7 @@
 					sy=skeletonData[250*time+10*i+8];
 					sz=skeletonData[250*time+10*i+9];
 					//px=py=pz=0.0;
-					sx=sy=sz=1.0;
+					//sx=sy=sz=1.0;
 
 					float x2 = x + x,	y2 = y + y, z2 = z + z;
                     float xx = x * x2, xy = x * y2, xz = x * z2;
@@ -93,7 +94,7 @@
                     	( xz - wy ) * sx        ,( yz + wx ) * sy        ,( 1.0-( xx + yy ) ) * sz,pz,
                     	0.0                     ,0.0                     ,0.0                     ,1.0
                     );
-				}*/
+				}/**/
 
             	/*mat4 matrixs[25];//25个骨骼的变换矩阵
 				for(int i=0;i<25;i++){

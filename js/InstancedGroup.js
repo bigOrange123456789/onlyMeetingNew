@@ -96,7 +96,7 @@ function InstancedGroup(instanceCount,originMesh,animationClip ){
 
         geometry.setAttribute('type', this.type);
         geometry.setAttribute('color', this.colors);
-        geometry.setAttribute('skeletonData', this.skeletonData);
+        //geometry.setAttribute('skeletonData', this.skeletonData);
 
         //以下是根据material设置的uniform
         let texs=[];
@@ -134,6 +134,8 @@ function InstancedGroup(instanceCount,originMesh,animationClip ){
 
                     ,skeletonData0:{value: skeletonData}
                     ,skeletonData1:{value: skeletonData}
+
+                    ,skeletonData:{value: skeletonDataArray}
                 },
                 vertexShader: document.getElementById('vertexShader').textContent,
                 fragmentShader: document.getElementById('fragmentShader').textContent,
