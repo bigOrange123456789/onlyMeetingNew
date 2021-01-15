@@ -44,6 +44,9 @@
         varying float myTest00;
 
 		void main(){
+		int relation_parent=[
+			0,1,2,3,4,5,3,7,8,9,3,11,12,13,0,15,16,17,18,0,20,21,22,23
+		];
 			vec3 vPosition = position;
 			//if(random<0.8)//显示百分之80三角面
 			//if(vPosition.y<1.8)//全身显示
@@ -63,35 +66,48 @@
 				else if(vPosition.y<0.59) type_part=1.0;//上身
 				else type_part=2.0;//头部
 
-				//判断使用哪一种动画
-				/*float skeletonData[400];
-				if(type[3]>-0.5&&type[3]<0.5){
-					for(int i=0;i<400;i++)
-						skeletonData[i]=skeletonData0[i];
-				}else{
-					for(int i=0;i<400;i++)
-						skeletonData[i]=skeletonData1[i];
+				//开始求25个骨骼的变换矩阵
+				/*int time=0;
+				mat4 matrixs0[25];
+				for(int i=0;i<25;i++)//25个骨头
+				{
+					float x,y,z,w,sx,sy,sz,px,py,pz;
+					px=skeletonData[250*time+10*i+0];
+					py=skeletonData[250*time+10*i+1];
+					pz=skeletonData[250*time+10*i+2];
+					x=skeletonData[250*time+10*i+3];
+					y=skeletonData[250*time+10*i+4];
+					z=skeletonData[250*time+10*i+5];
+					w=skeletonData[250*time+10*i+6];
+					sx=skeletonData[250*time+10*i+7];
+					sy=skeletonData[250*time+10*i+8];
+					sz=skeletonData[250*time+10*i+9];
+					//px=py=pz=0.0;
+					sx=sy=sz=1.0;
+
+					float x2 = x + x,	y2 = y + y, z2 = z + z;
+                    float xx = x * x2, xy = x * y2, xz = x * z2;
+                    float yy = y * y2, yz = y * z2, zz = z * z2;
+                    float wx = w * x2, wy = w * y2, wz = w * z2;
+                    matrixs0[i]=mat4(
+                    	( 1.0-( yy + zz ) ) * sx,( xy - wz ) * sy        ,( xz + wy ) * sz        ,px,
+                    	( xy + wz ) * sx        ,( 1.0-( xx + zz ) ) * sy,( yz - wx ) * sz        ,py,
+                    	( xz - wy ) * sx        ,( yz + wx ) * sy        ,( 1.0-( xx + yy ) ) * sz,pz,
+                    	0.0                     ,0.0                     ,0.0                     ,1.0
+                    );
 				}*/
+
+
 
             	mat4 matrixs[25];//25个骨骼的变换矩阵
 				for(int i=0;i<25;i++){
-					//if(type[3]>-0.5&&type[3]<0.5){
 						matrixs[i]=mat4(//最后一行是：0 0 0 1
 				    	    skeletonData0[i*16+0] ,skeletonData0[i*16+1] ,skeletonData0[i*16+2] ,skeletonData0[i*16+3] ,
 				  	      	skeletonData0[i*16+4] ,skeletonData0[i*16+5] ,skeletonData0[i*16+6] ,skeletonData0[i*16+7] ,
 				    	    skeletonData0[i*16+8] ,skeletonData0[i*16+9] ,skeletonData0[i*16+10],skeletonData0[i*16+11],
 				    	    skeletonData0[i*16+12],skeletonData0[i*16+13],skeletonData0[i*16+14],skeletonData0[i*16+15]
 			    	    );
-					//}else{
-						/*matrixs[i]=mat4(//最后一行是：0 0 0 1
-				    	    skeletonData1[i*16+0] ,skeletonData1[i*16+1] ,skeletonData1[i*16+2] ,skeletonData1[i*16+3] ,
-				  	      	skeletonData1[i*16+4] ,skeletonData1[i*16+5] ,skeletonData1[i*16+6] ,skeletonData1[i*16+7] ,
-				    	    skeletonData1[i*16+8] ,skeletonData1[i*16+9] ,skeletonData1[i*16+10],skeletonData1[i*16+11],
-				    	    skeletonData1[i*16+12],skeletonData1[i*16+13],skeletonData1[i*16+14],skeletonData1[i*16+15]
-			    	    );*/
-					//}
-
-				}
+				}/**/
 
             	int mySkinIndex[4];//求skinIndex的近似整数，结果存入mySkinIndex
             	for(int j=0;j<4;j++){
@@ -121,6 +137,8 @@
                 	    matrix_temp=matrixs[i];
                     	matrix1=matrix1+skinWeight[3]*matrix_temp;
          	        }
+
+
 
 				mat4 matrix2 = mat4(//确定位置//最后一列是 0 0 0 1
 					vec4( mcol0, 0),

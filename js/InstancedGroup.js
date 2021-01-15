@@ -20,6 +20,7 @@ function InstancedGroup(instanceCount,originMesh,animationClip ){
     this.type;
     this.colors;
     this.speeds=[];
+    this.skeletonData;
 
     this.dummy=new THREE.Object3D();//dummy仿制品//工具对象
 
@@ -32,7 +33,7 @@ function InstancedGroup(instanceCount,originMesh,animationClip ){
         this.originMeshs[0]=this.meshController.mesh;
 
         for(var i=0;i<this.instanceCount;i++){
-            this.speeds.push(1);
+            this.speeds.push(Math.random()+0.5);
             this.scales.push([1,1,1]);
             this.rotations.push([0,0,0]);
         }
@@ -67,8 +68,10 @@ function InstancedGroup(instanceCount,originMesh,animationClip ){
 
         this.type=new THREE.InstancedBufferAttribute(new Uint16Array(this.instanceCount*4), 4);//头部、上衣、裤子、动作
         this.colors=new THREE.InstancedBufferAttribute(new Float32Array(this.instanceCount*3), 3);
+        this.skeletonData=new THREE.InstancedBufferAttribute(new Float32Array(this.instanceCount*400), 400);//400=25*16//25个骨头
 
-        for(var i=0;i<this.instanceCount;i++){
+
+        for(i=0;i<this.instanceCount;i++){
                 this.mcol0.setXYZ(i, 1,0,0);//随机长宽高
                 this.mcol1.setXYZ(i, 0,1,0);//四元数、齐次坐标
                 this.mcol2.setXYZ(i, 0,0,1);//mcol3.setXYZ(i, 0,0,0);
@@ -93,6 +96,7 @@ function InstancedGroup(instanceCount,originMesh,animationClip ){
 
         geometry.setAttribute('type', this.type);
         geometry.setAttribute('color', this.colors);
+        geometry.setAttribute('skeletonData', this.skeletonData);
 
         //以下是根据material设置的uniform
         let texs=[];
@@ -109,27 +113,6 @@ function InstancedGroup(instanceCount,originMesh,animationClip ){
                 for(j=0;j<this.originMeshs[0].skeleton.boneInverses[i].length;j++)
                     skeletonData.push(0);//全是0矩阵
             }
-
-            var skeletonDataArray=[];//10*25*36//400
-            //console.log(this.originMeshs);
-            for (j = 0; j < this.animationClip.tracks[0].times.length; j+=3)
-                for (i = 0; i < this.originMeshs[0].skeleton.boneInverses.length/3; i+=3)
-                {//这个36是时间数
-                    //for(k=0;k<10;k++)
-                    //position
-                    skeletonDataArray.push(0);//this.animationClip.tracks[i].values[3*j]);
-                    skeletonDataArray.push(0);//this.animationClip.tracks[i].values[3*j+1]);
-                    skeletonDataArray.push(0);//this.animationClip.tracks[i].values[3*j+2]);
-                    //quaternion
-                    skeletonDataArray.push(this.animationClip.tracks[i+1].values[4*j]);
-                    skeletonDataArray.push(this.animationClip.tracks[i+1].values[4*j+1]);
-                    skeletonDataArray.push(this.animationClip.tracks[i+1].values[4*j+2]);
-                    skeletonDataArray.push(this.animationClip.tracks[i+1].values[4*j+3]);
-                    //scale
-                    skeletonDataArray.push(1);//this.animationClip.tracks[i+2].values[3*j]);
-                    skeletonDataArray.push(1);//this.animationClip.tracks[i+2].values[3*j+1]);
-                    skeletonDataArray.push(1);//this.animationClip.tracks[i+2].values[3*j+2]);
-                }
             material = new THREE.RawShaderMaterial({//原始着色器材质
                 uniforms: {
                     text0: {type: 't', value: texs[0]}//textureHandle
@@ -151,8 +134,6 @@ function InstancedGroup(instanceCount,originMesh,animationClip ){
 
                     ,skeletonData0:{value: skeletonData}
                     ,skeletonData1:{value: skeletonData}
-
-                    ,skeletonData:{value: skeletonDataArray}
                 },
                 vertexShader: document.getElementById('vertexShader').textContent,
                 fragmentShader: document.getElementById('fragmentShader').textContent,
@@ -188,33 +169,47 @@ function InstancedGroup(instanceCount,originMesh,animationClip ){
         this.mesh.frustumCulled=false;
 
         if(this.haveSkeleton){
-            //this.handleSkeletonAnimation(geometry);
-            this.handleSkeletonAnimation2(this.animationClip);
+            this.handleSkeletonAnimation();
+            var scope=this;
+            //window.setInterval(scope.handleSkeletonAnimation,100);
+            this.handleSkeletonAnimation();
             for(var i=0;i<this.originMeshs.length;i++){
                 this.originMeshs[i].visible=false;
                 this.obj.add(this.originMeshs[i]);//threeJS中模型的位置尺寸角度变化，似乎是通过骨骼来实现的
             }
         }
 
-
-
-
         this.obj.add(this.mesh);
 
         //完成进行实例化渲染
     }
-    this.handleSkeletonAnimation2=function(animation){
+    this.handleSkeletonAnimation2=function(){
         var scope=this;//scope范围//为了避免this重名
         var t=0;
         updateAnimation();
         function updateAnimation() {//每帧更新一次动画
             requestAnimationFrame(updateAnimation);
             t+=0.5;//t=0;
-            var time=Math.floor(t%36);
+            //var time=Math.floor(t%36);
 
-            //var time=Math.floor(t2*scope.speed%36);
+            for(k=0;k<scope.instanceCount;k++){
+                var time=Math.floor(t*scope.speeds[k]%36);
+                scope.meshController.setTime(time);
+                skeletonData0=[];//16*25//400
+                for(i=0;i<scope.originMeshs[0].skeleton.boneInverses.length;i++){
+                    temp1=scope.originMeshs[0].skeleton.boneInverses[i];//.toArray();
+                    temp2=scope.originMeshs[0].skeleton.bones[i].matrixWorld.clone();//.toArray();
+                    temp=temp2.multiply(temp1);//逆矩阵在右
+                    temp=temp.toArray();
+                    for(j=0;j<temp.length;j++)
+                        skeletonData0.push(temp[j]);
+                }
+                /*for(var i2=0;i2<400;i++)
+                scope.skeletonData.array[k+i2]=skeletonData0[i2];*/
+            }
+            time=Math.floor(t*scope.speeds[0]%36);
             scope.meshController.setTime(time);
-            var skeletonData0=[];//16*25//400
+            skeletonData0=[];//16*25//400
             for(i=0;i<scope.originMeshs[0].skeleton.boneInverses.length;i++){
                 temp1=scope.originMeshs[0].skeleton.boneInverses[i];//.toArray();
                 temp2=scope.originMeshs[0].skeleton.bones[i].matrixWorld.clone();//.toArray();
@@ -224,28 +219,192 @@ function InstancedGroup(instanceCount,originMesh,animationClip ){
                     skeletonData0.push(temp[j]);
             }
             scope.mesh.material.uniforms.skeletonData0={value: skeletonData0};
-        }
-        function compose(x,y,z,w,sx,sy,sz,px,py,pz ) {
-            var x2 = x + x,	y2 = y + y, z2 = z + z;
-            var xx = x * x2, xy = x * y2, xz = x * z2;
-            var yy = y * y2, yz = y * z2, zz = z * z2;
-            var wx = w * x2, wy = w * y2, wz = w * z2;
-            te = new THREE.Matrix4();
-            te.set(
-                ( 1.0-( yy + zz ) ) * sx,( xy - wz ) * sy        ,( xz + wy ) * sz        ,px,
-                ( xy + wz ) * sx        ,( 1.0-( xx + zz ) ) * sy,( yz - wx ) * sz        ,py,
-                ( xz - wy ) * sx        ,( yz + wx ) * sy        ,( 1.0-( xx + yy ) ) * sz,pz,
-                0.0                     ,0.0                     ,0.0                     ,1.0
-            );
-            return te;
         }
     }
-    this.handleSkeletonAnimation=function(geometry){
+    this.handleSkeletonAnimation=function(){
         var scope=this;//scope范围//为了避免this重名
+        var t=0;
+        updateAnimation();
         function updateAnimation() {//每帧更新一次动画
             requestAnimationFrame(updateAnimation);
+            t+=0.125;//t=0;
+            //if(t%1!==0)return;
+            //var time=Math.floor(t%36);
 
-            var skeletonData0=[];//16*25//400
+            //var skeletonDatas=[];
+            for(k=0;k<scope.instanceCount;k++){
+                var time=Math.floor(t*scope.speeds[k]%36);
+                scope.meshController.setTime(time);
+                skeletonData0=[];//16*25//400
+                for(i=0;i<scope.originMeshs[0].skeleton.boneInverses.length;i++){
+                    temp1=scope.originMeshs[0].skeleton.boneInverses[i];//.toArray();
+                    //temp2=scope.originMeshs[0].skeleton.bones[i].matrixWorld.clone();//.toArray();
+                    if(i===0){
+                        temp2=scope.originMeshs[0].skeleton.bones[0].matrix.clone();
+                    }else if(i===1){
+                        temp2=scope.originMeshs[0].skeleton.bones[0].matrix.clone();
+                        temp2=temp2.multiply(scope.originMeshs[0].skeleton.bones[1].matrix.clone());
+                    }else if(i===2){
+                        temp2=scope.originMeshs[0].skeleton.bones[0].matrix.clone();
+                        temp2=temp2.multiply(scope.originMeshs[0].skeleton.bones[1].matrix.clone());
+                        temp2=temp2.multiply(scope.originMeshs[0].skeleton.bones[2].matrix.clone());
+                    }else if(i===3){
+                        temp2=scope.originMeshs[0].skeleton.bones[0].matrix.clone();
+                        temp2=temp2.multiply(scope.originMeshs[0].skeleton.bones[1].matrix.clone());
+                        temp2=temp2.multiply(scope.originMeshs[0].skeleton.bones[2].matrix.clone());
+                        temp2=temp2.multiply(scope.originMeshs[0].skeleton.bones[3].matrix.clone());
+                    }else if(i===4){
+                        temp2=scope.originMeshs[0].skeleton.bones[0].matrix.clone();
+                        temp2=temp2.multiply(scope.originMeshs[0].skeleton.bones[1].matrix.clone());
+                        temp2=temp2.multiply(scope.originMeshs[0].skeleton.bones[2].matrix.clone());
+                        temp2=temp2.multiply(scope.originMeshs[0].skeleton.bones[3].matrix.clone());
+                        temp2=temp2.multiply(scope.originMeshs[0].skeleton.bones[4].matrix.clone());
+                    }else if(i===5){
+                        temp2=scope.originMeshs[0].skeleton.bones[0].matrix.clone();
+                        temp2=temp2.multiply(scope.originMeshs[0].skeleton.bones[1].matrix.clone());
+                        temp2=temp2.multiply(scope.originMeshs[0].skeleton.bones[2].matrix.clone());
+                        temp2=temp2.multiply(scope.originMeshs[0].skeleton.bones[3].matrix.clone());
+                        temp2=temp2.multiply(scope.originMeshs[0].skeleton.bones[4].matrix.clone());
+                        temp2=temp2.multiply(scope.originMeshs[0].skeleton.bones[5].matrix.clone());
+                    }else if(i===6){
+                        temp2=scope.originMeshs[0].skeleton.bones[0].matrix.clone();
+                        temp2=temp2.multiply(scope.originMeshs[0].skeleton.bones[1].matrix.clone());
+                        temp2=temp2.multiply(scope.originMeshs[0].skeleton.bones[2].matrix.clone());
+                        temp2=temp2.multiply(scope.originMeshs[0].skeleton.bones[3].matrix.clone());
+                        temp2=temp2.multiply(scope.originMeshs[0].skeleton.bones[4].matrix.clone());
+                        temp2=temp2.multiply(scope.originMeshs[0].skeleton.bones[5].matrix.clone());
+                        temp2=temp2.multiply(scope.originMeshs[0].skeleton.bones[6].matrix.clone());
+                    }else if(i===7){
+                        temp2=scope.originMeshs[0].skeleton.bones[0].matrix.clone();
+                        temp2=temp2.multiply(scope.originMeshs[0].skeleton.bones[1].matrix.clone());
+                        temp2=temp2.multiply(scope.originMeshs[0].skeleton.bones[2].matrix.clone());
+                        temp2=temp2.multiply(scope.originMeshs[0].skeleton.bones[3].matrix.clone());
+                        temp2=temp2.multiply(scope.originMeshs[0].skeleton.bones[7].matrix.clone());
+                    }else if(i===8){
+                        temp2=scope.originMeshs[0].skeleton.bones[0].matrix.clone();
+                        temp2=temp2.multiply(scope.originMeshs[0].skeleton.bones[1].matrix.clone());
+                        temp2=temp2.multiply(scope.originMeshs[0].skeleton.bones[2].matrix.clone());
+                        temp2=temp2.multiply(scope.originMeshs[0].skeleton.bones[3].matrix.clone());
+                        temp2=temp2.multiply(scope.originMeshs[0].skeleton.bones[7].matrix.clone());
+                        temp2=temp2.multiply(scope.originMeshs[0].skeleton.bones[8].matrix.clone());
+                    }else if(i===9){
+                        temp2=scope.originMeshs[0].skeleton.bones[0].matrix.clone();
+                        temp2=temp2.multiply(scope.originMeshs[0].skeleton.bones[1].matrix.clone());
+                        temp2=temp2.multiply(scope.originMeshs[0].skeleton.bones[2].matrix.clone());
+                        temp2=temp2.multiply(scope.originMeshs[0].skeleton.bones[3].matrix.clone());
+                        temp2=temp2.multiply(scope.originMeshs[0].skeleton.bones[7].matrix.clone());
+                        temp2=temp2.multiply(scope.originMeshs[0].skeleton.bones[8].matrix.clone());
+                        temp2=temp2.multiply(scope.originMeshs[0].skeleton.bones[9].matrix.clone());
+                    }else if(i===10){
+                        temp2=scope.originMeshs[0].skeleton.bones[0].matrix.clone();
+                        temp2=temp2.multiply(scope.originMeshs[0].skeleton.bones[1].matrix.clone());
+                        temp2=temp2.multiply(scope.originMeshs[0].skeleton.bones[2].matrix.clone());
+                        temp2=temp2.multiply(scope.originMeshs[0].skeleton.bones[3].matrix.clone());
+                        temp2=temp2.multiply(scope.originMeshs[0].skeleton.bones[7].matrix.clone());
+                        temp2=temp2.multiply(scope.originMeshs[0].skeleton.bones[8].matrix.clone());
+                        temp2=temp2.multiply(scope.originMeshs[0].skeleton.bones[9].matrix.clone());
+                        temp2=temp2.multiply(scope.originMeshs[0].skeleton.bones[10].matrix.clone());
+                    }else if(i===11){
+                        temp2=scope.originMeshs[0].skeleton.bones[0].matrix.clone();
+                        temp2=temp2.multiply(scope.originMeshs[0].skeleton.bones[1].matrix.clone());
+                        temp2=temp2.multiply(scope.originMeshs[0].skeleton.bones[2].matrix.clone());
+                        temp2=temp2.multiply(scope.originMeshs[0].skeleton.bones[3].matrix.clone());
+                        temp2=temp2.multiply(scope.originMeshs[0].skeleton.bones[11].matrix.clone());
+                    }else if(i===12){
+                        temp2=scope.originMeshs[0].skeleton.bones[0].matrix.clone();
+                        temp2=temp2.multiply(scope.originMeshs[0].skeleton.bones[1].matrix.clone());
+                        temp2=temp2.multiply(scope.originMeshs[0].skeleton.bones[2].matrix.clone());
+                        temp2=temp2.multiply(scope.originMeshs[0].skeleton.bones[3].matrix.clone());
+                        temp2=temp2.multiply(scope.originMeshs[0].skeleton.bones[11].matrix.clone());
+                        temp2=temp2.multiply(scope.originMeshs[0].skeleton.bones[12].matrix.clone());
+                    }else if(i===13){
+                        temp2=scope.originMeshs[0].skeleton.bones[0].matrix.clone();
+                        temp2=temp2.multiply(scope.originMeshs[0].skeleton.bones[1].matrix.clone());
+                        temp2=temp2.multiply(scope.originMeshs[0].skeleton.bones[2].matrix.clone());
+                        temp2=temp2.multiply(scope.originMeshs[0].skeleton.bones[3].matrix.clone());
+                        temp2=temp2.multiply(scope.originMeshs[0].skeleton.bones[11].matrix.clone());
+                        temp2=temp2.multiply(scope.originMeshs[0].skeleton.bones[12].matrix.clone());
+                        temp2=temp2.multiply(scope.originMeshs[0].skeleton.bones[13].matrix.clone());
+                    }else if(i===14){
+                        temp2=scope.originMeshs[0].skeleton.bones[0].matrix.clone();
+                        temp2=temp2.multiply(scope.originMeshs[0].skeleton.bones[1].matrix.clone());
+                        temp2=temp2.multiply(scope.originMeshs[0].skeleton.bones[2].matrix.clone());
+                        temp2=temp2.multiply(scope.originMeshs[0].skeleton.bones[3].matrix.clone());
+                        temp2=temp2.multiply(scope.originMeshs[0].skeleton.bones[11].matrix.clone());
+                        temp2=temp2.multiply(scope.originMeshs[0].skeleton.bones[12].matrix.clone());
+                        temp2=temp2.multiply(scope.originMeshs[0].skeleton.bones[13].matrix.clone());
+                        temp2=temp2.multiply(scope.originMeshs[0].skeleton.bones[14].matrix.clone());
+                    }else if(i===15){
+                        temp2=scope.originMeshs[0].skeleton.bones[0].matrix.clone();
+                        temp2=temp2.multiply(scope.originMeshs[0].skeleton.bones[15].matrix.clone());
+                    }else if(i===16){
+                        temp2=scope.originMeshs[0].skeleton.bones[0].matrix.clone();
+                        temp2=temp2.multiply(scope.originMeshs[0].skeleton.bones[15].matrix.clone());
+                        temp2=temp2.multiply(scope.originMeshs[0].skeleton.bones[16].matrix.clone());
+                    }else if(i===17){
+                        temp2=scope.originMeshs[0].skeleton.bones[0].matrix.clone();
+                        temp2=temp2.multiply(scope.originMeshs[0].skeleton.bones[15].matrix.clone());
+                        temp2=temp2.multiply(scope.originMeshs[0].skeleton.bones[16].matrix.clone());
+                        temp2=temp2.multiply(scope.originMeshs[0].skeleton.bones[17].matrix.clone());
+                    }else if(i===18){
+                        temp2=scope.originMeshs[0].skeleton.bones[0].matrix.clone();
+                        temp2=temp2.multiply(scope.originMeshs[0].skeleton.bones[15].matrix.clone());
+                        temp2=temp2.multiply(scope.originMeshs[0].skeleton.bones[16].matrix.clone());
+                        temp2=temp2.multiply(scope.originMeshs[0].skeleton.bones[17].matrix.clone());
+                        temp2=temp2.multiply(scope.originMeshs[0].skeleton.bones[18].matrix.clone());
+                    }else if(i===19){
+                        temp2=scope.originMeshs[0].skeleton.bones[0].matrix.clone();
+                        temp2=temp2.multiply(scope.originMeshs[0].skeleton.bones[15].matrix.clone());
+                        temp2=temp2.multiply(scope.originMeshs[0].skeleton.bones[16].matrix.clone());
+                        temp2=temp2.multiply(scope.originMeshs[0].skeleton.bones[17].matrix.clone());
+                        temp2=temp2.multiply(scope.originMeshs[0].skeleton.bones[18].matrix.clone());
+                        temp2=temp2.multiply(scope.originMeshs[0].skeleton.bones[19].matrix.clone());
+                    }else if(i===20){
+                        temp2=scope.originMeshs[0].skeleton.bones[0].matrix.clone();
+                        temp2=temp2.multiply(scope.originMeshs[0].skeleton.bones[20].matrix.clone());
+                    }else if(i===21){
+                        temp2=scope.originMeshs[0].skeleton.bones[0].matrix.clone();
+                        temp2=temp2.multiply(scope.originMeshs[0].skeleton.bones[20].matrix.clone());
+                        temp2=temp2.multiply(scope.originMeshs[0].skeleton.bones[21].matrix.clone());
+                    }else if(i===22){
+                        temp2=scope.originMeshs[0].skeleton.bones[0].matrix.clone();
+                        temp2=temp2.multiply(scope.originMeshs[0].skeleton.bones[20].matrix.clone());
+                        temp2=temp2.multiply(scope.originMeshs[0].skeleton.bones[21].matrix.clone());
+                        temp2=temp2.multiply(scope.originMeshs[0].skeleton.bones[22].matrix.clone());
+                    }else if(i===23){
+                        temp2=scope.originMeshs[0].skeleton.bones[0].matrix.clone();
+                        temp2=temp2.multiply(scope.originMeshs[0].skeleton.bones[20].matrix.clone());
+                        temp2=temp2.multiply(scope.originMeshs[0].skeleton.bones[21].matrix.clone());
+                        temp2=temp2.multiply(scope.originMeshs[0].skeleton.bones[22].matrix.clone());
+                        temp2=temp2.multiply(scope.originMeshs[0].skeleton.bones[23].matrix.clone());
+                    }else if(i===24){
+                        temp2=scope.originMeshs[0].skeleton.bones[0].matrix.clone();
+                        temp2=temp2.multiply(scope.originMeshs[0].skeleton.bones[20].matrix.clone());
+                        temp2=temp2.multiply(scope.originMeshs[0].skeleton.bones[21].matrix.clone());
+                        temp2=temp2.multiply(scope.originMeshs[0].skeleton.bones[22].matrix.clone());
+                        temp2=temp2.multiply(scope.originMeshs[0].skeleton.bones[23].matrix.clone());
+                        temp2=temp2.multiply(scope.originMeshs[0].skeleton.bones[24].matrix.clone());
+                    }
+                    temp=temp2.multiply(temp1);//逆矩阵在右
+                    temp=temp.toArray();
+                    for(j=0;j<temp.length;j++)
+                        skeletonData0.push(temp[j]);
+                }
+                //skeletonDatas.push(skeletonData0);
+                //for(var i2=0;i2<400;i++)
+                /*for(var i2=0;i2<1;i++)
+                scope.skeletonData.array[k+i2]=skeletonData0[i2];*/
+                //for(i2=0;i2<1;i++)
+                //scope.skeletonData.array[k]=0;
+            }
+            //console.log(skeletonDatas);
+            /*for(i=0;i<scope.instanceCount*400;i++){
+                scope.skeletonData.array[i]=skeletonDatas[Math.floor(i/400)][i%400];
+            }*/
+
+            time=Math.floor(t*scope.speeds[0]%36);
+            scope.meshController.setTime(time);
+            skeletonData0=[];//16*25//400
             for(i=0;i<scope.originMeshs[0].skeleton.boneInverses.length;i++){
                 temp1=scope.originMeshs[0].skeleton.boneInverses[i];//.toArray();
                 temp2=scope.originMeshs[0].skeleton.bones[i].matrixWorld.clone();//.toArray();
@@ -255,19 +414,7 @@ function InstancedGroup(instanceCount,originMesh,animationClip ){
                     skeletonData0.push(temp[j]);
             }
             scope.mesh.material.uniforms.skeletonData0={value: skeletonData0};
-
-            skeletonData1=[];//16*25//400
-            for(i=0;i<scope.originMeshs[1].skeleton.boneInverses.length;i++){
-                temp1=scope.originMeshs[1].skeleton.boneInverses[i];//.toArray();
-                temp2=scope.originMeshs[1].skeleton.bones[i].matrixWorld.clone();//.toArray();
-                temp=temp2.multiply(temp1);//逆矩阵在右
-                temp=temp.toArray();
-                for(j=0;j<temp.length;j++)
-                    skeletonData1.push(temp[j]);
-            }
-            scope.mesh.material.uniforms.skeletonData1={value: skeletonData1};
-
-        }updateAnimation();
+        }
     }
 
     this.updateBuffer=function(i){//更新第i个对象对应的缓冲区

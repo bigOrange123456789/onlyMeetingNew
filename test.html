@@ -19,7 +19,7 @@
 		uniform float skeletonData0[400];//16*25
 		uniform float skeletonData1[400];//16*25
 
-		uniform float skeletonData[3000];//uniform float[]最大长度4088
+		//uniform float skeletonData[3000];//uniform float[]最大长度4088
 		//uniform float skeletonData[9000000000088];
 
 		attribute vec3 position;
@@ -36,6 +36,7 @@
 
 		attribute vec4 type;   //type[3]是0或1，用于表示动画
 		attribute vec3 color;
+		//attribute vec400 skeletonData;//[400];
 
         varying vec2 outUV;
         varying vec3 varyType;
@@ -94,9 +95,7 @@
                     );
 				}*/
 
-
-
-            	mat4 matrixs[25];//25个骨骼的变换矩阵
+            	/*mat4 matrixs[25];//25个骨骼的变换矩阵
 				for(int i=0;i<25;i++){
 						matrixs[i]=mat4(//最后一行是：0 0 0 1
 				    	    skeletonData0[i*16+0] ,skeletonData0[i*16+1] ,skeletonData0[i*16+2] ,skeletonData0[i*16+3] ,
@@ -104,7 +103,17 @@
 				    	    skeletonData0[i*16+8] ,skeletonData0[i*16+9] ,skeletonData0[i*16+10],skeletonData0[i*16+11],
 				    	    skeletonData0[i*16+12],skeletonData0[i*16+13],skeletonData0[i*16+14],skeletonData0[i*16+15]
 			    	    );
-				}/**/
+				}*/
+
+				mat4 matrixs[25];//25个骨骼的变换矩阵
+				for(int i=0;i<25;i++){
+						matrixs[i]=mat4(//最后一行是：0 0 0 1
+				    	    skeletonData0[i*16+0] ,skeletonData0[i*16+1] ,skeletonData0[i*16+2] ,skeletonData0[i*16+3] ,
+				  	      	skeletonData0[i*16+4] ,skeletonData0[i*16+5] ,skeletonData0[i*16+6] ,skeletonData0[i*16+7] ,
+				    	    skeletonData0[i*16+8] ,skeletonData0[i*16+9] ,skeletonData0[i*16+10],skeletonData0[i*16+11],
+				    	    skeletonData0[i*16+12],skeletonData0[i*16+13],skeletonData0[i*16+14],skeletonData0[i*16+15]
+			    	    );
+				}
 
             	int mySkinIndex[4];//求skinIndex的近似整数，结果存入mySkinIndex
             	for(int j=0;j<4;j++){
