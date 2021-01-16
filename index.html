@@ -66,33 +66,39 @@
 				//开始求25个骨骼的变换矩阵
 				//int time=10;
 				mat4 matrixs0[25];
-				for(int i=0;i<25;i++)//25个骨头
+				//int iii;
+				for(int iii=0;iii<25;iii++)//25个骨头
 				{
 					float x,y,z,w,sx,sy,sz,px,py,pz;
-					px=skeletonData[250*time+10*i+0];
-					py=skeletonData[250*time+10*i+1];
-					pz=skeletonData[250*time+10*i+2];
-					x=skeletonData[250*time+10*i+3];
-					y=skeletonData[250*time+10*i+4];
-					z=skeletonData[250*time+10*i+5];
-					w=skeletonData[250*time+10*i+6];
-					sx=skeletonData[250*time+10*i+7];
-					sy=skeletonData[250*time+10*i+8];
-					sz=skeletonData[250*time+10*i+9];
+
+					px=skeletonData[250*time+10*iii+0];
+					py=skeletonData[250*time+10*iii+1];
+					pz=skeletonData[250*time+10*iii+2];
+					x=skeletonData[250*time+10*iii+3];
+					y=skeletonData[250*time+10*iii+4];
+					z=skeletonData[250*time+10*iii+5];
+					w=skeletonData[250*time+10*iii+6];
+					//sx=skeletonData[250*time+10*iii+7];
+					//sy=skeletonData[250*time+10*iii+8];
+					//sz=skeletonData[250*time+10*iii+9];
 					//px=py=pz=0.0;
 					sx=sy=sz=1.0;
 
-					float x2 = x + x,	y2 = y + y, z2 = z + z;
-                    float xx = x * x2, xy = x * y2, xz = x * z2;
-                    float yy = y * y2, yz = y * z2, zz = z * z2;
-                    float wx = w * x2, wy = w * y2, wz = w * z2;
-                    matrixs0[i]=mat4(
+					float x2,y2,z2 ,
+					      xx,xy,xz,
+					      yy,yz,zz,
+					      wx,wy,wz;
+					x2 = x + x;	y2 = y + y; z2 = z + z;
+                    xx = x * x2;xy = x * y2;xz = x * z2;
+                    yy = y * y2;yz = y * z2;zz = z * z2;
+                    wx = w * x2;wy = w * y2;wz = w * z2;
+                    matrixs0[iii]=mat4(
                     	( 1.0-( yy + zz ) ) * sx,( xy + wz ) * sx        ,( xz - wy ) * sx         ,0.0,
                     	( xy - wz ) * sy        ,( 1.0-( xx + zz ) ) * sy,( yz + wx ) * sy         ,0.0,
                     	( xz + wy ) * sz       ,( yz - wx ) * sz         ,( 1.0-( xx + yy ) ) * sz ,0.0,
                     	px                     ,py                       ,pz                       ,1.0
                     );
-				}
+				}/**/
 
 
 
@@ -110,10 +116,10 @@
 			    	    matrixs[0]=tool*matrixs[0];tool=tool*matrixs0[1];
 			    	    matrixs[1]=tool*matrixs[1];tool=tool*matrixs0[2];
 			    	    matrixs[2]=tool*matrixs[2];tool=tool*matrixs0[3];  mat4  _tool3=tool;
-			    	    matrixs[3]=tool*matrixs[3];tool=tool*matrixs0[4];
+			    	    /*matrixs[3]=tool*matrixs[3];tool=tool*matrixs0[4];
 			    	    matrixs[4]=tool*matrixs[4];tool=tool*matrixs0[5];
 			    	    matrixs[5]=tool*matrixs[5];tool=tool*matrixs0[6];
-			    	    matrixs[6]=tool*matrixs[6];
+			    	    matrixs[6]=tool*matrixs[6];*/
 
 						                           tool=_tool3;
 			    	                               tool=tool*matrixs0[7];
@@ -129,7 +135,7 @@
 			    	    matrixs[13]=tool*matrixs[13];tool=tool*matrixs0[14];
 			    	    matrixs[14]=tool*matrixs[14];
 
-			    	                                 tool=matrixs0[0]*matrixs0[15];
+			    	                                 /*tool=matrixs0[0]*matrixs0[15];
 			    	    matrixs[15]=tool*matrixs[15];tool=tool*matrixs0[16];
 			    	    matrixs[16]=tool*matrixs[16];tool=tool*matrixs0[17];
 			    	    matrixs[17]=tool*matrixs[17];tool=tool*matrixs0[18];
@@ -141,7 +147,7 @@
 			    	    matrixs[21]=tool*matrixs[21];tool=tool*matrixs0[22];
 			    	    matrixs[22]=tool*matrixs[22];tool=tool*matrixs0[23];
 			    	    matrixs[23]=tool*matrixs[23];tool=tool*matrixs0[24];
-			    	    matrixs[24]=tool*matrixs[24];
+			    	    matrixs[24]=tool*matrixs[24];*/
 
             	int mySkinIndex[4];//求skinIndex的近似整数，结果存入mySkinIndex
             	for(int j=0;j<4;j++){
