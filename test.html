@@ -64,7 +64,7 @@
 				else type_part=2.0;//头部
 
 				//开始求25个骨骼的变换矩阵
-				/*int time=0;
+				int time=10;
 				mat4 matrixs0[25];
 				for(int i=0;i<25;i++)//25个骨头
 				{
@@ -86,25 +86,74 @@
                     float xx = x * x2, xy = x * y2, xz = x * z2;
                     float yy = y * y2, yz = y * z2, zz = z * z2;
                     float wx = w * x2, wy = w * y2, wz = w * z2;
-                    matrixs0[i]=mat4(
+                    /*matrixs0[i]=mat4(
                     	( 1.0-( yy + zz ) ) * sx,( xy - wz ) * sy        ,( xz + wy ) * sz        ,px,
                     	( xy + wz ) * sx        ,( 1.0-( xx + zz ) ) * sy,( yz - wx ) * sz        ,py,
                     	( xz - wy ) * sx        ,( yz + wx ) * sy        ,( 1.0-( xx + yy ) ) * sz,pz,
                     	0.0                     ,0.0                     ,0.0                     ,1.0
+                    );*/
+                    matrixs0[i]=mat4(
+                    	( 1.0-( yy + zz ) ) * sx,( xy + wz ) * sx        ,( xz - wy ) * sx         ,0.0,
+                    	( xy - wz ) * sy        ,( 1.0-( xx + zz ) ) * sy,( yz + wx ) * sy         ,0.0,
+                    	( xz + wy ) * sz       ,( yz - wx ) * sz         ,( 1.0-( xx + yy ) ) * sz ,0.0,
+                    	px                     ,py                       ,pz                       ,1.0
                     );
-				}*/
+				}
 
 
 
-            	mat4 matrixs[25];//25个骨骼的变换矩阵
+            	mat4 matrixs[25];//25个骨骼//逆骨骼矩阵
 				for(int i=0;i<25;i++){
-						matrixs[i]=mat4(//最后一行是：0 0 0 1
+						matrixs[i]=mat4(//最后一列是：0 0 0 1
 				    	    skeletonData0[i*16+0] ,skeletonData0[i*16+1] ,skeletonData0[i*16+2] ,skeletonData0[i*16+3] ,
 				  	      	skeletonData0[i*16+4] ,skeletonData0[i*16+5] ,skeletonData0[i*16+6] ,skeletonData0[i*16+7] ,
 				    	    skeletonData0[i*16+8] ,skeletonData0[i*16+9] ,skeletonData0[i*16+10],skeletonData0[i*16+11],
 				    	    skeletonData0[i*16+12],skeletonData0[i*16+13],skeletonData0[i*16+14],skeletonData0[i*16+15]
 			    	    );
-				}/**/
+			    	    /*matrixs[i]=mat4(//最后一行是：0 0 0 1
+				    	    skeletonData0[i*16+0] ,skeletonData0[i*16+4] ,skeletonData0[i*16+8] ,skeletonData0[i*16+12] ,
+				  	      	skeletonData0[i*16+1] ,skeletonData0[i*16+5] ,skeletonData0[i*16+9] ,skeletonData0[i*16+13] ,
+				    	    skeletonData0[i*16+2] ,skeletonData0[i*16+6] ,skeletonData0[i*16+10],skeletonData0[i*16+14],
+				    	    skeletonData0[i*16+3] ,skeletonData0[i*16+7] ,skeletonData0[i*16+11],skeletonData0[i*16+15]
+			    	    );*/
+				}
+
+						                           mat4 tool=matrixs0[0];
+			    	    matrixs[0]=tool*matrixs[0];tool=matrixs0[1]*tool;
+			    	    matrixs[1]=tool*matrixs[1];tool=matrixs0[2]*tool;
+			    	    matrixs[2]=tool*matrixs[2];tool=matrixs0[3]*tool;  mat4  _tool3=tool;
+			    	    matrixs[3]=tool*matrixs[3];tool=matrixs0[4]*tool;
+			    	    matrixs[4]=tool*matrixs[4];tool=matrixs0[5]*tool;
+			    	    matrixs[5]=tool*matrixs[5];tool=matrixs0[6]*tool;
+			    	    matrixs[6]=tool*matrixs[6];
+
+						                           tool=_tool3;
+			    	                               tool=tool*matrixs0[7];
+			    	    matrixs[7]=tool*matrixs[7];tool=tool*matrixs0[8];
+			    	    matrixs[8]=tool*matrixs[8];tool=tool*matrixs0[9];
+			    	    matrixs[9]=tool*matrixs[9];tool=tool*matrixs0[10];
+			    	    matrixs[10]=tool*matrixs[10];
+
+			    	                                 tool=_tool3;
+			    	                                 tool=tool*matrixs0[11];
+			    	    matrixs[11]=tool*matrixs[11];tool=tool*matrixs0[12];
+			    	    matrixs[12]=tool*matrixs[12];tool=tool*matrixs0[13];
+			    	    matrixs[13]=tool*matrixs[13];tool=tool*matrixs0[14];
+			    	    matrixs[14]=tool*matrixs[14];
+
+			    	                                 tool=matrixs0[0]*matrixs0[15];
+			    	    matrixs[15]=tool*matrixs[15];tool=tool*matrixs0[16];
+			    	    matrixs[16]=tool*matrixs[16];tool=tool*matrixs0[17];
+			    	    matrixs[17]=tool*matrixs[17];tool=tool*matrixs0[18];
+			    	    matrixs[18]=tool*matrixs[18];tool=tool*matrixs0[19];
+			    	    matrixs[19]=tool*matrixs[19];
+
+			    	                                 tool=matrixs0[0]*matrixs0[20];
+			    	    matrixs[20]=tool*matrixs[20];tool=tool*matrixs0[21];
+			    	    matrixs[21]=tool*matrixs[21];tool=tool*matrixs0[22];
+			    	    matrixs[22]=tool*matrixs[22];tool=tool*matrixs0[23];
+			    	    matrixs[23]=tool*matrixs[23];tool=tool*matrixs0[24];
+			    	    matrixs[24]=tool*matrixs[24];
 
             	int mySkinIndex[4];//求skinIndex的近似整数，结果存入mySkinIndex
             	for(int j=0;j<4;j++){

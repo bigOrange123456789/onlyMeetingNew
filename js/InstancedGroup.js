@@ -102,22 +102,22 @@ function InstancedGroup(instanceCount,originMesh,animationClip ){
             var skeletonDataArray=[];//10*25*36//400
             //console.log(this.originMeshs);
             for (j = 0; j < this.animationClip.tracks[0].times.length; j+=3)
-                for (i = 0; i < this.originMeshs[0].skeleton.boneInverses.length/3; i+=3)
+                for (i = 0; i < this.originMeshs[0].skeleton.boneInverses.length*3; i+=3)
                 {//这个36是时间数
                     //for(k=0;k<10;k++)
                     //position
-                    skeletonDataArray.push(0);//this.animationClip.tracks[i].values[3*j]);
-                    skeletonDataArray.push(0);//this.animationClip.tracks[i].values[3*j+1]);
-                    skeletonDataArray.push(0);//this.animationClip.tracks[i].values[3*j+2]);
+                    skeletonDataArray.push(this.animationClip.tracks[i].values[3*j]);
+                    skeletonDataArray.push(this.animationClip.tracks[i].values[3*j+1]);
+                    skeletonDataArray.push(this.animationClip.tracks[i].values[3*j+2]);
                     //quaternion
                     skeletonDataArray.push(this.animationClip.tracks[i+1].values[4*j]);
                     skeletonDataArray.push(this.animationClip.tracks[i+1].values[4*j+1]);
                     skeletonDataArray.push(this.animationClip.tracks[i+1].values[4*j+2]);
                     skeletonDataArray.push(this.animationClip.tracks[i+1].values[4*j+3]);
                     //scale
-                    skeletonDataArray.push(1);//this.animationClip.tracks[i+2].values[3*j]);
-                    skeletonDataArray.push(1);//this.animationClip.tracks[i+2].values[3*j+1]);
-                    skeletonDataArray.push(1);//this.animationClip.tracks[i+2].values[3*j+2]);
+                    skeletonDataArray.push(this.animationClip.tracks[i+2].values[3*j]);
+                    skeletonDataArray.push(this.animationClip.tracks[i+2].values[3*j+1]);
+                    skeletonDataArray.push(this.animationClip.tracks[i+2].values[3*j+2]);
                 }
             material = new THREE.RawShaderMaterial({//原始着色器材质
                 uniforms: {
@@ -198,7 +198,7 @@ function InstancedGroup(instanceCount,originMesh,animationClip ){
         updateAnimation();
         function updateAnimation() {//每帧更新一次动画
             requestAnimationFrame(updateAnimation);
-            t2+=0.5;//t=0;
+            //t2+=0.5;//t=0;
             var time=Math.floor(t2%36);
             //开始计算matrix
             matrixs0=[];matrixs=[];
@@ -260,7 +260,7 @@ function InstancedGroup(instanceCount,originMesh,animationClip ){
             matrixs[21]=tool.clone().multiply(matrixs[21]);tool=tool.clone().multiply(matrixs0[22]);
             matrixs[22]=tool.clone().multiply(matrixs[22]);tool=tool.clone().multiply(matrixs0[23]);
             matrixs[23]=tool.clone().multiply(matrixs[23]);tool=tool.clone().multiply(matrixs0[24]);
-            matrixs[24]=tool.clone().multiply(matrixs[24]);
+            matrixs[24]=tool.clone().multiply(matrixs[24]);/**/
             //完成计算matrix
 
             var skeletonData0=[];//16*25//400
@@ -283,7 +283,8 @@ function InstancedGroup(instanceCount,originMesh,animationClip ){
                     animation.tracks[3*i].values[3*time+2]
                 );*/
                 //temp=temp2.multiply(temp1);//逆矩阵在右
-                temp=matrixs[i];
+                //temp=matrixs[i];
+                temp=temp1;
                 temp=temp.toArray();
                 for(j=0;j<temp.length;j++)
                     skeletonData0.push(temp[j]);
@@ -422,8 +423,8 @@ function SkinnedMeshController() {
         animationMixer0.clipAction(animation).play();//不清楚这里的作用
 
 
-        var t=0;
-        updateAnimation2_2();
+        //var t=0;
+        //updateAnimation2_2();
         function updateAnimation3() {//每帧更新一次动画--失败
             t+=0.2;
             var time=Math.floor(t%36);
