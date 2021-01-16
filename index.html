@@ -16,8 +16,8 @@
 		uniform mat4 modelViewMatrix;
 		uniform mat4 projectionMatrix;
 
-		uniform float skeletonData0[400];//16*25
-		uniform float skeletonData1[400];//16*25
+		uniform float skeletonMatrixInverse[400];//16*25
+		uniform float skeletonMatrix[400];//16*25
 
 		uniform float skeletonData[3000];//uniform float[]最大长度4088//变化范围12(0-11)
 		uniform float time;//0-10000
@@ -44,6 +44,15 @@
         varying vec3 varyColor;
         varying float type_part;
         varying float myTest00;
+
+        mat4 getMatrixs_i(int i){
+        	return mat4(//最后一列是：0 0 0 1
+				    	    skeletonMatrix[i*16+0] ,skeletonMatrix[i*16+1] ,skeletonMatrix[i*16+2] ,skeletonMatrix[i*16+3] ,
+				  	      	skeletonMatrix[i*16+4] ,skeletonMatrix[i*16+5] ,skeletonMatrix[i*16+6] ,skeletonMatrix[i*16+7] ,
+				    	    skeletonMatrix[i*16+8] ,skeletonMatrix[i*16+9] ,skeletonMatrix[i*16+10],skeletonMatrix[i*16+11],
+				    	    skeletonMatrix[i*16+12],skeletonMatrix[i*16+13],skeletonMatrix[i*16+14],skeletonMatrix[i*16+15]
+			    	    );
+        }
 		mat4 getMatrixs0_i(int iii){
 					//float c=(a/b-floor(a/b))*b;//fmod(float a,float b)
 					float t=((time*speed)/12.0-floor((time*speed)/12.0))*12.0;
@@ -170,12 +179,16 @@
             	mat4 matrixs[25];//25个骨骼//逆骨骼矩阵
 				for(int i=0;i<25;i++){
 						matrixs[i]=mat4(//最后一列是：0 0 0 1
-				    	    skeletonData0[i*16+0] ,skeletonData0[i*16+1] ,skeletonData0[i*16+2] ,skeletonData0[i*16+3] ,
-				  	      	skeletonData0[i*16+4] ,skeletonData0[i*16+5] ,skeletonData0[i*16+6] ,skeletonData0[i*16+7] ,
-				    	    skeletonData0[i*16+8] ,skeletonData0[i*16+9] ,skeletonData0[i*16+10],skeletonData0[i*16+11],
-				    	    skeletonData0[i*16+12],skeletonData0[i*16+13],skeletonData0[i*16+14],skeletonData0[i*16+15]
+				    	    skeletonMatrixInverse[i*16+0] ,skeletonMatrixInverse[i*16+1] ,skeletonMatrixInverse[i*16+2] ,skeletonMatrixInverse[i*16+3] ,
+				  	      	skeletonMatrixInverse[i*16+4] ,skeletonMatrixInverse[i*16+5] ,skeletonMatrixInverse[i*16+6] ,skeletonMatrixInverse[i*16+7] ,
+				    	    skeletonMatrixInverse[i*16+8] ,skeletonMatrixInverse[i*16+9] ,skeletonMatrixInverse[i*16+10],skeletonMatrixInverse[i*16+11],
+				    	    skeletonMatrixInverse[i*16+12],skeletonMatrixInverse[i*16+13],skeletonMatrixInverse[i*16+14],skeletonMatrixInverse[i*16+15]
 			    	    );
 				}
+						matrixs[3]=getMatrixs_i(3);
+						matrixs[4]=getMatrixs_i(4);
+						matrixs[5]=getMatrixs_i(5);
+						matrixs[6]=getMatrixs_i(6);
 
 						                           mat4 tool=matrixs0[0];
 			    	    matrixs[0]=tool*matrixs[0];tool=tool*matrixs0[1];
@@ -200,6 +213,17 @@
 			    	    matrixs[13]=tool*matrixs[13];tool=tool*matrixs0[14];
 			    	    matrixs[14]=tool*matrixs[14];
 
+						matrixs[15]=getMatrixs_i(15);
+						matrixs[15]=getMatrixs_i(16);
+						matrixs[15]=getMatrixs_i(17);
+						matrixs[15]=getMatrixs_i(18);
+						matrixs[15]=getMatrixs_i(19);
+						matrixs[15]=getMatrixs_i(20);
+						matrixs[15]=getMatrixs_i(21);
+						matrixs[15]=getMatrixs_i(22);
+						matrixs[15]=getMatrixs_i(23);
+						matrixs[15]=getMatrixs_i(24);
+
 			    	                                 /*tool=matrixs0[0]*matrixs0[15];
 			    	    matrixs[15]=tool*matrixs[15];tool=tool*matrixs0[16];
 			    	    matrixs[16]=tool*matrixs[16];tool=tool*matrixs0[17];
@@ -213,6 +237,11 @@
 			    	    matrixs[22]=tool*matrixs[22];tool=tool*matrixs0[23];
 			    	    matrixs[23]=tool*matrixs[23];tool=tool*matrixs0[24];
 			    	    matrixs[24]=tool*matrixs[24];*/
+
+			    	    /*for(int i=0;i<25;i++)
+			    	    matrixs[i]=getMatrixs_i(i);*/
+
+
 
             	int mySkinIndex[4];//求skinIndex的近似整数，结果存入mySkinIndex
             	for(int j=0;j<4;j++){

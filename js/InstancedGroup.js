@@ -145,8 +145,8 @@ function InstancedGroup(instanceCount,originMesh,animationClip ){
                     ,text14: {type: 't', value: texs[14]}
                     ,text15: {type: 't', value: texs[15]}
 
-                    ,skeletonData0:{value: skeletonData}
-                    ,skeletonData1:{value: skeletonData}
+                    ,skeletonMatrixInverse:{value: skeletonData}
+                    ,skeletonMatrix:{value: skeletonData}
 
                     ,skeletonData:{value: skeletonDataArray}
                     ,time:{value: 0.0}
@@ -185,20 +185,20 @@ function InstancedGroup(instanceCount,originMesh,animationClip ){
         this.mesh.frustumCulled=false;
 
         if(this.haveSkeleton){
-            this.handleSkeletonAnimation();
+            this.handleSkeletonAnimation(this.animationClip);
             for(var i=0;i<this.originMeshs.length;i++){
                 this.originMeshs[i].visible=false;
                 this.obj.add(this.originMeshs[i]);//threeJS中模型的位置尺寸角度变化，似乎是通过骨骼来实现的
             }
             var scope=this;
-            var skeletonData0=[];//16*25//400
+            var skeletonMatrixInverse=[];//16*25//400
             for(i=0;i<scope.originMeshs[0].skeleton.boneInverses.length;i++){
                 temp=scope.originMeshs[0].skeleton.boneInverses[i];
                 temp=temp.toArray();
                 for(j=0;j<temp.length;j++)
-                    skeletonData0.push(temp[j]);
+                    skeletonMatrixInverse.push(temp[j]);
             }
-            scope.mesh.material.uniforms.skeletonData0={value: skeletonData0};
+            scope.mesh.material.uniforms.skeletonMatrixInverse={value: skeletonMatrixInverse};
         }
 
 
@@ -208,13 +208,86 @@ function InstancedGroup(instanceCount,originMesh,animationClip ){
 
         //完成进行实例化渲染
     }
-    this.handleSkeletonAnimation=function(){
+    this.handleSkeletonAnimation=function(animation){
         var scope=this;//scope范围//为了避免this重名
         updateAnimation();
         function updateAnimation() {//每帧更新一次动画
             requestAnimationFrame(updateAnimation);
             scope.time=(scope.time+1.0)%60000;
             scope.mesh.material.uniforms.time={value: scope.time};
+
+            //开始计算matrix
+            matrixs0=[];matrixs=[];
+            //if(time%3!==0)return;
+            var time=Math.floor(scope.time/2)%36;
+            for(i=0;i<25;i++){
+                matrixs0.push(
+                    compose(
+                        animation.tracks[3*i+1].values[4*time],
+                        animation.tracks[3*i+1].values[4*time+1],
+                        animation.tracks[3*i+1].values[4*time+2],
+                        animation.tracks[3*i+1].values[4*time+3],
+
+                        animation.tracks[3*i+2].values[3*time],
+                        animation.tracks[3*i+2].values[3*time+1],
+                        animation.tracks[3*i+2].values[3*time+2],
+
+                        animation.tracks[3*i].values[3*time],
+                        animation.tracks[3*i].values[3*time+1],
+                        animation.tracks[3*i].values[3*time+2]
+                    )
+                    //scope.originMeshs[0].skeleton.bones[i].matrix.clone()
+                );
+                matrixs.push(
+                    scope.originMeshs[0].skeleton.boneInverses[i].clone()
+                );
+            }
+
+            var tool=matrixs0[0];
+            matrixs[0]=tool.clone().multiply(matrixs[0]);tool=tool.clone().multiply(matrixs0[1]);
+            matrixs[1]=tool.clone().multiply(matrixs[1]);tool=tool.clone().multiply(matrixs0[2]);
+            matrixs[2]=tool.clone().multiply(matrixs[2]);tool=tool.clone().multiply(matrixs0[3]);  var  _tool3=tool;
+            matrixs[3]=tool.clone().multiply(matrixs[3]);tool=tool.clone().multiply(matrixs0[4]);
+            matrixs[4]=tool.clone().multiply(matrixs[4]);tool=tool.clone().multiply(matrixs0[5]);
+            matrixs[5]=tool.clone().multiply(matrixs[5]);tool=tool.clone().multiply(matrixs0[6]);
+            matrixs[6]=tool.clone().multiply(matrixs[6]);
+
+            tool=_tool3;
+            tool=tool.clone().multiply(matrixs0[7]);
+            matrixs[7]=tool.clone().multiply(matrixs[7]);tool=tool.clone().multiply(matrixs0[8]);
+            matrixs[8]=tool.clone().multiply(matrixs[8]);tool=tool.clone().multiply(matrixs0[9]);
+            matrixs[9]=tool.clone().multiply(matrixs[9]);tool=tool.clone().multiply(matrixs0[10]);
+            matrixs[10]=tool.clone().multiply(matrixs[10]);
+
+            tool=_tool3;
+            tool=tool.clone().multiply(matrixs0[11]);
+            matrixs[11]=tool.clone().multiply(matrixs[11]);tool=tool.clone().multiply(matrixs0[12]);
+            matrixs[12]=tool.clone().multiply(matrixs[12]);tool=tool.clone().multiply(matrixs0[13]);
+            matrixs[13]=tool.clone().multiply(matrixs[13]);tool=tool.clone().multiply(matrixs0[14]);
+            matrixs[14]=tool.clone().multiply(matrixs[14]);
+
+            tool=matrixs0[0].clone().multiply(matrixs0[15]);
+            matrixs[15]=tool.clone().multiply(matrixs[15]);tool=tool.clone().multiply(matrixs0[16]);
+            matrixs[16]=tool.clone().multiply(matrixs[16]);tool=tool.clone().multiply(matrixs0[17]);
+            matrixs[17]=tool.clone().multiply(matrixs[17]);tool=tool.clone().multiply(matrixs0[18]);
+            matrixs[18]=tool.clone().multiply(matrixs[18]);tool=tool.clone().multiply(matrixs0[19]);
+            matrixs[19]=tool.clone().multiply(matrixs[19]);
+
+            tool=matrixs0[0].clone().multiply(matrixs0[20]);
+            matrixs[20]=tool.clone().multiply(matrixs[20]);tool=tool.clone().multiply(matrixs0[21]);
+            matrixs[21]=tool.clone().multiply(matrixs[21]);tool=tool.clone().multiply(matrixs0[22]);
+            matrixs[22]=tool.clone().multiply(matrixs[22]);tool=tool.clone().multiply(matrixs0[23]);
+            matrixs[23]=tool.clone().multiply(matrixs[23]);tool=tool.clone().multiply(matrixs0[24]);
+            matrixs[24]=tool.clone().multiply(matrixs[24]);
+            //完成计算matrix
+            var skeletonData0=[];//16*25//400
+            for(i=0;i<scope.originMeshs[0].skeleton.boneInverses.length;i++){
+                temp=matrixs[i];
+                temp=temp.toArray();
+                for(j=0;j<temp.length;j++)
+                    skeletonData0.push(temp[j]);
+            }
+            scope.mesh.material.uniforms.skeletonMatrix={value: skeletonData0};/**/
         }
         function compose(x,y,z,w,sx,sy,sz,px,py,pz ) {
             var x2 = x + x,	y2 = y + y, z2 = z + z;
