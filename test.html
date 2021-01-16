@@ -20,7 +20,7 @@
 		uniform float skeletonData1[400];//16*25
 
 		uniform float skeletonData[3000];//uniform float[]最大长度4088
-		//uniform float skeletonData[9000000000088];
+		uniform int time;//变化范围12(0-11)
 
 		attribute vec3 position;
 		attribute vec2 inUV;
@@ -64,7 +64,7 @@
 				else type_part=2.0;//头部
 
 				//开始求25个骨骼的变换矩阵
-				int time=10;
+				//int time=10;
 				mat4 matrixs0[25];
 				for(int i=0;i<25;i++)//25个骨头
 				{
