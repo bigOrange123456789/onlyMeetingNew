@@ -164,11 +164,16 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
         var loader= new THREE.GLTFLoader();
         loader.load('myModel/avatar/Female.glb', (glb) => {
             //测试
-            var mesh=glb.scene.children[0].children[1];
+            //console.log(glb);
+            var myMesh=new SkinnedMeshController();
+            myMesh.init(
+                glb.scene.children[0].children[1],
+                glb.animations[0]
+            );
             //测试
             var peoples=new InstancedGroup(
                 scope.positions.length,
-                [mesh],//这些mesh的网格应该一致
+                [myMesh.mesh,myMesh.mesh],//这些mesh的网格应该一致
                 glb.animations[0]
             );
             var texSrc=[];

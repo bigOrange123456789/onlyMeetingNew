@@ -132,9 +132,14 @@ InstancedGroupTest.prototype={
                 loader.load("myModel/avatar/Female.glb", (glb) => {
                         console.log(glb);
                         var mesh=glb.scene.children[0].children[1];
+                        var myMesh=new SkinnedMeshController();
+                        myMesh.init(
+                            mesh,
+                            glb.animations[0]
+                        );/**/
                         var peoples = new InstancedGroup(
                             2,
-                            [mesh],//这些mesh的网格应该一致
+                            [myMesh.mesh,myMesh.mesh],//这些mesh的网格应该一致
                             glb.animations[0]
                         );
                         var texSrc = [];

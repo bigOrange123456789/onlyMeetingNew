@@ -3,8 +3,6 @@ function InstancedGroup(instanceCount,originMesh,animationClip ){
     this.obj=new THREE.Object3D();
     this.instanceCount=instanceCount;
 
-    this.meshController;//=new SkinnedMeshController();
-
     if(typeof(animationClip)=="undefined"||animationClip===false)this.haveSkeleton=flase;
     else this.haveSkeleton=true;
     this.originMeshs=originMesh;//这是一个数组，每个元素播放一种动画
@@ -19,20 +17,11 @@ function InstancedGroup(instanceCount,originMesh,animationClip ){
     this.rotations=[];
     this.type;
     this.colors;
-    this.speeds=[];
 
     this.dummy=new THREE.Object3D();//dummy仿制品//工具对象
 
     this.init=function (texSrc){
-        this.meshController=new SkinnedMeshController();
-        this.meshController.init(
-            this.originMeshs[0],
-            this.animationClip
-        );
-        this.originMeshs[0]=this.meshController.mesh;
-
         for(var i=0;i<this.instanceCount;i++){
-            this.speeds.push(1);
             this.scales.push([1,1,1]);
             this.rotations.push([0,0,0]);
         }
@@ -205,21 +194,97 @@ function InstancedGroup(instanceCount,originMesh,animationClip ){
     }
     this.handleSkeletonAnimation2=function(animation){
         var scope=this;//scope范围//为了避免this重名
-        var t=0;
+        var t2=0;
         updateAnimation();
         function updateAnimation() {//每帧更新一次动画
             requestAnimationFrame(updateAnimation);
-            t+=0.5;//t=0;
-            var time=Math.floor(t%36);
+            t2+=0.5;//t=0;
+            var time=Math.floor(t2%36);
+            //开始计算matrix
+            matrixs0=[];matrixs=[];
+            for(i=0;i<25;i++){
+                matrixs0.push(
+                        compose(
+                            animation.tracks[3*i+1].values[4*time],
+                            animation.tracks[3*i+1].values[4*time+1],
+                            animation.tracks[3*i+1].values[4*time+2],
+                            animation.tracks[3*i+1].values[4*time+3],
 
-            //var time=Math.floor(t2*scope.speed%36);
-            scope.meshController.setTime(time);
+                            animation.tracks[3*i+2].values[3*time],
+                            animation.tracks[3*i+2].values[3*time+1],
+                            animation.tracks[3*i+2].values[3*time+2],
+
+                            animation.tracks[3*i].values[3*time],
+                            animation.tracks[3*i].values[3*time+1],
+                            animation.tracks[3*i].values[3*time+2]
+                        )
+                    //scope.originMeshs[0].skeleton.bones[i].matrix.clone()
+                );
+                matrixs.push(
+                    scope.originMeshs[0].skeleton.boneInverses[i].clone()
+                );
+            }
+
+                                                         var tool=matrixs0[0];
+            matrixs[0]=tool.clone().multiply(matrixs[0]);tool=tool.clone().multiply(matrixs0[1]);
+            matrixs[1]=tool.clone().multiply(matrixs[1]);tool=tool.clone().multiply(matrixs0[2]);
+            matrixs[2]=tool.clone().multiply(matrixs[2]);tool=tool.clone().multiply(matrixs0[3]);  var  _tool3=tool;
+            matrixs[3]=tool.clone().multiply(matrixs[3]);tool=tool.clone().multiply(matrixs0[4]);
+            matrixs[4]=tool.clone().multiply(matrixs[4]);tool=tool.clone().multiply(matrixs0[5]);
+            matrixs[5]=tool.clone().multiply(matrixs[5]);tool=tool.clone().multiply(matrixs0[6]);
+            matrixs[6]=tool.clone().multiply(matrixs[6]);
+
+                                                         tool=_tool3;
+                                                         tool=tool.clone().multiply(matrixs0[7]);
+            matrixs[7]=tool.clone().multiply(matrixs[7]);tool=tool.clone().multiply(matrixs0[8]);
+            matrixs[8]=tool.clone().multiply(matrixs[8]);tool=tool.clone().multiply(matrixs0[9]);
+            matrixs[9]=tool.clone().multiply(matrixs[9]);tool=tool.clone().multiply(matrixs0[10]);
+            matrixs[10]=tool.clone().multiply(matrixs[10]);
+
+                                                           tool=_tool3;
+                                                           tool=tool.clone().multiply(matrixs0[11]);
+            matrixs[11]=tool.clone().multiply(matrixs[11]);tool=tool.clone().multiply(matrixs0[12]);
+            matrixs[12]=tool.clone().multiply(matrixs[12]);tool=tool.clone().multiply(matrixs0[13]);
+            matrixs[13]=tool.clone().multiply(matrixs[13]);tool=tool.clone().multiply(matrixs0[14]);
+            matrixs[14]=tool.clone().multiply(matrixs[14]);
+
+                                                           tool=matrixs0[0].clone().multiply(matrixs0[15]);
+            matrixs[15]=tool.clone().multiply(matrixs[15]);tool=tool.clone().multiply(matrixs0[16]);
+            matrixs[16]=tool.clone().multiply(matrixs[16]);tool=tool.clone().multiply(matrixs0[17]);
+            matrixs[17]=tool.clone().multiply(matrixs[17]);tool=tool.clone().multiply(matrixs0[18]);
+            matrixs[18]=tool.clone().multiply(matrixs[18]);tool=tool.clone().multiply(matrixs0[19]);
+            matrixs[19]=tool.clone().multiply(matrixs[19]);
+
+                                                           tool=matrixs0[0].clone().multiply(matrixs0[20]);
+            matrixs[20]=tool.clone().multiply(matrixs[20]);tool=tool.clone().multiply(matrixs0[21]);
+            matrixs[21]=tool.clone().multiply(matrixs[21]);tool=tool.clone().multiply(matrixs0[22]);
+            matrixs[22]=tool.clone().multiply(matrixs[22]);tool=tool.clone().multiply(matrixs0[23]);
+            matrixs[23]=tool.clone().multiply(matrixs[23]);tool=tool.clone().multiply(matrixs0[24]);
+            matrixs[24]=tool.clone().multiply(matrixs[24]);
+            //完成计算matrix
+
             var skeletonData0=[];//16*25//400
             for(i=0;i<scope.originMeshs[0].skeleton.boneInverses.length;i++){
                 temp1=scope.originMeshs[0].skeleton.boneInverses[i];//.toArray();
-                //temp2=scope.originMeshs[0].skeleton.bones[i].matrixWorld.clone();//.toArray();
+                temp2=scope.originMeshs[0].skeleton.bones[i].matrixWorld.clone();//.toArray();
+                /*temp2=
+                    compose(
+                    animation.tracks[3*i+1].values[4*time],
+                    animation.tracks[3*i+1].values[4*time+1],
+                    animation.tracks[3*i+1].values[4*time+2],
+                    animation.tracks[3*i+1].values[4*time+3],
+
+                    animation.tracks[3*i+2].values[3*time],
+                    animation.tracks[3*i+2].values[3*time+1],
+                    animation.tracks[3*i+2].values[3*time+2],
+
+                    animation.tracks[3*i].values[3*time],
+                    animation.tracks[3*i].values[3*time+1],
+                    animation.tracks[3*i].values[3*time+2]
+                );*/
                 //temp=temp2.multiply(temp1);//逆矩阵在右
-                temp=temp1.toArray();
+                temp=matrixs[i];
+                temp=temp.toArray();
                 for(j=0;j<temp.length;j++)
                     skeletonData0.push(temp[j]);
             }
@@ -239,35 +304,6 @@ function InstancedGroup(instanceCount,originMesh,animationClip ){
             );
             return te;
         }
-    }
-    this.handleSkeletonAnimation=function(geometry){
-        var scope=this;//scope范围//为了避免this重名
-        function updateAnimation() {//每帧更新一次动画
-            requestAnimationFrame(updateAnimation);
-
-            var skeletonData0=[];//16*25//400
-            for(i=0;i<scope.originMeshs[0].skeleton.boneInverses.length;i++){
-                temp1=scope.originMeshs[0].skeleton.boneInverses[i];//.toArray();
-                temp2=scope.originMeshs[0].skeleton.bones[i].matrixWorld.clone();//.toArray();
-                temp=temp2.multiply(temp1);//逆矩阵在右
-                temp=temp.toArray();
-                for(j=0;j<temp.length;j++)
-                    skeletonData0.push(temp[j]);
-            }
-            scope.mesh.material.uniforms.skeletonData0={value: skeletonData0};
-
-            skeletonData1=[];//16*25//400
-            for(i=0;i<scope.originMeshs[1].skeleton.boneInverses.length;i++){
-                temp1=scope.originMeshs[1].skeleton.boneInverses[i];//.toArray();
-                temp2=scope.originMeshs[1].skeleton.bones[i].matrixWorld.clone();//.toArray();
-                temp=temp2.multiply(temp1);//逆矩阵在右
-                temp=temp.toArray();
-                for(j=0;j<temp.length;j++)
-                    skeletonData1.push(temp[j]);
-            }
-            scope.mesh.material.uniforms.skeletonData1={value: skeletonData1};
-
-        }updateAnimation();
     }
 
     this.updateBuffer=function(i){//更新第i个对象对应的缓冲区
@@ -351,9 +387,6 @@ function InstancedGroup(instanceCount,originMesh,animationClip ){
         this.scales[i][2]=scale[2];
         this.updateBuffer(i);
     }
-    this.speedSet=function (i,speed) {
-        this.speeds[i]=speed;
-    }
 
     this.move=function (i,dPos){
         var pos=this.positionGet(i);
@@ -390,7 +423,7 @@ function SkinnedMeshController() {
 
 
         var t=0;
-        //updateAnimation2_2();
+        updateAnimation2_2();
         function updateAnimation3() {//每帧更新一次动画--失败
             t+=0.2;
             var time=Math.floor(t%36);
@@ -458,13 +491,13 @@ function SkinnedMeshController() {
                     )
                 );
             }
-            requestAnimationFrame(updateAnimation2_3);
+            requestAnimationFrame(updateAnimation2_2);
         }
         function updateAnimation2_2() {//每帧更新一次动画--
             t+=0.5;//t=0;
             var time=Math.floor(t%36);
             scope.setTime(time);
-            //requestAnimationFrame(updateAnimation2_2);
+            requestAnimationFrame(updateAnimation2_2);
         }
         function updateAnimation2_1() {//每帧更新一次动画
             t+=0.5;
