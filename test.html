@@ -86,12 +86,6 @@
                     float xx = x * x2, xy = x * y2, xz = x * z2;
                     float yy = y * y2, yz = y * z2, zz = z * z2;
                     float wx = w * x2, wy = w * y2, wz = w * z2;
-                    /*matrixs0[i]=mat4(
-                    	( 1.0-( yy + zz ) ) * sx,( xy - wz ) * sy        ,( xz + wy ) * sz        ,px,
-                    	( xy + wz ) * sx        ,( 1.0-( xx + zz ) ) * sy,( yz - wx ) * sz        ,py,
-                    	( xz - wy ) * sx        ,( yz + wx ) * sy        ,( 1.0-( xx + yy ) ) * sz,pz,
-                    	0.0                     ,0.0                     ,0.0                     ,1.0
-                    );*/
                     matrixs0[i]=mat4(
                     	( 1.0-( yy + zz ) ) * sx,( xy + wz ) * sx        ,( xz - wy ) * sx         ,0.0,
                     	( xy - wz ) * sy        ,( 1.0-( xx + zz ) ) * sy,( yz + wx ) * sy         ,0.0,
@@ -110,21 +104,15 @@
 				    	    skeletonData0[i*16+8] ,skeletonData0[i*16+9] ,skeletonData0[i*16+10],skeletonData0[i*16+11],
 				    	    skeletonData0[i*16+12],skeletonData0[i*16+13],skeletonData0[i*16+14],skeletonData0[i*16+15]
 			    	    );
-			    	    /*matrixs[i]=mat4(//最后一行是：0 0 0 1
-				    	    skeletonData0[i*16+0] ,skeletonData0[i*16+4] ,skeletonData0[i*16+8] ,skeletonData0[i*16+12] ,
-				  	      	skeletonData0[i*16+1] ,skeletonData0[i*16+5] ,skeletonData0[i*16+9] ,skeletonData0[i*16+13] ,
-				    	    skeletonData0[i*16+2] ,skeletonData0[i*16+6] ,skeletonData0[i*16+10],skeletonData0[i*16+14],
-				    	    skeletonData0[i*16+3] ,skeletonData0[i*16+7] ,skeletonData0[i*16+11],skeletonData0[i*16+15]
-			    	    );*/
 				}
 
 						                           mat4 tool=matrixs0[0];
-			    	    matrixs[0]=tool*matrixs[0];tool=matrixs0[1]*tool;
-			    	    matrixs[1]=tool*matrixs[1];tool=matrixs0[2]*tool;
-			    	    matrixs[2]=tool*matrixs[2];tool=matrixs0[3]*tool;  mat4  _tool3=tool;
-			    	    matrixs[3]=tool*matrixs[3];tool=matrixs0[4]*tool;
-			    	    matrixs[4]=tool*matrixs[4];tool=matrixs0[5]*tool;
-			    	    matrixs[5]=tool*matrixs[5];tool=matrixs0[6]*tool;
+			    	    matrixs[0]=tool*matrixs[0];tool=tool*matrixs0[1];
+			    	    matrixs[1]=tool*matrixs[1];tool=tool*matrixs0[2];
+			    	    matrixs[2]=tool*matrixs[2];tool=tool*matrixs0[3];  mat4  _tool3=tool;
+			    	    matrixs[3]=tool*matrixs[3];tool=tool*matrixs0[4];
+			    	    matrixs[4]=tool*matrixs[4];tool=tool*matrixs0[5];
+			    	    matrixs[5]=tool*matrixs[5];tool=tool*matrixs0[6];
 			    	    matrixs[6]=tool*matrixs[6];
 
 						                           tool=_tool3;
