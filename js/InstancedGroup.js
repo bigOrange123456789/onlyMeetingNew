@@ -63,8 +63,8 @@ function InstancedGroup(instanceCount,originMesh,animationClip ){
         this.colors=new THREE.InstancedBufferAttribute(new Float32Array(this.instanceCount*3), 3);
 
         for(i=0;i<this.instanceCount;i++){
-                //this.speed.setX(i,i/20+0.001)//Math.random()*9+0.05);
-                this.speed.setX(i,Math.random()*9+0.05);
+                this.speed.setX(i,i/20+0.01)//Math.random()*9+0.05);
+                //this.speed.setX(i,Math.random()*9+0.05);
                 this.mcol0.setXYZ(i, 1,0,0);//随机长宽高
                 this.mcol1.setXYZ(i, 0,1,0);//四元数、齐次坐标
                 this.mcol2.setXYZ(i, 0,0,1);//mcol3.setXYZ(i, 0,0,0);
@@ -109,8 +109,19 @@ function InstancedGroup(instanceCount,originMesh,animationClip ){
 
             var skeletonDataArray=[];//10*25*36//400
             //console.log(this.originMeshs);
-            for (j = 0; j < this.animationClip.tracks[0].times.length; j+=3)
-                for (i = 0; i < this.originMeshs[0].skeleton.boneInverses.length*3; i+=3)
+            for (j = 0; j < this.animationClip.tracks[0].times.length; j++)//36个时间点
+                for (i = 0; i < this.originMeshs[0].skeleton.boneInverses.length*3; i+=3)//8*3
+                    if(
+                        i===7*3||
+                        i===8*3||
+                        i===9*3||
+                        i===10*3||
+
+                        i===11*3||
+                        i===12*3||
+                        i===13*3||
+                        i===14*3
+                    )/**/
                 {//这个36是时间数
                     //for(k=0;k<10;k++)
                     //position
@@ -126,7 +137,9 @@ function InstancedGroup(instanceCount,originMesh,animationClip ){
                     skeletonDataArray.push(this.animationClip.tracks[i+2].values[3*j]);
                     skeletonDataArray.push(this.animationClip.tracks[i+2].values[3*j+1]);
                     skeletonDataArray.push(this.animationClip.tracks[i+2].values[3*j+2]);
+                    //console.log(i,j)
                 }
+            //console.log(skeletonDataArray.length)//2880=36*8*10
             material = new THREE.RawShaderMaterial({//原始着色器材质
                 uniforms: {
                     text0: {type: 't', value: texs[0]}//textureHandle
