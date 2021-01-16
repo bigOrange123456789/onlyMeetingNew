@@ -216,6 +216,7 @@ function InstancedGroup(instanceCount,originMesh,animationClip ){
             scope.time=(scope.time+1.0)%60000;
             scope.mesh.material.uniforms.time={value: scope.time};
 
+            if(scope.time!==1.0)return;
             //开始计算matrix
             matrixs0=[];matrixs=[];
             //if(time%3!==0)return;
