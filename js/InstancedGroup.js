@@ -243,11 +243,15 @@ function InstancedGroup(instanceCount,originMesh,animationClip ){
                 );
             }
 
+            //矩阵3没有乘以逆矩阵
             var tool=matrixs0[0];
             matrixs[0]=tool.clone().multiply(matrixs[0]);tool=tool.clone().multiply(matrixs0[1]);
             matrixs[1]=tool.clone().multiply(matrixs[1]);tool=tool.clone().multiply(matrixs0[2]);
             matrixs[2]=tool.clone().multiply(matrixs[2]);tool=tool.clone().multiply(matrixs0[3]);  var  _tool3=tool;
-            matrixs[3]=tool.clone().multiply(matrixs[3]);tool=tool.clone().multiply(matrixs0[4]);
+            matrixs[3]=tool.clone();tool=tool.clone().multiply(matrixs0[4]);
+
+
+
             matrixs[4]=tool.clone().multiply(matrixs[4]);tool=tool.clone().multiply(matrixs0[5]);
             matrixs[5]=tool.clone().multiply(matrixs[5]);tool=tool.clone().multiply(matrixs0[6]);
             matrixs[6]=tool.clone().multiply(matrixs[6]);

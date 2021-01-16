@@ -185,16 +185,24 @@
 				    	    skeletonMatrixInverse[i*16+12],skeletonMatrixInverse[i*16+13],skeletonMatrixInverse[i*16+14],skeletonMatrixInverse[i*16+15]
 			    	    );
 				}
-						matrixs[3]=getMatrixs_i(3);
+
+						matrixs[0]=getMatrixs_i(0);
+						matrixs[1]=getMatrixs_i(1);
+						matrixs[2]=getMatrixs_i(2);
+
+						mat4  _tool3=getMatrixs_i(3);
+						matrixs[3]=_tool3*matrixs[3];
 						matrixs[4]=getMatrixs_i(4);
 						matrixs[5]=getMatrixs_i(5);
 						matrixs[6]=getMatrixs_i(6);
 
-						                           mat4 tool=matrixs0[0];
+						mat4 tool;
+
+						                           /*tool=matrixs0[0];
 			    	    matrixs[0]=tool*matrixs[0];tool=tool*matrixs0[1];
 			    	    matrixs[1]=tool*matrixs[1];tool=tool*matrixs0[2];
 			    	    matrixs[2]=tool*matrixs[2];tool=tool*matrixs0[3];  mat4  _tool3=tool;
-			    	    /*matrixs[3]=tool*matrixs[3];tool=tool*matrixs0[4];
+			    	    matrixs[3]=tool*matrixs[3];tool=tool*matrixs0[4];
 			    	    matrixs[4]=tool*matrixs[4];tool=tool*matrixs0[5];
 			    	    matrixs[5]=tool*matrixs[5];tool=tool*matrixs0[6];
 			    	    matrixs[6]=tool*matrixs[6];*/
