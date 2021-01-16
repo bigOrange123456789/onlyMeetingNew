@@ -9,6 +9,7 @@ function InstancedGroup(instanceCount,originMesh,animationClip ){
     this.animationClip=animationClip;
     this.mesh=null;//实例化渲染对象的网格
 
+    this.speed;
     this.mcol0;//变换矩阵的一部分
     this.mcol1;
     this.mcol2;
@@ -51,6 +52,8 @@ function InstancedGroup(instanceCount,originMesh,animationClip ){
         }
         //InstancedBufferAttribute为每个对象一组数据：先生成空间，再设置数据
         //6-11
+        this.speed=new THREE.InstancedBufferAttribute(new Float32Array(this.instanceCount * 1), 1);
+
         this.mcol0=new THREE.InstancedBufferAttribute(new Float32Array(this.instanceCount * 3), 3);
         this.mcol1=new THREE.InstancedBufferAttribute(new Float32Array(this.instanceCount * 3), 3);
         this.mcol2=new THREE.InstancedBufferAttribute(new Float32Array(this.instanceCount * 3), 3);
@@ -59,7 +62,8 @@ function InstancedGroup(instanceCount,originMesh,animationClip ){
         this.type=new THREE.InstancedBufferAttribute(new Uint16Array(this.instanceCount*4), 4);//头部、上衣、裤子、动作
         this.colors=new THREE.InstancedBufferAttribute(new Float32Array(this.instanceCount*3), 3);
 
-        for(var i=0;i<this.instanceCount;i++){
+        for(i=0;i<this.instanceCount;i++){
+                this.speed.setX(i,Math.random()+0.5);
                 this.mcol0.setXYZ(i, 1,0,0);//随机长宽高
                 this.mcol1.setXYZ(i, 0,1,0);//四元数、齐次坐标
                 this.mcol2.setXYZ(i, 0,0,1);//mcol3.setXYZ(i, 0,0,0);
@@ -72,10 +76,11 @@ function InstancedGroup(instanceCount,originMesh,animationClip ){
                     Math.floor(Math.random() * texs_length),
                     Math.floor(Math.random() *2)//Math.random()//这个缓冲区是int类型的//所以这里不能传小数
                 );
-            this.colors.setXYZ(i,
-                0.0,0.0,0.0
-            );
+                this.colors.setXYZ(i,
+                    0.0,0.0,0.0
+                );
         }
+        geometry.setAttribute('speed', this.speed);
 
         geometry.setAttribute('mcol0', this.mcol0);//四元数、齐次坐标
         geometry.setAttribute('mcol1', this.mcol1);
@@ -144,7 +149,7 @@ function InstancedGroup(instanceCount,originMesh,animationClip ){
                     ,skeletonData1:{value: skeletonData}
 
                     ,skeletonData:{value: skeletonDataArray}
-                    ,time:{value: 0}
+                    ,time:{value: 0.0}
                 },
                 vertexShader: document.getElementById('vertexShader').textContent,
                 fragmentShader: document.getElementById('fragmentShader').textContent,
@@ -208,7 +213,7 @@ function InstancedGroup(instanceCount,originMesh,animationClip ){
         updateAnimation();
         function updateAnimation() {//每帧更新一次动画
             requestAnimationFrame(updateAnimation);
-            scope.time=Math.floor((scope.time+1)%12);
+            scope.time=(scope.time+1.0)%60000;
             scope.mesh.material.uniforms.time={value: scope.time};
         }
         function compose(x,y,z,w,sx,sy,sz,px,py,pz ) {
