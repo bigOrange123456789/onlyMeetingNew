@@ -48,13 +48,95 @@
                     	m1[3][0]+b*(m2[3][0]-m1[3][0]),	m1[3][1]+b*(m2[3][1]-m1[3][1]),	m1[3][2]+b*(m2[3][2]-m1[3][2]),	m1[3][3]+b*(m2[3][3]-m1[3][3])
                     );*/
 	-->
+	<!--计算手臂部分的骨骼数据-->
+	<!--
+	//开始计算matrix
+            /*var data=[];
+            for(var time=0;time<8;time++){//0-7
+                matrixs0=[];matrixs=[];
+                for(i=0;i<25;i++){
+                    matrixs0.push(
+                        compose(
+                            animation.tracks[3*i+1].values[4*time],
+                            animation.tracks[3*i+1].values[4*time+1],
+                            animation.tracks[3*i+1].values[4*time+2],
+                            animation.tracks[3*i+1].values[4*time+3],
+
+                            animation.tracks[3*i+2].values[3*time],
+                            animation.tracks[3*i+2].values[3*time+1],
+                            animation.tracks[3*i+2].values[3*time+2],
+
+                            animation.tracks[3*i].values[3*time],
+                            animation.tracks[3*i].values[3*time+1],
+                            animation.tracks[3*i].values[3*time+2]
+                        )
+                        //scope.originMeshs[0].skeleton.bones[i].matrix.clone()
+                    );
+                    matrixs.push(
+                        scope.originMeshs[0].skeleton.boneInverses[i].clone()
+                    );
+                }
+
+                //矩阵3没有乘以逆矩阵
+                var tool=matrixs0[0];
+                matrixs[0]=tool.clone().multiply(matrixs[0]);tool=tool.clone().multiply(matrixs0[1]);
+                matrixs[1]=tool.clone().multiply(matrixs[1]);tool=tool.clone().multiply(matrixs0[2]);
+                matrixs[2]=tool.clone().multiply(matrixs[2]);tool=tool.clone().multiply(matrixs0[3]);  var  _tool3=tool;
+
+
+
+                tool=_tool3;
+                tool=tool.clone().multiply(matrixs0[7]);
+                matrixs[7]=tool.clone().multiply(matrixs[7]);tool=tool.clone().multiply(matrixs0[8]);
+                matrixs[8]=tool.clone().multiply(matrixs[8]);tool=tool.clone().multiply(matrixs0[9]);
+                matrixs[9]=tool.clone().multiply(matrixs[9]);tool=tool.clone().multiply(matrixs0[10]);
+                matrixs[10]=tool.clone().multiply(matrixs[10]);
+
+                tool=_tool3;
+                tool=tool.clone().multiply(matrixs0[11]);
+                matrixs[11]=tool.clone().multiply(matrixs[11]);tool=tool.clone().multiply(matrixs0[12]);
+                matrixs[12]=tool.clone().multiply(matrixs[12]);tool=tool.clone().multiply(matrixs0[13]);
+                matrixs[13]=tool.clone().multiply(matrixs[13]);tool=tool.clone().multiply(matrixs0[14]);
+                matrixs[14]=tool.clone().multiply(matrixs[14]);
+
+                var temp=[];
+                temp.push(matrixs[7].toArray());
+                temp.push(matrixs[8].toArray());
+                temp.push(matrixs[9].toArray());
+                temp.push(matrixs[10].toArray());
+                temp.push(matrixs[11].toArray());
+                temp.push(matrixs[12].toArray());
+                temp.push(matrixs[13].toArray());
+                temp.push(matrixs[14].toArray());
+                for(var i=0;i<8;i++){
+                    data.push(temp[i][0]);
+                    data.push(temp[i][1]);
+                    data.push(temp[i][2]);
+                    data.push(temp[i][4]);
+                    data.push(temp[i][5]);
+                    data.push(temp[i][6]);
+                    data.push(temp[i][8]);
+                    data.push(temp[i][9]);
+                    data.push(temp[i][10]);
+                    data.push(temp[i][12]);
+                    data.push(temp[i][13]);
+                    data.push(temp[i][14]);
+                }
+            }//iii
+            let link = document.createElement('a');
+            link.style.display = 'none';
+            document.body.appendChild(link);
+            link.href = URL.createObjectURL(new Blob([JSON.stringify({data:data})], { type: 'text/plain' }));
+            link.download ="skeletonData.json";
+            link.click();*/
+	-->
 	<script id="vertexShader" type="x-shader/x-vertex">
 		precision highp float;//highp
 		uniform mat4 modelViewMatrix;
 		uniform mat4 projectionMatrix;
 
 		uniform float skeletonMatrixInverse[400];//16*25//逆骨骼矩阵
-		uniform float skeletonMatrix[400];//16*25//骨骼矩阵//用于求不动位置的骨骼
+		uniform float skeletonMatrix[400];//骨骼25*16=400//骨骼矩阵//用于求不动位置的骨骼
 
 		uniform float skeletonData[640];//帧数8*骨骼8*10//用于求手臂骨骼//8个手臂骨骼的数据//uniform float[]最大长度4088//变化范围12(0-11)
 		uniform float time;//0-10000

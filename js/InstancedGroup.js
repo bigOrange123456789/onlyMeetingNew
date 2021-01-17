@@ -101,11 +101,6 @@ function InstancedGroup(instanceCount,originMesh,animationClip ){
 
         let material;
         if(this.haveSkeleton){
-            var skeletonData=[];//16*25//400
-            for(i=0;i<this.originMeshs[0].skeleton.boneInverses.length;i++){
-                for(j=0;j<this.originMeshs[0].skeleton.boneInverses[i].length;j++)
-                    skeletonData.push(0);//全是0矩阵
-            }
 
             var skeletonDataArray=[];//10*25*36//400
             //console.log(this.originMeshs);
@@ -159,8 +154,8 @@ function InstancedGroup(instanceCount,originMesh,animationClip ){
                     ,text14: {type: 't', value: texs[14]}
                     ,text15: {type: 't', value: texs[15]}
 
-                    ,skeletonMatrixInverse:{value: skeletonData}
-                    ,skeletonMatrix:{value: []}
+                    ,skeletonMatrixInverse:{value: []}
+                    ,skeletonMatrix:{value: []}////骨骼25*16=400//骨骼矩阵//用于求不动位置的骨骼
 
                     ,skeletonData:{value: skeletonDataArray}//8个手臂骨骼的数据
                     ,time:{value: 0.0}
@@ -214,9 +209,6 @@ function InstancedGroup(instanceCount,originMesh,animationClip ){
             }
             scope.mesh.material.uniforms.skeletonMatrixInverse={value: skeletonMatrixInverse};
         }
-
-
-
 
         this.obj.add(this.mesh);
 
@@ -309,7 +301,8 @@ function InstancedGroup(instanceCount,originMesh,animationClip ){
             document.body.appendChild(link);
             link.href = URL.createObjectURL(new Blob([JSON.stringify({data:data})], { type: 'text/plain' }));
             link.download ="skeletonData.json";
-            link.click();*/
+            console.log(data);
+            //link.click();*/
 
 
 
