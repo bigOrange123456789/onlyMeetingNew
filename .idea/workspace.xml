@@ -22,6 +22,7 @@
     <list default="true" id="b7b6123d-caec-4b82-a432-424a6b5be5dd" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/js/InstancedGroup.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/InstancedGroup.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skeletonData.json" beforeDir="false" afterPath="$PROJECT_DIR$/skeletonData.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test.html" beforeDir="false" afterPath="$PROJECT_DIR$/test.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -120,7 +121,7 @@
       <workItem from="1610518712864" duration="4064000" />
       <workItem from="1610524880037" duration="278000" />
       <workItem from="1610534839740" duration="48544000" />
-      <workItem from="1610852643854" duration="20614000" />
+      <workItem from="1610852643854" duration="23451000" />
     </task>
     <servers />
   </component>
