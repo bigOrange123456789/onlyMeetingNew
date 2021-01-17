@@ -56,7 +56,7 @@
 		uniform float skeletonMatrixInverse[400];//16*25//逆骨骼矩阵
 		uniform float skeletonMatrix[400];//16*25//骨骼矩阵//用于求不动位置的骨骼
 
-		uniform float skeletonData[3000];//10*25*12//uniform float[]最大长度4088//变化范围12(0-11)
+		uniform float skeletonData[640];//帧数8*骨骼8*10//用于求手臂骨骼//8个手臂骨骼的数据//uniform float[]最大长度4088//变化范围12(0-11)
 		uniform float time;//0-10000
 
 		attribute vec3 position;
@@ -87,7 +87,7 @@
 
 		void frame_indexSet(){//求帧序号
 					//int frame_index;
-					float t=((time*speed)/36.0-floor((time*speed)/36.0))*36.0;//将time*speed对36取余结果：[0，36)
+					float t=((time*speed)/8.0-floor((time*speed)/8.0))*8.0;//将time*speed对8取余结果：[0，7)
 
 					if(t>-0.5&&t<0.5)frame_index=0;
 					else if(t>0.5&&t<1.5)frame_index=1;
@@ -96,37 +96,11 @@
 					else if(t>3.5&&t<4.5)frame_index=4;
 					else if(t>4.5&&t<5.5)frame_index=5;
 					else if(t>5.5&&t<6.5)frame_index=6;
-					else if(t>6.5&&t<7.5)frame_index=7;
-					else if(t>7.5&&t<8.5)frame_index=8;
-					else if(t>8.5&&t<9.5)frame_index=9;
-					else if(t>9.5&&t<10.5)frame_index=10;
-					else if(t>10.5&&t<11.5)frame_index=11;
-					else if(t>11.5&&t<12.5)frame_index=12;
-					else if(t>12.5&&t<13.5)frame_index=13;
-					else if(t>13.5&&t<14.5)frame_index=14;
-					else if(t>14.5&&t<15.5)frame_index=15;
-					else if(t>15.5&&t<16.5)frame_index=16;
-					else if(t>16.5&&t<17.5)frame_index=17;
-					else if(t>17.5&&t<18.5)frame_index=18;
-					else if(t>18.5&&t<19.5)frame_index=19;
-					else if(t>19.5&&t<20.5)frame_index=20;
-					else if(t>20.5&&t<21.5)frame_index=21;
-					else if(t>21.5&&t<22.5)frame_index=22;
-					else if(t>22.5&&t<23.5)frame_index=23;
-					else if(t>23.5&&t<24.5)frame_index=24;
-					else if(t>24.5&&t<25.5)frame_index=25;
-					else if(t>25.5&&t<26.5)frame_index=26;
-					else if(t>26.5&&t<27.5)frame_index=27;
-					else if(t>27.5&&t<28.5)frame_index=28;
-					else if(t>28.5&&t<29.5)frame_index=29;
-					else if(t>29.5&&t<30.5)frame_index=30;
-					else if(t>30.5&&t<31.5)frame_index=31;
-					else if(t>31.5&&t<32.5)frame_index=32;
-					else if(t>32.5&&t<33.5)frame_index=33;
-					else if(t>33.5&&t<34.5)frame_index=34;
-					else frame_index=35;
+					else frame_index=7;
+
 		}
         mat4 getMatrixs_i(int i){//求不动位置的骨骼
+        	//if(i!=3)return mat4(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1);
         	return mat4(//最后一列是：0 0 0 1
 				    	    skeletonMatrix[i*16+0] ,skeletonMatrix[i*16+1] ,skeletonMatrix[i*16+2] ,skeletonMatrix[i*16+3] ,
 				  	      	skeletonMatrix[i*16+4] ,skeletonMatrix[i*16+5] ,skeletonMatrix[i*16+6] ,skeletonMatrix[i*16+7] ,
