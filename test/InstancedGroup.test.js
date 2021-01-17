@@ -129,9 +129,10 @@ InstancedGroupTest.prototype={
                 //开始测试
                 var scope=this;
                 var loader= new THREE.GLTFLoader();
-                loader.load("myModel/avatar/Female.glb", (glb) => {
-                        console.log(glb);
-                        var mesh=glb.scene.children[0].children[1];
+                loader.load("myModel/avatar/FemaleOnlyArm2.glb", (glb) => {
+                        console.log(glb);//OnlyArm
+                        var mesh=glb.scene.children[0].children[1];//"myModel/avatar/Female.glb"
+
                         var myMesh=new SkinnedMeshController();
                         myMesh.init(
                             mesh,
@@ -156,9 +157,31 @@ InstancedGroupTest.prototype={
                         scope.scene.add(peoples.obj);
                         console.log(mesh)
                 });//
+                //完成测试
+        },
+        test4:function (contextType){
+                if(typeof(contextType)==="undefined")this.setContext();
+                var nameTest="固定姿势模型";
+                console.log('start test:'+nameTest);
+                //开始测试
+                var scope=this;
+                var loader= new THREE.GLTFLoader();
+                loader.load("test/city2.glb", (glb) => {
+                        console.log(glb);
+                        //console.log(glb.scene.children[0].children[0]);//OnlyArm
+                        glb.scene.traverse(node=>{
+                                if(typeof(node.material!=="undefined")){
+                                        scope.scene.add(node);
+                                        node.material=new THREE.MeshBasicMaterial();
+                                }
+                        });
+                        //var mesh=glb.scene.children[0].children[1];//"myModel/avatar/Female.glb"
+                        //scope.scene.add(mesh);
+
+                });//
 
                 //完成测试
         },
 }
 var myInstancedGroupTest=new InstancedGroupTest();
-myInstancedGroupTest.test3();
+myInstancedGroupTest.test4();
