@@ -91,16 +91,10 @@ function RoomManager(){//myVideoManager_
         //var test2=new THREE.Sphere();
         function fileError(k){
             var arr=[
-                41,37
+                0,37
             ];
             var arrRange=[
-                41,42,
-                43,44,
-                45,59,
-                60,69,
-                70,79,
-                80,84
-
+                41,84
             ];
             for(var i=0;i<arr.length;i++)
                 if(arr[i]===k)return true;

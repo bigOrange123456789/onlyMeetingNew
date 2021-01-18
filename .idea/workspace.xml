@@ -23,10 +23,57 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/js/InstancedGroup.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/InstancedGroup.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/js/sceneSet/AvatarManager.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/sceneSet/AvatarManager.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/sceneSet/RoomManager.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/sceneSet/RoomManager.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/new41.gltf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/new42.gltf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/new43.gltf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/new44.gltf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/new45.gltf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/new46.gltf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/new47.gltf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/new48.gltf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/new49.gltf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/new50.gltf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/new51.gltf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/new52.gltf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/new53.gltf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/new54.gltf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/new55.gltf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/new56.gltf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/new57.gltf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/new58.gltf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/new59.gltf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/new60.gltf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/new61.gltf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/new62.gltf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/new63.gltf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/new64.gltf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/new65.gltf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/new66.gltf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/new67.gltf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/new68.gltf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/new69.gltf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/new70.gltf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/new71.gltf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/new72.gltf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/new73.gltf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/new74.gltf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/new75.gltf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/new76.gltf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/new77.gltf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/new78.gltf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/new79.gltf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/new80.gltf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/new81.gltf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/new82.gltf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/new83.gltf" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/skeletonData.json" beforeDir="false" afterPath="$PROJECT_DIR$/skeletonData.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test.html" beforeDir="false" afterPath="$PROJECT_DIR$/test.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/InstancedGroup.test.js" beforeDir="false" afterPath="$PROJECT_DIR$/test/InstancedGroup.test.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skeletonData0.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/skeletonData1.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/skeletonData2.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/skeletonData3.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/skeletonData4.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/skeletonData5.json" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
