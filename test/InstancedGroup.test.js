@@ -221,16 +221,24 @@ InstancedGroupTest.prototype={
                                 //输出帧序号，用于验证
                                 var time=peoples.time; var frame_index;
                                 var speed=peoples.speed.array[1],
-                                    t=t=((time*speed)/8.0-Math.floor((time*speed)/8.0))*8.0;//将time*speed对8取余结果：[0，7)
+                                    t=((time*speed)/16.0-Math.floor((time*speed)/16.0))*16.0;//将time*speed对8取余结果：[0，7)
 
-                                if(t>-0.5&&t<0.5)frame_index=0;
-                                else if(t>0.5&&t<1.5)frame_index=1;
-                                else if(t>1.5&&t<2.5)frame_index=2;
-                                else if(t>2.5&&t<3.5)frame_index=3;
-                                else if(t>3.5&&t<4.5)frame_index=4;
-                                else if(t>4.5&&t<5.5)frame_index=5;
-                                else if(t>5.5&&t<6.5)frame_index=6;
-                                else frame_index=7;
+                                if(t>-0.5&&t<=0.5)frame_index=0;
+                                else if(t>0.5&&t<=1.5)frame_index=1;
+                                else if(t>1.5&&t<=2.5)frame_index=2;
+                                else if(t>2.5&&t<=3.5)frame_index=3;
+                                else if(t>3.5&&t<=4.5)frame_index=4;
+                                else if(t>4.5&&t<=5.5)frame_index=5;
+                                else if(t>5.5&&t<=6.5)frame_index=6;
+                                else if(t>6.5&&t<=7.5)frame_index=7;
+                                else if(t>7.5&&t<=8.5)frame_index=8;
+                                else if(t>8.5&&t<=9.5)frame_index=9;
+                                else if(t>9.5&&t<=10.5)frame_index=10;
+                                else if(t>10.5&&t<=11.5)frame_index=11;
+                                else if(t>11.5&&t<=12.5)frame_index=12;
+                                else if(t>12.5&&t<=13.5)frame_index=13;
+                                else if(t>13.5&&t<=14.5)frame_index=14;
+                                else frame_index=15;
 
                                 console.log(frame_index);
                                 //完成验证
@@ -253,10 +261,12 @@ InstancedGroupTest.prototype={
                         var animation=glb.animations[0];
                         var data=[];
                         for(var Time=0;Time<16;Time++){//0-7
-                                var time=Math.floor(Time/2);
+                                var time=Time/2;
+                                //console.log(time);
                                 matrixs0=[];matrixs=[];
                                 for(i=0;i<25;i++){
-                                        if(time===Time){
+                                        if(time===Math.floor(time)){
+                                                //console.log(Time);
                                                 matrixs0.push(
                                                     compose(
                                                         animation.tracks[3*i+1].values[4*time],
@@ -274,8 +284,114 @@ InstancedGroupTest.prototype={
                                                     )
                                                 );
                                         }else{
-                                                //var time2=(time+1)%8;
-                                                var m1=compose(
+                                                var time1=Math.floor(time);
+                                                var time2=(time1+1)%8;
+                                                //console.log(time,time2);
+                                                var q1,q2,q3,q4;
+                                                q1=animation.tracks[3*i+1].values[4*time1];
+                                                q2=animation.tracks[3*i+1].values[4*time1+1];
+                                                q3=animation.tracks[3*i+1].values[4*time1+2];
+                                                q4=animation.tracks[3*i+1].values[4*time1+3];
+
+                                                var p1,p2,p3,p4;
+                                                p1=animation.tracks[3*i+1].values[4*time2];
+                                                p2=animation.tracks[3*i+1].values[4*time2+1];
+                                                p3=animation.tracks[3*i+1].values[4*time2+2];
+                                                p4=animation.tracks[3*i+1].values[4*time2+3];
+                                                /*console.log(Math.pow(
+                                                    q1*q1+q2*q2+q3*q3+q4*q4,0.5
+                                                ));*/
+
+                                                var A={},B={};
+                                                B.x=q1;
+                                                B.y=q2;
+                                                B.z=q3;
+                                                B.w=q4;
+                                                A.x=p1;
+                                                A.y=p2;
+                                                A.z=p3;
+                                                A.w=p4;
+
+                                                var OUT=makeInterpolated(A,B,0.5);
+                                                //console.log(A,B,OUT, (p1+q1)/2, (p2+q2)/2, (p3+q3)/2, (p4+q4)/2);
+
+                                                function makeInterpolated(a,b,t) {//(Quaternion a, Quaternion b, float t)
+                                                                 var out = {};
+                                                                 //计算夹角的cos值//计算两个向量的内积
+                                                                 var cosHalfTheta = a.x * b.x + a.y * b.y + a.z * b.z + a.w * b.w;
+                                                                 //如果两个向量的夹角大于180
+                                                                 if(cosHalfTheta < 0.0) {
+                                                                             //b = new Quaternion(b);
+                                                                             cosHalfTheta = -cosHalfTheta;
+                                                                             b.x = -b.x;
+                                                                             b.y = -b.y;
+                                                                             b.z = -b.z;
+                                                                             b.w = -b.w;
+                                                                         }
+
+                                                                 //计算两个向量的夹角
+                                                                 var halfTheta = Math.floor(Math.acos(cosHalfTheta));
+                                                                 //计算夹角的sin值
+                                                                 var sinHalfTheta = Math.floor(
+                                                                     Math.sqrt(1.0 - cosHalfTheta * cosHalfTheta)
+                                                                 );
+                                                                 var ratioA;
+                                                                 var ratioB;
+                                                                 if(Math.abs(sinHalfTheta) > 0.001) {
+                                                                             var oneOverSinHalfTheta = 1.0 / sinHalfTheta;
+                                                                             ratioA = Math.floor(
+                                                                                 Math.sin((1.0 - t) * halfTheta) * oneOverSinHalfTheta
+                                                                             );
+                                                                             ratioB =Math.floor(
+                                                                                 Math.sin(t * halfTheta) * oneOverSinHalfTheta
+                                                                             );
+                                                                 } else {
+                                                                             ratioA = 1.0 - t;
+                                                                             ratioB = t;
+                                                                 }
+
+                                                                 //out= ratioA*a + ratioB*b
+                                                                 out.x = ratioA * a.x + ratioB * b.x;
+                                                                 out.y = ratioA * a.y + ratioB * b.y;
+                                                                 out.z = ratioA * a.z + ratioB * b.z;
+                                                                 out.w = ratioA * a.w + ratioB * b.w;
+                                                                 var l=Math.pow(
+                                                                     out.x*out.x+out.y*out.y+out.z*out.z+out.w*out.w,
+                                                                     0.5
+                                                                 );//out.normalizeInPlace();
+                                                                 out.x/=l;out.y/=l;out.z/=l;out.w/=l;
+                                                                 return out;
+                                                             }
+                                                matrixs0.push(
+                                                    compose(//quaternion scale,position
+                                                        //quaternion
+                                                        //OUT.x,OUT.y,OUT.z,OUT.w,
+                                                        (p1+q1)/2,
+                                                        (p2+q2)/2,
+                                                        (p3+q3)/2,
+                                                        (p4+q4)/2,
+                                                        //scale
+                                                        1,//animation.tracks[3*i+2].values[3*time],
+                                                        1,//animation.tracks[3*i+2].values[3*time+1],
+                                                        1,//animation.tracks[3*i+2].values[3*time+2],
+                                                        //position
+                                                        (animation.tracks[3*i].values[3*time1  ]+animation.tracks[3*i].values[3*time2])/2,
+                                                        (animation.tracks[3*i].values[3*time1+1]+animation.tracks[3*i].values[3*time2+1])/2,
+                                                        (animation.tracks[3*i].values[3*time1+2]+animation.tracks[3*i].values[3*time2+2])/2
+                                                    )
+                                                );
+                                                /*console.log(
+                                                    time1,
+                                                    time2,
+                                                    (p1+q1)/2,
+                                                    (p2+q2)/2,
+                                                    (p3+q3)/2,
+                                                    (p4+q4)/2,
+                                                    (animation.tracks[3*i].values[3*time1  ],animation.tracks[3*i].values[3*time2])/2,
+                                                    (animation.tracks[3*i].values[3*time1+1],animation.tracks[3*i].values[3*time2+1])/2,
+                                                    (animation.tracks[3*i].values[3*time1+2],animation.tracks[3*i].values[3*time2+2])/2
+                                                );*/
+                                                /*var m1=compose(
                                                     animation.tracks[3*i+1].values[4*time],
                                                     animation.tracks[3*i+1].values[4*time+1],
                                                     animation.tracks[3*i+1].values[4*time+2],
@@ -323,8 +439,7 @@ InstancedGroupTest.prototype={
                                                     (m1.elements[14]+m2.elements[14])/2,
                                                     (m1.elements[15]+m2.elements[15])/2
                                                 );
-                                                matrixs0.push(m);
-                                                console.log(m);
+                                                matrixs0.push(m);*/
                                         }
 
                                         matrixs.push(
@@ -400,7 +515,7 @@ InstancedGroupTest.prototype={
                         link.download ="skeletonData.json";
                         //console.log(data);
                         link.click();
-                        function compose(x,y,z,w,sx,sy,sz,px,py,pz ) {
+                        function compose(x,y,z,w,sx,sy,sz,px,py,pz ) {//quaternion scale,position
                                 var x2 = x + x,	y2 = y + y, z2 = z + z;
                                 var xx = x * x2, xy = x * y2, xz = x * z2;
                                 var yy = y * y2, yz = y * z2, zz = z * z2;
@@ -419,4 +534,4 @@ InstancedGroupTest.prototype={
         },
 }
 var myInstancedGroupTest=new InstancedGroupTest();
-myInstancedGroupTest.test6();
+myInstancedGroupTest.test5();

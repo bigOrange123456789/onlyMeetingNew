@@ -63,7 +63,7 @@ function InstancedGroup(instanceCount,originMesh,animationClip ){
         this.colors=new THREE.InstancedBufferAttribute(new Float32Array(this.instanceCount*3), 3);
 
         for(i=0;i<this.instanceCount;i++){
-                this.speed.setX(i,i/20+0.01)//Math.random()*9+0.05);
+                this.speed.setX(i,0.01)//Math.random()*9+0.05);
                 //this.speed.setX(i,Math.random()*9+0.05);
                 this.mcol0.setXYZ(i, 1,0,0);//随机长宽高
                 this.mcol1.setXYZ(i, 0,1,0);//四元数、齐次坐标

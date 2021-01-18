@@ -188,6 +188,7 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
 
                 peoples.typeSet(i,scope.types[i]);
                 peoples.colorSet(i,scope.colors[i]);
+                peoples.speedSet(i,2.5+Math.random()*2.42);
             }
             //peoples.obj.rotation.set(Math.PI/2,0,0);
             peoples.animationSpeed=0.1;
