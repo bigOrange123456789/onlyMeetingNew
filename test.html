@@ -261,9 +261,7 @@
 		uniform mat4 modelViewMatrix;
 		uniform mat4 projectionMatrix;
 
-		uniform float skeletonMatrixInverse[400];//16*25//逆骨骼矩阵
 		uniform float skeletonMatrix[400];//骨骼25*16=400//骨骼矩阵//用于求不动位置的骨骼
-
 		uniform float skeletonData[1768];//帧数8*骨骼8*12=768//用于求手臂骨骼//8个手臂骨骼的数据//uniform float[]最大长度4088//变化范围12(0-11)
 									    //帧数8*骨骼8*10//用于求手臂骨骼//8个手臂骨骼的数据//uniform float[]最大长度4088//变化范围12(0-11)
 		uniform float time;//0-10000
