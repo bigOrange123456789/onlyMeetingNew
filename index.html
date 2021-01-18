@@ -16,9 +16,7 @@
 		uniform mat4 modelViewMatrix;
 		uniform mat4 projectionMatrix;
 
-		uniform float skeletonMatrixInverse[400];//16*25//逆骨骼矩阵
 		uniform float skeletonMatrix[400];//骨骼25*16=400//骨骼矩阵//用于求不动位置的骨骼
-
 		uniform float skeletonData[1768];//帧数8*骨骼8*12=768//用于求手臂骨骼//8个手臂骨骼的数据//uniform float[]最大长度4088//变化范围12(0-11)
 									    //帧数8*骨骼8*10//用于求手臂骨骼//8个手臂骨骼的数据//uniform float[]最大长度4088//变化范围12(0-11)
 		uniform float time;//0-10000
@@ -49,22 +47,19 @@
 		int frame_index;
 		mat4 matrixs[25];//所有的骨骼矩阵//matrixsSet()
 
-		void frame_indexSet(){//求帧序号
-					//int frame_index;
+		void frame_indexSet(){//求帧序号//int frame_index;
 					float t=((time*speed)/8.0-floor((time*speed)/8.0))*8.0;//将time*speed对8取余结果：[0，7)
 
-					if(t>-0.5&&t<0.5)frame_index=0;
-					else if(t>0.5&&t<1.5)frame_index=1;
-					else if(t>1.5&&t<2.5)frame_index=2;
-					else if(t>2.5&&t<3.5)frame_index=3;
-					else if(t>3.5&&t<4.5)frame_index=4;
-					else if(t>4.5&&t<5.5)frame_index=5;
-					else if(t>5.5&&t<6.5)frame_index=6;
+					if(t>-0.5&&t<=0.5)frame_index=0;
+					else if(t>0.5&&t<=1.5)frame_index=1;
+					else if(t>1.5&&t<=2.5)frame_index=2;
+					else if(t>2.5&&t<=3.5)frame_index=3;
+					else if(t>3.5&&t<=4.5)frame_index=4;
+					else if(t>4.5&&t<=5.5)frame_index=5;
+					else if(t>5.5&&t<=6.5)frame_index=6;
 					else frame_index=7;
-
 		}
         mat4 getMatrixs_i(int i){//求不动位置的骨骼
-        	//if(i!=3)return mat4(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1);
         	return mat4(//最后一列是：0 0 0 1
 				    	    skeletonMatrix[i*16+0] ,skeletonMatrix[i*16+1] ,skeletonMatrix[i*16+2] ,skeletonMatrix[i*16+3] ,
 				  	      	skeletonMatrix[i*16+4] ,skeletonMatrix[i*16+5] ,skeletonMatrix[i*16+6] ,skeletonMatrix[i*16+7] ,
@@ -73,103 +68,22 @@
 			    	    );
         }
 		mat4 getMatrixs0_i(int iii){//求手臂骨骼
-					iii=iii-7;//iii的取值范围是7-14 -> 0-7
-					int i=iii;
+					int i=iii-7;//iii的取值范围是7-14 -> 0-7
 					return mat4(//最后一列是：0 0 0 1
 				    	    skeletonData[frame_index*96+i*12+0] ,skeletonData[frame_index*96+i*12+1] ,skeletonData[frame_index*96+i*12+2] ,0,
 				  	      	skeletonData[frame_index*96+i*12+3] ,skeletonData[frame_index*96+i*12+4] ,skeletonData[frame_index*96+i*12+5] ,0 ,
 				    	    skeletonData[frame_index*96+i*12+6] ,skeletonData[frame_index*96+i*12+7] ,skeletonData[frame_index*96+i*12+8] ,0,
 				    	    skeletonData[frame_index*96+i*12+9] ,skeletonData[frame_index*96+i*12+10],skeletonData[frame_index*96+i*12+11],1
 			    	    );
-					return mat4(//最后一列是：0 0 0 1
-				    	    skeletonData[i*16+0] ,skeletonData[i*16+1] ,skeletonData[i*16+2] ,skeletonData[i*16+3] ,
-				  	      	skeletonData[i*16+4] ,skeletonData[i*16+5] ,skeletonData[i*16+6] ,skeletonData[i*16+7] ,
-				    	    skeletonData[i*16+8] ,skeletonData[i*16+9] ,skeletonData[i*16+10],skeletonData[i*16+11],
-				    	    skeletonData[i*16+12],skeletonData[i*16+13],skeletonData[i*16+14],skeletonData[i*16+15]
-			    	    );/**/
-					return mat4(//最后一列是：0 0 0 1
-				    	     skeletonData[frame_index*16*8+iii*16+0] , skeletonData[frame_index*16*8+iii*16+1] , skeletonData[frame_index*16*8+iii*16+2] , skeletonData[iii*16+3] ,
-				  	      	 skeletonData[frame_index*16*8+iii*16+4] , skeletonData[frame_index*16*8+iii*16+5] , skeletonData[frame_index*16*8+iii*16+6] , skeletonData[iii*16+7] ,
-				    	     skeletonData[frame_index*16*8+iii*16+8] , skeletonData[frame_index*16*8+iii*16+9] , skeletonData[frame_index*16*8+iii*16+10], skeletonData[iii*16+11],
-				    	     skeletonData[frame_index*16*8+iii*16+12], skeletonData[frame_index*16*8+iii*16+13], skeletonData[frame_index*16*8+iii*16+14], skeletonData[iii*16+15]
-			    	    );
-					//skeletonData[768];//帧数8*骨骼8*12=768//用于求手臂骨骼
-					/*return mat4(//最后一列是：0 0 0 1
-				    	    skeletonData[frame_index*16*8+ iii*8+0] ,skeletonData[frame_index*16*8+ iii*8+1] ,skeletonData[frame_index*16*8+ iii*8+2] ,0,
-				  	      	skeletonData[frame_index*16*8+ iii*8+3]  ,skeletonData[frame_index*16*8+ iii*8+4] ,skeletonData[frame_index*16*8+ iii*8+5] ,0 ,
-				    	    skeletonData[frame_index*16*8+ iii*8+6]  ,skeletonData[frame_index*16*8+ iii*8+7] ,skeletonData[frame_index*16*8+ iii*8+8],0,
-				    	    skeletonData[frame_index*16*8+ iii*8+9]  ,skeletonData[frame_index*16*8+ iii*8+10],skeletonMatrix[frame_index*16*8+ iii*8+11],1
-			    	    );*/
-			    	    //return mat4(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1);
-        			return mat4(//最后一列是：0 0 0 1
-				    	    skeletonData[frame_index*96+iii*8+0] ,skeletonData[frame_index*96+iii*8+1] ,skeletonData[frame_index*96+iii*8+2] ,0,
-				  	      	skeletonData[frame_index*96+iii*8+3] ,skeletonData[frame_index*96+iii*8+4] ,skeletonData[frame_index*96+iii*8+5] ,0 ,
-				    	    skeletonData[frame_index*96+iii*8+6] ,skeletonData[frame_index*96+iii*8+7] ,skeletonData[frame_index*96+iii*8+8],0,
-				    	    skeletonData[frame_index*96+iii*8+9],skeletonData[frame_index*96+iii*8+10],skeletonMatrix[frame_index*96+iii*8+11],1
-			    	    );
-					/*float x,y,z,w,px,py,pz;
-					float x2,y2,z2 ,
-					      xx,xy,xz,
-					      yy,yz,zz,
-					      wx,wy,wz;
-
-
-						px=skeletonData[80*frame_index+10*iii+0];
-						py=skeletonData[80*frame_index+10*iii+1];
-						pz=skeletonData[80*frame_index+10*iii+2];
-						x=skeletonData[80*frame_index+10*iii+3];
-						y=skeletonData[80*frame_index+10*iii+4];
-						z=skeletonData[80*frame_index+10*iii+5];
-						w=skeletonData[80*frame_index+10*iii+6];
-
-						x2 = x + x;	y2 = y + y; z2 = z + z;
-    	                xx = x * x2;xy = x * y2;xz = x * z2;
-        	            yy = y * y2;yz = y * z2;zz = z * z2;
-            	        wx = w * x2;wy = w * y2;wz = w * z2;
-                	    mat4 m=mat4(
-                    		( 1.0-( yy + zz ) ),( xy + wz )         ,( xz - wy )         ,0.0,
-                    		( xy - wz )        ,( 1.0-( xx + zz ) ) ,( yz + wx )         ,0.0,
-	                    	( xz + wy )        ,( yz - wx )         ,( 1.0-( xx + yy ) ) ,0.0,
-    	                	px                 ,py                  ,pz                  ,1.0
-        	            );
-
-					return m;*/
 		}
 
 
 		void matrixsSet(){
 						frame_indexSet();//设置全局变量frame_index的值
 
-						matrixs[0]=getMatrixs_i(0);
-						matrixs[1]=getMatrixs_i(1);
-						matrixs[2]=getMatrixs_i(2);
-						matrixs[3]=getMatrixs_i(3);
-						matrixs[4]=getMatrixs_i(4);
-						matrixs[5]=getMatrixs_i(5);
-						matrixs[6]=getMatrixs_i(6);
-
-			    	    //胳膊
-			    	    matrixs[7]=getMatrixs0_i(7);
-			    	    matrixs[8]=getMatrixs0_i(8);
-			    	    matrixs[9]=getMatrixs0_i(9);
-			    	    matrixs[10]=getMatrixs0_i(10);
-
-			    	    //胳膊
-			    	    matrixs[11]=getMatrixs0_i(11);
-			    	    matrixs[12]=getMatrixs0_i(12);
-			    	    matrixs[13]=getMatrixs0_i(13);
-			    	    matrixs[14]=getMatrixs0_i(14);
-
-						matrixs[15]=getMatrixs_i(15);
-						matrixs[16]=getMatrixs_i(16);
-						matrixs[17]=getMatrixs_i(17);
-						matrixs[18]=getMatrixs_i(18);
-						matrixs[19]=getMatrixs_i(19);
-						matrixs[20]=getMatrixs_i(20);
-						matrixs[21]=getMatrixs_i(21);
-						matrixs[22]=getMatrixs_i(22);
-						matrixs[23]=getMatrixs_i(23);
-						matrixs[24]=getMatrixs_i(24);
+						for(int i=0;i<7;i++)matrixs[i]=getMatrixs_i(i);
+			    	    for(int i=7;i<15;i++)matrixs[i]=getMatrixs0_i(i);//胳膊
+						for(int i=15;i<25;i++)matrixs[i]=getMatrixs_i(i);
 		}
 		void main(){
 			    vec3 vPosition = position;

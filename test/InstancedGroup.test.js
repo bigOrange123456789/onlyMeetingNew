@@ -196,14 +196,9 @@ InstancedGroupTest.prototype={
                         console.log(glb);//OnlyArm
                         var mesh=glb.scene.children[0].children[1];//"myModel/avatar/Female.glb"
 
-                        var myMesh=new SkinnedMeshController();
-                        myMesh.init(
-                            mesh,
-                            glb.animations[0]
-                        );/**/
                         var peoples = new InstancedGroup(
                             2,
-                            [myMesh.mesh,myMesh.mesh],//这些mesh的网格应该一致
+                            [mesh],//这些mesh的网格应该一致
                             glb.animations[0]
                         );
                         var texSrc = [];
@@ -216,18 +211,18 @@ InstancedGroupTest.prototype={
                                 peoples.positionSet(i, [3 * i, 0, 0]);
                                 peoples.scaleSet(i, [0.03, 0.03, 0.03]);
                         }
-                        peoples.animationSpeed = 0.1;
                         scope.scene.add(peoples.obj);
                         console.log(mesh)
+                        peoples.speedSet(1,0.01);
 
                         updateAnimation();//
                         function updateAnimation() {//每帧更新一次动画
                                 requestAnimationFrame(updateAnimation);
                                 //输出帧序号，用于验证
-                                var time=peoples.time;
+                                var time=peoples.time; var frame_index;
                                 var speed=peoples.speed.array[1],
-                                    t=((time*speed)/36.0-Math.floor((time*speed)/36.0))*36.0;//时间对36取余结果：[0，36)
-                                var frame_index;
+                                    t=t=((time*speed)/8.0-Math.floor((time*speed)/8.0))*8.0;//将time*speed对8取余结果：[0，7)
+
                                 if(t>-0.5&&t<0.5)frame_index=0;
                                 else if(t>0.5&&t<1.5)frame_index=1;
                                 else if(t>1.5&&t<2.5)frame_index=2;
@@ -235,35 +230,8 @@ InstancedGroupTest.prototype={
                                 else if(t>3.5&&t<4.5)frame_index=4;
                                 else if(t>4.5&&t<5.5)frame_index=5;
                                 else if(t>5.5&&t<6.5)frame_index=6;
-                                else if(t>6.5&&t<7.5)frame_index=7;
-                                else if(t>7.5&&t<8.5)frame_index=8;
-                                else if(t>8.5&&t<9.5)frame_index=9;
-                                else if(t>9.5&&t<10.5)frame_index=10;
-                                else if(t>10.5&&t<11.5)frame_index=11;
-                                else if(t>11.5&&t<12.5)frame_index=12;
-                                else if(t>12.5&&t<13.5)frame_index=13;
-                                else if(t>13.5&&t<14.5)frame_index=14;
-                                else if(t>14.5&&t<15.5)frame_index=15;
-                                else if(t>15.5&&t<16.5)frame_index=16;
-                                else if(t>16.5&&t<17.5)frame_index=17;
-                                else if(t>17.5&&t<18.5)frame_index=18;
-                                else if(t>18.5&&t<19.5)frame_index=19;
-                                else if(t>19.5&&t<20.5)frame_index=20;
-                                else if(t>20.5&&t<21.5)frame_index=21;
-                                else if(t>21.5&&t<22.5)frame_index=22;
-                                else if(t>22.5&&t<23.5)frame_index=23;
-                                else if(t>23.5&&t<24.5)frame_index=24;
-                                else if(t>24.5&&t<25.5)frame_index=25;
-                                else if(t>25.5&&t<26.5)frame_index=26;
-                                else if(t>26.5&&t<27.5)frame_index=27;
-                                else if(t>27.5&&t<28.5)frame_index=28;
-                                else if(t>28.5&&t<29.5)frame_index=29;
-                                else if(t>29.5&&t<30.5)frame_index=30;
-                                else if(t>30.5&&t<31.5)frame_index=31;
-                                else if(t>31.5&&t<32.5)frame_index=32;
-                                else if(t>32.5&&t<33.5)frame_index=33;
-                                else if(t>33.5&&t<34.5)frame_index=34;
-                                else frame_index=35;
+                                else frame_index=7;
+
                                 console.log(frame_index);
                                 //完成验证
                         }

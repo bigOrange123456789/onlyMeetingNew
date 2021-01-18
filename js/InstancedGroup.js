@@ -162,7 +162,7 @@ function InstancedGroup(instanceCount,originMesh,animationClip ){
                 fragmentShader: document.getElementById('fragmentShader').textContent,
                 side: THREE.DoubleSide
             });
-            
+
             var loader = new THREE.XHRLoader(THREE.DefaultLoadingManager);
             loader.load("skeletonData.json", function(str)
             {
@@ -226,8 +226,8 @@ function InstancedGroup(instanceCount,originMesh,animationClip ){
             scope.mesh.material.uniforms.time={value: scope.time};
 
 
-            //开始计算matrix
-            /*
+            /*//开始计算matrix
+
             if(scope.time!==20.0)return;
             var data=[];
             for(var time=0;time<8;time++){//0-7
@@ -397,17 +397,6 @@ function InstancedGroup(instanceCount,originMesh,animationClip ){
         return this.scales[i];
     }
 
-    this.typeSet=function (i,type) {
-        this.type.array[4*i  ]=type[0];
-        this.type.array[4*i+1]=type[1];
-        this.type.array[4*i+2]=type[2];
-        this.type.array[4*i+3]=type[3];
-    }
-    this.colorSet=function (i,color) {
-        this.colors.array[3*i  ]=color[0];
-        this.colors.array[3*i+1]=color[1];
-        this.colors.array[3*i+2]=color[2];
-    }
     this.positionSet=function (i,pos){
         this.mcol3.array[3*i  ]=pos[0];
         this.mcol3.array[3*i+1]=pos[1];
@@ -424,6 +413,20 @@ function InstancedGroup(instanceCount,originMesh,animationClip ){
         this.scales[i][1]=scale[1];
         this.scales[i][2]=scale[2];
         this.updateBuffer(i);
+    }
+    this.typeSet=function (i,type) {
+        this.type.array[4*i  ]=type[0];
+        this.type.array[4*i+1]=type[1];
+        this.type.array[4*i+2]=type[2];
+        this.type.array[4*i+3]=type[3];
+    }
+    this.colorSet=function (i,color) {
+        this.colors.array[3*i  ]=color[0];
+        this.colors.array[3*i+1]=color[1];
+        this.colors.array[3*i+2]=color[2];
+    }
+    this.speedSet=function (i,speed) {//设置动画速度
+        this.speed.array[i]=speed;
     }
 
     this.move=function (i,dPos){
