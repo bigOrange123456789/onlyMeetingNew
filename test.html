@@ -291,7 +291,7 @@
 		uniform mat4 modelViewMatrix;
 		uniform mat4 projectionMatrix;
 
-		uniform float skeletonMatrix[400];//骨骼25*16=400//骨骼矩阵//用于求不动位置的骨骼
+		uniform float skeletonMatrix[204];//骨骼(25-8)*12=204//骨骼矩阵//用于求不动位置的骨骼
 		uniform float skeletonData[1768];//帧数16*骨骼8*12=//用于求手臂骨骼//8个手臂骨骼的数据//uniform float[]最大长度4088//变化范围12(0-11)
 									    //帧数8*骨骼8*10//用于求手臂骨骼//8个手臂骨骼的数据//uniform float[]最大长度4088//变化范围12(0-11)
 		uniform float time;//0-10000
@@ -343,11 +343,12 @@
 					else frame_index=15;
 		}
         mat4 getMatrixs_i(int i){//求不动位置的骨骼
+        	if(i>14)i=i-8;
         	return mat4(//最后一列是：0 0 0 1
-				    	    skeletonMatrix[i*16+0] ,skeletonMatrix[i*16+1] ,skeletonMatrix[i*16+2] ,skeletonMatrix[i*16+3] ,
-				  	      	skeletonMatrix[i*16+4] ,skeletonMatrix[i*16+5] ,skeletonMatrix[i*16+6] ,skeletonMatrix[i*16+7] ,
-				    	    skeletonMatrix[i*16+8] ,skeletonMatrix[i*16+9] ,skeletonMatrix[i*16+10],skeletonMatrix[i*16+11],
-				    	    skeletonMatrix[i*16+12],skeletonMatrix[i*16+13],skeletonMatrix[i*16+14],skeletonMatrix[i*16+15]
+				    	    skeletonMatrix[i*12+0] ,skeletonMatrix[i*12+1] ,skeletonMatrix[i*12+2] ,0 ,
+				  	      	skeletonMatrix[i*12+3] ,skeletonMatrix[i*12+4] ,skeletonMatrix[i*12+5] ,0 ,
+				    	    skeletonMatrix[i*12+6] ,skeletonMatrix[i*12+7] ,skeletonMatrix[i*12+8] ,0 ,
+				    	    skeletonMatrix[i*12+9],skeletonMatrix[i*12+10],skeletonMatrix[i*12+11] ,1
 			    	    );
         }
 		mat4 getMatrixs0_i(int iii){//求手臂骨骼
