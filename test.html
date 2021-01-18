@@ -130,6 +130,132 @@
             link.download ="skeletonData.json";
             link.click();*/
 	-->
+	<!--计算手臂部分的骨骼矩阵/压缩成12个数-->
+	<!--
+	var data=[];
+            for(var time=0;time<8;time++){//0-7
+            //var time=0;
+                matrixs0=[];matrixs=[];
+                for(i=0;i<25;i++){
+                    matrixs0.push(
+                        compose(
+                            animation.tracks[3*i+1].values[4*time],
+                            animation.tracks[3*i+1].values[4*time+1],
+                            animation.tracks[3*i+1].values[4*time+2],
+                            animation.tracks[3*i+1].values[4*time+3],
+
+                            animation.tracks[3*i+2].values[3*time],
+                            animation.tracks[3*i+2].values[3*time+1],
+                            animation.tracks[3*i+2].values[3*time+2],
+
+                            animation.tracks[3*i].values[3*time],
+                            animation.tracks[3*i].values[3*time+1],
+                            animation.tracks[3*i].values[3*time+2]
+                        )
+                        //scope.originMeshs[0].skeleton.bones[i].matrix.clone()
+                    );
+                    matrixs.push(
+                        scope.originMeshs[0].skeleton.boneInverses[i].clone()
+                    );
+                }
+
+                /////矩阵3没有乘以逆矩阵
+                var tool=matrixs0[0];
+                matrixs[0]=tool.clone().multiply(matrixs[0]);tool=tool.clone().multiply(matrixs0[1]);
+                matrixs[1]=tool.clone().multiply(matrixs[1]);tool=tool.clone().multiply(matrixs0[2]);
+                matrixs[2]=tool.clone().multiply(matrixs[2]);tool=tool.clone().multiply(matrixs0[3]);  var  _tool3=tool;
+                matrixs[3]=tool.clone().multiply(matrixs[3]);tool=tool.clone().multiply(matrixs0[4]);
+                matrixs[4]=tool.clone().multiply(matrixs[4]);tool=tool.clone().multiply(matrixs0[5]);
+                matrixs[5]=tool.clone().multiply(matrixs[5]);tool=tool.clone().multiply(matrixs0[6]);
+                matrixs[6]=tool.clone().multiply(matrixs[6]);
+
+                tool=_tool3;
+                tool=tool.clone().multiply(matrixs0[7]);
+                matrixs[7]=tool.clone().multiply(matrixs[7]);tool=tool.clone().multiply(matrixs0[8]);
+                matrixs[8]=tool.clone().multiply(matrixs[8]);tool=tool.clone().multiply(matrixs0[9]);
+                matrixs[9]=tool.clone().multiply(matrixs[9]);tool=tool.clone().multiply(matrixs0[10]);
+                matrixs[10]=tool.clone().multiply(matrixs[10]);
+
+                tool=_tool3;
+                tool=tool.clone().multiply(matrixs0[11]);
+                matrixs[11]=tool.clone().multiply(matrixs[11]);tool=tool.clone().multiply(matrixs0[12]);
+                matrixs[12]=tool.clone().multiply(matrixs[12]);tool=tool.clone().multiply(matrixs0[13]);
+                matrixs[13]=tool.clone().multiply(matrixs[13]);tool=tool.clone().multiply(matrixs0[14]);
+                matrixs[14]=tool.clone().multiply(matrixs[14]);
+
+                tool=matrixs0[0].clone().multiply(matrixs0[15]);
+                matrixs[15]=tool.clone().multiply(matrixs[15]);tool=tool.clone().multiply(matrixs0[16]);
+                matrixs[16]=tool.clone().multiply(matrixs[16]);tool=tool.clone().multiply(matrixs0[17]);
+                matrixs[17]=tool.clone().multiply(matrixs[17]);tool=tool.clone().multiply(matrixs0[18]);
+                matrixs[18]=tool.clone().multiply(matrixs[18]);tool=tool.clone().multiply(matrixs0[19]);
+                matrixs[19]=tool.clone().multiply(matrixs[19]);
+
+                tool=matrixs0[0].clone().multiply(matrixs0[20]);
+                matrixs[20]=tool.clone().multiply(matrixs[20]);tool=tool.clone().multiply(matrixs0[21]);
+                matrixs[21]=tool.clone().multiply(matrixs[21]);tool=tool.clone().multiply(matrixs0[22]);
+                matrixs[22]=tool.clone().multiply(matrixs[22]);tool=tool.clone().multiply(matrixs0[23]);
+                matrixs[23]=tool.clone().multiply(matrixs[23]);tool=tool.clone().multiply(matrixs0[24]);
+                matrixs[24]=tool.clone().multiply(matrixs[24]);/**/
+                //完成计算matrix
+
+            /*for(i=0;i<25;i++){
+                var arr=matrixs[i].toArray();
+                for(j=0;j<16;j++){
+                    data.push(arr[j]);
+                }
+            }*/
+
+            for(i of [7,8,9,10,11,12,13,14]){
+                var temp=matrixs[i].toArray();
+                for(j=0;j<16;j++){
+                    //data.push(arr[j]);
+                }
+                data.push(temp[0]);
+                data.push(temp[1]);
+                data.push(temp[2]);
+                data.push(temp[4]);
+                data.push(temp[5]);
+                data.push(temp[6]);
+                data.push(temp[8]);
+                data.push(temp[9]);
+                data.push(temp[10]);
+                data.push(temp[12]);
+                data.push(temp[13]);
+                data.push(temp[14]);
+            }/**/
+
+                /*var temp=[];
+                temp.push(matrixs[7].toArray());
+                temp.push(matrixs[8].toArray());
+                temp.push(matrixs[9].toArray());
+                temp.push(matrixs[10].toArray());
+                temp.push(matrixs[11].toArray());
+                temp.push(matrixs[12].toArray());
+                temp.push(matrixs[13].toArray());
+                temp.push(matrixs[14].toArray());
+                for(var i=0;i<8;i++){
+                    data.push(temp[i][0]);
+                    data.push(temp[i][1]);
+                    data.push(temp[i][2]);
+                    data.push(temp[i][4]);
+                    data.push(temp[i][5]);
+                    data.push(temp[i][6]);
+                    data.push(temp[i][8]);
+                    data.push(temp[i][9]);
+                    data.push(temp[i][10]);
+                    data.push(temp[i][12]);
+                    data.push(temp[i][13]);
+                    data.push(temp[i][14]);
+                }*/
+            }//iii
+            let link = document.createElement('a');
+            link.style.display = 'none';
+            document.body.appendChild(link);
+            link.href = URL.createObjectURL(new Blob([JSON.stringify({data:data})], { type: 'text/plain' }));
+            link.download ="skeletonData.json";
+            //console.log(data);
+            //link.click();/**/
+	-->
 	<script id="vertexShader" type="x-shader/x-vertex">
 		precision highp float;//highp
 		uniform mat4 modelViewMatrix;
@@ -138,7 +264,7 @@
 		uniform float skeletonMatrixInverse[400];//16*25//逆骨骼矩阵
 		uniform float skeletonMatrix[400];//骨骼25*16=400//骨骼矩阵//用于求不动位置的骨骼
 
-		uniform float skeletonData[768];//帧数8*骨骼8*12=768//用于求手臂骨骼//8个手臂骨骼的数据//uniform float[]最大长度4088//变化范围12(0-11)
+		uniform float skeletonData[1768];//帧数8*骨骼8*12=768//用于求手臂骨骼//8个手臂骨骼的数据//uniform float[]最大长度4088//变化范围12(0-11)
 									    //帧数8*骨骼8*10//用于求手臂骨骼//8个手臂骨骼的数据//uniform float[]最大长度4088//变化范围12(0-11)
 		uniform float time;//0-10000
 
@@ -193,14 +319,33 @@
         }
 		mat4 getMatrixs0_i(int iii){//求手臂骨骼
 					iii=iii-7;//iii的取值范围是7-14 -> 0-7
+					int i=iii;
+					return mat4(//最后一列是：0 0 0 1
+				    	    skeletonData[frame_index*96+i*12+0] ,skeletonData[frame_index*96+i*12+1] ,skeletonData[frame_index*96+i*12+2] ,0,
+				  	      	skeletonData[frame_index*96+i*12+3] ,skeletonData[frame_index*96+i*12+4] ,skeletonData[frame_index*96+i*12+5] ,0 ,
+				    	    skeletonData[frame_index*96+i*12+6] ,skeletonData[frame_index*96+i*12+7] ,skeletonData[frame_index*96+i*12+8] ,0,
+				    	    skeletonData[frame_index*96+i*12+9] ,skeletonData[frame_index*96+i*12+10],skeletonData[frame_index*96+i*12+11],1
+			    	    );
+					return mat4(//最后一列是：0 0 0 1
+				    	    skeletonData[i*16+0] ,skeletonData[i*16+1] ,skeletonData[i*16+2] ,skeletonData[i*16+3] ,
+				  	      	skeletonData[i*16+4] ,skeletonData[i*16+5] ,skeletonData[i*16+6] ,skeletonData[i*16+7] ,
+				    	    skeletonData[i*16+8] ,skeletonData[i*16+9] ,skeletonData[i*16+10],skeletonData[i*16+11],
+				    	    skeletonData[i*16+12],skeletonData[i*16+13],skeletonData[i*16+14],skeletonData[i*16+15]
+			    	    );/**/
+					return mat4(//最后一列是：0 0 0 1
+				    	     skeletonData[frame_index*16*8+iii*16+0] , skeletonData[frame_index*16*8+iii*16+1] , skeletonData[frame_index*16*8+iii*16+2] , skeletonData[iii*16+3] ,
+				  	      	 skeletonData[frame_index*16*8+iii*16+4] , skeletonData[frame_index*16*8+iii*16+5] , skeletonData[frame_index*16*8+iii*16+6] , skeletonData[iii*16+7] ,
+				    	     skeletonData[frame_index*16*8+iii*16+8] , skeletonData[frame_index*16*8+iii*16+9] , skeletonData[frame_index*16*8+iii*16+10], skeletonData[iii*16+11],
+				    	     skeletonData[frame_index*16*8+iii*16+12], skeletonData[frame_index*16*8+iii*16+13], skeletonData[frame_index*16*8+iii*16+14], skeletonData[iii*16+15]
+			    	    );
 					//skeletonData[768];//帧数8*骨骼8*12=768//用于求手臂骨骼
 					/*return mat4(//最后一列是：0 0 0 1
-				    	    skeletonData[ iii*8+0] ,skeletonData[ iii*8+1] ,skeletonData[ iii*8+2] ,0,
-				  	      	skeletonData[ iii*8+3] ,skeletonData[ iii*8+4] ,skeletonData[ iii*8+5] ,0 ,
-				    	    skeletonData[ iii*8+6] ,skeletonData[ iii*8+7] ,skeletonData[ iii*8+8],0,
-				    	    skeletonData[ iii*8+9],skeletonData[ iii*8+10],skeletonMatrix[ iii*8+11],1
+				    	    skeletonData[frame_index*16*8+ iii*8+0] ,skeletonData[frame_index*16*8+ iii*8+1] ,skeletonData[frame_index*16*8+ iii*8+2] ,0,
+				  	      	skeletonData[frame_index*16*8+ iii*8+3]  ,skeletonData[frame_index*16*8+ iii*8+4] ,skeletonData[frame_index*16*8+ iii*8+5] ,0 ,
+				    	    skeletonData[frame_index*16*8+ iii*8+6]  ,skeletonData[frame_index*16*8+ iii*8+7] ,skeletonData[frame_index*16*8+ iii*8+8],0,
+				    	    skeletonData[frame_index*16*8+ iii*8+9]  ,skeletonData[frame_index*16*8+ iii*8+10],skeletonMatrix[frame_index*16*8+ iii*8+11],1
 			    	    );*/
-			    	    return mat4(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1);
+			    	    //return mat4(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1);
         			return mat4(//最后一列是：0 0 0 1
 				    	    skeletonData[frame_index*96+iii*8+0] ,skeletonData[frame_index*96+iii*8+1] ,skeletonData[frame_index*96+iii*8+2] ,0,
 				  	      	skeletonData[frame_index*96+iii*8+3] ,skeletonData[frame_index*96+iii*8+4] ,skeletonData[frame_index*96+iii*8+5] ,0 ,
@@ -238,32 +383,15 @@
 
 
 		void matrixsSet(){
-				frame_indexSet();//设置全局变量frame_index的值
-
-				//开始求25个骨骼的变换矩阵
-				mat4 matrixs0[25];
-
-
-            	//mat4 matrixs[25];//25个骨骼//逆骨骼矩阵
-				for(int i=0;i<25;i++){
-						matrixs[i]=mat4(//最后一列是：0 0 0 1
-				    	    skeletonMatrixInverse[i*16+0] ,skeletonMatrixInverse[i*16+1] ,skeletonMatrixInverse[i*16+2] ,skeletonMatrixInverse[i*16+3] ,
-				  	      	skeletonMatrixInverse[i*16+4] ,skeletonMatrixInverse[i*16+5] ,skeletonMatrixInverse[i*16+6] ,skeletonMatrixInverse[i*16+7] ,
-				    	    skeletonMatrixInverse[i*16+8] ,skeletonMatrixInverse[i*16+9] ,skeletonMatrixInverse[i*16+10],skeletonMatrixInverse[i*16+11],
-				    	    skeletonMatrixInverse[i*16+12],skeletonMatrixInverse[i*16+13],skeletonMatrixInverse[i*16+14],skeletonMatrixInverse[i*16+15]
-			    	    );
-				}
+						frame_indexSet();//设置全局变量frame_index的值
 
 						matrixs[0]=getMatrixs_i(0);
 						matrixs[1]=getMatrixs_i(1);
 						matrixs[2]=getMatrixs_i(2);
-
-						mat4  _tool3=getMatrixs_i(3);
-						matrixs[3]=_tool3*matrixs[3];
+						matrixs[3]=getMatrixs_i(3);
 						matrixs[4]=getMatrixs_i(4);
 						matrixs[5]=getMatrixs_i(5);
 						matrixs[6]=getMatrixs_i(6);
-
 
 			    	    //胳膊
 			    	    matrixs[7]=getMatrixs0_i(7);
@@ -287,8 +415,6 @@
 						matrixs[22]=getMatrixs_i(22);
 						matrixs[23]=getMatrixs_i(23);
 						matrixs[24]=getMatrixs_i(24);
-
-
 		}
 		void main(){
 			    vec3 vPosition = position;
