@@ -260,7 +260,7 @@ InstancedGroupTest.prototype={
                         //开始计算matrix
                         var animation=glb.animations[0];
                         var data=[];
-                        for(var Time=0;Time<16;Time++){//0-7
+                        for(var Time=0;Time<8;Time++){//0-7
                                 var time=Time/2;
                                 //console.log(time);
                                 matrixs0=[];matrixs=[];
@@ -285,7 +285,7 @@ InstancedGroupTest.prototype={
                                                 );
                                         }else{
                                                 var time1=Math.floor(time);
-                                                var time2=(time1+1)%8;
+                                                var time2=(time1+1)//%8;
                                                 //console.log(time,time2);
                                                 var q1,q2,q3,q4;
                                                 q1=animation.tracks[3*i+1].values[4*time1];

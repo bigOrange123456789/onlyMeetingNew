@@ -22,7 +22,8 @@
     <list default="true" id="b7b6123d-caec-4b82-a432-424a6b5be5dd" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/skeletonMatrix.json" beforeDir="false" afterPath="$PROJECT_DIR$/skeletonMatrix.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skeletonData.json" beforeDir="false" afterPath="$PROJECT_DIR$/skeletonData.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skeletonMatrix0.json" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/test.html" beforeDir="false" afterPath="$PROJECT_DIR$/test.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test/InstancedGroup.test.js" beforeDir="false" afterPath="$PROJECT_DIR$/test/InstancedGroup.test.js" afterDir="false" />
     </list>

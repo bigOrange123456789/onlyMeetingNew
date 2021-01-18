@@ -18,8 +18,8 @@
 		uniform mat4 projectionMatrix;
 
 		uniform float skeletonMatrix[204];//骨骼(25-8)*12=204//骨骼矩阵//用于求不动位置的骨骼
-		uniform float skeletonData[1768];//帧数16*骨骼8*12=//用于求手臂骨骼//8个手臂骨骼的数据//uniform float[]最大长度4088//变化范围12(0-11)
-									    //帧数8*骨骼8*10//用于求手臂骨骼//8个手臂骨骼的数据//uniform float[]最大长度4088//变化范围12(0-11)
+		uniform float skeletonData[768];//帧数8*骨骼8*12=768//用于求手臂骨骼//8个手臂骨骼的数据//uniform float[]最大长度4088//变化范围12(0-11)
+
 		uniform float time;//0-10000
 
 		attribute vec3 position;
@@ -59,14 +59,14 @@
 					else if(t>4.5&&t<=5.5)frame_index=5;
 					else if(t>5.5&&t<=6.5)frame_index=6;
 					else if(t>6.5&&t<=7.5)frame_index=7;
-					else if(t>7.5&&t<=8.5)frame_index=8;
-					else if(t>8.5&&t<=9.5)frame_index=9;
-					else if(t>9.5&&t<=10.5)frame_index=10;
-					else if(t>10.5&&t<=11.5)frame_index=11;
-					else if(t>11.5&&t<=12.5)frame_index=12;
-					else if(t>12.5&&t<=13.5)frame_index=13;
-					else if(t>13.5&&t<=14.5)frame_index=14;
-					else frame_index=15;
+					else if(t>7.5&&t<=8.5)frame_index=7;
+					else if(t>8.5&&t<=9.5)frame_index=6;
+					else if(t>9.5&&t<=10.5)frame_index=5;
+					else if(t>10.5&&t<=11.5)frame_index=4;
+					else if(t>11.5&&t<=12.5)frame_index=3;
+					else if(t>12.5&&t<=13.5)frame_index=2;
+					else if(t>13.5&&t<=14.5)frame_index=1;
+					else frame_index=0;
 		}
         mat4 getMatrixs_i(int i){//求不动位置的骨骼
         	if(i>14)i=i-8;
