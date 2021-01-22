@@ -44,7 +44,7 @@ function Main(){
         setInterval(function () {
             stats.begin();
             stats.end();
-        }, 1000 / 60)
+        }, 100)
         //性能监视器stats.js结束
 
     }

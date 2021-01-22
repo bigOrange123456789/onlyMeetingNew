@@ -46,7 +46,7 @@
         varying float myTest00;
 
 		int frame_index;
-		mat4 matrixs[25];//所有的骨骼矩阵//matrixsSet()
+		//mat4 matrixs[25];//所有的骨骼矩阵//matrixsSet()
 
 		void frame_indexSet(){//求帧序号//int frame_index;
 					float t=((time*speed)/16.0-floor((time*speed)/16.0))*16.0;//将time*speed对8取余结果：[0，7)
@@ -86,15 +86,15 @@
 				    	    skeletonData[frame_index*96+i*12+9] ,skeletonData[frame_index*96+i*12+10],skeletonData[frame_index*96+i*12+11],1
 			    	    );
 		}
-
-
-		void matrixsSet(){
-						frame_indexSet();//设置全局变量frame_index的值
-
-						for(int i=0;i<7;i++)matrixs[i]=getMatrixs_i(i);
-			    	    for(int i=7;i<15;i++)matrixs[i]=getMatrixs0_i(i);//胳膊
-						for(int i=15;i<25;i++)matrixs[i]=getMatrixs_i(i);
+		mat4 getMatrix(int i){//求骨骼
+					//int i=iii-7;//iii的取值范围是7-14 -> 0-7
+					if(i>=7&&i<=14) return getMatrixs0_i(i);
+					else return getMatrixs_i(i);
 		}
+
+
+
+
 		void main(){
 			    vec3 vPosition = position;
 
@@ -107,7 +107,7 @@
 				else if(vPosition.y<0.59) type_part=1.0;//上身
 				else type_part=2.0;//头部
 
-				matrixsSet();//求所有的骨骼矩阵
+				frame_indexSet();//设置全局变量frame_index的值
 
 				int mySkinIndex[4];//求skinIndex的近似整数，结果存入mySkinIndex
             	for(int j=0;j<4;j++){
@@ -124,16 +124,16 @@
             	mat4 matrix_temp;
             	for(int i=0;i<25;i++)
 	                if(i==mySkinIndex[0]){
-    	                matrix_temp=matrixs[i];
+    	                matrix_temp=getMatrix(i);
         	            matrix1=matrix1+skinWeight[0]*matrix_temp;
             	    }else if(i==mySkinIndex[1]){
-                	    matrix_temp=matrixs[i];
+                	    matrix_temp=getMatrix(i);
                     	matrix1=matrix1+skinWeight[1]*matrix_temp;
 	                }else if(i==mySkinIndex[2]){
-    	                matrix_temp=matrixs[i];
+    	                matrix_temp=getMatrix(i);
         	            matrix1=matrix1+skinWeight[2]*matrix_temp;
             	    }else if(i==mySkinIndex[3]){
-                	    matrix_temp=matrixs[i];
+                	    matrix_temp=getMatrix(i);
                     	matrix1=matrix1+skinWeight[3]*matrix_temp;
          	        }
 
