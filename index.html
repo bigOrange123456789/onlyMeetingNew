@@ -25,7 +25,6 @@
 		attribute vec3 position;
 		attribute vec2 inUV;
         attribute vec4 skinIndex;
-        attribute vec4 skinWeight;
 
         attribute float random;
 
@@ -46,7 +45,6 @@
         varying float myTest00;
 
 		int frame_index;
-		//mat4 matrixs[25];//所有的骨骼矩阵//matrixsSet()
 
 		void frame_indexSet(){//求帧序号//int frame_index;
 					float t=((time*speed)/16.0-floor((time*speed)/16.0))*16.0;//将time*speed对8取余结果：[0，7)
@@ -87,13 +85,9 @@
 			    	    );
 		}
 		mat4 getMatrix(int i){//求骨骼
-					//int i=iii-7;//iii的取值范围是7-14 -> 0-7
 					if(i>=7&&i<=14) return getMatrixs0_i(i);
 					else return getMatrixs_i(i);
 		}
-
-
-
 
 		void main(){
 			    vec3 vPosition = position;
@@ -109,33 +103,15 @@
 
 				frame_indexSet();//设置全局变量frame_index的值
 
-				int mySkinIndex[4];//求skinIndex的近似整数，结果存入mySkinIndex
-            	for(int j=0;j<4;j++){
-                	float i0=0.0;
-                	for(int i=0;i<25;i++){
-                   	if((skinIndex[j]-i0)>-0.5&&(skinIndex[j]-i0)<0.5){
-                        	    mySkinIndex[j]=i;
+				//计算动画的变换矩阵：matrix1=skinWeight[0]*matrixs[mySkinIndex[0]]+...
+            	mat4 matrix1;//每个点只与一个骨骼相关
+            	float i0=0.0;
+                for(int i=0;i<25;i++){
+                   	if((skinIndex[0]-i0)>-0.5&&(skinIndex[0]-i0)<0.5){
+                   	    	    matrix1=getMatrix(i);
                    	}
                    	i0=i0+1.0;
-                	}
-            	}
-            	//计算动画的变换矩阵：matrix1=skinWeight[0]*matrixs[mySkinIndex[0]]+...
-            	mat4 matrix1=mat4(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
-            	mat4 matrix_temp;
-            	for(int i=0;i<25;i++)
-	                if(i==mySkinIndex[0]){
-    	                matrix_temp=getMatrix(i);
-        	            matrix1=matrix1+skinWeight[0]*matrix_temp;
-            	    }else if(i==mySkinIndex[1]){
-                	    matrix_temp=getMatrix(i);
-                    	matrix1=matrix1+skinWeight[1]*matrix_temp;
-	                }else if(i==mySkinIndex[2]){
-    	                matrix_temp=getMatrix(i);
-        	            matrix1=matrix1+skinWeight[2]*matrix_temp;
-            	    }else if(i==mySkinIndex[3]){
-                	    matrix_temp=getMatrix(i);
-                    	matrix1=matrix1+skinWeight[3]*matrix_temp;
-         	        }
+                }
 
 				mat4 matrix2 = mat4(//确定位置//最后一列是 0 0 0 1
 					vec4( mcol0, 0),
