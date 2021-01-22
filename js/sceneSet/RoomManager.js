@@ -48,7 +48,7 @@ function RoomManager(){//myVideoManager_
             //console.log(url);
             //alert(url+":"+gltf.scene.children[0].name);
             var door1,door2;
-            console.log(gltf)
+            //console.log(gltf)
             for(var i=0;i<gltf.scene.children.length;i++){
                 if(gltf.scene.children[i].name==="室内-可动门01")door1=gltf.scene.children[i];
                 else if(gltf.scene.children[i].name==="室内-可动门02")door2=gltf.scene.children[i];

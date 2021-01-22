@@ -4,46 +4,11 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
     this.obj1=new THREE.Object3D();
     this.obj2=new THREE.Object3D();
 
-    this.avatar1=[null,null,null,null];//new Array(4);
-    this.avatar2=[null,null,null,null];//new Array(4);
-    this.frameFlag=1;//1-8
-    this.frameAnimation=function () {
-        requestAnimationFrame(scope.frameAnimation);
-        //if(Math.random()<0.5)return;
-        if(scope.avatar1[0]&&scope.avatar1[1]&&scope.avatar1[2]&&scope.avatar1[3]
-        &&scope.avatar2[0]&&scope.avatar2[1]&&scope.avatar2[2]&&scope.avatar2[3])
-        if(scope.frameFlag===1){
-            scope.obj.remove(scope.avatar1[0]);
-            scope.obj.add(scope.avatar2[0]);
-        }else if(scope.frameFlag===2){
-            scope.obj.remove(scope.avatar1[1]);
-            scope.obj.add(scope.avatar2[1]);
-        }else if(scope.frameFlag===3){
-            scope.obj.remove(scope.avatar1[2]);
-            scope.obj.add(scope.avatar2[2]);
-        } else if(scope.frameFlag===4){
-            scope.obj.remove(scope.avatar1[3]);
-            scope.obj.add(scope.avatar2[3]);
-        }else if(scope.frameFlag===5){
-            scope.obj.remove(scope.avatar2[0]);
-            scope.obj.add(scope.avatar1[0]);
-        }else if(scope.frameFlag===6){
-            scope.obj.remove(scope.avatar2[1]);
-            scope.obj.add(scope.avatar1[1]);
-        }else if(scope.frameFlag===7){
-            scope.obj.remove(scope.avatar2[2]);
-            scope.obj.add(scope.avatar1[2]);
-        }else if(scope.frameFlag===8){
-            scope.obj.remove(scope.avatar2[3]);
-            scope.obj.add(scope.avatar1[3]);
-        }
-        if(scope.frameFlag===8)scope.frameFlag=1;
-        else scope.frameFlag++;
-    }
-
     this.positions=mySeatManager.positions;
     this.types=[];
     this.colors=[];
+    this.sexs=[];//0表示女性，1表示男性
+    this.manNum=0;
 
     for(var i=0;i<scope.positions.length;i++){//共有1677张椅子
         this.types.push([
@@ -57,6 +22,11 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
             Math.random()/4 ,
             Math.random()/4
         ]);
+        if(Math.random()<0.5)this.sexs.push(0);
+        else {
+            this.sexs.push(1);
+            this.manNum++;
+        }
     }
 
 
@@ -70,7 +40,6 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
         for(var i=0;i<this.positions.length;i++)
             this.positionsType.push(Math.floor(Math.random()*4)+1);//1-4
         this.loadAvatar();
-        //this.frameAnimation();
     }
 
     this.loadAvatar=function () {
@@ -162,39 +131,70 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
     }
     this.createPeople_haveAnimation=function(){
         var loader= new THREE.GLTFLoader();
+        //加载女性
         loader.load('myModel/avatar/Female.glb', (glb) => {
-            //测试
-            //console.log(glb);
-            var myMesh=new SkinnedMeshController();
-            myMesh.init(
-                glb.scene.children[0].children[1],
-                glb.animations[0]
-            );
-            //测试
+            console.log(glb.scene.children[0].children[1])
             var peoples=new InstancedGroup(
-                scope.positions.length,
-                [myMesh.mesh,myMesh.mesh],//这些mesh的网格应该一致
-                glb.animations[0]
+                scope.positions.length-this.manNum,
+                [glb.scene.children[0].children[1].clone()],//这些mesh的网格应该一致
+                glb.animations[0].clone()
             );
             var texSrc=[];
             for(i=0;i<16;i++)texSrc.push('./texture/w/w'+i+'.jpg');
             peoples.init(
                 texSrc
             );
-            for(var i=0;i<scope.positions.length;i++){
-                peoples.rotationSet(i,[Math.PI/2,0,3*Math.PI/2]);
-                peoples.positionSet(i,[scope.positions[i][0]+1.8,scope.positions[i][1]+1.5,scope.positions[i][2]]);
-                peoples.scaleSet(i,[0.045,0.045,0.04+Math.random()*0.01]);
 
-                peoples.typeSet(i,scope.types[i]);
-                peoples.colorSet(i,scope.colors[i]);
-                peoples.speedSet(i,0.2+Math.random()*3.52);
+            var index=0;
+            for(var i=0;i<scope.positions.length;i++)
+            if(this.sexs[i]===0){
+                peoples.rotationSet(index,[Math.PI/2,0,3*Math.PI/2]);
+                peoples.positionSet(index,[scope.positions[i][0]+1.8,scope.positions[i][1]+1.5,scope.positions[i][2]]);
+                peoples.scaleSet(index,[0.045,0.045,0.04+Math.random()*0.01]);
+
+                peoples.typeSet(index,scope.types[i]);
+                peoples.colorSet(index,scope.colors[i]);
+                peoples.speedSet(index,0.2+Math.random()*3.52);
                 //else peoples.speedSet(i,2+Math.random()*1.92);
+                index++;
             }
-            //peoples.obj.rotation.set(Math.PI/2,0,0);
-            peoples.animationSpeed=0.1;
+
             scope.obj.add(peoples.obj);
-        });
+            //开始加载男性听众
+            //loader.load('myModel/avatar/Male.glb', (glb2) => {//console.log(glb2.scene.children[0].children[3]);
+                //return;
+                //console.log(glb2);
+                var peoples=new InstancedGroup(
+                    scope.manNum,
+                    [glb.scene.children[0].children[1]],//[glb2.scene.children[0].children[3]],//这些mesh的网格应该一致
+                    glb.animations[0]
+                );
+                var texSrc=[];
+                for(i=0;i<16;i++)texSrc.push('./texture/m/m'+i+'.jpg');
+                peoples.init(
+                    texSrc
+                );
+
+                var index=0;
+                for(var i=0;i<scope.positions.length;i++)
+                    if(this.sexs[i]===1){
+                        peoples.rotationSet(index,[Math.PI/2,0,3*Math.PI/2]);
+                        peoples.positionSet(index,[scope.positions[i][0]+1.8,scope.positions[i][1]+1.5,scope.positions[i][2]]);
+                        peoples.scaleSet(index,[0.045,0.045,0.04+Math.random()*0.01]);
+
+                        peoples.typeSet(index,scope.types[i]);
+                        peoples.colorSet(index,scope.colors[i]);
+                        peoples.speedSet(index,0.2+Math.random()*3.52);
+                        //else peoples.speedSet(i,2+Math.random()*1.92);
+                        index++;
+                    }
+
+                scope.obj.add(peoples.obj);
+            });
+            //完成加载男性听众
+        //});
+        //完成加载女性听众
+
     }
     this.host=function () {
         var loader= new THREE.GLTFLoader();
