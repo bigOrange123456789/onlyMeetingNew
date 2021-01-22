@@ -662,6 +662,39 @@ InstancedGroupTest.prototype={
                 });//
                 //完成测试
         },
+        //贴图测试
+        test8:function (contextType){
+                if(typeof(contextType)==="undefined")this.setContext();
+                var nameTest="贴图测试";
+                console.log('start test:'+nameTest);
+                //开始测试
+                var scope=this;
+                var loader= new THREE.GLTFLoader();
+                loader.load("myModel/avatar/Female.glb", (glb) => {
+                        console.log(glb);//OnlyArm
+                        var mesh=glb.scene.children[0].children[1];//"myModel/avatar/Female.glb"
+
+                        for(var k=0;k<18;k++){
+                                var peoples = new InstancedGroup(1, [mesh], glb.animations[0]);
+                                var texSrc = [];
+                                for (i = 0; i < 16; i++) texSrc.push('./test/texture/w/w'+k+'.jpg');
+                                peoples.init(texSrc);
+                                peoples.rotationSet(0, [Math.PI / 2, 0, 0]);
+                                peoples.positionSet(0, [2*k, 0, 0]);
+                                peoples.scaleSet(0, [0.03, 0.03, 0.03]);
+                                peoples.speedSet(0,0.1);
+                                scope.scene.add(peoples.obj);
+                        }
+
+
+
+                        updateAnimation();//
+                        function updateAnimation() {//每帧更新一次动画
+                                requestAnimationFrame(updateAnimation);
+                        }
+                });//
+                //完成测试
+        },
 }
 var myInstancedGroupTest=new InstancedGroupTest();
-myInstancedGroupTest.test5();
+myInstancedGroupTest.test8();

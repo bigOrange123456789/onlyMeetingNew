@@ -99,7 +99,7 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
                 false
             );
             var texSrc=[];
-            for(i=0;i<16;i++)texSrc.push('./texture/'+i+'.jpg');
+            for(i=0;i<16;i++)texSrc.push('./texture/w/w'+i+'.jpg');
             peoples.init(
                 texSrc
             );
@@ -177,7 +177,7 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
                 glb.animations[0]
             );
             var texSrc=[];
-            for(i=0;i<16;i++)texSrc.push('./texture/'+i+'.jpg');
+            for(i=0;i<16;i++)texSrc.push('./texture/w/w'+i+'.jpg');
             peoples.init(
                 texSrc
             );
@@ -188,7 +188,8 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
 
                 peoples.typeSet(i,scope.types[i]);
                 peoples.colorSet(i,scope.colors[i]);
-                peoples.speedSet(i,2.5+Math.random()*2.42);
+                peoples.speedSet(i,0.2+Math.random()*3.52);
+                //else peoples.speedSet(i,2+Math.random()*1.92);
             }
             //peoples.obj.rotation.set(Math.PI/2,0,0);
             peoples.animationSpeed=0.1;

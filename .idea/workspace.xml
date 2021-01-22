@@ -22,6 +22,24 @@
     <list default="true" id="b7b6123d-caec-4b82-a432-424a6b5be5dd" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/sceneSet/AvatarManager.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/sceneSet/AvatarManager.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/InstancedGroup.test.js" beforeDir="false" afterPath="$PROJECT_DIR$/test/InstancedGroup.test.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/texture/0.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/texture/1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/texture/10.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/texture/11.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/texture/12.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/texture/13.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/texture/14.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/texture/15.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/texture/2.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/texture/3.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/texture/4.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/texture/5.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/texture/6.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/texture/7.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/texture/8.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/texture/9.jpg" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -121,7 +139,7 @@
       <workItem from="1610534839740" duration="48544000" />
       <workItem from="1610852643854" duration="23451000" />
       <workItem from="1611301881794" duration="123000" />
-      <workItem from="1611303150221" duration="7606000" />
+      <workItem from="1611303150221" duration="14347000" />
     </task>
     <servers />
   </component>
