@@ -32,6 +32,21 @@ function Main(){
 
         var ambient = new THREE.AmbientLight(0xffffff , 1 );
         this.scene.add( ambient );
+
+
+        //性能监视器stats.js开始
+        var stats = new Stats();
+        //stats.setMode(0);
+        //stats.domElement.style.position = 'absolute';
+        //stats.domElement.style.left = '0px';
+        //stats.domElement.style.top = '0px';
+        document.body.appendChild(stats.domElement);
+        setInterval(function () {
+            stats.begin();
+            stats.end();
+        }, 1000 / 60)
+        //性能监视器stats.js结束
+
     }
     this._onResize=function()
     {
