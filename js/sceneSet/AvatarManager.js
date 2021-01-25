@@ -166,7 +166,8 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
                 //console.log(glb2);
                 var peoples=new InstancedGroup(
                     scope.manNum,
-                    [glb.scene.children[0].children[1]],//[glb2.scene.children[0].children[3]],//这些mesh的网格应该一致
+                    [glb.scene.children[0].children[1]],
+                    //[glb2.scene.children[0].children[3]],//这些mesh的网格应该一致
                     glb.animations[0]
                 );
                 var texSrc=[];

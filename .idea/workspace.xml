@@ -22,14 +22,11 @@
     <list default="true" id="b7b6123d-caec-4b82-a432-424a6b5be5dd" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/InstancedGroup.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/InstancedGroup.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/js/sceneSet/AvatarManager.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/sceneSet/AvatarManager.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/js/sceneSet/RoomManager.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/sceneSet/RoomManager.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/myModel/avatar/Female01_2.glb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/myModel/avatar/Female02.glb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/myModel/avatar/FemaleNoArm.glb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/myModel/avatar/FemaleOnlyArm.glb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/myModel/avatar/FemaleOnlyArm2.glb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/texture/w/w16.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/avatar/Male.glb" beforeDir="false" afterPath="$PROJECT_DIR$/myModel/avatar/Male.glb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/InstancedGroup.test.js" beforeDir="false" afterPath="$PROJECT_DIR$/test/InstancedGroup.test.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,7 +47,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../InstanceRenderingTest" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -129,7 +126,11 @@
       <workItem from="1610534839740" duration="48544000" />
       <workItem from="1610852643854" duration="23451000" />
       <workItem from="1611301881794" duration="123000" />
-      <workItem from="1611303150221" duration="17682000" />
+      <workItem from="1611303150221" duration="18453000" />
+      <workItem from="1611551630965" duration="10564000" />
+      <workItem from="1611566563338" duration="3128000" />
+      <workItem from="1611575759977" duration="757000" />
+      <workItem from="1611578147986" duration="11241000" />
     </task>
     <servers />
   </component>
@@ -153,10 +154,10 @@
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="379" y="141" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1280.680@0.0.1280.680" timestamp="1610685129999" />
-    <state x="523" y="120" key="FileChooserDialogImpl" timestamp="1611302002593">
+    <state x="523" y="120" key="FileChooserDialogImpl" timestamp="1611587135183">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state x="523" y="120" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1611302002593" />
+    <state x="523" y="120" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1611587135183" />
     <state x="785" y="184" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1609483059436" />
     <state x="335" y="92" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1609487862309">
       <screen x="0" y="0" width="1920" height="1040" />

@@ -58,12 +58,14 @@ function RoomManager(){//myVideoManager_
             function test(){
                 //console.log(door1.rotation.z,door2.rotation.y)
                 if(door1.rotation.z>0){
-                    z-=0.01;
+                    z-=0.02;
                     door1.rotation.z=z;
-                    door2.rotation.z+=0.01;//-1*gltf.scene.children[30].rotation.z;
+                    door2.rotation.z+=0.02;//-1*gltf.scene.children[30].rotation.z;
                 }
                 requestAnimationFrame(test);
-            }test();/**/
+            }
+            test();
+            //timeoutId = setTimeout(function () {clearTimeout(timeoutId);}, 500);
         })
     }
     this.loadRoom=function(){

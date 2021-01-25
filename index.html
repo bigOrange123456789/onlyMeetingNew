@@ -12,8 +12,11 @@
 	<body>
 	<script>//alert("1006");</script>
 	<!--有骨骼动画的着色器-->
-	<script id="vertexShader" type="x-shader/x-vertex">
+	<script id="vertexShader" type="x-shader/x-vertex">//#version 300 es
 		precision highp float;//highp
+
+		uniform sampler2D dataTexture;
+
 		uniform mat4 modelViewMatrix;
 		uniform mat4 projectionMatrix;
 
@@ -85,17 +88,43 @@
 			    	    );
 		}
 		mat4 getMatrix(int i){//求骨骼
+
 					if(i>=7&&i<=14) return getMatrixs0_i(i);
 					else return getMatrixs_i(i);
 		}
 
 		void main(){
+				vec4 tttt=texture2D(dataTexture, vec2(
+						(0.5+3.0)/6.0,
+						(0.5+1.0)/6.0
+				));
+				myTest00=tttt.y;
+				//0,0,x=0
+				//0,0,y=1
+				//0,0,z=2
+
+				//1,0,x=30---18=(1+0*6)*3+0
+						//0,0,w=255
+				//0,1,x=18---18=(0+1*6)*3+0
+				//0,1,y=19
+				//0,1,z=20
+
+				//2,1,z=26---26=(2+1*6)*3+2
+
+				//3,1,y=24---28=(3+1*6)*3+1
+
+
+
+				//ivec2 tttt=ivec2(0, 0);
+				//texelFetch(dataTexture,tttt);
+				//texture2D(dataTexture,ivec2(0, 0));
+				//ivec2(0, 0);
+
 			    vec3 vPosition = position;
 
 				outUV = inUV;
 				varyType=vec3(type[0],type[1],type[2]);
 				varyColor=vec3(color[0],color[1],color[2]);
-				myTest00=type[3];
 
 				/*if(vPosition.x<-0.12){
 					gl_Position=vec4( 0.0,0.0,0.0,0.0 );
@@ -130,6 +159,9 @@
 	</script>
 	<script id="fragmentShader" type="x-shader/x-fragment">
         precision highp float;
+
+        uniform sampler2D dataTexture;
+
         uniform sampler2D text0;
         uniform sampler2D text1;
         uniform sampler2D text2;
@@ -156,6 +188,14 @@
 		varying float myTest00;
 
 		void main(){
+			gl_FragColor = vec4 (
+            					 myTest00,
+            					 0.0,
+            					 0.0,
+            					 1.0
+            					 );
+            					 return;
+		    //texelFetch(dataTexture,outUV);
 			vec4 myTexture;
 			float type;
 
@@ -180,7 +220,6 @@
 			else if(type>13.9&&type<14.1)myTexture =texture2D(text14, outUV);
 			else myTexture =texture2D(text15, outUV);
 
-            float mytest0=varyType[1]*0.01;
             if(floor(type_part)==0.0){//下身
             	gl_FragColor = vec4 (
             					 myTexture.r+varyColor[0],

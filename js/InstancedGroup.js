@@ -3,8 +3,9 @@ function InstancedGroup(instanceCount,originMesh,animationClip ){
     this.obj=new THREE.Object3D();
     this.instanceCount=instanceCount;
 
-    if(typeof(animationClip)=="undefined"||animationClip===false)this.haveSkeleton=flase;
-    else this.haveSkeleton=true;
+    //记录有无骨骼动画
+    this.haveSkeleton = !(typeof (animationClip) == "undefined" || animationClip === false);
+
     this.originMeshs=originMesh;//这是一个数组，每个元素播放一种动画
     this.animationClip=animationClip;
     this.mesh=null;//实例化渲染对象的网格
@@ -98,6 +99,26 @@ function InstancedGroup(instanceCount,originMesh,animationClip ){
             texs[i].flipY=false;
             texs[i].wrapS = texs[i].wrapT = THREE.ClampToEdgeWrapping;
         }
+        //开始测试
+        // create a buffer with color data
+        var width = 6 , height = 6 ;
+        var size = width * height;
+        var data = new Uint8Array( 3 * size );
+        for ( var i = 0; i < size; i ++ ) {
+            var stride = i * 3;
+            data[ stride ] =stride ;
+            data[ stride + 1 ] =(stride + 1) ;
+            data[ stride + 2 ] =(stride + 2) ;
+        }
+        // used the buffer to create a DataTexture
+        var dataTexture = new THREE.DataTexture(
+            data,
+            width,
+            height,
+            THREE.RGBFormat
+        );
+        console.log(dataTexture);
+        //完成测试
 
         let material;
         if(this.haveSkeleton){
@@ -137,7 +158,9 @@ function InstancedGroup(instanceCount,originMesh,animationClip ){
             //console.log(skeletonDataArray.length)//2880=36*8*10
             material = new THREE.RawShaderMaterial({//原始着色器材质
                 uniforms: {
-                    text0: {type: 't', value: texs[0]}//textureHandle
+                    dataTexture: {type: 't', value:dataTexture}
+
+                    ,text0: {type: 't', value: texs[0]}//textureHandle
                     ,text1: {type: 't', value: texs[1]}
                     ,text2: {type: 't', value: texs[2]}
                     ,text3: {type: 't', value: texs[3]}
