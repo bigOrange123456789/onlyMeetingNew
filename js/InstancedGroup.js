@@ -101,15 +101,31 @@ function InstancedGroup(instanceCount,originMesh,animationClip ){
         }
         //开始测试
         // create a buffer with color data
-        var width = 6 , height = 6 ;
-        var size = width * height;
-        var data = new Uint8Array( 3 * size );
-        for ( var i = 0; i < size; i ++ ) {
-            var stride = i * 3;
-            data[ stride ] =stride ;
-            data[ stride + 1 ] =(stride + 1) ;
-            data[ stride + 2 ] =(stride + 2) ;
+        function deal(floatNum) {
+            var a=0,//正数
+                b,//值0-7，10^(b-3)
+                c,
+                d;
+            //计算a
+            if(floatNum<0){
+                a=1;
+                floatNum*=-1;
+            }
+            //计算b
+
         }
+        var width = 5 , height = 10 ;
+        var data = new Uint8Array( 3 * width * height );
+        for ( var i = 0; i < height; i ++ )//存完一列再存第二列//width
+            for ( var j = 0; j < width; j ++ ) {//height
+                var stride = (j+i*width) * 3;
+                data[ stride ] =stride ;
+                data[ stride + 1 ] =(stride + 1) ;
+                data[ stride + 2 ] =(stride + 2) ;
+                if(j===0&&i===1)data[ stride ]=256;
+            }
+        ////(a+b*height)*3+c
+        console.log(data);
         // used the buffer to create a DataTexture
         var dataTexture = new THREE.DataTexture(
             data,
