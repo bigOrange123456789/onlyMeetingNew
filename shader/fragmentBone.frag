@@ -34,7 +34,7 @@ void main(){
     myTest01.z,
     1.0
     );
-    //return;
+    return;
     vec4 myTexture;
     float type;
 

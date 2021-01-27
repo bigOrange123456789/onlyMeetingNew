@@ -50,61 +50,6 @@ mat4 getMatrixs_i(int i);//求不动位置的骨骼
 mat4 getMatrixs0_i(int iii);//求手臂骨骼
 mat4 getMatrix(int i);//求骨骼
 
-float computeErr_i(int b);//计算误差
-float computeErr(int type);
-int computeErr_();
-
-void main(){
-    vec3 tttt=texture2D(dataTexture, vec2(
-    (0.5+0.0)/1.0, //宽width
-    (0.5+floor(4.0/3.0))/dataTextureHeight//高height
-    )).xyz;
-    float a=1.0;
-    float aa=1.0;
-    int bb=1;
-    float err=
-    (
-    decode(getNumByTexture(aa+0.0), getNumByTexture(aa+768.0))
-    -
-    skeletonData[bb]
-    )/(skeletonData[bb]*2.56);
-    myTest01=vec3(
-    getNumByTexture(0.0), //computeErr(0),
-    computeErr_i(0),
-    computeErr_i(446)
-    );
-
-    vec3 vPosition = position;
-
-    outUV = inUV;
-    varyType=vec3(type[0], type[1], type[2]);
-    varyColor=vec3(color[0], color[1], color[2]);
-
-    if (vPosition.y<0.15&&(vPosition.z<0.35&&vPosition.z>-0.35))type_part=0.0;//下身
-    else if (vPosition.y<0.59) type_part=1.0;//上身
-    else type_part=2.0;//头部
-
-    frame_indexSet();//设置全局变量frame_index的值
-
-    //计算动画的变换矩阵：matrix1=skinWeight[0]*matrixs[mySkinIndex[0]]+...
-    mat4 matrix1;//每个点只与一个骨骼相关
-    float i0=0.0;
-    for (int i=0;i<25;i++){
-        if ((skinIndex[0]-i0)>-0.5&&(skinIndex[0]-i0)<0.5){
-            matrix1=getMatrix(i);
-        }
-        i0=i0+1.0;
-    }
-
-    mat4 matrix2 = mat4(//确定位置//最后一列是 0 0 0 1
-    vec4(mcol0, 0),
-    vec4(mcol1, 0),
-    vec4(mcol2, 0),
-    vec4(mcol3, 1)
-    );
-
-    gl_Position = projectionMatrix * modelViewMatrix * matrix2  * matrix1 * vec4(position, 1.0);
-}
 float computeErr_i(int b){ //0-1
     float a=int2float(b);
     return
@@ -148,6 +93,67 @@ int computeErr_(){
     }
     return bMax;
 }
+struct Test{
+    int type;
+
+};
+
+void test(){//用于测试
+    Test myTest;
+    vec3 tttt=texture2D(dataTexture, vec2(
+        (0.5+0.0)/1.0, //宽width
+        (0.5+floor(4.0/3.0))/dataTextureHeight//高height
+        )).xyz;
+    float a=1.0;
+    float aa=1.0;
+    int bb=1;
+    float err=
+        (
+        decode(getNumByTexture(aa+0.0), getNumByTexture(aa+768.0))
+        -
+        skeletonData[bb]
+        )/(skeletonData[bb]*2.56);
+    myTest01=vec3(
+        getNumByTexture(0.0), //computeErr(0),
+        computeErr_i(0),
+        computeErr_i(446)
+    );
+}
+
+void main(){
+    test();
+    vec3 vPosition = position;
+
+    outUV = inUV;
+    varyType=vec3(type[0], type[1], type[2]);
+    varyColor=vec3(color[0], color[1], color[2]);
+
+    if (vPosition.y<0.15&&(vPosition.z<0.35&&vPosition.z>-0.35))type_part=0.0;//下身
+    else if (vPosition.y<0.59) type_part=1.0;//上身
+    else type_part=2.0;//头部
+
+    frame_indexSet();//设置全局变量frame_index的值
+
+    //计算动画的变换矩阵：matrix1=skinWeight[0]*matrixs[mySkinIndex[0]]+...
+    mat4 matrix1;//每个点只与一个骨骼相关
+    float i0=0.0;
+    for (int i=0;i<25;i++){
+        if ((skinIndex[0]-i0)>-0.5&&(skinIndex[0]-i0)<0.5){
+            matrix1=getMatrix(i);
+        }
+        i0=i0+1.0;
+    }
+
+    mat4 matrix2 = mat4(//确定位置//最后一列是 0 0 0 1
+        vec4(mcol0, 0),
+        vec4(mcol1, 0),
+        vec4(mcol2, 0),
+        vec4(mcol3, 1)
+    );
+
+    gl_Position = projectionMatrix * modelViewMatrix * matrix2  * matrix1 * vec4(position, 1.0);
+}
+
 float getNumByTexture(float n){
     vec3 tttt=texture2D(dataTexture, vec2(
     (0.5+0.0)/1.0, //宽width

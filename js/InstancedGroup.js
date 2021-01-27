@@ -214,8 +214,8 @@ function InstancedGroup(instanceCount,originMesh,animationClip ){
                     ,skeletonData:{value:[] }//8个手臂骨骼的数据
                     ,time:{value: 0.0}
                 },
-                vertexShader: load("shader/vertexBone.vert"),
-                fragmentShader:load("shader/fragmentBone.frag"),
+                vertexShader: load("shader/vertexBone0.vert"),
+                fragmentShader:load("shader/fragmentBone0.frag"),
                 side: THREE.DoubleSide
             });
 
@@ -224,17 +224,17 @@ function InstancedGroup(instanceCount,originMesh,animationClip ){
             {
                 var data0=JSON.parse(str).data;//768;
 
-                for(var i=0;i<data0.length;i++){
+                /*for(var i=0;i<data0.length;i++){
                     var result0=encode(data0[i]);
                     var a0=result0[0]/255;
                     var b0=result0[1]/255;
                     data0[i]=decode(a0*255,b0*255);
-                }/**/
+                }*/
                 material.uniforms.skeletonData={
                     "value":data0
                 };
 
-                var data1=[],data2=[];
+                /*var data1=[],data2=[];
                 for(var i=0;i<768;i++){
                     var result=encode(data0[i]);
                     data1.push(result[0]);
@@ -259,8 +259,7 @@ function InstancedGroup(instanceCount,originMesh,animationClip ){
                     var a=data[i]/255;
                     var b=data[i+data0.length]/255;
                     console.log(Math.floor((decode(a*255,b*255)/data0[i])*100)+"%")
-                }/**/
-                //alert(decode(data[data0.length-5],data[data0.length-5+data0.length]));
+                }
 
                 var dataTexture = new THREE.DataTexture(
                     data,
@@ -276,7 +275,7 @@ function InstancedGroup(instanceCount,originMesh,animationClip ){
                 );
                 material.uniforms.dataTexture={
                     "value":dataTexture
-                };
+                };*/
             });
             loader.load("skeletonMatrix.json", function(str)
             {
@@ -305,7 +304,7 @@ function InstancedGroup(instanceCount,originMesh,animationClip ){
                     ,text15: {type: 't', value: texs[15]}
                 },
                 vertexShader: load("shader/vertex.vert"),
-                fragmentShader: load("shader/fragmentBone.frag"),
+                fragmentShader: load("shader/fragment.frag"),
                 side: THREE.DoubleSide
             });
         }
