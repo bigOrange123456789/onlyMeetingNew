@@ -199,23 +199,24 @@ InstancedGroupTest.prototype={
                         var mesh=glb.scene.children[0].children[1];//"myModel/avatar/Female.glb"
 
                         var peoples = new InstancedGroup(
-                            2,
+                            1,
                             [mesh],//这些mesh的网格应该一致
                             glb.animations[0]
                         );
                         var texSrc = [];
-                        for (i = 0; i < 16; i++) texSrc.push('./texture/' + i + '.jpg');
+                        for (i = 0; i < 16; i++) texSrc.push('./texture/w/w' + i + '.jpg');
                         peoples.init(
                             texSrc
                         );
-                        for (var i = 0; i < 2; i++) {
+                        for (var i = 0; i < 1; i++) {
                                 peoples.rotationSet(i, [Math.PI / 2, 0, 0]);
                                 peoples.positionSet(i, [3 * i, 0, 0]);
                                 peoples.scaleSet(i, [0.03, 0.03, 0.03]);
+                                peoples.speedSet(i,0.5);
                         }
                         scope.scene.add(peoples.obj);
                         console.log(mesh)
-                        peoples.speedSet(1,0.01);
+
 
                         updateAnimation();//
                         function updateAnimation() {//每帧更新一次动画
@@ -244,6 +245,43 @@ InstancedGroupTest.prototype={
 
                                 console.log(frame_index);
                                 //完成验证
+                        }
+                });//
+                //完成测试
+        },
+        //有动画测试
+        test5_0:function (contextType){
+                if(typeof(contextType)==="undefined")this.setContext();
+                var nameTest="输出帧序号，用于验证";
+                console.log('start test:'+nameTest);
+                //开始测试
+                var scope=this;
+                var loader= new THREE.GLTFLoader();
+                loader.load("myModel/avatar/Female.glb", (glb) => {
+                        console.log(glb);//OnlyArm
+                        var mesh=glb.scene.children[0].children[1];//"myModel/avatar/Female.glb"
+
+                        var peoples = new InstancedGroup(
+                            1,
+                            [mesh],//这些mesh的网格应该一致
+                            glb.animations[0]
+                        );
+                        var texSrc = [];
+                        for (i = 0; i < 16; i++) texSrc.push('./texture/w/w' + i + '.jpg');
+                        peoples.init(
+                            texSrc
+                        );
+                        for (var i = 0; i < 1; i++) {
+                                peoples.rotationSet(i, [Math.PI / 2, 0, 0]);
+                                peoples.positionSet(i, [3 * i, 0, 0]);
+                                peoples.scaleSet(i, [0.03, 0.03, 0.03]);
+                                peoples.speedSet(i,0.5);
+                        }
+                        scope.scene.add(peoples.obj);
+
+                        updateAnimation();//
+                        function updateAnimation() {//每帧更新一次动画
+                                requestAnimationFrame(updateAnimation);
                         }
                 });//
                 //完成测试
@@ -1221,4 +1259,4 @@ InstancedGroupTest.prototype={
         },
 }
 var myInstancedGroupTest=new InstancedGroupTest();
-myInstancedGroupTest.test9();
+myInstancedGroupTest.test5_0();

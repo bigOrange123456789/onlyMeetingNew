@@ -23,6 +23,9 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/js/InstancedGroup.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/InstancedGroup.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/threeJS/three.js" beforeDir="false" afterPath="$PROJECT_DIR$/lib/threeJS/three.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test.html" beforeDir="false" afterPath="$PROJECT_DIR$/test.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/InstancedGroup.test.js" beforeDir="false" afterPath="$PROJECT_DIR$/test/InstancedGroup.test.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,7 +46,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../InstanceRenderingTest" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -126,7 +129,8 @@
       <workItem from="1611551630965" duration="10564000" />
       <workItem from="1611566563338" duration="3128000" />
       <workItem from="1611575759977" duration="757000" />
-      <workItem from="1611578147986" duration="19053000" />
+      <workItem from="1611578147986" duration="45080000" />
+      <workItem from="1611731901583" duration="1214000" />
     </task>
     <servers />
   </component>
@@ -150,10 +154,10 @@
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="379" y="141" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1280.680@0.0.1280.680" timestamp="1610685129999" />
-    <state x="523" y="120" key="FileChooserDialogImpl" timestamp="1611587135183">
+    <state x="523" y="120" key="FileChooserDialogImpl" timestamp="1611665136967">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state x="523" y="120" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1611587135183" />
+    <state x="523" y="120" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1611665136967" />
     <state x="785" y="184" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1609483059436" />
     <state x="335" y="92" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1609487862309">
       <screen x="0" y="0" width="1920" height="1040" />
@@ -163,10 +167,10 @@
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="438" y="254" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1280.680@0.0.1280.680" timestamp="1610804167249" />
-    <state x="297" y="151" key="run.anything.popup" timestamp="1611641175799">
+    <state x="297" y="151" key="run.anything.popup" timestamp="1611654401189">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state x="297" y="151" key="run.anything.popup/0.0.1280.680@0.0.1280.680" timestamp="1611641175799" />
+    <state x="297" y="151" key="run.anything.popup/0.0.1280.680@0.0.1280.680" timestamp="1611654401189" />
     <state x="303" y="1" width="672" height="678" key="search.everywhere.popup" timestamp="1610890416663">
       <screen x="0" y="0" width="1280" height="680" />
     </state>

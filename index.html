@@ -12,7 +12,9 @@
 	<body>
 	<script>//alert("1006");</script>
 	<!--有骨骼动画的着色器-->
-	<script id="vertexShader" type="x-shader/x-vertex">//#version 300 es
+	<script id="vertexShader" type="x-shader/x-vertex">
+		#define dataTextureHeight 512.0
+
 		precision highp float;//highp
 
 		uniform sampler2D dataTexture;
@@ -46,69 +48,60 @@
         varying vec3 varyColor;
         varying float type_part;
         varying float myTest00;
+        varying vec3 myTest01;
 
 		int frame_index;
 
-
+		float modFloor(float a,float b);
+		int float2int(float n);
+		float int2float(int n);
+		float getNumByTexture(float n);
+		float decode(float A,float B);//0-1
+		float getI(int m);//取手臂骨骼数据
 		void frame_indexSet();//求帧序号
         mat4 getMatrixs_i(int i);//求不动位置的骨骼
 		mat4 getMatrixs0_i(int iii);//求手臂骨骼
 		mat4 getMatrix(int i);//求骨骼
+		float computeErr_i(int b);//0-1
+		float computeErr(int type);
+		int computeErr_();
+		void noShader();
 
 		void main(){
-				vec4 tttt=texture2D(dataTexture, vec2(
-						(0.5+0.0)/5.0,//宽width
-						(0.5+1.0)/10.0 //高height
-				));
-				myTest00=tttt.x;//(a+b*width)*3+c//0-1的小数
-
-				//1,0 3 =(1+0*5)*3+0
-				//0,1 15=(0+1*5)*3+0
-				//1,1 18=(1+1*5)*3+0
-
-				//1,0 15=3*5
-				//0,1 45=3*15
-
-				//30=(0+1*10)*3+0
-				//72=24*3=(6*4+0)*3+0
-				//72=24*3=(2*10+4)*3+0
-				//0 0
-				//1 0
-				//2 0
-				//3 0
-				//0 1
-				//1 1
-
-				//3,1,y=40---40=(3+1*10)*3+1
-
-				//
-				//0,0,x=0
-				//0,0,y=1
-				//0,0,z=2
-
-				//1,0,x=30---18=(1+0*6)*3+0
-						//0,0,w=255
-				//0,1,x=18---18=(0+1*6)*3+0
-				//0,1,y=19
-				//0,1,z=20
-
-				//2,1,z=26---26=(2+1*6)*3+2
-
-				//3,1,y=24---28=(3+1*6)*3+1
+				vec3 tttt=texture2D(dataTexture, vec2(
+						(0.5+0.0)/1.0,//宽width
+						(0.5+floor(4.0/3.0))/dataTextureHeight //高height
+				)).xyz;
+				//tttt;
+				float a=1.0;
+				float aa=1.0;
+				int bb=1;
+				float err=
+					(
+						decode(getNumByTexture(aa+0.0),getNumByTexture(aa+768.0))
+						-
+						skeletonData[bb]
+					)/(skeletonData[bb]*2.56);
+					//440
+				myTest01=vec3(
+					getNumByTexture(0.0),//computeErr(0),
+					computeErr_i(0),
+					computeErr_i(446)
+				);/**/
+				//1,0 3=(1+0*5)*3
+				/*if(getNumByTexture(0.0)!=0.0){
+					gl_Position=vec4( 0.0,0.0,0.0,0.0 );
+					return;
+				}*/
 
 
-
-				//ivec2 tttt=ivec2(0, 0);
-				//texelFetch(dataTexture,tttt);
-				//texture2D(dataTexture,ivec2(0, 0));
-				//ivec2(0, 0);
 
 			    vec3 vPosition = position;
 
 				outUV = inUV;
 				varyType=vec3(type[0],type[1],type[2]);
 				varyColor=vec3(color[0],color[1],color[2]);
-
+				noShader();
 				/*if(vPosition.x<-0.12){
 					gl_Position=vec4( 0.0,0.0,0.0,0.0 );
 					return;
@@ -139,8 +132,91 @@
 				gl_Position = projectionMatrix * modelViewMatrix*  matrix2  * matrix1 * vec4( position, 1.0 );
 
 		}
+		float computeErr_i(int b){//0-1
+					float a=int2float(b);
+					return
+					(
+						decode(getNumByTexture(a+0.0),getNumByTexture(a+768.0))
+						-
+						skeletonData[b]
+					)/(skeletonData[b]*2.56);
+		}
+		float computeErr(int type){
+			float a=1.0;
+			float aMax=1.0;
+			int   bMax=1;
+			float errMax=computeErr_i(0);
+			/*for(int b=1;b<760;b++){//760
+					float err0=computeErr_i(b);
+					if(errMax<err0){
+						errMax=err0;
+						aMax=a;
+						bMax=b;
+					}
+					a+=1.0;
+				}
+			if(type==0)return errMax;
+			else return aMax;*/
+			return computeErr_i(0);
+		}
+		int computeErr_(){
+			float a=1.0;
+			float aMax=1.0;
+			int   bMax=1;
+			float errMax=computeErr_i(0);
+			for(int b=1;b<760;b++){
+					float err0=computeErr_i(b);
+					if(errMax<err0){
+						errMax=err0;
+						aMax=a;
+						bMax=b;
+					}
+					a+=1.0;
+				}
+			return bMax;
+		}
+		float getNumByTexture(float n){
+			vec3 tttt=texture2D(dataTexture, vec2(
+						(0.5+0.0)/1.0,    //宽width
+						(0.5+floor(n/3.0))/dataTextureHeight   //高height
+				)).xyz;
+			float m=modFloor(n,3.0);
+			//return m/256.0;
+			if(m<0.5)return tttt.x;
+			else if(m<1.5)return tttt.y;
+			else return tttt.z;
+		}
+		float decode(float A,float B){//0-1
+			A*=256.0;
+			B*=256.0;
+			float a,b,c,d;
+            a=floor(A/128.0);
+            b=floor((modFloor(A,128.0))/16.0);
+            c=modFloor(A,16.0);
+            d=B;
+
+            float c_d=c*256.0+d;
+            float num=c_d*pow(10.0,b-5.0);
+            if(a==1.0)num*=-1.0;
+            return num;
+		}
+		float getI(int m){//取手臂骨骼数据
+			float n=int2float(m);
+			float A=getNumByTexture(n),B=getNumByTexture(n+dataTextureHeight*3.0/2.0);
+            return decode(A,B);
+		}
+		void noShader(){
+			gl_Position=vec4( 0.0,0.0,0.0,0.0 );
+		}
+		float modFloor(float a,float b){
+			return ( a/b-floor(a/b) )*b;
+		}
 		void frame_indexSet(){//求帧序号//int frame_index;
-					float t=((time*speed)/16.0-floor((time*speed)/16.0))*16.0;//将time*speed对8取余结果：[0，7)
+					//mod(time*speed,16.0);
+					//mod(2,1);
+					//int a=2 mod 1;
+					//mod(2.0,1.0);
+					float t=modFloor(time*speed,16.0);//((time*speed)/16.0-floor((time*speed)/16.0))*16.0;//将time*speed对8取余结果：[0，7)
 
 					if(t>-0.5&&t<=0.5)frame_index=0;
 					else if(t>0.5&&t<=1.5)frame_index=1;
@@ -171,21 +247,55 @@
         mat4 getMatrixs0_i(int iii){//求手臂骨骼
 					int i=iii-7;//iii的取值范围是7-14 -> 0-7
 					return mat4(//最后一列是：0 0 0 1
+				    	    getI(frame_index*96+i*12+0) ,getI(frame_index*96+i*12+1) ,getI(frame_index*96+i*12+2) ,0,
+				  	      	getI(frame_index*96+i*12+3) ,getI(frame_index*96+i*12+4) ,getI(frame_index*96+i*12+5) ,0 ,
+				    	    getI(frame_index*96+i*12+6) ,getI(frame_index*96+i*12+7) ,getI(frame_index*96+i*12+8) ,0,
+				    	    getI(frame_index*96+i*12+9) ,getI(frame_index*96+i*12+10),getI(frame_index*96+i*12+11),1
+			    	    );
+					/*return mat4(//最后一列是：0 0 0 1
+				    	    getI(frame_index*96+i*12+0) ,getI(frame_index*96+i*12+1) ,getI(frame_index*96+i*12+2) ,0,
+				  	      	getI(frame_index*96+i*12+3) ,getI(frame_index*96+i*12+4) ,getI(frame_index*96+i*12+5) ,0 ,
+				    	    getI(frame_index*96+i*12+6) ,getI(frame_index*96+i*12+7) ,getI(frame_index*96+i*12+8) ,0,
+				    	    getI(frame_index*96+i*12+9) ,getI(frame_index*96+i*12+10),getI(frame_index*96+i*12+11),1
+			    	    );
+					return mat4(//最后一列是：0 0 0 1
 				    	    skeletonData[frame_index*96+i*12+0] ,skeletonData[frame_index*96+i*12+1] ,skeletonData[frame_index*96+i*12+2] ,0,
 				  	      	skeletonData[frame_index*96+i*12+3] ,skeletonData[frame_index*96+i*12+4] ,skeletonData[frame_index*96+i*12+5] ,0 ,
 				    	    skeletonData[frame_index*96+i*12+6] ,skeletonData[frame_index*96+i*12+7] ,skeletonData[frame_index*96+i*12+8] ,0,
 				    	    skeletonData[frame_index*96+i*12+9] ,skeletonData[frame_index*96+i*12+10],skeletonData[frame_index*96+i*12+11],1
-			    	    );
+			    	    );*/
 		}
 		mat4 getMatrix(int i){//求骨骼
 					if(i>=7&&i<=14) return getMatrixs0_i(i);
 					else return getMatrixs_i(i);
 		}
+		int float2int(float n){
+			if(n>0.0){
+				int a=0;
+				for(float b=0.0;b<=1000.0;b+=1.0){
+					if(b>n)break;
+					a++;
+				}
+				return a-1;
+			}else{
+				return -1;
+			}
+		}
+		float int2float(int n){
+			if(n>0){
+				float b=0.0;
+				for(int a=0;a<=1000;a++){
+					if(a>n)break;
+					b+=1.0;
+				}
+				return b-1.0;
+			}else{
+				return -1.0;
+			}
+		}
 	</script>
 	<script id="fragmentShader" type="x-shader/x-fragment">
         precision highp float;
-
-        uniform sampler2D dataTexture;
 
         uniform sampler2D text0;
         uniform sampler2D text1;
@@ -211,16 +321,16 @@
 		varying vec2 outUV;
 
 		varying float myTest00;
+		varying vec3 myTest01;
 
 		void main(){
 			gl_FragColor = vec4 (
-            					 myTest00,
-            					 0.0,
-            					 0.0,
+            					 myTest01.x,
+            					 myTest01.y,
+            					 myTest01.z,
             					 1.0
             					 );
-            					 return;
-		    //texelFetch(dataTexture,outUV);
+            					 //return;
 			vec4 myTexture;
 			float type;
 
