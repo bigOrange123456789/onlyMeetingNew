@@ -22,8 +22,8 @@
     <list default="true" id="b7b6123d-caec-4b82-a432-424a6b5be5dd" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/js/InstancedGroup.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/InstancedGroup.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shader/fragmentBone.frag" beforeDir="false" afterPath="$PROJECT_DIR$/shader/fragmentBone.frag" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/shader/vertexBone.vert" beforeDir="false" afterPath="$PROJECT_DIR$/shader/vertexBone.vert" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test.html" beforeDir="false" afterPath="$PROJECT_DIR$/test.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -130,7 +130,7 @@
       <workItem from="1611578147986" duration="45080000" />
       <workItem from="1611731901583" duration="2588000" />
       <workItem from="1611734560947" duration="3316000" />
-      <workItem from="1611737889521" duration="4923000" />
+      <workItem from="1611737889521" duration="17102000" />
     </task>
     <servers />
   </component>
