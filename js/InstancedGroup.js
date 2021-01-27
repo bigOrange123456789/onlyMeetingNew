@@ -189,7 +189,16 @@ function InstancedGroup(instanceCount,originMesh,animationClip ){
         //完成测试
 
         let material;
+        function load(name) {
+            let xhr = new XMLHttpRequest(),
+                okStatus = document.location.protocol === "file:" ? 0 : 200;
+            xhr.open('GET', name, false);
+            xhr.overrideMimeType("text/html;charset=utf-8");//默认为utf-8
+            xhr.send(null);
+            return xhr.status === okStatus ? xhr.responseText : null;
+        }
         if(this.haveSkeleton){
+
             material = new THREE.RawShaderMaterial({//原始着色器材质
                 uniforms: {
                     dataTexture: {type: 't', value:dataTexture}
@@ -215,8 +224,8 @@ function InstancedGroup(instanceCount,originMesh,animationClip ){
                     ,skeletonData:{value:[] }//8个手臂骨骼的数据
                     ,time:{value: 0.0}
                 },
-                vertexShader: document.getElementById('vertexShader').textContent,
-                fragmentShader: document.getElementById('fragmentShader').textContent,
+                vertexShader: load("shader/vertexShader.txt"),
+                fragmentShader:load("shader/fragmentShader.txt"),
                 side: THREE.DoubleSide
             });
 
