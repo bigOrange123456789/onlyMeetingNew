@@ -28,13 +28,13 @@ varying float myTest00;
 varying vec3 myTest01;
 
 void main(){
-    gl_FragColor = vec4 (
+    /*gl_FragColor = vec4 (
     myTest01.x,
     myTest01.y,
     myTest01.z,
     1.0
     );
-    return;
+    return;*/
     vec4 myTexture;
     float type;
 

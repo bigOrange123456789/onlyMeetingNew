@@ -1,4 +1,5 @@
 function InstancedGroup(instanceCount,originMesh,animationClip ){
+    var scope=this;
     //若有骨骼，则需要源mesh是skinnedMesh
     this.obj=new THREE.Object3D();
     this.instanceCount=instanceCount;
@@ -24,6 +25,50 @@ function InstancedGroup(instanceCount,originMesh,animationClip ){
 
     this.dummy=new THREE.Object3D();//dummy仿制品//工具对象
 
+    this.decode=function(A,B) {
+        var a,b,c,d;
+        a=Math.floor(A/128);
+        b=Math.floor((A%128)/16);
+        c=A%16;
+        d=B;
+
+        var c_d=c*256+d;
+        var num=c_d*Math.pow(10,b-5);
+        if(a===1)num*=-1;
+        return num;
+    }
+    this.encode=function(floatNum) {
+        var a=0,//正数
+            b,//值0-7，10^(b-3)
+            c,
+            d;
+        //计算a//0+ 1-
+        if(floatNum<0){
+            a=1;
+            floatNum*=-1;
+        }
+        //计算b//0~7  -3~4
+        if(floatNum>10000)b=7;
+        else if(floatNum>1000)b=6;
+        else if(floatNum>100)b=5;
+        else if(floatNum>10)b=4;//25.11
+        else if(floatNum>1)b=3;//2.51
+        else if(floatNum>0.1)b=2;//0.512
+        else if(floatNum>0.01)b=1;
+        else if(floatNum>0.001)b=0;
+        else{
+            return [0,0];
+        }
+        //计算c和d
+        var c_d=floatNum*Math.pow(10,7-b-2);//10^(7-b-2)
+        c_d=Math.floor(c_d);//保留十进制3位有效数组
+        c=Math.floor(c_d/256);
+        d=c_d%256;
+
+        var A=a*128+b*16+c;
+        var B=d;
+        return [A,B];
+    }
     this.init=function (texSrc){
         for(var i=0;i<this.instanceCount;i++){
             this.scales.push([1,1,1]);
@@ -99,84 +144,6 @@ function InstancedGroup(instanceCount,originMesh,animationClip ){
             texs[i].flipY=false;
             texs[i].wrapS = texs[i].wrapT = THREE.ClampToEdgeWrapping;
         }
-        //开始测试
-        // create a buffer with color data
-
-        //var myCode=encode(7900.11);
-        //console.log(myCode);
-        //console.log(decode(myCode[0],myCode[1]));//25.1
-        function decode(A,B) {
-            var a,b,c,d;
-            a=Math.floor(A/128);
-            b=Math.floor((A%128)/16);
-            c=A%16;
-            d=B;
-
-            var c_d=c*256+d;
-            var num=c_d*Math.pow(10,b-5);
-            if(a===1)num*=-1;
-            return num;
-        }
-        function encode(floatNum) {
-            var a=0,//正数
-                b,//值0-7，10^(b-3)
-                c,
-                d;
-            //计算a//0+ 1-
-            if(floatNum<0){
-                a=1;
-                floatNum*=-1;
-            }
-            //计算b//0~7  -3~4
-            if(floatNum>10000)b=7;
-            else if(floatNum>1000)b=6;
-            else if(floatNum>100)b=5;
-            else if(floatNum>10)b=4;//25.11
-            else if(floatNum>1)b=3;//2.51
-            else if(floatNum>0.1)b=2;//0.512
-            else if(floatNum>0.01)b=1;
-            else if(floatNum>0.001)b=0;
-            else{
-                return [0,0];
-            }
-            //计算c和d
-            var c_d=floatNum*Math.pow(10,7-b-2);//10^(7-b-2)
-            c_d=Math.floor(c_d);//保留十进制3位有效数组
-            c=Math.floor(c_d/256);
-            d=c_d%256;
-
-            var A=a*128+b*16+c;
-            var B=d;
-            return [A,B];
-        }
-
-        var test=[
-            [1,4,7,10],
-            [2,5,8,11],
-            [3,6,9,12],
-            [0,0,0,1]
-        ];
-
-        var width = 1 , height = 12*2 ;
-        var size=width * height;
-        var data = new Float32Array( 3 * size);
-        for ( var i = 0; i < 3*size; i +=3 ){//存完一列再存第二列//width
-                data[ i ] =i ;
-                data[ i + 1 ] =i+1;
-                data[ i + 2 ] =i+2 ;
-                //if(j===0&&i===1)data[ stride ]=256;
-            }
-        //(a+b*height)*3+c
-        //console.log(data);
-        // used the buffer to create a DataTexture
-        var dataTexture = new THREE.DataTexture(
-            data,
-            width,
-            height,
-            THREE.RGBFormat
-        );
-        console.log(dataTexture);
-        //完成测试
 
         let material;
         function load(name) {
@@ -191,7 +158,7 @@ function InstancedGroup(instanceCount,originMesh,animationClip ){
 
             material = new THREE.RawShaderMaterial({//原始着色器材质
                 uniforms: {
-                    dataTexture: {type: 't', value:dataTexture}
+                    dataTexture: {type: 't', value:[]}
 
                     ,text0: {type: 't', value: texs[0]}//textureHandle
                     ,text1: {type: 't', value: texs[1]}
@@ -223,29 +190,18 @@ function InstancedGroup(instanceCount,originMesh,animationClip ){
             loader.load("skeletonData.json", function(str)
             {
                 var data0=JSON.parse(str).data;//768;
-
-                for(var i=0;i<data0.length;i++){
-                    var result0=encode(data0[i]);
-                    var a0=result0[0]/255;
-                    var b0=result0[1]/255;
-                    data0[i]=decode(a0*255,b0*255);
-                }/**/
                 material.uniforms.skeletonData={
                     "value":data0
                 };
 
                 var data1=[],data2=[];
                 for(var i=0;i<768;i++){
-                    var result=encode(data0[i]);
+                    var result=scope.encode(data0[i]);
                     data1.push(result[0]);
                     data2.push(result[1]);
-                    //console.log(data0[i],decode(result[0],result[1]))
                 }
-                console.log();
                 //dataTexture
                 var width = 1 , height = data0.length*2/3 ;
-                var size=width * height;
-                //var data = new Float32Array( data0.length*2);//new Uint8Array( data0.length*2);
                 var data = new Uint8Array( data0.length*2);
                 for(var i=0;i<data0.length;i++){
                     data[i]=data1[i];
@@ -253,22 +209,7 @@ function InstancedGroup(instanceCount,originMesh,animationClip ){
                 for(var i=data0.length;i<data0.length*2;i++){
                     data[i]=data2[i-data0.length];
                 }
-                console.log("data0.length",data0.length);
-                console.log(data1[0],data2[0],data0[0]);
-                for(var i=0;i<data0.length;i++){
-                    var a=data[i]/255;
-                    var b=data[i+data0.length]/255;
-                    console.log(Math.floor((decode(a*255,b*255)/data0[i])*100)+"%")
-                }/**/
-                //alert(decode(data[data0.length-5],data[data0.length-5+data0.length]));
-
                 var dataTexture = new THREE.DataTexture(
-                    data,
-                    width,
-                    height,
-                    THREE.RGBFormat
-                );
-                console.log(
                     data,
                     width,
                     height,
@@ -326,7 +267,7 @@ function InstancedGroup(instanceCount,originMesh,animationClip ){
         //完成进行实例化渲染
     }
     this.handleSkeletonAnimation=function(){
-        var scope=this;//scope范围//为了避免this重名
+        //var scope=this;//scope范围//为了避免this重名
         updateAnimation();
         function updateAnimation() {//每帧更新一次动画
             requestAnimationFrame(updateAnimation);
@@ -430,7 +371,7 @@ function InstancedGroup(instanceCount,originMesh,animationClip ){
     }
 }
 function SkinnedMeshController() {
-    var scope=this;
+    //var scope=this;
     this.mesh;
     this.animation;
     this.init=function (originMesh,animation) {
