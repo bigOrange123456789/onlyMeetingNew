@@ -23,7 +23,130 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/js/InstancedGroup.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/InstancedGroup.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/sceneSet/AvatarManager.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/sceneSet/AvatarManager.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/pmLib/MyPMLoader.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/pmLib/PMAnimLoader.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/threeJS/GLTFLoader.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/threeJS/OrbitControls.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/threeJS/stats.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/threeJS/stats.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/threeJS/three.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/avatar/新建文件夹/Female01_2.glb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/avatar/新建文件夹/Female02.glb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/avatar/新建文件夹/FemaleNoArm.glb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/avatar/新建文件夹/FemaleOnlyArm.glb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/avatar/新建文件夹/FemaleOnlyArm2.glb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/新建文件夹/new41.gltf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/新建文件夹/new42.gltf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/新建文件夹/new43.gltf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/新建文件夹/new44.gltf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/新建文件夹/new45.gltf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/新建文件夹/new46.gltf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/新建文件夹/new47.gltf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/新建文件夹/new48.gltf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/新建文件夹/new49.gltf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/新建文件夹/new50.gltf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/新建文件夹/new51.gltf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/新建文件夹/new52.gltf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/新建文件夹/new53.gltf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/新建文件夹/new54.gltf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/新建文件夹/new55.gltf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/新建文件夹/new56.gltf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/新建文件夹/new57.gltf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/新建文件夹/new58.gltf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/新建文件夹/new59.gltf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/新建文件夹/new60.gltf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/新建文件夹/new61.gltf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/新建文件夹/new62.gltf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/新建文件夹/new63.gltf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/新建文件夹/new64.gltf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/新建文件夹/new65.gltf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/新建文件夹/new66.gltf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/新建文件夹/new67.gltf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/新建文件夹/new68.gltf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/新建文件夹/new69.gltf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/新建文件夹/new70.gltf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/新建文件夹/new71.gltf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/新建文件夹/new72.gltf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/新建文件夹/new73.gltf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/新建文件夹/new74.gltf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/新建文件夹/new75.gltf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/新建文件夹/new76.gltf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/新建文件夹/new77.gltf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/新建文件夹/new78.gltf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/新建文件夹/new79.gltf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/新建文件夹/new80.gltf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/新建文件夹/new81.gltf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/新建文件夹/new82.gltf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/新建文件夹/new83.gltf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/shader/fragmentShader.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/shader/vertexShader.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/skeletonMatrix1.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/skeletonMatrix2.json" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/test.html" beforeDir="false" afterPath="$PROJECT_DIR$/test.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/InstancedGroup.test.js" beforeDir="false" afterPath="$PROJECT_DIR$/test/InstancedGroup.test.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/testLaunch.js" beforeDir="false" afterPath="$PROJECT_DIR$/test/testLaunch.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/texture/m/m0.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/texture/m/m1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/texture/m/m10.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/texture/m/m11.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/texture/m/m12.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/texture/m/m13.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/texture/m/m14.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/texture/m/m15.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/texture/m/m16.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/texture/m/m17.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/texture/m/m18.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/texture/m/m19.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/texture/m/m2.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/texture/m/m20.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/texture/m/m21.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/texture/m/m22.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/texture/m/m23.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/texture/m/m24.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/texture/m/m25.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/texture/m/m26.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/texture/m/m27.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/texture/m/m28.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/texture/m/m29.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/texture/m/m3.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/texture/m/m30.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/texture/m/m31.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/texture/m/m32.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/texture/m/m33.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/texture/m/m34.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/texture/m/m35.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/texture/m/m36.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/texture/m/m37.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/texture/m/m38.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/texture/m/m39.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/texture/m/m4.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/texture/m/m40.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/texture/m/m41.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/texture/m/m42.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/texture/m/m5.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/texture/m/m6.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/texture/m/m7.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/texture/m/m8.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/texture/m/m9.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/texture/w/w0.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/texture/w/w1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/texture/w/w10.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/texture/w/w11.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/texture/w/w12.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/texture/w/w13.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/texture/w/w14.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/texture/w/w15.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/texture/w/w2.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/texture/w/w3.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/texture/w/w4.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/texture/w/w5.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/texture/w/w6.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/texture/w/w7.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/texture/w/w8.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/texture/w/w9.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/变换矩阵测试笔记.txt" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -128,7 +251,9 @@
       <workItem from="1611566563338" duration="3128000" />
       <workItem from="1611575759977" duration="757000" />
       <workItem from="1611578147986" duration="45080000" />
-      <workItem from="1611731901583" duration="1973000" />
+      <workItem from="1611731901583" duration="2588000" />
+      <workItem from="1611734560947" duration="3316000" />
+      <workItem from="1611737889521" duration="1320000" />
     </task>
     <servers />
   </component>
@@ -152,10 +277,10 @@
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="379" y="141" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1280.680@0.0.1280.680" timestamp="1610685129999" />
-    <state x="523" y="120" key="FileChooserDialogImpl" timestamp="1611665136967">
+    <state x="523" y="120" key="FileChooserDialogImpl" timestamp="1611734490364">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state x="523" y="120" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1611665136967" />
+    <state x="523" y="120" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1611734490364" />
     <state x="785" y="184" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1609483059436" />
     <state x="335" y="92" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1609487862309">
       <screen x="0" y="0" width="1920" height="1040" />
@@ -169,9 +294,9 @@
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="297" y="151" key="run.anything.popup/0.0.1280.680@0.0.1280.680" timestamp="1611654401189" />
-    <state x="303" y="1" width="672" height="678" key="search.everywhere.popup" timestamp="1610890416663">
+    <state x="303" y="1" width="672" height="678" key="search.everywhere.popup" timestamp="1611736579691">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state x="303" y="1" width="672" height="678" key="search.everywhere.popup/0.0.1280.680@0.0.1280.680" timestamp="1610890416663" />
+    <state x="303" y="1" width="672" height="678" key="search.everywhere.popup/0.0.1280.680@0.0.1280.680" timestamp="1611736579691" />
   </component>
 </project>

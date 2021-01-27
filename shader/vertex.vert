@@ -1,0 +1,58 @@
+precision highp float;
+uniform mat4 modelViewMatrix;
+uniform mat4 projectionMatrix;
+
+
+attribute vec3 position;
+attribute vec2 inUV;
+
+attribute float random;
+
+attribute vec3 mcol0;
+attribute vec3 mcol1;
+attribute vec3 mcol2;
+attribute vec3 mcol3;
+
+attribute vec4 type;   //type[3]是0或1，用于表示动画
+attribute vec3 color;
+
+varying vec2 outUV;
+varying vec3 varyType;
+varying vec3 varyColor;
+varying float type_part;
+varying float myTest00;
+
+void main(){
+    vec3 vPosition = position;
+    //if(random<0.8)//显示百分之80三角面
+    //if(vPosition.y<1.8)//全身显示
+    //if(vPosition.y>0.61&&vPosition.x>0.0)//只显示脸
+
+    if(true)//全身显示
+    //if(vPosition.x>-0.09)//前半部分
+    //if((vPosition.x>-0.01&&vPosition.y>0.1)||vPosition.y>0.65)//只显示前半部分的上半身和头
+    //if(vPosition.x>-0.01&&vPosition.y>0.1)//只显示前半部分的上半身
+    {
+        outUV = inUV;
+        varyType=vec3(type[0],type[1],type[2]);
+        varyColor=vec3(color[0],color[1],color[2]);
+        myTest00=type[3];
+
+        if(position.z<-0.95)type_part=2.0;//头部
+        else if(position.z<-0.60) type_part=1.0;//上身
+        else type_part=0.0;//下身
+
+        //if(position.z<-1.0)type_part=0.0;
+        //else type_part=1.0;
+
+        mat4 matrix2 = mat4(//确定位置//最后一列是 0 0 0 1
+        vec4( mcol0, 0),
+        vec4( mcol1, 0),
+        vec4( mcol2, 0),
+        vec4( mcol3, 1)
+        );
+
+        gl_Position = projectionMatrix * modelViewMatrix*  matrix2  *  vec4( position, 1.0 );
+        //gl_Position = projectionMatrix * modelViewMatrix*  matrix2  * matrix1 * vec4( position, 1.0 );
+    }
+}

@@ -70,7 +70,7 @@ InstancedGroupTest.prototype={
                             false
                         );
                         var texSrc = [];
-                        for (i = 0; i < 16; i++) texSrc.push('./texture/w/w' + i + '.jpg');
+                        for (i = 0; i < 16; i++) texSrc.push('./img/texture/w/w' + i + '.jpg');
                         peoples.init(
                             texSrc
                         );
@@ -108,7 +108,7 @@ InstancedGroupTest.prototype={
                                     false
                                 );
                                 var texSrc = [];
-                                for (i = 0; i < 16; i++) texSrc.push('./texture/' + i + '.jpg');
+                                for (i = 0; i < 16; i++) texSrc.push('./img/texture/' + i + '.jpg');
                                 peoples.init(
                                     texSrc
                                 );
@@ -147,7 +147,7 @@ InstancedGroupTest.prototype={
                             glb.animations[0]
                         );
                         var texSrc = [];
-                        for (i = 0; i < 16; i++) texSrc.push('./texture/' + i + '.jpg');
+                        for (i = 0; i < 16; i++) texSrc.push('./img/texture/' + i + '.jpg');
                         peoples.init(
                             texSrc
                         );
@@ -204,7 +204,7 @@ InstancedGroupTest.prototype={
                             glb.animations[0]
                         );
                         var texSrc = [];
-                        for (i = 0; i < 16; i++) texSrc.push('./texture/w/w' + i + '.jpg');
+                        for (i = 0; i < 16; i++) texSrc.push('./img/texture/w/w' + i + '.jpg');
                         peoples.init(
                             texSrc
                         );
@@ -267,7 +267,7 @@ InstancedGroupTest.prototype={
                             glb.animations[0]
                         );
                         var texSrc = [];
-                        for (i = 0; i < 16; i++) texSrc.push('./texture/w/w' + i + '.jpg');
+                        for (i = 0; i < 16; i++) texSrc.push('./img/texture/w/w' + i + '.jpg');
                         peoples.init(
                             texSrc
                         );
@@ -302,7 +302,7 @@ InstancedGroupTest.prototype={
                         for(var k=0;k<18;k++){
                                 var peoples = new InstancedGroup(1, [mesh], glb.animations[0]);
                                 var texSrc = [];
-                                for (i = 0; i < 16; i++) texSrc.push('./test/texture/w/w'+k+'.jpg');
+                                for (i = 0; i < 16; i++) texSrc.push('./test/img/texture/w/w'+k+'.jpg');
                                 peoples.init(texSrc);
                                 peoples.rotationSet(0, [Math.PI / 2, 0, 0]);
                                 peoples.positionSet(0, [2*k, 0, 0]);
@@ -1184,7 +1184,7 @@ InstancedGroupTest.prototype={
                             false
                         );
                         var texSrc = [];
-                        for (i = 0; i < 16; i++) texSrc.push('./texture/w/w' + i + '.jpg');
+                        for (i = 0; i < 16; i++) texSrc.push('./img/texture/w/w' + i + '.jpg');
                         peoples.init(
                             texSrc
                         );
@@ -1210,7 +1210,7 @@ InstancedGroupTest.prototype={
                             false
                         );
                         var texSrc = [];
-                        for (i = 0; i < 16; i++) texSrc.push('./texture/m/m' + i + '.jpg');
+                        for (i = 0; i < 16; i++) texSrc.push('./img/texture/m/m' + i + '.jpg');
                         peoples.init(
                             texSrc
                         );
@@ -1241,7 +1241,7 @@ InstancedGroupTest.prototype={
                             glb.animations[0]
                         );
                         var texSrc = [];
-                        for (i = 0; i < 16; i++) texSrc.push('./texture/w/w' + i + '.jpg');
+                        for (i = 0; i < 16; i++) texSrc.push('./img/texture/w/w' + i + '.jpg');
                         peoples.init(
                             texSrc
                         );

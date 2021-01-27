@@ -68,7 +68,7 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
                 false
             );
             var texSrc=[];
-            for(i=0;i<16;i++)texSrc.push('./texture/w/w'+i+'.jpg');
+            for(i=0;i<16;i++)texSrc.push('./img/texture/w/w'+i+'.jpg');
             peoples.init(
                 texSrc
             );
@@ -116,7 +116,7 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
                 false
             );
             var texSrc=[];
-            for(i=0;i<16;i++)texSrc.push('./texture/'+i+'.jpg');
+            for(i=0;i<16;i++)texSrc.push('./img/texture/w/w'+i+'.jpg');
             peoples.init(
                 texSrc
             );
@@ -140,7 +140,7 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
                 glb.animations[0].clone()
             );
             var texSrc=[];
-            for(i=0;i<16;i++)texSrc.push('./texture/w/w'+i+'.jpg');
+            for(i=0;i<16;i++)texSrc.push('./img/texture/w/w'+i+'.jpg');
             peoples.init(
                 texSrc
             );
@@ -171,7 +171,7 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
                     glb.animations[0]
                 );
                 var texSrc=[];
-                for(i=0;i<16;i++)texSrc.push('./texture/m/m'+i+'.jpg');
+                for(i=0;i<16;i++)texSrc.push('./img/texture/m/m'+i+'.jpg');
                 peoples.init(
                     texSrc
                 );

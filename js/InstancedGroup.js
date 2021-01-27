@@ -149,16 +149,6 @@ function InstancedGroup(instanceCount,originMesh,animationClip ){
             var B=d;
             return [A,B];
         }
-        function encode2(array) {
-            var array1=[],array2=[];
-            for(var i=0;i<array.length;i++)
-                for(var j=0;j<array[0].length;j++){
-                    result=encode(array[i][j]);
-                    array1.push(result[0]);
-                    array2.push(result[1]);
-                }
-            return [array1,array2];
-        }
 
         var test=[
             [1,4,7,10],
@@ -224,18 +214,26 @@ function InstancedGroup(instanceCount,originMesh,animationClip ){
                     ,skeletonData:{value:[] }//8个手臂骨骼的数据
                     ,time:{value: 0.0}
                 },
-                vertexShader: load("shader/vertexShader.txt"),
-                fragmentShader:load("shader/fragmentShader.txt"),
+                vertexShader: load("shader/vertexBone.vert"),
+                fragmentShader:load("shader/fragmentBone.frag"),
                 side: THREE.DoubleSide
             });
 
             var loader = new THREE.XHRLoader(THREE.DefaultLoadingManager);
             loader.load("skeletonData.json", function(str)
             {
-                material.uniforms.skeletonData={
-                    "value":JSON.parse(str).data
-                };
                 var data0=JSON.parse(str).data;//768;
+
+                for(var i=0;i<data0.length;i++){
+                    var result0=encode(data0[i]);
+                    var a0=result0[0]/255;
+                    var b0=result0[1]/255;
+                    data0[i]=decode(a0*255,b0*255);
+                }/**/
+                material.uniforms.skeletonData={
+                    "value":data0
+                };
+
                 var data1=[],data2=[];
                 for(var i=0;i<768;i++){
                     var result=encode(data0[i]);
@@ -258,7 +256,9 @@ function InstancedGroup(instanceCount,originMesh,animationClip ){
                 console.log("data0.length",data0.length);
                 console.log(data1[0],data2[0],data0[0]);
                 for(var i=0;i<data0.length;i++){
-                    console.log(Math.floor((decode(data[i],data[i+data0.length])/data0[i])*100)+"%")
+                    var a=data[i]/255;
+                    var b=data[i+data0.length]/255;
+                    console.log(Math.floor((decode(a*255,b*255)/data0[i])*100)+"%")
                 }/**/
                 //alert(decode(data[data0.length-5],data[data0.length-5+data0.length]));
 
@@ -304,8 +304,8 @@ function InstancedGroup(instanceCount,originMesh,animationClip ){
                     ,text14: {type: 't', value: texs[14]}
                     ,text15: {type: 't', value: texs[15]}
                 },
-                vertexShader: document.getElementById('vertexShader0').textContent,
-                fragmentShader: document.getElementById('fragmentShader0').textContent,
+                vertexShader: load("shader/vertex.vert"),
+                fragmentShader: load("shader/fragmentBone.frag"),
                 side: THREE.DoubleSide
             });
         }
