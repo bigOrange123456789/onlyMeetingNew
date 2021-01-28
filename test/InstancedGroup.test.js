@@ -1323,4 +1323,4 @@ InstancedGroupTest.prototype={
         },
 }
 var myInstancedGroupTest=new InstancedGroupTest();
-myInstancedGroupTest.test5();
+myInstancedGroupTest.test5_0();

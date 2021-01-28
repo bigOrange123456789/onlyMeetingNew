@@ -1,8 +1,10 @@
-#define dataTextureHeight 512.0
+#define skeletonSize0 204.0 //用于求不动位置的骨骼//骨骼(25-8)*12=204//骨骼矩阵
+#define skeletonSize1 768.0 //8个手臂骨骼的数据//帧数8*骨骼8*12=768
+
 precision highp float;//highp
 uniform sampler2D dataTexture;//帧数8*骨骼8*12=768//用于求手臂骨骼//8个手臂骨骼的数据
 uniform mat4 modelViewMatrix,projectionMatrix;
-uniform float skeletonMatrix[204];//骨骼(25-8)*12=204//骨骼矩阵//用于求不动位置的骨骼
+//uniform float skeletonMatrix[204];//骨骼(25-8)*12=204//骨骼矩阵//用于求不动位置的骨骼
 //uniform float skeletonData[768];//uniform float[]最大长度4088//变化范围12(0-11)
 uniform float time;//0-10000
 
@@ -22,12 +24,12 @@ varying vec3 myTest01;
 
 //void Test_init();
 //bool Test_meetExpectations();
+void Animation_init();
 mat4 Animation_computeMatrix();
 
 void main(){
-    /*Test_init();
-    if(!Test_meetExpectations())return;*/
-
+    //Test_init();
+    //if(!Test_meetExpectations())return;
     vec3 vPosition = position;
 
     outUV = inUV;
@@ -38,6 +40,7 @@ void main(){
     else if (vPosition.y<0.59) type_part=1.0;//上身
     else type_part=2.0;//头部
 
+    Animation_init();
     mat4 matrix1=Animation_computeMatrix();//计算动画的变换矩阵
 
     mat4 matrix2 = mat4(//确定位置//最后一列是 0 0 0 1
@@ -86,13 +89,18 @@ float int2float(int n){
 void Tool_init(){}
 
 struct Animation{
+    float skeletonPos0;
+    float skeletonPos1;
+    float skeletonLast;
+    float dataTextureHeight;
+
     int frameIndex;
     float frameIndex_f;
 }oAnimation;
 float Animation_getNumByTexture(float n){
     vec3 tttt=texture2D(dataTexture, vec2(
         (0.5+0.0)/1.0, //宽width
-        (0.5+floor(n/3.0))/dataTextureHeight//高height
+        (0.5+floor(n/3.0))/oAnimation.dataTextureHeight//高height
     )).xyz;
     float m=modFloor(n, 3.0);
     //return m/256.0;
@@ -114,33 +122,36 @@ float Animation_decode(float A, float B){ //0-1
     if (a==1.0)num*=-1.0;
     return num;
 }
-float Animation_getElem(float n){ //取手臂骨骼数据
-    //float n=int2float(m);
-    float A=Animation_getNumByTexture(n), B=Animation_getNumByTexture(n+dataTextureHeight*3.0/2.0);
+float Animation_getElem2(float n){ //取手臂骨骼数据
+    float A=Animation_getNumByTexture(n+oAnimation.skeletonPos1), B=Animation_getNumByTexture(n+oAnimation.skeletonLast+oAnimation.skeletonPos1);
+    return Animation_decode(A, B);
+}
+float Animation_getElem1(float n){ //取手臂骨骼数据
+    float A=Animation_getNumByTexture(n+oAnimation.skeletonPos0), B=Animation_getNumByTexture(n+oAnimation.skeletonLast+oAnimation.skeletonPos0);
     return Animation_decode(A, B);
 }
 mat4 Animation_getMatrix2(float iii){ //求手臂骨骼
     float frame_index=oAnimation.frameIndex_f;
     float i=iii-7.0;//iii的取值范围是7-14 -> 0-7
     return mat4(//最后一列是：0 0 0 1
-        Animation_getElem(frame_index*96.+i*12.+0.), Animation_getElem(frame_index*96.+i*12.+1.), Animation_getElem(frame_index*96.+i*12.+2.), 0,
-        Animation_getElem(frame_index*96.+i*12.+3.), Animation_getElem(frame_index*96.+i*12.+4.), Animation_getElem(frame_index*96.+i*12.+5.), 0,
-        Animation_getElem(frame_index*96.+i*12.+6.), Animation_getElem(frame_index*96.+i*12.+7.), Animation_getElem(frame_index*96.+i*12.+8.), 0,
-        Animation_getElem(frame_index*96.+i*12.+9.), Animation_getElem(frame_index*96.+i*12.+10.), Animation_getElem(frame_index*96.+i*12.+11.), 1
+        Animation_getElem2(frame_index*96.+i*12.+0.), Animation_getElem2(frame_index*96.+i*12.+1.), Animation_getElem2(frame_index*96.+i*12.+2.), 0,
+        Animation_getElem2(frame_index*96.+i*12.+3.), Animation_getElem2(frame_index*96.+i*12.+4.), Animation_getElem2(frame_index*96.+i*12.+5.), 0,
+        Animation_getElem2(frame_index*96.+i*12.+6.), Animation_getElem2(frame_index*96.+i*12.+7.), Animation_getElem2(frame_index*96.+i*12.+8.), 0,
+        Animation_getElem2(frame_index*96.+i*12.+9.), Animation_getElem2(frame_index*96.+i*12.+10.), Animation_getElem2(frame_index*96.+i*12.+11.), 1
     );
 }
-mat4 Animation_getMatrix1(int i){ //求不动位置的骨骼
-    if (i>14)i=i-8;
+mat4 Animation_getMatrix1(float i){ //求不动位置的骨骼
+    if (i>14.0)i=i-8.0;
     return mat4(//最后一列是：0 0 0 1
-    skeletonMatrix[i*12+0], skeletonMatrix[i*12+1], skeletonMatrix[i*12+2], 0,
-    skeletonMatrix[i*12+3], skeletonMatrix[i*12+4], skeletonMatrix[i*12+5], 0,
-    skeletonMatrix[i*12+6], skeletonMatrix[i*12+7], skeletonMatrix[i*12+8], 0,
-    skeletonMatrix[i*12+9], skeletonMatrix[i*12+10], skeletonMatrix[i*12+11], 1
+    Animation_getElem1(i*12.+0.), Animation_getElem1(i*12.+1.), Animation_getElem1(i*12.+2.), 0.,
+    Animation_getElem1(i*12.+3.), Animation_getElem1(i*12.+4.), Animation_getElem1(i*12.+5.), 0.,
+    Animation_getElem1(i*12.+6.), Animation_getElem1(i*12.+7.), Animation_getElem1(i*12.+8.), 0.,
+    Animation_getElem1(i*12.+9.), Animation_getElem1(i*12.+10.), Animation_getElem1(i*12.+11.), 1.
     );
 }
-mat4 Animation_getMatrix(int i,float i_f){ //求骨骼
-    if (i>=7&&i<=14) return Animation_getMatrix2(i_f);
-    else return Animation_getMatrix1(i);
+mat4 Animation_getMatrix(float i_f){ //求骨骼
+    if (i_f>=7.&&i_f<=14.) return Animation_getMatrix2(i_f);
+    else return Animation_getMatrix1(i_f);
 }
 void Animation_frameIndexSet(){ //求帧序号//int frame_index;
     float t=modFloor(time*speed, 16.0);//((time*speed)/16.0-floor((time*speed)/16.0))*16.0;//将time*speed对8取余结果：[0，7)
@@ -167,22 +178,29 @@ void Animation_frameIndexSet(){ //求帧序号//int frame_index;
     oAnimation.frameIndex_f=frameIndex_f;
 }
 mat4 Animation_computeMatrix(){
-    Animation_frameIndexSet();//设置全局变量frame_index的值
+
 
     //计算动画的变换矩阵：matrix1=skinWeight[0]*matrixs[mySkinIndex[0]]+...
     mat4 matrix1;//每个点只与一个骨骼相关
-    float i0=0.0;
-    for (int i=0;i<25;i++){
-        if ((skinIndex[0]-i0)>-0.5&&(skinIndex[0]-i0)<0.5){
-            matrix1=Animation_getMatrix(i,i0);
-        }
-        i0=i0+1.0;
-    }
+    //float i0=0.0;
+    //for (int i=0;i<25;i++){
+        //if ((skinIndex[0]-i0)>-0.5&&(skinIndex[0]-i0)<0.5){
+            matrix1=Animation_getMatrix(skinIndex[0]);
+        //}
+        //i0=i0+1.0;
+    //}
     return matrix1;
 }
-void Animation_init(){}
+void Animation_init(){
+    oAnimation.skeletonPos0=0.0;
+    oAnimation.skeletonPos1=(oAnimation.skeletonPos0+skeletonSize0);
+    oAnimation.skeletonLast=(oAnimation.skeletonPos1+skeletonSize1);
+    oAnimation.dataTextureHeight=(oAnimation.skeletonLast*2.0/3.0);
 
-/*struct Test{
+    Animation_frameIndexSet();//设置全局变量frame_index的值
+}
+
+struct Test{
     //计算误差computeErr
     //int pos;
     float err;
@@ -201,8 +219,7 @@ float Test_computeErr(int b){//,pos
     (
     Animation_decode(Animation_getNumByTexture(a+0.0), Animation_getNumByTexture(a+768.0))
     -
-    skeletonData[b]
-    )/(skeletonData[b]*2.56);
+    0.0);//skeletonData[b])/(skeletonData[b]*2.56);
     oTest.err=result;
     return result;
 }
@@ -234,33 +251,41 @@ void Test_assertFloat(float a,float b){
 }
 bool Test_meetExpectations(){//判断代码的测试结果是否符合预期
     oTest.assertion=true;
-    //Animation_decode
-    //if(Animation_decode(50.0/255.0,106.0/255.0)!=6.18)return false;
-    //[50,106]期望对应6.18,实际对应6.6~
-    float result=Animation_decode(50.0/255.0,106.0/255.0);
-    Test_assertFloat(floor(result),6.0);//result个位是6
-    //Test_assertFloat(floor(result*10.0),66.0);//result小数点后一位是6
-    //开始解码部分代码
-    float A=50.0/255.0,B=106.0/255.0;
-    A*=255.0;Test_assertFloat(floor(A),50.0);Test_assertFloat(A,50.0);
-    B*=255.0;
-    float a, b, c, d;
-    a=floor(A/128.0);
-    b=floor((modFloor(A, 128.0))/16.0);
-    c=modFloor(A, 16.0);
-    d=B;
 
-    float c_d=c*256.0+d;
-    float num=c_d*pow(10.0, b-5.0);
-    if (a==1.0)num*=-1.0;
-    //结束解码部分代码
+    //开始测试Animation_getNumByTexture
+    //177
+    Test_assertFloat(Animation_getNumByTexture(0.0),177.0/255.0);
+    Test_assertFloat(Animation_getNumByTexture(1.0),67.0/255.0);
+    Test_assertFloat(Animation_getNumByTexture(972.0),162.0/255.0);
+    //完成测试Animation_getNumByTexture
+
+    if(true){//开始解码部分代码测试
+        //[50,106]期望对应6.18,实际对应6.6~
+        float result=Animation_decode(50.0/255.0,106.0/255.0);
+        Test_assertFloat(floor(result),6.0);//result个位是6
+        //Test_assertFloat(floor(result*10.0),66.0);//result小数点后一位是6
+
+        float A=50.0/255.0,B=106.0/255.0;
+        A*=255.0;Test_assertFloat(floor(A),50.0);Test_assertFloat(A,50.0);
+        B*=255.0;
+        float a, b, c, d;
+        a=floor(A/128.0);
+        b=floor((modFloor(A, 128.0))/16.0);
+        c=modFloor(A, 16.0);
+        d=B;
+        float c_d=c*256.0+d;
+        float num=c_d*pow(10.0, b-5.0);
+        if (a==1.0)num*=-1.0;
+    }//结束解码部分代码测试
+
+
 
     return oTest.assertion;
 }
 void Test_init(){//用于测试
     vec3 tttt=texture2D(dataTexture, vec2(
     (0.5+0.0)/1.0, //宽width
-    (0.5+floor(4.0/3.0))/dataTextureHeight//高height
+    (0.5+floor(4.0/3.0))/oAnimation.dataTextureHeight//高height
     )).xyz;
     float a=1.0;
     float aa=1.0;
@@ -269,8 +294,7 @@ void Test_init(){//用于测试
     (
     Animation_decode(Animation_getNumByTexture(aa+0.0), Animation_getNumByTexture(aa+768.0))
     -
-    skeletonData[bb]
-    )/(skeletonData[bb]*2.56);
+    0.0);//skeletonData[bb])/(skeletonData[bb]*2.56);
 
     //if(Animation_decode(50.0/255.0,106.0/255.0)!=6.18)return;
     float result=Animation_decode(50.0/255.0,106.0/255.0);
@@ -282,4 +306,4 @@ void Test_init(){//用于测试
         modFloor(floor(result*10.0),10.0)/255.0//Test_computeErr(446)
     );
 
-}*/
+}/**/

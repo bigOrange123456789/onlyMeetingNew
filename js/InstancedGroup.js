@@ -177,8 +177,8 @@ function InstancedGroup(instanceCount,originMesh,animationClip ){
                     ,text14: {type: 't', value: texs[14]}
                     ,text15: {type: 't', value: texs[15]}
 
-                    ,skeletonMatrix:{value: []}////骨骼25*16=400//骨骼矩阵//用于求不动位置的骨骼
-                    ,skeletonData:{value:[] }//8个手臂骨骼的数据
+                    //,skeletonMatrix:{value: []}////骨骼25*16=400//骨骼矩阵//用于求不动位置的骨骼
+                    //,skeletonData:{value:[] }//8个手臂骨骼的数据
                     ,time:{value: 0.0}
                 },
                 vertexShader: load("shader/vertexBone.vert"),
@@ -187,43 +187,49 @@ function InstancedGroup(instanceCount,originMesh,animationClip ){
             });
 
             var loader = new THREE.XHRLoader(THREE.DefaultLoadingManager);
-            loader.load("skeletonData.json", function(str)
-            {
-                var data0=JSON.parse(str).data;//768;
-                material.uniforms.skeletonData={
-                    "value":data0
-                };
 
+            loader.load("skeletonMatrix.json", function(str0)
+            {
+                var data0=JSON.parse(str0).data;//204
+                //material.uniforms.skeletonMatrix={"value": data0};
                 var data1=[],data2=[];
-                for(var i=0;i<768;i++){
+                for(var i=0;i<data0.length;i++){
                     var result=scope.encode(data0[i]);
                     data1.push(result[0]);
                     data2.push(result[1]);
                 }
                 //dataTexture
-                var width = 1 , height = data0.length*2/3 ;
-                var data = new Uint8Array( data0.length*2);
-                for(var i=0;i<data0.length;i++){
-                    data[i]=data1[i];
-                }
-                for(var i=data0.length;i<data0.length*2;i++){
-                    data[i]=data2[i-data0.length];
-                }
-                var dataTexture = new THREE.DataTexture(
-                    data,
-                    width,
-                    height,
-                    THREE.RGBFormat
-                );
-                material.uniforms.dataTexture={
-                    "value":dataTexture
-                };
-            });
-            loader.load("skeletonMatrix.json", function(str)
-            {
-                material.uniforms.skeletonMatrix={
-                    "value": JSON.parse(str).data
-                };
+
+
+                var loader2 = new THREE.XHRLoader(THREE.DefaultLoadingManager);
+                loader2.load("skeletonData.json", function(str)
+                {
+                    var data0=JSON.parse(str).data;//768;
+
+                    //var data1=[],data2=[];
+                    for(var i=0;i<data0.length;i++){//768
+                        var result=scope.encode(data0[i]);
+                        data1.push(result[0]);
+                        data2.push(result[1]);
+                    }
+                    //console.log(data0,data1,data2);
+                    //dataTexture
+                    var width = 1 , height = data1.length*2/3 ;//648
+                    var data = new Uint8Array( data1.length*2);//1944
+                    for(var i=0;i<data1.length;i++){//972
+                        data[i]=data1[i];
+                        data[i+data1.length]=data2[i];
+                    }
+                    var dataTexture = new THREE.DataTexture(
+                        data,
+                        width,
+                        height,
+                        THREE.RGBFormat
+                    );
+                    material.uniforms.dataTexture={
+                        "value":dataTexture
+                    };
+                });
             });
         }else{
             material = new THREE.RawShaderMaterial({//原始着色器材质
