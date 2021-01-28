@@ -286,70 +286,7 @@ InstancedGroupTest.prototype={
                 });//
                 //完成测试
         },
-        //编码测试
-        test5_1:function (contextType){
-                if(typeof(contextType)==="undefined")this.setContext();
-                var nameTest="输出帧序号，用于验证";
-                console.log('start test:'+nameTest);
-                //开始测试
-                var scope=this;
-                var loader= new THREE.GLTFLoader();
-                loader.load("myModel/avatar/Female.glb", (glb) => {
-                        console.log(glb);//OnlyArm
-                        var mesh=glb.scene.children[0].children[1];//"myModel/avatar/Female.glb"
 
-                        var peoples = new InstancedGroup(
-                            1,
-                            [mesh],//这些mesh的网格应该一致
-                            glb.animations[0]
-                        );
-                        var texSrc = [];
-                        for (i = 0; i < 16; i++) texSrc.push('./img/texture/w/w' + i + '.jpg');
-                        peoples.init(
-                            texSrc
-                        );
-                        for (var i = 0; i < 1; i++) {
-                                peoples.rotationSet(i, [Math.PI / 2, 0, 0]);
-                                peoples.positionSet(i, [3 * i, 0, 0]);
-                                peoples.scaleSet(i, [0.03, 0.03, 0.03]);
-                                peoples.speedSet(i,0.5);
-                        }
-                        scope.scene.add(peoples.obj);
-                        //开始解码部分代码测试
-                        var A=50,B=160;
-                        a=Math.floor(A/128);
-                        b=Math.floor((A%128)/16);
-                        c=A%16;
-                        d=B;
-
-                        var c_d=c*256+d;
-
-                        console.log(a,b,c,d,c_d);
-
-                        var num=c_d*Math.pow(10,b-5);
-                        if(a===1)num*=-1;
-                        //结束解码部分代码测试
-
-
-
-                        scope.referee.assertion(
-                            peoples.encode(6.18),[50,106],"6.18编码为[50,106],"
-                        );
-                        scope.referee.assertion(
-                            6.18,peoples.decode(50,106),"[50,106]解码为6.18"
-                        );
-                        var loader = new THREE.XHRLoader(THREE.DefaultLoadingManager);
-                        loader.load("skeletonData.json", function(str)
-                        {
-                                var data0=JSON.parse(str).data;//768;
-                        });
-                        updateAnimation();//
-                        function updateAnimation() {//每帧更新一次动画
-                                requestAnimationFrame(updateAnimation);
-                        }
-                });//
-                //完成测试
-        },
 
         //观察贴图效果，区分男女贴图
         test_texture:function (contextType){
@@ -1226,6 +1163,150 @@ InstancedGroupTest.prototype={
                 });
                 //完成测试
         },
+        //编码测试,输出编码后的骨骼数据
+        test5_1:function (contextType){
+                if(typeof(contextType)==="undefined")this.setContext();
+                var nameTest="输出帧序号，用于验证";
+                console.log('start test:'+nameTest);
+                //开始测试
+                var scope=this;
+                var loader= new THREE.GLTFLoader();
+                loader.load("myModel/avatar/Female.glb", (glb) => {
+                        console.log(glb);//OnlyArm
+                        var mesh=glb.scene.children[0].children[1];//"myModel/avatar/Female.glb"
+
+                        var peoples = new InstancedGroup(
+                            1,
+                            [mesh],//这些mesh的网格应该一致
+                            glb.animations[0]
+                        );
+                        var texSrc = [];
+                        for (i = 0; i < 16; i++) texSrc.push('./img/texture/w/w' + i + '.jpg');
+                        peoples.init(
+                            texSrc
+                        );
+                        for (var i = 0; i < 1; i++) {
+                                peoples.rotationSet(i, [Math.PI / 2, 0, 0]);
+                                peoples.positionSet(i, [3 * i, 0, 0]);
+                                peoples.scaleSet(i, [0.03, 0.03, 0.03]);
+                                peoples.speedSet(i,0.5);
+                        }
+                        scope.scene.add(peoples.obj);
+                        //开始解码部分代码测试
+                        var A=50,B=160;
+                        a=Math.floor(A/128);
+                        b=Math.floor((A%128)/16);
+                        c=A%16;
+                        d=B;
+
+                        var c_d=c*256+d;
+
+                        console.log(a,b,c,d,c_d);
+
+                        var num=c_d*Math.pow(10,b-5);
+                        if(a===1)num*=-1;
+                        //结束解码部分代码测试
+
+
+
+                        scope.referee.assertion(
+                            peoples.encode(6.18),[50,106],"6.18编码为[50,106],"
+                        );
+                        scope.referee.assertion(
+                            6.18,peoples.decode(50,106),"[50,106]解码为6.18"
+                        );
+                        scope.encode=function(floatNum) {
+                                var a=0,//正数
+                                    b,//值0-7，10^(b-3)
+                                    c,
+                                    d;
+                                //计算a//0+ 1-
+                                if(floatNum<0){
+                                        a=1;
+                                        floatNum*=-1;
+                                }
+                                //计算b//0~7  -3~4
+                                if(floatNum>10000)b=7;
+                                else if(floatNum>1000)b=6;
+                                else if(floatNum>100)b=5;
+                                else if(floatNum>10)b=4;//25.11
+                                else if(floatNum>1)b=3;//2.51
+                                else if(floatNum>0.1)b=2;//0.512
+                                else if(floatNum>0.01)b=1;
+                                else if(floatNum>0.001)b=0;
+                                else{
+                                        return [0,0];
+                                }
+                                //计算c和d
+                                var c_d=floatNum*Math.pow(10,7-b-2);//10^(7-b-2)
+                                c_d=Math.floor(c_d);//保留十进制3位有效数组
+                                c=Math.floor(c_d/256);
+                                d=c_d%256;
+
+                                var A=a*128+b*16+c;
+                                var B=d;
+                                return [A,B];
+                        }
+                        var loader = new THREE.XHRLoader(THREE.DefaultLoadingManager);
+                        loader.load("skeletonMatrix.json", function(str0)
+                        {
+                                var data0=JSON.parse(str0).data;//204
+                                //material.uniforms.skeletonMatrix={"value": data0};
+                                var data1=[],data2=[];
+                                for(var i=0;i<data0.length;i++){
+                                        var result=scope.encode(data0[i]);
+                                        data1.push(result[0]);
+                                        data2.push(result[1]);
+                                }
+                                //dataTexture
+
+
+                                var loader2 = new THREE.XHRLoader(THREE.DefaultLoadingManager);
+                                loader2.load("skeletonData.json", function(str)
+                                {
+                                        var data0=JSON.parse(str).data;//768;
+
+                                        //var data1=[],data2=[];
+                                        for(var i=0;i<data0.length;i++){//768
+                                                var result=scope.encode(data0[i]);
+                                                data1.push(result[0]);
+                                                data2.push(result[1]);
+                                        }
+                                        //console.log(data0,data1,data2);
+                                        //dataTexture
+                                        var width = 1 , height = data1.length*2/3 ;//648
+                                        var data = new Uint8Array( data1.length*2);//1944
+                                        for(var i=0;i<data1.length;i++){//972
+                                                data[i]=data1[i];
+                                                data[i+data1.length]=data2[i];
+                                        }
+                                        var dataArray=[];
+                                        for(var i=0;i<data1.length;i++){//972
+                                                dataArray[i]=data1[i];
+                                                dataArray[i+data1.length]=data2[i];
+                                        }
+                                        var dataTexture = new THREE.DataTexture(
+                                            data,
+                                            width,
+                                            height,
+                                            THREE.RGBFormat
+                                        );
+
+                                        let link = document.createElement('a');
+                                        link.style.display = 'none';
+                                        document.body.appendChild(link);
+                                        link.href = URL.createObjectURL(new Blob([JSON.stringify({data:dataArray})], { type: 'text/plain' }));
+                                        link.download ="animationData.json";
+                                        link.click();
+                                });
+                        });
+                        updateAnimation();//
+                        function updateAnimation() {//每帧更新一次动画
+                                requestAnimationFrame(updateAnimation);
+                        }
+                });//
+                //完成测试
+        },
 
 
         //探索如何使用新的男性模型
@@ -1323,4 +1404,4 @@ InstancedGroupTest.prototype={
         },
 }
 var myInstancedGroupTest=new InstancedGroupTest();
-myInstancedGroupTest.test5_0();
+myInstancedGroupTest.test5();

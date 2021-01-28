@@ -188,48 +188,24 @@ function InstancedGroup(instanceCount,originMesh,animationClip ){
 
             var loader = new THREE.XHRLoader(THREE.DefaultLoadingManager);
 
-            loader.load("skeletonMatrix.json", function(str0)
+            loader.load("animationData.json", function(str)
             {
-                var data0=JSON.parse(str0).data;//204
-                //material.uniforms.skeletonMatrix={"value": data0};
-                var data1=[],data2=[];
-                for(var i=0;i<data0.length;i++){
-                    var result=scope.encode(data0[i]);
-                    data1.push(result[0]);
-                    data2.push(result[1]);
-                }
+                var data0=JSON.parse(str).data;//204
                 //dataTexture
-
-
-                var loader2 = new THREE.XHRLoader(THREE.DefaultLoadingManager);
-                loader2.load("skeletonData.json", function(str)
-                {
-                    var data0=JSON.parse(str).data;//768;
-
-                    //var data1=[],data2=[];
-                    for(var i=0;i<data0.length;i++){//768
-                        var result=scope.encode(data0[i]);
-                        data1.push(result[0]);
-                        data2.push(result[1]);
-                    }
-                    //console.log(data0,data1,data2);
-                    //dataTexture
-                    var width = 1 , height = data1.length*2/3 ;//648
-                    var data = new Uint8Array( data1.length*2);//1944
-                    for(var i=0;i<data1.length;i++){//972
-                        data[i]=data1[i];
-                        data[i+data1.length]=data2[i];
-                    }
-                    var dataTexture = new THREE.DataTexture(
-                        data,
-                        width,
-                        height,
-                        THREE.RGBFormat
-                    );
-                    material.uniforms.dataTexture={
-                        "value":dataTexture
-                    };
-                });
+                var data = new Uint8Array( data0.length);//1944
+                var width = 1 , height = data.length/3 ;//648
+                for(var i=0;i<data.length;i++){//972
+                    data[i]=data0[i];
+                }
+                var dataTexture = new THREE.DataTexture(
+                    data,
+                    width,
+                    height,
+                    THREE.RGBFormat
+                );
+                material.uniforms.dataTexture={
+                    "value":dataTexture
+                };
             });
         }else{
             material = new THREE.RawShaderMaterial({//原始着色器材质

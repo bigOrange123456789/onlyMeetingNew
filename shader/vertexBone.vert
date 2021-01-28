@@ -1,11 +1,8 @@
 #define skeletonSize0 204.0 //用于求不动位置的骨骼//骨骼(25-8)*12=204//骨骼矩阵
 #define skeletonSize1 768.0 //8个手臂骨骼的数据//帧数8*骨骼8*12=768
-
 precision highp float;//highp
 uniform sampler2D dataTexture;//帧数8*骨骼8*12=768//用于求手臂骨骼//8个手臂骨骼的数据
 uniform mat4 modelViewMatrix,projectionMatrix;
-//uniform float skeletonMatrix[204];//骨骼(25-8)*12=204//骨骼矩阵//用于求不动位置的骨骼
-//uniform float skeletonData[768];//uniform float[]最大长度4088//变化范围12(0-11)
 uniform float time;//0-10000
 
 attribute vec3 position;
@@ -49,7 +46,6 @@ void main(){
         vec4(mcol2, 0),
         vec4(mcol3, 1)
     );
-    //if(Animation_decode(50.0/255.0,106.0/255.0)!=6.18)return;
     gl_Position = projectionMatrix * modelViewMatrix * matrix2  * matrix1 * vec4(position, 1.0);
 }
 //尽可以按照面向对象的编程思想来编写下面的代码
@@ -178,17 +174,10 @@ void Animation_frameIndexSet(){ //求帧序号//int frame_index;
     oAnimation.frameIndex_f=frameIndex_f;
 }
 mat4 Animation_computeMatrix(){
-
-
     //计算动画的变换矩阵：matrix1=skinWeight[0]*matrixs[mySkinIndex[0]]+...
     mat4 matrix1;//每个点只与一个骨骼相关
-    //float i0=0.0;
-    //for (int i=0;i<25;i++){
-        //if ((skinIndex[0]-i0)>-0.5&&(skinIndex[0]-i0)<0.5){
-            matrix1=Animation_getMatrix(skinIndex[0]);
-        //}
-        //i0=i0+1.0;
-    //}
+    matrix1=Animation_getMatrix(skinIndex[0]);
+
     return matrix1;
 }
 void Animation_init(){
