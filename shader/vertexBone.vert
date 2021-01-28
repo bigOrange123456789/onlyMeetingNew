@@ -1,9 +1,9 @@
 #define dataTextureHeight 512.0
 precision highp float;//highp
-uniform sampler2D dataTexture;
+uniform sampler2D dataTexture;//帧数8*骨骼8*12=768//用于求手臂骨骼//8个手臂骨骼的数据
 uniform mat4 modelViewMatrix,projectionMatrix;
 uniform float skeletonMatrix[204];//骨骼(25-8)*12=204//骨骼矩阵//用于求不动位置的骨骼
-uniform float skeletonData[768];//帧数8*骨骼8*12=768//用于求手臂骨骼//8个手臂骨骼的数据//uniform float[]最大长度4088//变化范围12(0-11)
+//uniform float skeletonData[768];//uniform float[]最大长度4088//变化范围12(0-11)
 uniform float time;//0-10000
 
 attribute vec3 position;
@@ -20,9 +20,9 @@ varying float type_part;
 varying float myTest00;
 varying vec3 myTest01;
 
-void Test_init();
+//void Test_init();
+//bool Test_meetExpectations();
 mat4 Animation_computeMatrix();
-bool Test_meetExpectations();
 
 void main(){
     /*Test_init();
@@ -87,6 +87,7 @@ void Tool_init(){}
 
 struct Animation{
     int frameIndex;
+    float frameIndex_f;
 }oAnimation;
 float Animation_getNumByTexture(float n){
     vec3 tttt=texture2D(dataTexture, vec2(
@@ -113,27 +114,20 @@ float Animation_decode(float A, float B){ //0-1
     if (a==1.0)num*=-1.0;
     return num;
 }
-float Animation_getElem(int m){ //取手臂骨骼数据
-    float n=int2float(m);
+float Animation_getElem(float n){ //取手臂骨骼数据
+    //float n=int2float(m);
     float A=Animation_getNumByTexture(n), B=Animation_getNumByTexture(n+dataTextureHeight*3.0/2.0);
     return Animation_decode(A, B);
 }
-mat4 Animation_getMatrix2(int iii){ //求手臂骨骼
-    int frame_index=oAnimation.frameIndex;
-    int i=iii-7;//iii的取值范围是7-14 -> 0-7
+mat4 Animation_getMatrix2(float iii){ //求手臂骨骼
+    float frame_index=oAnimation.frameIndex_f;
+    float i=iii-7.0;//iii的取值范围是7-14 -> 0-7
     return mat4(//最后一列是：0 0 0 1
-        Animation_getElem(frame_index*96+i*12+0), Animation_getElem(frame_index*96+i*12+1), Animation_getElem(frame_index*96+i*12+2), 0,
-        Animation_getElem(frame_index*96+i*12+3), Animation_getElem(frame_index*96+i*12+4), Animation_getElem(frame_index*96+i*12+5), 0,
-        Animation_getElem(frame_index*96+i*12+6), Animation_getElem(frame_index*96+i*12+7), Animation_getElem(frame_index*96+i*12+8), 0,
-        Animation_getElem(frame_index*96+i*12+9), Animation_getElem(frame_index*96+i*12+10), Animation_getElem(frame_index*96+i*12+11), 1
+        Animation_getElem(frame_index*96.+i*12.+0.), Animation_getElem(frame_index*96.+i*12.+1.), Animation_getElem(frame_index*96.+i*12.+2.), 0,
+        Animation_getElem(frame_index*96.+i*12.+3.), Animation_getElem(frame_index*96.+i*12.+4.), Animation_getElem(frame_index*96.+i*12.+5.), 0,
+        Animation_getElem(frame_index*96.+i*12.+6.), Animation_getElem(frame_index*96.+i*12.+7.), Animation_getElem(frame_index*96.+i*12.+8.), 0,
+        Animation_getElem(frame_index*96.+i*12.+9.), Animation_getElem(frame_index*96.+i*12.+10.), Animation_getElem(frame_index*96.+i*12.+11.), 1
     );
-    /**/
-    return mat4(//最后一列是：0 0 0 1
-            skeletonData[frame_index*96+i*12+0] ,skeletonData[frame_index*96+i*12+1] ,skeletonData[frame_index*96+i*12+2] ,0,
-                skeletonData[frame_index*96+i*12+3] ,skeletonData[frame_index*96+i*12+4] ,skeletonData[frame_index*96+i*12+5] ,0 ,
-            skeletonData[frame_index*96+i*12+6] ,skeletonData[frame_index*96+i*12+7] ,skeletonData[frame_index*96+i*12+8] ,0,
-            skeletonData[frame_index*96+i*12+9] ,skeletonData[frame_index*96+i*12+10],skeletonData[frame_index*96+i*12+11],1
-        );
 }
 mat4 Animation_getMatrix1(int i){ //求不动位置的骨骼
     if (i>14)i=i-8;
@@ -144,30 +138,33 @@ mat4 Animation_getMatrix1(int i){ //求不动位置的骨骼
     skeletonMatrix[i*12+9], skeletonMatrix[i*12+10], skeletonMatrix[i*12+11], 1
     );
 }
-mat4 Animation_getMatrix(int i){ //求骨骼
-    if (i>=7&&i<=14) return Animation_getMatrix2(i);
+mat4 Animation_getMatrix(int i,float i_f){ //求骨骼
+    if (i>=7&&i<=14) return Animation_getMatrix2(i_f);
     else return Animation_getMatrix1(i);
 }
 void Animation_frameIndexSet(){ //求帧序号//int frame_index;
     float t=modFloor(time*speed, 16.0);//((time*speed)/16.0-floor((time*speed)/16.0))*16.0;//将time*speed对8取余结果：[0，7)
     int frame_index;
-    if (t>-0.5&&t<=0.5)frame_index=0;
-    else if (t>0.5&&t<=1.5)frame_index=1;
-    else if (t>1.5&&t<=2.5)frame_index=2;
-    else if (t>2.5&&t<=3.5)frame_index=3;
-    else if (t>3.5&&t<=4.5)frame_index=4;
-    else if (t>4.5&&t<=5.5)frame_index=5;
-    else if (t>5.5&&t<=6.5)frame_index=6;
-    else if (t>6.5&&t<=7.5)frame_index=7;
-    else if (t>7.5&&t<=8.5)frame_index=7;
-    else if (t>8.5&&t<=9.5)frame_index=6;
-    else if (t>9.5&&t<=10.5)frame_index=5;
-    else if (t>10.5&&t<=11.5)frame_index=4;
-    else if (t>11.5&&t<=12.5)frame_index=3;
-    else if (t>12.5&&t<=13.5)frame_index=2;
-    else if (t>13.5&&t<=14.5)frame_index=1;
-    else frame_index=0;
+    float frameIndex_f;
+    //t=1.0;
+    if (t>-0.5&&t<=0.5){ frame_index=0; frameIndex_f=0.0;}
+    else if (t>0.5&&t<=1.5){ frame_index=1; frameIndex_f=1.0;}
+    else if (t>1.5&&t<=2.5){ frame_index=2; frameIndex_f=2.0;}
+    else if (t>2.5&&t<=3.5){ frame_index=3; frameIndex_f=3.0;}
+    else if (t>3.5&&t<=4.5){ frame_index=4; frameIndex_f=4.0;}
+    else if (t>4.5&&t<=5.5){ frame_index=5; frameIndex_f=5.0;}
+    else if (t>5.5&&t<=6.5){ frame_index=6; frameIndex_f=6.0;}
+    else if (t>6.5&&t<=7.5){ frame_index=7; frameIndex_f=7.0;}
+    else if (t>7.5&&t<=8.5){ frame_index=7; frameIndex_f=7.0;}
+    else if (t>8.5&&t<=9.5){ frame_index=6; frameIndex_f=6.0;}
+    else if (t>9.5&&t<=10.5){ frame_index=5; frameIndex_f=5.0;}
+    else if (t>10.5&&t<=11.5){ frame_index=4; frameIndex_f=4.0;}
+    else if (t>11.5&&t<=12.5){ frame_index=3; frameIndex_f=3.0;}
+    else if (t>12.5&&t<=13.5){ frame_index=2; frameIndex_f=2.0;}
+    else if (t>13.5&&t<=14.5){ frame_index=1; frameIndex_f=1.0;}
+    else { frame_index=0; frameIndex_f=0.0;}
     oAnimation.frameIndex=frame_index;
+    oAnimation.frameIndex_f=frameIndex_f;
 }
 mat4 Animation_computeMatrix(){
     Animation_frameIndexSet();//设置全局变量frame_index的值
@@ -177,7 +174,7 @@ mat4 Animation_computeMatrix(){
     float i0=0.0;
     for (int i=0;i<25;i++){
         if ((skinIndex[0]-i0)>-0.5&&(skinIndex[0]-i0)<0.5){
-            matrix1=Animation_getMatrix(i);
+            matrix1=Animation_getMatrix(i,i0);
         }
         i0=i0+1.0;
     }
@@ -185,7 +182,7 @@ mat4 Animation_computeMatrix(){
 }
 void Animation_init(){}
 
-struct Test{
+/*struct Test{
     //计算误差computeErr
     //int pos;
     float err;
@@ -228,7 +225,6 @@ void Test_computeErrMax(){//计算整体的最大误差
     oTest.errMax=errMax;
     oTest.errMax_pos_float=aMax;
     oTest.errMax_pos_int=bMax;
-    /*return Test_computeErr(0);*/
 }
 void Test_assertInt(int a,int b){
     if(a!=b)oTest.assertion=false;
@@ -286,4 +282,4 @@ void Test_init(){//用于测试
         modFloor(floor(result*10.0),10.0)/255.0//Test_computeErr(446)
     );
 
-}
+}*/

@@ -212,7 +212,7 @@ InstancedGroupTest.prototype={
                                 peoples.rotationSet(i, [Math.PI / 2, 0, 0]);
                                 peoples.positionSet(i, [3 * i, 0, 0]);
                                 peoples.scaleSet(i, [0.03, 0.03, 0.03]);
-                                peoples.speedSet(i,0.5);
+                                peoples.speedSet(i,0.1);
                         }
                         scope.scene.add(peoples.obj);
                         console.log(mesh)
@@ -223,7 +223,7 @@ InstancedGroupTest.prototype={
                                 requestAnimationFrame(updateAnimation);
                                 //输出帧序号，用于验证
                                 var time=peoples.time; var frame_index;
-                                var speed=peoples.speed.array[1],
+                                var speed=peoples.speed.array[0],
                                     t=((time*speed)/16.0-Math.floor((time*speed)/16.0))*16.0;//将time*speed对8取余结果：[0，7)
 
                                 if(t>-0.5&&t<=0.5)frame_index=0;
@@ -240,8 +240,8 @@ InstancedGroupTest.prototype={
                                 else if(t>10.5&&t<=11.5)frame_index=11;
                                 else if(t>11.5&&t<=12.5)frame_index=12;
                                 else if(t>12.5&&t<=13.5)frame_index=13;
-                                else if(t>13.5&&t<=14.5)frame_index=14;
-                                else frame_index=15;
+                                //else if(t>13.5&&t<=14.5)frame_index=14;
+                                else frame_index=14;
 
                                 console.log(frame_index);
                                 //完成验证
@@ -1323,4 +1323,4 @@ InstancedGroupTest.prototype={
         },
 }
 var myInstancedGroupTest=new InstancedGroupTest();
-myInstancedGroupTest.test5_1();
+myInstancedGroupTest.test5();
