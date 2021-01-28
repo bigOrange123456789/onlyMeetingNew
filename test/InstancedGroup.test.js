@@ -750,8 +750,17 @@ InstancedGroupTest.prototype={
                 var scope=this;
                 var loader= new THREE.GLTFLoader();
                 loader.load("myModel/avatar/Female.glb", (glb) => {
-                        console.log(glb);//OnlyArm
+                        console.log(glb);//scene.children[3].children[3]
                         var mesh=glb.scene.children[0].children[1];//"myModel/avatar/Female.glb"
+                        for(var i=0;i<mesh.skeleton.boneInverses.length;i++){
+                                var mat=mesh.skeleton.boneInverses[i] ;
+                                var a=new THREE.Vector3();
+                                var b=new THREE.Quaternion();
+                                var c=new THREE.Vector3();
+                                mat.decompose(a,b,c);
+                                console.log(a,b,c);
+                        }
+
                         //开始计算matrix
                         var animation=glb.animations[0];
                         var data=[];
@@ -1009,7 +1018,7 @@ InstancedGroupTest.prototype={
                         link.href = URL.createObjectURL(new Blob([JSON.stringify({data:data})], { type: 'text/plain' }));
                         link.download ="skeletonData.json";
                         //console.log(data);
-                        link.click();
+                        //link.click();
                         function compose(x,y,z,w,sx,sy,sz,px,py,pz ) {//quaternion scale,position
                                 var x2 = x + x,	y2 = y + y, z2 = z + z;
                                 var xx = x * x2, xy = x * y2, xz = x * z2;
@@ -1404,4 +1413,4 @@ InstancedGroupTest.prototype={
         },
 }
 var myInstancedGroupTest=new InstancedGroupTest();
-myInstancedGroupTest.test5();
+myInstancedGroupTest.test6_1();

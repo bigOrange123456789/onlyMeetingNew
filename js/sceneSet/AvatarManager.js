@@ -5,7 +5,7 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
     this.obj2=new THREE.Object3D();
 
     this.positions=mySeatManager.positions;
-    this.types=[];
+    this.types=[];//贴图类型
     this.colors=[];
     this.sexs=[];//0表示女性，1表示男性
     this.manNum=0;

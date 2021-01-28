@@ -16,8 +16,6 @@ function InstancedGroup(instanceCount,originMesh,animationClip ){
     this.mcol1;
     this.mcol2;
     this.mcol3;
-    this.scales=[];
-    this.rotations=[];
     this.type;
     this.colors;
 
@@ -70,10 +68,6 @@ function InstancedGroup(instanceCount,originMesh,animationClip ){
         return [A,B];
     }
     this.init=function (texSrc){
-        for(var i=0;i<this.instanceCount;i++){
-            this.scales.push([1,1,1]);
-            this.rotations.push([0,0,0]);
-        }
         //const instanceCount =2*2;//10 0000//1089
         let texs_length=16;
 
@@ -258,21 +252,6 @@ function InstancedGroup(instanceCount,originMesh,animationClip ){
         }
     }
 
-    this.updateBuffer=function(i){//更新第i个对象对应的缓冲区
-        var pos=[
-            this.mcol3.array[3*i  ],
-            this.mcol3.array[3*i+1],
-            this.mcol3.array[3*i+2]
-        ];//记录位置
-        this.dummy.scale.set(this.scales[i][0],this.scales[i][1],this.scales[i][2]);
-        this.dummy.rotation.set(this.rotations[i][0],this.rotations[i][1],this.rotations[i][2]);
-        this.dummy.updateMatrix();
-
-        this.dummy.matrix.elements[12]=pos[0];
-        this.dummy.matrix.elements[13]=pos[1];
-        this.dummy.matrix.elements[14]=pos[2];//恢复位置
-        this.setMatrix(i,this.dummy.matrix);
-    }
     this.setMatrix=function (i,matrix){//获取实例化对象第i个成员的变换矩阵
         this.mcol0.array[3*i  ]=matrix.elements[0];
         this.mcol0.array[3*i+1]=matrix.elements[1];
@@ -305,10 +284,22 @@ function InstancedGroup(instanceCount,originMesh,animationClip ){
         return [this.mcol3.array[3*i],this.mcol3.array[3*i+1],this.mcol3.array[3*i+2]];
     }
     this.rotationGet=function(i){
-        return this.rotations[i];
+        var mat4=this.getMatrix(i);
+        var position=new THREE.Vector3();
+        var quaternion=new THREE.Quaternion();
+        var scale=new THREE.Vector3();
+        mat4.decompose(position,quaternion,scale);
+        var euler=new THREE.Euler(0,0,0, 'XYZ');
+        euler.setFromQuaternion(quaternion);
+        return [euler.x,euler.y,euler.z];
     }
     this.scaleGet=function(i){
-        return this.scales[i];
+        var mat4=this.getMatrix(i);
+        var position=new THREE.Vector3();
+        var quaternion=new THREE.Quaternion();
+        var scale=new THREE.Vector3();
+        mat4.decompose(position,quaternion,scale);
+        return [scale.x,scale.y,scale.z];
     }
 
     this.positionSet=function (i,pos){
@@ -317,16 +308,34 @@ function InstancedGroup(instanceCount,originMesh,animationClip ){
         this.mcol3.array[3*i+2]=pos[2];
     }
     this.rotationSet=function (i,rot){
-        this.rotations[i][0]=rot[0];
-        this.rotations[i][1]=rot[1];
-        this.rotations[i][2]=rot[2];
-        this.updateBuffer(i);
+        var mat4=this.getMatrix(i);
+        var position=new THREE.Vector3();
+        var quaternion=new THREE.Quaternion();
+        var scale=new THREE.Vector3();
+        mat4.decompose(position,quaternion,scale);
+
+        this.dummy.scale.set(scale.x,scale.y,scale.z);
+        this.dummy.rotation.set(rot[0],rot[1],rot[2]);
+        this.dummy.position.set(position.x,position.y,position.z);
+        this.dummy.updateMatrix();
+
+        this.setMatrix(i,this.dummy.matrix);
     }
-    this.scaleSet=function(i,scale){
-        this.scales[i][0]=scale[0];
-        this.scales[i][1]=scale[1];
-        this.scales[i][2]=scale[2];
-        this.updateBuffer(i);
+    this.scaleSet=function(i,size){
+        var mat4=this.getMatrix(i);
+        var position=new THREE.Vector3();
+        var quaternion=new THREE.Quaternion();
+        var scale=new THREE.Vector3();
+        mat4.decompose(position,quaternion,scale);
+        var euler=new THREE.Euler(0,0,0, 'XYZ');
+        euler.setFromQuaternion(quaternion);
+
+        this.dummy.scale.set(size[0],size[1],size[2]);
+        this.dummy.rotation.set(euler.x,euler.y,euler.z);
+        this.dummy.position.set(position.x,position.y,position.z);
+        this.dummy.updateMatrix();
+
+        this.setMatrix(i,this.dummy.matrix);
     }
     this.typeSet=function (i,type) {
         this.type.array[4*i  ]=type[0];
