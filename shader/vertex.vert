@@ -17,9 +17,8 @@ attribute vec4 type;   //type[3]是0或1，用于表示动画
 attribute vec3 color;
 
 varying vec2 outUV;
-varying vec3 varyType;
 varying vec3 varyColor;
-varying float type_part;
+varying float type_part,texType;
 varying float myTest00;
 
 void main(){
@@ -34,13 +33,19 @@ void main(){
     //if(vPosition.x>-0.01&&vPosition.y>0.1)//只显示前半部分的上半身
     {
         outUV = inUV;
-        varyType=vec3(type[0],type[1],type[2]);
         varyColor=vec3(color[0],color[1],color[2]);
         myTest00=type[3];
 
-        if(position.z<-0.95)type_part=2.0;//头部
-        else if(position.z<-0.60) type_part=1.0;//上身
-        else type_part=0.0;//下身
+        if (vPosition.y<0.15&&(vPosition.z<0.35&&vPosition.z>-0.35)){
+            type_part=0.0;//下身
+            texType=floor(type[0]+0.5);
+        } else if (vPosition.y<0.59) {
+            type_part=1.0;//上身
+            texType=floor(type[1]+0.5);
+        } else{
+            type_part=2.0;//头部
+            texType=floor(type[2]+0.5);
+        }
 
         //if(position.z<-1.0)type_part=0.0;
         //else type_part=1.0;

@@ -340,10 +340,10 @@ InstancedGroupTest.prototype={
                         console.log(glb);//OnlyArm
                         var mesh=glb.scene.children[0].children[1];//"myModel/avatar/Female.glb"
 
-                        for(var k=0;k<18;k++){
+                        for(var k=0;k<3;k++){
                                 var peoples = new InstancedGroup(1, [mesh], glb.animations[0]);
                                 var texSrc = [];
-                                for (i = 0; i < 16; i++) texSrc.push('./test/img/texture/w/w'+k+'.jpg');
+                                for (i = 0; i < 16; i++) texSrc.push('./img/texture/w/w'+0+'.jpg');
                                 peoples.init(texSrc);
                                 peoples.rotationSet(0, [Math.PI / 2, 0, 0]);
                                 peoples.positionSet(0, [2*k, 0, 0]);
@@ -1453,4 +1453,4 @@ InstancedGroupTest.prototype={
         },
 }
 var myInstancedGroupTest=new InstancedGroupTest();
-myInstancedGroupTest.test2_1();
+myInstancedGroupTest.test1();

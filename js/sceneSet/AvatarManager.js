@@ -62,10 +62,8 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
                 [glb.scene.children[0].children[1].clone()],//这些mesh的网格应该一致
                 glb.animations[0].clone()
             );
-            var texSrc=[];
-            for(i=0;i<16;i++)texSrc.push('./img/texture/w/w'+i+'.jpg');
             peoples.init(
-                texSrc
+                ['./img/texture/w/w0.jpg']
             );
 
             var index=0;
@@ -77,7 +75,7 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
 
                 peoples.typeSet(index,scope.types[i]);
                 peoples.colorSet(index,scope.colors[i]);
-                peoples.speedSet(index,0.15+Math.random()*2.5);
+                peoples.speedSet(index,0.15+Math.random()*1.5);
                 //else peoples.speedSet(i,2+Math.random()*1.92);
                 index++;
             }
@@ -94,11 +92,7 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
                     //[glb2.scene.children[0].children[0].children[2]],//这些mesh的网格应该一致
                     glb.animations[0]
                 );
-                var texSrc=[];
-                for(i=0;i<16;i++)texSrc.push('./img/texture/m/m'+i+'.jpg');
-                peoples.init(
-                    texSrc
-                );
+                peoples.init(['./img/texture/m/m0.jpg']);
 
                 var index=0;
                 for(var i=0;i<scope.positions.length;i++)
@@ -109,7 +103,7 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
 
                         peoples.typeSet(index,scope.types[i]);
                         peoples.colorSet(index,scope.colors[i]);
-                        peoples.speedSet(index,0.15+Math.random()*2.5);
+                        peoples.speedSet(index,0.15+Math.random()*1.5);
                         //else peoples.speedSet(i,2+Math.random()*1.92);
                         index++;
                     }

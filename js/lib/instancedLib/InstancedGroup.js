@@ -127,12 +127,9 @@ InstancedGroup.prototype={
         geometry.setAttribute('color', this.colors);
 
         //以下是根据material设置的uniform
-        let texs=[];
-        for(i=0;i<texs_length;i++){
-            texs.push( THREE.ImageUtils.loadTexture(texSrc[i]) ) ;
-            texs[i].flipY=false;
-            texs[i].wrapS = texs[i].wrapT = THREE.ClampToEdgeWrapping;
-        }
+        let text0= THREE.ImageUtils.loadTexture(texSrc[0]);
+        text0.flipY=false;
+        text0.wrapS = text0.wrapT = THREE.ClampToEdgeWrapping;
 
         let material;
         function load(name) {
@@ -144,34 +141,14 @@ InstancedGroup.prototype={
             return xhr.status === okStatus ? xhr.responseText : null;
         }
         if(this.haveSkeleton){
-
             material = new THREE.RawShaderMaterial({//原始着色器材质
                 uniforms: {
                     dataTexture: {type: 't', value:[]}
-
-                    ,text0: {type: 't', value: texs[0]}//textureHandle
-                    ,text1: {type: 't', value: texs[1]}
-                    ,text2: {type: 't', value: texs[2]}
-                    ,text3: {type: 't', value: texs[3]}
-                    ,text4: {type: 't', value: texs[4]}
-                    ,text5: {type: 't', value: texs[5]}
-                    ,text6: {type: 't', value: texs[6]}
-                    ,text7: {type: 't', value: texs[7]}
-                    ,text8: {type: 't', value: texs[8]}
-                    ,text9: {type: 't', value: texs[9]}
-                    ,text10: {type: 't', value: texs[10]}//textureHandle
-                    ,text11: {type: 't', value: texs[11]}
-                    ,text12: {type: 't', value: texs[12]}
-                    ,text13: {type: 't', value: texs[13]}
-                    ,text14: {type: 't', value: texs[14]}
-                    ,text15: {type: 't', value: texs[15]}
-
-                    //,skeletonMatrix:{value: []}////骨骼25*16=400//骨骼矩阵//用于求不动位置的骨骼
-                    //,skeletonData:{value:[] }//8个手臂骨骼的数据
+                    ,text0: {type: 't', value: text0}
                     ,time:{value: 0.0}
                 },
                 vertexShader: load("shader/vertexBone.vert"),
-                fragmentShader:load("shader/fragmentBone.frag"),
+                fragmentShader:load("shader/fragment.frag"),
                 side: THREE.DoubleSide
             });
 
@@ -199,22 +176,7 @@ InstancedGroup.prototype={
         }else{
             material = new THREE.RawShaderMaterial({//原始着色器材质
                 uniforms: {
-                    text0: {type: 't', value: texs[0]}//textureHandle
-                    ,text1: {type: 't', value: texs[1]}
-                    ,text2: {type: 't', value: texs[2]}
-                    ,text3: {type: 't', value: texs[3]}
-                    ,text4: {type: 't', value: texs[4]}
-                    ,text5: {type: 't', value: texs[5]}
-                    ,text6: {type: 't', value: texs[6]}
-                    ,text7: {type: 't', value: texs[7]}
-                    ,text8: {type: 't', value: texs[8]}
-                    ,text9: {type: 't', value: texs[9]}
-                    ,text10: {type: 't', value: texs[10]}//textureHandle
-                    ,text11: {type: 't', value: texs[11]}
-                    ,text12: {type: 't', value: texs[12]}
-                    ,text13: {type: 't', value: texs[13]}
-                    ,text14: {type: 't', value: texs[14]}
-                    ,text15: {type: 't', value: texs[15]}
+                    text0: {type: 't', value: text0}//textureHandle
                 },
                 vertexShader: load("shader/vertex.vert"),
                 fragmentShader: load("shader/fragment.frag"),

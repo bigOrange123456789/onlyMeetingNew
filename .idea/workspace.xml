@@ -21,13 +21,29 @@
   <component name="ChangeListManager">
     <list default="true" id="b7b6123d-caec-4b82-a432-424a6b5be5dd" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/js/InstancedGroup.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/js/lib/threeJS/three.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/lib/threeJS/three.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/img/texture/m/m0.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/img/texture/m/m0.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/img/texture/w/w0.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/img/texture/w/w0.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/img/texture/w/w1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/img/texture/w/w10.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/img/texture/w/w11.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/img/texture/w/w12.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/img/texture/w/w13.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/img/texture/w/w14.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/img/texture/w/w15.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/img/texture/w/w2.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/img/texture/w/w3.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/img/texture/w/w4.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/img/texture/w/w5.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/img/texture/w/w6.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/img/texture/w/w7.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/img/texture/w/w8.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/img/texture/w/w9.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/lib/instancedLib/InstancedGroup.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/lib/instancedLib/InstancedGroup.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/js/sceneSet/AvatarManager.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/sceneSet/AvatarManager.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/js/sceneSet/SeatManager.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/sceneSet/SeatManager.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/myModel/avatar/Male0.glb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test.html" beforeDir="false" afterPath="$PROJECT_DIR$/test.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shader/fragment.frag" beforeDir="false" afterPath="$PROJECT_DIR$/shader/fragment.frag" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shader/fragmentBone.frag" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/shader/vertex.vert" beforeDir="false" afterPath="$PROJECT_DIR$/shader/vertex.vert" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shader/vertexBone.vert" beforeDir="false" afterPath="$PROJECT_DIR$/shader/vertexBone.vert" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test/InstancedGroup.test.js" beforeDir="false" afterPath="$PROJECT_DIR$/test/InstancedGroup.test.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -137,7 +153,7 @@
       <workItem from="1611734560947" duration="3316000" />
       <workItem from="1611737889521" duration="32942000" />
       <workItem from="1611821669345" duration="10569000" />
-      <workItem from="1611898961303" duration="6419000" />
+      <workItem from="1611898961303" duration="13212000" />
     </task>
     <servers />
   </component>

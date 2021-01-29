@@ -14,9 +14,8 @@ attribute vec4 type;//设置贴图0-2,type[3]用处不明
 attribute vec3 color;
 
 varying vec2 outUV;
-varying vec3 varyType,varyColor;
-varying float type_part;
-varying float myTest00;
+varying vec3 varyColor;
+varying float type_part,texType;
 varying vec3 myTest01;
 
 //void Test_init();
@@ -30,12 +29,18 @@ void main(){
     vec3 vPosition = position;
 
     outUV = inUV;
-    varyType=vec3(type[0], type[1], type[2]);
     varyColor=vec3(color[0], color[1], color[2]);
 
-    if (vPosition.y<0.15&&(vPosition.z<0.35&&vPosition.z>-0.35))type_part=0.0;//下身
-    else if (vPosition.y<0.59) type_part=1.0;//上身
-    else type_part=2.0;//头部
+    if (vPosition.y<0.15&&(vPosition.z<0.35&&vPosition.z>-0.35)){
+        type_part=0.0;//下身
+        texType=floor(type[0]+0.5);
+    } else if (vPosition.y<0.59) {
+        type_part=1.0;//上身
+        texType=floor(type[1]+0.5);
+    } else{
+        type_part=2.0;//头部
+        texType=floor(type[2]+0.5);
+    }
 
     Animation_init();
     mat4 matrix1=Animation_computeMatrix();//计算动画的变换矩阵
@@ -189,7 +194,7 @@ void Animation_init(){
     Animation_frameIndexSet();//设置全局变量frame_index的值
 }
 
-struct Test{
+/*struct Test{
     //计算误差computeErr
     //int pos;
     float err;
@@ -295,4 +300,4 @@ void Test_init(){//用于测试
         modFloor(floor(result*10.0),10.0)/255.0//Test_computeErr(446)
     );
 
-}/**/
+}*/
