@@ -1,28 +1,28 @@
 function AvatarManager(mySeatManager,camera){//camera用于LOD
     var scope=this;
     this.obj=new THREE.Object3D();
-    this.obj1=new THREE.Object3D();
-    this.obj2=new THREE.Object3D();
+    //this.obj1=new THREE.Object3D();
+    //this.obj2=new THREE.Object3D();
 
     this.positions=mySeatManager.positions;
-    this.types=[];//贴图类型
+    //this.types=[];//贴图类型
     this.colors=[];
     this.sexs=[];//0表示女性，1表示男性
     this.manNum=0;
 
     for(var i=0;i<scope.positions.length;i++){//共有1677张椅子
-        this.types.push([
+        /*this.types.push([
             Math.floor(Math.random() * 16),
             Math.floor(Math.random() * 16),
             Math.floor(Math.random() * 16),
             Math.floor(Math.random() *2)
-        ]);
+        ]);*/
         this.colors.push([
             Math.random()/4 ,
             Math.random()/4 ,
             Math.random()/4
         ]);
-        if(Math.random()<0.5)this.sexs.push(0);
+        if(Math.random()<0.33)this.sexs.push(0);
         else {
             this.sexs.push(1);
             this.manNum++;
@@ -62,9 +62,7 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
                 [glb.scene.children[0].children[1].clone()],//这些mesh的网格应该一致
                 glb.animations[0].clone()
             );
-            peoples.init(
-                ['./img/texture/w/w0.jpg']
-            );
+            peoples.init(['./img/texture/w/w0.jpg'],16);
 
             var index=0;
             for(var i=0;i<scope.positions.length;i++)
@@ -73,7 +71,7 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
                 peoples.positionSet(index,[scope.positions[i][0]+1.8,scope.positions[i][1]+1.5,scope.positions[i][2]]);
                 peoples.scaleSet(index,[0.045,0.045,0.04+Math.random()*0.01]);
 
-                peoples.typeSet(index,scope.types[i]);
+                //peoples.typeSet(index,scope.types[i]);//设置贴图类型//贴图类型可以自动随机多样性
                 peoples.colorSet(index,scope.colors[i]);
                 peoples.speedSet(index,0.15+Math.random()*1.5);
                 //else peoples.speedSet(i,2+Math.random()*1.92);
@@ -92,7 +90,7 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
                     //[glb2.scene.children[0].children[0].children[2]],//这些mesh的网格应该一致
                     glb.animations[0]
                 );
-                peoples.init(['./img/texture/m/m0.jpg']);
+                peoples.init(['./img/texture/m/m0.jpg'],32);
 
                 var index=0;
                 for(var i=0;i<scope.positions.length;i++)
@@ -101,7 +99,7 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
                         peoples.positionSet(index,[scope.positions[i][0]+1.8,scope.positions[i][1]+1.5,scope.positions[i][2]]);
                         peoples.scaleSet(index,[0.045,0.045,0.04+Math.random()*0.01]);
 
-                        peoples.typeSet(index,scope.types[i]);
+                        //peoples.typeSet(index,scope.types[i]);//设置贴图类型//贴图类型可以自动随机多样性
                         peoples.colorSet(index,scope.colors[i]);
                         peoples.speedSet(index,0.15+Math.random()*1.5);
                         //else peoples.speedSet(i,2+Math.random()*1.92);

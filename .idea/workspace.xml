@@ -22,21 +22,8 @@
     <list default="true" id="b7b6123d-caec-4b82-a432-424a6b5be5dd" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/img/texture/m/m0.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/img/texture/m/m0.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/texture/m/m00.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/texture/m/m1.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/texture/m/m10.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/texture/m/m11.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/texture/m/m12.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/texture/m/m13.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/texture/m/m14.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/texture/m/m2.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/texture/m/m3.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/texture/m/m4.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/texture/m/m5.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/texture/m/m6.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/texture/m/m7.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/texture/m/m8.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/texture/m/m9.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/lib/instancedLib/InstancedGroup.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/lib/instancedLib/InstancedGroup.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/sceneSet/AvatarManager.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/sceneSet/AvatarManager.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/shader/fragment.frag" beforeDir="false" afterPath="$PROJECT_DIR$/shader/fragment.frag" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test/InstancedGroup.test.js" beforeDir="false" afterPath="$PROJECT_DIR$/test/InstancedGroup.test.js" afterDir="false" />
     </list>
@@ -147,7 +134,7 @@
       <workItem from="1611734560947" duration="3316000" />
       <workItem from="1611737889521" duration="32942000" />
       <workItem from="1611821669345" duration="10569000" />
-      <workItem from="1611898961303" duration="15471000" />
+      <workItem from="1611898961303" duration="17779000" />
     </task>
     <servers />
   </component>

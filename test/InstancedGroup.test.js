@@ -342,9 +342,8 @@ InstancedGroupTest.prototype={
 
                         for(var k=0;k<3;k++){
                                 var peoples = new InstancedGroup(1, [mesh], glb.animations[0]);
-                                var texSrc = [];
-                                for (i = 0; i < 16; i++) texSrc.push('./img/texture/m/m'+0+'.jpg');
-                                peoples.init(texSrc);
+
+                                peoples.init(['./img/texture/m/m'+0+'.jpg'],32);
                                 peoples.rotationSet(0, [Math.PI / 2, 0, 0]);
                                 peoples.positionSet(0, [2*k, 0, 0]);
                                 peoples.scaleSet(0, [0.03, 0.03, 0.03]);

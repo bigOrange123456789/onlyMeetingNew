@@ -66,9 +66,9 @@ InstancedGroup.prototype={
         var B=d;
         return [A,B];
     },
-    init:function (texSrc){
+    init:function (texSrc,textNum){//纹理贴图资源路径，贴图中包含纹理的个数
+        if(typeof(textNum)=="undefined")textNum=16;
         //const instanceCount =2*2;//10 0000//1089
-        let texs_length=16;
 
         this.originMeshs[0].geometry=this.originMeshs[0].geometry.toNonIndexed();
 
@@ -109,9 +109,9 @@ InstancedGroup.prototype={
             //this.mcol3.setXYZ(i, 0,0,0);
 
             this.type.setXYZW(i,
-                Math.floor(Math.random() * texs_length),
-                Math.floor(Math.random() * texs_length),
-                Math.floor(Math.random() * texs_length),
+                Math.floor(Math.random() * textNum),
+                Math.floor(Math.random() * textNum),
+                Math.floor(Math.random() * textNum),
                 Math.floor(Math.random() *2)//Math.random()//这个缓冲区是int类型的//所以这里不能传小数
             );
             //this.colors.setXYZ(i, 0.0,0.0,0.0);
@@ -146,6 +146,7 @@ InstancedGroup.prototype={
                     dataTexture: {type: 't', value:[]}
                     ,text0: {type: 't', value: text0}
                     ,time:{value: 0.0}
+                    ,textNum:{value: textNum}
                 },
                 vertexShader: load("shader/vertexBone.vert"),
                 fragmentShader:load("shader/fragment.frag"),
