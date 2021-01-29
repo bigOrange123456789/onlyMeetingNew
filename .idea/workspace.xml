@@ -22,28 +22,22 @@
     <list default="true" id="b7b6123d-caec-4b82-a432-424a6b5be5dd" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/img/texture/m/m0.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/img/texture/m/m0.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/texture/w/w0.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/img/texture/w/w0.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/texture/w/w1.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/texture/w/w10.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/texture/w/w11.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/texture/w/w12.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/texture/w/w13.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/texture/w/w14.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/texture/w/w15.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/texture/w/w2.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/texture/w/w3.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/texture/w/w4.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/texture/w/w5.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/texture/w/w6.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/texture/w/w7.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/texture/w/w8.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/texture/w/w9.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/js/lib/instancedLib/InstancedGroup.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/lib/instancedLib/InstancedGroup.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/js/sceneSet/AvatarManager.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/sceneSet/AvatarManager.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/img/texture/m/m00.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/img/texture/m/m1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/img/texture/m/m10.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/img/texture/m/m11.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/img/texture/m/m12.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/img/texture/m/m13.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/img/texture/m/m14.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/img/texture/m/m2.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/img/texture/m/m3.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/img/texture/m/m4.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/img/texture/m/m5.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/img/texture/m/m6.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/img/texture/m/m7.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/img/texture/m/m8.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/img/texture/m/m9.jpg" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/shader/fragment.frag" beforeDir="false" afterPath="$PROJECT_DIR$/shader/fragment.frag" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shader/fragmentBone.frag" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/shader/vertex.vert" beforeDir="false" afterPath="$PROJECT_DIR$/shader/vertex.vert" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shader/vertexBone.vert" beforeDir="false" afterPath="$PROJECT_DIR$/shader/vertexBone.vert" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test/InstancedGroup.test.js" beforeDir="false" afterPath="$PROJECT_DIR$/test/InstancedGroup.test.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -65,7 +59,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../InstanceRenderingTest" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -153,7 +147,7 @@
       <workItem from="1611734560947" duration="3316000" />
       <workItem from="1611737889521" duration="32942000" />
       <workItem from="1611821669345" duration="10569000" />
-      <workItem from="1611898961303" duration="13212000" />
+      <workItem from="1611898961303" duration="15471000" />
     </task>
     <servers />
   </component>
@@ -177,10 +171,10 @@
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="379" y="141" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1280.680@0.0.1280.680" timestamp="1610685129999" />
-    <state x="523" y="120" key="FileChooserDialogImpl" timestamp="1611838282709">
+    <state x="523" y="120" key="FileChooserDialogImpl" timestamp="1611920250957">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state x="523" y="120" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1611838282709" />
+    <state x="523" y="120" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1611920250957" />
     <state x="785" y="184" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1609483059436" />
     <state x="335" y="92" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1609487862309">
       <screen x="0" y="0" width="1920" height="1040" />
