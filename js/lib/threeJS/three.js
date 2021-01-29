@@ -19316,12 +19316,12 @@
 		}
 	});
 
-	function SkinnedMesh(geometry, material) {
+	function SkinnedMesh(geometry, material) {//SkinnedMesh的构造方法
 		if (geometry && geometry.isGeometry) {
 			console.error('THREE.SkinnedMesh no longer supports THREE.Geometry. Use THREE.BufferGeometry instead.');
 		}
 
-		Mesh.call(this, geometry, material);
+		Mesh.call(this, geometry, material);//继承Mesh对象
 		this.type = 'SkinnedMesh';
 		this.bindMode = 'attached';
 		this.bindMatrix = new Matrix4();

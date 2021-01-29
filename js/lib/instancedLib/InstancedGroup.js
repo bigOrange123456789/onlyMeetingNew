@@ -1,12 +1,10 @@
 function InstancedGroup(instanceCount,originMesh,animationClip ){
-    var scope=this;
     //若有骨骼，则需要源mesh是skinnedMesh
     this.obj=new THREE.Object3D();
     this.instanceCount=instanceCount;
 
     //记录有无骨骼动画
     this.haveSkeleton = !(typeof (animationClip) == "undefined" || animationClip === false);
-
     this.originMeshs=originMesh;//这是一个数组，每个元素播放一种动画
     this.animationClip=animationClip;
     this.mesh=null;//实例化渲染对象的网格
@@ -22,8 +20,9 @@ function InstancedGroup(instanceCount,originMesh,animationClip ){
     this.time=0;//每帧自动加1，加到一定值之后自动归0
 
     this.dummy=new THREE.Object3D();//dummy仿制品//工具对象
-
-    this.decode=function(A,B) {
+}
+InstancedGroup.prototype={
+    decode:function(A,B) {
         var a,b,c,d;
         a=Math.floor(A/128);
         b=Math.floor((A%128)/16);
@@ -34,8 +33,8 @@ function InstancedGroup(instanceCount,originMesh,animationClip ){
         var num=c_d*Math.pow(10,b-5);
         if(a===1)num*=-1;
         return num;
-    }
-    this.encode=function(floatNum) {
+    },
+    encode:function(floatNum) {
         var a=0,//正数
             b,//值0-7，10^(b-3)
             c,
@@ -66,8 +65,8 @@ function InstancedGroup(instanceCount,originMesh,animationClip ){
         var A=a*128+b*16+c;
         var B=d;
         return [A,B];
-    }
-    this.init=function (texSrc){
+    },
+    init:function (texSrc){
         //const instanceCount =2*2;//10 0000//1089
         let texs_length=16;
 
@@ -103,23 +102,19 @@ function InstancedGroup(instanceCount,originMesh,animationClip ){
         this.colors=new THREE.InstancedBufferAttribute(new Float32Array(this.instanceCount*3), 3);
 
         for(i=0;i<this.instanceCount;i++){
-                this.speed.setX(i,0.01)//Math.random()*9+0.05);
-                //this.speed.setX(i,Math.random()*9+0.05);
-                this.mcol0.setXYZ(i, 1,0,0);//随机长宽高
-                this.mcol1.setXYZ(i, 0,1,0);//四元数、齐次坐标
-                this.mcol2.setXYZ(i, 0,0,1);//mcol3.setXYZ(i, 0,0,0);
+            //this.speed.setX(i,0.01);
+            this.mcol0.setXYZ(i, 1,0,0);//随机长宽高
+            this.mcol1.setXYZ(i, 0,1,0);//四元数、齐次坐标
+            this.mcol2.setXYZ(i, 0,0,1);//mcol3.setXYZ(i, 0,0,0);
+            //this.mcol3.setXYZ(i, 0,0,0);
 
-                this.mcol3.setXYZ(i, 0,0,0);
-
-                this.type.setXYZW(i,
-                    Math.floor(Math.random() * texs_length),
-                    Math.floor(Math.random() * texs_length),
-                    Math.floor(Math.random() * texs_length),
-                    Math.floor(Math.random() *2)//Math.random()//这个缓冲区是int类型的//所以这里不能传小数
-                );
-                this.colors.setXYZ(i,
-                    0.0,0.0,0.0
-                );
+            this.type.setXYZW(i,
+                Math.floor(Math.random() * texs_length),
+                Math.floor(Math.random() * texs_length),
+                Math.floor(Math.random() * texs_length),
+                Math.floor(Math.random() *2)//Math.random()//这个缓冲区是int类型的//所以这里不能传小数
+            );
+            //this.colors.setXYZ(i, 0.0,0.0,0.0);
         }
         geometry.setAttribute('speed', this.speed);
 
@@ -241,8 +236,9 @@ function InstancedGroup(instanceCount,originMesh,animationClip ){
         this.obj.add(this.mesh);
 
         //完成进行实例化渲染
-    }
-    this.handleSkeletonAnimation=function(){
+    },
+    handleSkeletonAnimation:function(){
+        var scope=this;
         //var scope=this;//scope范围//为了避免this重名
         updateAnimation();
         function updateAnimation() {//每帧更新一次动画
@@ -250,9 +246,9 @@ function InstancedGroup(instanceCount,originMesh,animationClip ){
             scope.time=(scope.time+1.0)%60000;
             scope.mesh.material.uniforms.time={value: scope.time};
         }
-    }
+    },
 
-    this.setMatrix=function (i,matrix){//获取实例化对象第i个成员的变换矩阵
+    setMatrix:function (i,matrix){//获取实例化对象第i个成员的变换矩阵
         this.mcol0.array[3*i  ]=matrix.elements[0];
         this.mcol0.array[3*i+1]=matrix.elements[1];
         this.mcol0.array[3*i+2]=matrix.elements[2];
@@ -268,8 +264,8 @@ function InstancedGroup(instanceCount,originMesh,animationClip ){
         this.mcol3.array[3*i  ]=matrix.elements[12];
         this.mcol3.array[3*i+1]=matrix.elements[13];
         this.mcol3.array[3*i+2]=matrix.elements[14];
-    }
-    this.getMatrix=function (i){//获取实例化对象第i个成员的变换矩阵
+    },
+    getMatrix:function (i){//获取实例化对象第i个成员的变换矩阵
         var matrix=new THREE.Matrix4();
         matrix.set(
             this.mcol0.array[3*i  ],this.mcol1.array[3*i  ],this.mcol2.array[3*i  ],this.mcol3.array[3*i  ],
@@ -278,12 +274,12 @@ function InstancedGroup(instanceCount,originMesh,animationClip ){
             0                      ,0                      ,0                      ,1
         );
         return matrix;
-    }
+    },
 
-    this.positionGet=function(i){
+    positionGet:function(i){
         return [this.mcol3.array[3*i],this.mcol3.array[3*i+1],this.mcol3.array[3*i+2]];
-    }
-    this.rotationGet=function(i){
+    },
+    rotationGet:function(i){
         var mat4=this.getMatrix(i);
         var position=new THREE.Vector3();
         var quaternion=new THREE.Quaternion();
@@ -292,22 +288,22 @@ function InstancedGroup(instanceCount,originMesh,animationClip ){
         var euler=new THREE.Euler(0,0,0, 'XYZ');
         euler.setFromQuaternion(quaternion);
         return [euler.x,euler.y,euler.z];
-    }
-    this.scaleGet=function(i){
+    },
+    scaleGet:function(i){
         var mat4=this.getMatrix(i);
         var position=new THREE.Vector3();
         var quaternion=new THREE.Quaternion();
         var scale=new THREE.Vector3();
         mat4.decompose(position,quaternion,scale);
         return [scale.x,scale.y,scale.z];
-    }
+    },
 
-    this.positionSet=function (i,pos){
+    positionSet:function (i,pos){
         this.mcol3.array[3*i  ]=pos[0];
         this.mcol3.array[3*i+1]=pos[1];
         this.mcol3.array[3*i+2]=pos[2];
-    }
-    this.rotationSet=function (i,rot){
+    },
+    rotationSet:function (i,rot){
         var mat4=this.getMatrix(i);
         var position=new THREE.Vector3();
         var quaternion=new THREE.Quaternion();
@@ -320,8 +316,8 @@ function InstancedGroup(instanceCount,originMesh,animationClip ){
         this.dummy.updateMatrix();
 
         this.setMatrix(i,this.dummy.matrix);
-    }
-    this.scaleSet=function(i,size){
+    },
+    scaleSet:function(i,size){
         var mat4=this.getMatrix(i);
         var position=new THREE.Vector3();
         var quaternion=new THREE.Quaternion();
@@ -336,270 +332,28 @@ function InstancedGroup(instanceCount,originMesh,animationClip ){
         this.dummy.updateMatrix();
 
         this.setMatrix(i,this.dummy.matrix);
-    }
-    this.typeSet=function (i,type) {
+    },
+    typeSet:function (i,type) {
         this.type.array[4*i  ]=type[0];
         this.type.array[4*i+1]=type[1];
         this.type.array[4*i+2]=type[2];
         this.type.array[4*i+3]=type[3];
-    }
-    this.colorSet=function (i,color) {
+    },
+    colorSet:function (i,color) {
         this.colors.array[3*i  ]=color[0];
         this.colors.array[3*i+1]=color[1];
         this.colors.array[3*i+2]=color[2];
-    }
-    this.speedSet=function (i,speed) {//设置动画速度
+    },
+    speedSet:function (i,speed) {//设置动画速度
         this.speed.array[i]=speed;
-    }
+    },
 
-    this.move=function (i,dPos){
+    move:function (i,dPos){
         var pos=this.positionGet(i);
         this.positionSet(i,[pos[0]+dPos[0],pos[1]+dPos[1],pos[2]+dPos[2]]);
-    }
-    this.rotation=function (i,dRot){
+    },
+    rotation:function (i,dRot){
         var rot=this.rotationGet(i);
         this.rotationSet(i,[rot[0]+dRot[0],rot[1]+dRot[1],rot[2]+dRot[2]]);
-    }
-}
-function SkinnedMeshController() {
-    //var scope=this;
-    this.mesh;
-    this.animation;
-    this.init=function (originMesh,animation) {
-        this.animation=animation;
-        this.mesh=originMesh.clone();//new THREE.SkinnedMesh(originMesh.geometry.clone(),originMesh.material)
-
-        this.mesh.geometry=this.mesh.geometry.clone();
-        this.mesh.material=this.mesh.material.clone();
-        this.mesh.skeleton=this.mesh.skeleton.clone();
-        this.mesh.matrixWorld=this.mesh.matrixWorld.clone();
-        this.bones = [];
-        cloneBones(this.mesh.skeleton.bones[0], this.bones);
-        this.mesh.skeleton=new THREE.Skeleton(this.bones, this.mesh.skeleton.boneInverses);
-
-        this.mesh.add(this.mesh.skeleton.bones[0]);//添加骨骼
-        this.mesh.bind(this.mesh.skeleton,this.mesh.matrixWorld);//绑定骨架
-
-        //搞清动画混合器AnimationMixer的作用至关重要
-        //开始设置动画//进行这个动画设置的时候可能还只是一个基模
-        var animationMixer0=new THREE.AnimationMixer(this.mesh);
-        animationMixer0.clipAction(animation).play();//不清楚这里的作用
-
-
-        //var t=0;
-        //updateAnimation2_2();
-        function updateAnimation3() {//每帧更新一次动画--失败
-            t+=0.2;
-            var time=Math.floor(t%36);
-
-            //console.log(time);
-            for(i=0;i<bones.length;i++) {
-                //position
-                x = animation.tracks[3 * i].values[3 * time];
-                y = animation.tracks[3 * i].values[3 * time + 1];
-                z = animation.tracks[3 * i].values[3 * time + 2];
-                var m1 = new THREE.Matrix4();
-                m1.set(
-                    1, 0, 0, x,
-                    0, 1, 0, y,
-                    0, 0, 1, z,
-                    0, 0, 0, 1
-                );
-                //var test=m1.clone();
-
-                //Quaternion
-                x = animation.tracks[3 * i + 1].values[4 * time];
-                y = animation.tracks[3 * i + 1].values[4 * time + 1];
-                z = animation.tracks[3 * i + 1].values[4 * time + 2];
-                w = animation.tracks[3 * i + 1].values[4 * time + 3];
-                var m2 = new THREE.Matrix4();
-                m2.set(
-                    1 - 2 * y * y - 2 * z * z, 2 * x * y - 2 * z * w, 2 * x * z + 2 * y * w, 0,
-                    2 * x * y + 2 * z * w, 1 - 2 * x * x - 2 * z * z, 2 * y * z - 2 * x * w, 0,
-                    2 * x * z - 2 * y * w, 2 * y * z + 2 * x * w, 1 - 2 * x * x - 2 * y * y, 0,
-                    0, 0, 0, 1
-                );
-                //if(i===0)console.log(m2.elements[0])
-
-                //scale
-                x = animation.tracks[3 * i + 2].values[3 * time];
-                y = animation.tracks[3 * i + 2].values[3 * time + 1];
-                z = animation.tracks[3 * i + 2].values[3 * time + 2];
-                var m3 = new THREE.Matrix4();
-                m3.set(
-                    x, 0, 0, 0,
-                    0, y, 0, 0,
-                    0, 0, z, 0,
-                    0, 0, 0, 1
-                );
-                m1.multiply(m2.multiply(m3));
-                //bones[i].matrix.copy(m1);
-                for(j=0;j<16;j++){
-                    bones[i].matrix.elements[j]=m1.elements[j]*50;
-                    bones[i].matrixAutoUpdate=false;
-                }
-            }
-            requestAnimationFrame(updateAnimation3);
-        }
-        function updateAnimation2_3() {//每帧更新一次动画
-            t+=0.5;
-            var time=Math.floor(t%36);
-            for(i=0;i<bones.length;i++){
-                bones[i].matrixAutoUpdate=false;
-                bones[i].quaternion.copy(
-                    new THREE.Quaternion(
-                        animation.tracks[3*i+1].values[4*time],
-                        animation.tracks[3*i+1].values[4*time+1],
-                        animation.tracks[3*i+1].values[4*time+2],
-                        animation.tracks[3*i+1].values[4*time+3]
-                    )
-                );
-            }
-            requestAnimationFrame(updateAnimation2_2);
-        }
-        function updateAnimation2_2() {//每帧更新一次动画--
-            t+=0.5;//t=0;
-            var time=Math.floor(t%36);
-            scope.setTime(time);
-            requestAnimationFrame(updateAnimation2_2);
-        }
-        function updateAnimation2_1() {//每帧更新一次动画
-            t+=0.5;
-            var time=Math.floor(t%36);
-
-            for(i=0;i<bones.length;i++){
-                bones[i].position.set(
-                    animation.tracks[3*i].values[3*time],
-                    animation.tracks[3*i].values[3*time+1],
-                    animation.tracks[3*i].values[3*time+2]
-                );
-                bones[i].setRotationFromQuaternion(
-                    new THREE.Quaternion(
-                        animation.tracks[3*i+1].values[4*time],
-                        animation.tracks[3*i+1].values[4*time+1],
-                        animation.tracks[3*i+1].values[4*time+2],
-                        animation.tracks[3*i+1].values[4*time+3]
-                    )
-                );
-                bones[i].scale.set(
-                    animation.tracks[3*i+2].values[3*time],
-                    animation.tracks[3*i+2].values[3*time+1],
-                    animation.tracks[3*i+2].values[3*time+2]
-                );
-                bones[i].matrix=compose(
-                    bones[i].position, bones[i].quaternion, bones[i].scale
-                );
-                function compose( position, quaternion, scale ) {
-
-                    //x,y,z,,w,sx,xy,xz,px,py,pz
-                    const te = new THREE.Matrix4();
-
-                    const x = quaternion._x, y = quaternion._y, z = quaternion._z, w = quaternion._w;
-                    const x2 = x + x,	y2 = y + y, z2 = z + z;
-                    const xx = x * x2, xy = x * y2, xz = x * z2;
-                    const yy = y * y2, yz = y * z2, zz = z * z2;
-                    const wx = w * x2, wy = w * y2, wz = w * z2;
-
-                    const sx = scale.x, sy = scale.y, sz = scale.z;
-
-                    te[ 0 ] = ( 1 - ( yy + zz ) ) * sx;
-                    te[ 1 ] = ( xy + wz ) * sx;
-                    te[ 2 ] = ( xz - wy ) * sx;
-                    te[ 3 ] = 0;
-
-                    te[ 4 ] = ( xy - wz ) * sy;
-                    te[ 5 ] = ( 1 - ( xx + zz ) ) * sy;
-                    te[ 6 ] = ( yz + wx ) * sy;
-                    te[ 7 ] = 0;
-
-                    te[ 8 ] = ( xz + wy ) * sz;
-                    te[ 9 ] = ( yz - wx ) * sz;
-                    te[ 10 ] = ( 1 - ( xx + yy ) ) * sz;
-                    te[ 11 ] = 0;
-
-                    te[ 12 ] = position.x;
-                    te[ 13 ] = position.y;
-                    te[ 14 ] = position.z;
-                    te[ 15 ] = 1;
-                    return te;
-                }
-            }
-            requestAnimationFrame(updateAnimation2_1);
-        }
-        function updateAnimation2() {//每帧更新一次动画
-            t+=0.2;
-            var time=Math.floor(t%36);
-
-            for(i=0;i<bones.length;i++){
-                bones[i].position.set(
-                    animation.tracks[3*i].values[3*time],
-                    animation.tracks[3*i].values[3*time+1],
-                    animation.tracks[3*i].values[3*time+2]
-                );
-                bones[i].setRotationFromQuaternion(
-                    new THREE.Quaternion(
-                        animation.tracks[3*i+1].values[4*time],
-                        animation.tracks[3*i+1].values[4*time+1],
-                        animation.tracks[3*i+1].values[4*time+2],
-                        animation.tracks[3*i+1].values[4*time+3]
-                    )
-                );
-                bones[i].scale.set(
-                    animation.tracks[3*i+2].values[3*time],
-                    animation.tracks[3*i+2].values[3*time+1],
-                    animation.tracks[3*i+2].values[3*time+2]
-                );
-                bones[i].updateMatrix();
-            }
-            requestAnimationFrame(updateAnimation2);
-        }
-        function updateAnimation() {//每帧更新一次动画
-            animationMixer0.update(0.05);
-            requestAnimationFrame(updateAnimation);
-        }
-
-        function cloneBones(rootBone , boneArray){//用于加载完gltf文件后的骨骼动画的处理
-            var rootBoneClone=rootBone.clone();
-            rootBoneClone.children.splice(0,rootBoneClone.children.length);
-            boneArray.push(rootBoneClone);
-            for (var i = 0 ; i < rootBone.children.length ; ++i)
-                rootBoneClone.add(cloneBones(rootBone.children[i], boneArray));
-            return rootBoneClone;
-        }
-    }
-    this.setTime=function (time) {
-        var animation=this.animation;
-        var bones=this.bones;
-        for(i=0;i<bones.length;i++){
-            bones[i].matrixAutoUpdate=false;
-            bones[i].matrix=scope.compose(
-                animation.tracks[3*i+1].values[4*time],
-                animation.tracks[3*i+1].values[4*time+1],
-                animation.tracks[3*i+1].values[4*time+2],
-                animation.tracks[3*i+1].values[4*time+3],
-
-                animation.tracks[3*i+2].values[3*time],
-                animation.tracks[3*i+2].values[3*time+1],
-                animation.tracks[3*i+2].values[3*time+2],
-
-                animation.tracks[3*i].values[3*time],
-                animation.tracks[3*i].values[3*time+1],
-                animation.tracks[3*i].values[3*time+2]
-            );
-        }
-    }
-    this.compose=function(x,y,z,w,sx,sy,sz,px,py,pz) {
-        var x2 = x + x,	y2 = y + y, z2 = z + z;
-        var xx = x * x2, xy = x * y2, xz = x * z2;
-        var yy = y * y2, yz = y * z2, zz = z * z2;
-        var wx = w * x2, wy = w * y2, wz = w * z2;
-        te = new THREE.Matrix4();
-        te.set(
-            ( 1.0-( yy + zz ) ) * sx,( xy - wz ) * sy        ,( xz + wy ) * sz        ,px,
-            ( xy + wz ) * sx        ,( 1.0-( xx + zz ) ) * sy,( yz - wx ) * sz        ,py,
-            ( xz - wy ) * sx        ,( yz + wx ) * sy        ,( 1.0-( xx + yy ) ) * sz,pz,
-            0.0                     ,0.0                     ,0.0                     ,1.0
-        );
-        return te;
-    }
+    },
 }

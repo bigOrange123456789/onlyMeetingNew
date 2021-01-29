@@ -26,10 +26,7 @@ function SeatManager(){
         var loader= new THREE.GLTFLoader();
         loader.load(url, (gltf) => {
             var obj=gltf.scene.children[0];
-            //scope.chairs.add(obj);
 
-            //
-            //console.log(obj.children[0].geometry,obj.children[0].material);
             var geometry1=obj.children[0].geometry;
             var material1=obj.children[0].material;
             var mesh1=new THREE.InstancedMesh(geometry1,material1,scope.positions.length);
@@ -38,13 +35,7 @@ function SeatManager(){
             var material2=obj.children[1].material;
             var mesh2=new THREE.InstancedMesh(geometry2,material2,scope.positions.length);
 
-            /*var mesh=new THREE.Mesh(geometry2,material2);
-            scope.chairs.add(mesh);
-            new ParamMeasure(mesh,0);*/
-
             var dummy=new THREE.Object3D();
-
-            //console.log(scope.positions);
             for(var i=0;i<scope.positions.length;i++){
                 dummy.position.set(
                     scope.positions[i][0],
@@ -56,31 +47,40 @@ function SeatManager(){
                 mesh1.setMatrixAt(i, dummy.matrix);
                 mesh2.setMatrixAt(i, dummy.matrix);
             }
-            /*var mesh=new THREE.InstancedMesh(geometry,material,3);
-
-            var dummy=new THREE.Object3D();
-
-            //dummy.position.set(107,2,81);
-            dummy.updateMatrix();//由位置计算齐次坐标变换矩阵
-            mesh.setMatrixAt(0, dummy.matrix);
-
-            dummy.position.set(107,10,81);
-            dummy.scale.set(10,10,10);
-            dummy.updateMatrix();//由位置计算齐次坐标变换矩阵
-            mesh.setMatrixAt(1, dummy.matrix);
-
-            dummy.position.set(57,2,81);
-            dummy.scale.set(10,10,10);
-            dummy.updateMatrix();//由位置计算齐次坐标变换矩阵
-            mesh.setMatrixAt(2, dummy.matrix);*/
 
             scope.chairs.add(mesh1);
             scope.chairs.add(mesh2);
-            //scope.chairs.position.set(107,2,81);
-            //scope.chairs.rotation.set(0,-Math.PI/2,0);
+        })
+    }
+    this.myLoad0=function(url){
+        var scope=this;
+        var loader= new THREE.GLTFLoader();
+        loader.load(url, (gltf) => {
+            var obj=gltf.scene.children[0];
 
-            //window.mesh2=mesh2;
+            var geometry1=obj.children[0].geometry;
+            var material1=obj.children[0].material;
+            var mesh1=new THREE.InstancedMesh(geometry1,material1,scope.positions.length);
 
+            var geometry2=obj.children[1].geometry;
+            var material2=obj.children[1].material;
+            var mesh2=new THREE.InstancedMesh(geometry2,material2,scope.positions.length);
+
+            var dummy=new THREE.Object3D();
+            for(var i=0;i<scope.positions.length;i++){
+                dummy.position.set(
+                    scope.positions[i][0],
+                    scope.positions[i][1],
+                    scope.positions[i][2]);
+                dummy.rotation.set(0,-Math.PI/2,0);
+                dummy.scale.set(0.95,0.35,0.95);
+                dummy.updateMatrix();//由位置计算齐次坐标变换矩阵
+                mesh1.setMatrixAt(i, dummy.matrix);
+                mesh2.setMatrixAt(i, dummy.matrix);
+            }
+
+            scope.chairs.add(mesh1);
+            scope.chairs.add(mesh2);
         })
     }
 }

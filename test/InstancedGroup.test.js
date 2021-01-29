@@ -61,9 +61,10 @@ InstancedGroupTest.prototype={
                 //开始测试
                 var scope=this;
                 var loader= new THREE.GLTFLoader();
-                loader.load("myModel/avatar/Female.glb", (glb) => {
+                loader.load("test/2.glb", (glb) => {
                         //console.log(glb.scene.children[0]);
-                        var mesh=glb.scene.children[0].children[1];
+                        console.log(glb.scene.children[0].children[0].children[2]);
+                        var mesh=glb.scene.children[0].children[0].children[2];
                         var peoples = new InstancedGroup(
                             2,
                             [mesh],//这些mesh的网格应该一致
@@ -121,6 +122,45 @@ InstancedGroupTest.prototype={
                                 scope.scene.add(peoples.obj);
                         }
                 });//
+
+                //完成测试
+        },
+        //glb模型，非专门代码测试，有动画测试
+        test2_1:function (contextType){
+                if(typeof(contextType)==="undefined")this.setContext();
+                var nameTest="多模块模型";
+                console.log('start test:'+nameTest);
+                //开始测试
+                var scope=this;
+                var loader= new THREE.GLTFLoader();
+                //"test/avatar/male_run.glb"
+                //"myModel/avatar/Female.glb"
+                loader.load("test/avatar/male_run.glb", (glb0) => {
+                        //console.log(glb0);
+                        loader.load("myModel/avatar/Female.glb", (glb) => {
+                                //console.log(glb);
+                                glb.scene.children[0].traverse(node => {
+                                        if (node instanceof THREE.SkinnedMesh) {
+                                                createObj(node);
+                                        }
+                                });
+
+                                function createObj(mesh) {
+                                        //console.log(mesh);
+                                        var myController=new SkinnedMeshController();
+                                        myController.init(mesh,glb.animations[0]);
+                                        //myController.mesh.position.set(0,0,0);
+                                        //myController.mesh.scale.set(4.5,4.5,4.5);
+                                        //var time=0;
+                                        //myController.setTime(time);
+                                        scope.scene.add(myController.mesh);
+                                        /*setInterval(function () {
+                                                myController.setTime(time);
+                                                time=(time+1)%10;
+                                        },100);*/
+                                }
+                        });//
+                });
 
                 //完成测试
         },
@@ -1413,4 +1453,4 @@ InstancedGroupTest.prototype={
         },
 }
 var myInstancedGroupTest=new InstancedGroupTest();
-myInstancedGroupTest.test6_1();
+myInstancedGroupTest.test2_1();
