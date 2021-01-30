@@ -34,7 +34,7 @@ InstancedGroupTest.prototype={
                         renderer = new THREE.WebGLRenderer();
                         renderer.setPixelRatio(window.devicePixelRatio);
                         renderer.setSize(window.innerWidth, window.innerHeight);
-                        renderer.setClearColor(0xff00ff);
+                        renderer.setClearColor(0xffffff);
                         document.body.appendChild( renderer.domElement );
                         //container.appendChild(renderer.domElement);
 
@@ -61,26 +61,27 @@ InstancedGroupTest.prototype={
                 //开始测试
                 var scope=this;
                 var loader= new THREE.GLTFLoader();
-                loader.load("test/2.glb", (glb) => {
+                loader.load("myModel/avatar/Female.glb", (glb) => {
                         //console.log(glb.scene.children[0]);
-                        console.log(glb.scene.children[0].children[0].children[2]);
-                        var mesh=glb.scene.children[0].children[0].children[2];
+                        //console.log(glb.scene.children[0].children[0].children[2]);
+                        console.log(glb.scene.children[0].children[1])
+                        var mesh=glb.scene.children[0].children[1];
                         var peoples = new InstancedGroup(
-                            2,
+                            1,
                             [mesh],//这些mesh的网格应该一致
-                            false
+                            glb.animations[0]
                         );
-                        var texSrc = [];
-                        for (i = 0; i < 16; i++) texSrc.push('./img/texture/w/w' + i + '.jpg');
                         peoples.init(
-                            texSrc
+                            ['./img/texture/w/w0.jpg'],16
                         );
-                        for (var i = 0; i < 2; i++) {
-                                peoples.rotationSet(i, [Math.PI / 2, 0, 0]);
-                                peoples.positionSet(i, [3 * i, 0, 0]);
+                        for (var i = 0; i < 1; i++) {
+                                peoples.rotationSet(i, [Math.PI/2 ,0, 0]);
+                                peoples.positionSet(i, [0, 0, 0]);//(i-2)*9
                                 peoples.scaleSet(i, [4.5, 4.5, 4.5]);
+                                peoples.typeSet(i,[5,5,5,0]);
+                                //peoples.colorSet(i,[Math.random()/3,Math.random()/3,Math.random()/3]);
                         }
-                        peoples.animationSpeed = 0.1;
+                        //peoples.animationSpeed = 0.1;
                         scope.scene.add(peoples.obj);
                         console.log(mesh)
                 });//
@@ -1452,4 +1453,5 @@ InstancedGroupTest.prototype={
         },
 }
 var myInstancedGroupTest=new InstancedGroupTest();
-myInstancedGroupTest.test_texture();
+myInstancedGroupTest.test1();
+//myInstancedGroupTest.test_texture();

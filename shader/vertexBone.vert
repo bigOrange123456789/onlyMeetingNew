@@ -42,6 +42,7 @@ void main(){
         texType=floor(type[2]+0.5);
     }
 
+
     Animation_init();
     mat4 matrix1=Animation_computeMatrix();//计算动画的变换矩阵
 

@@ -126,7 +126,6 @@ InstancedGroup.prototype={
         geometry.setAttribute('type', this.type);
         geometry.setAttribute('color', this.colors);
 
-        //以下是根据material设置的uniform
         let text0= THREE.ImageUtils.loadTexture(texSrc[0]);
         text0.flipY=false;
         text0.wrapS = text0.wrapT = THREE.ClampToEdgeWrapping;
@@ -154,7 +153,6 @@ InstancedGroup.prototype={
             });
 
             var loader = new THREE.XHRLoader(THREE.DefaultLoadingManager);
-
             loader.load("animationData.json", function(str)
             {
                 var data0=JSON.parse(str).data;//204
@@ -178,12 +176,26 @@ InstancedGroup.prototype={
             material = new THREE.RawShaderMaterial({//原始着色器材质
                 uniforms: {
                     text0: {type: 't', value: text0}//textureHandle
+                    ,textNum:{value: textNum}
                 },
                 vertexShader: load("shader/vertex.vert"),
                 fragmentShader: load("shader/fragment.frag"),
                 side: THREE.DoubleSide
             });
         }
+        //以下是根据material设置的uniform
+        var texSrc_index=1;
+        function setText0(){
+            if(texSrc_index>=texSrc.length)return;
+            var myText0= THREE.ImageUtils.loadTexture(texSrc[texSrc_index],null,function () {
+                texSrc_index++;
+                myText0.flipY=false;
+                myText0.wrapS = myText0.wrapT = THREE.ClampToEdgeWrapping;
+                material.uniforms.text0={value: myText0};
+                setText0();
+            });
+        }
+        setText0();
 
         this.mesh = new THREE.Mesh(geometry, material);//重要
         this.mesh.frustumCulled=false;
