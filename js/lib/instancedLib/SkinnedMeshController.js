@@ -8,13 +8,9 @@ function SkinnedMeshController() {
 }
 SkinnedMeshController.prototype={
     init:function (originMesh,animation) {
-        console.log(originMesh,animation);
-        for(var i=0;i<animation.tracks.length;i++){
-            //console.log(animation.tracks[i].name.slice(5));
-        }
         this.animation=animation;
         this.mesh=originMesh.clone();//new THREE.SkinnedMesh(originMesh.geometry.clone(),originMesh.material)
-
+        //return;
         this.frameMax=this.animation.tracks[0].times.length;
         //this.boneNum=;
         this.speed=0.5;
@@ -31,7 +27,8 @@ SkinnedMeshController.prototype={
         this.mesh.add(this.mesh.skeleton.bones[0]);//添加骨骼
         this.mesh.bind(this.mesh.skeleton,this.mesh.matrixWorld);//绑定骨架
 
-        this.autoPlay0();
+        this.autoTest();
+        //this.autoPlay0();
         function cloneBones(rootBone , boneArray){//用于加载完gltf文件后的骨骼动画的处理
             var rootBoneClone=rootBone.clone();
             rootBoneClone.children.splice(0,rootBoneClone.children.length);
@@ -211,6 +208,85 @@ SkinnedMeshController.prototype={
             requestAnimationFrame(updateAnimation);
         }
     },
+    autoTest:function(){
+        var scope=this;
+        myPlay();
+        function myPlay() {
+            scope.setTime(0);
+            requestAnimationFrame(myPlay);
+        }
+
+        //for(var k=0;k<this.animation.tracks.length;k+=3){
+        //Shoulder  肩膀
+        //Arm
+        //ForeArm  前臂
+        //Hand
+        for(var k=7*3;k<=10*3;k+=3){
+            //mixamo
+            var str=this.animation.tracks[k].name;
+            str=str.replace('mixamo', '');
+            str=str.replace('.position', '');
+            console.log((k/3)+":"+str);//7,8,9,10
+        }
+
+        var i=7;
+        var time=0;
+        console.log(
+            this.animation.tracks[3*i],//position
+            this.animation.tracks[3*i+1],//quaternion
+            this.animation.tracks[3*i+2]//scale
+        );
+        console.log(
+            this.animation.tracks[3*i].values[3*time],//position
+            this.animation.tracks[3*i].values[3*time+1],
+            this.animation.tracks[3*i].values[3*time+2],
+            this.animation.tracks[3*i+1],//quaternion
+            this.animation.tracks[3*i+2]//scale
+        );
+        //new ParamMeasure(this.animation,2);
+        /*var animation=this.animation;
+        var This={};
+        This.beforeKey="";
+        document.onkeydown = function (e) {
+            var i=7;
+            var time=0;
+            var obj={};
+            obj.position={};
+            obj.position.x=animation.tracks[3*i].values[3*time];
+            obj.position.y=animation.tracks[3*i].values[3*time+1];
+            obj.position.z=animation.tracks[3*i].values[3*time+2];
+
+            if (e.key === "t") obj.position.x += step;
+            else if (e.key === "g") obj.position.x -= step;
+            else if (e.key === "r") obj.position.y += step;
+            else if (e.key === "y") obj.position.y -= step;
+            else if (e.key === "f") obj.position.z += step;
+            else if (e.key === "h") obj.position.z -= step;
+            else if (e.key === "v")
+                console.log(
+
+                );
+            var rx=obj.rotation.x,ry=obj.rotation.y,rz=obj.rotation.z;
+            //console.log(obj.rotation,rx,ry,rz,1,"stepScale"+stepScale);
+            if (e.key === '=') {
+                if (This.beforeKey === '1') obj.scale.x +=stepScale;
+                else if (This.beforeKey === '2') obj.scale.y +=stepScale;
+                else if (This.beforeKey === '3') obj.scale.z +=stepScale;
+                else if (This.beforeKey === '4') rx +=stepScale;
+                else if (This.beforeKey === '5') ry +=stepScale;
+                else if (This.beforeKey === '6') rz +=stepScale;
+            } else if (e.key === '-') {
+                if (This.beforeKey === '1') obj.scale.x -=stepScale;
+                else if (This.beforeKey === '2') obj.scale.y -=stepScale;
+                else if (This.beforeKey === '3') obj.scale.z -=stepScale;
+                else if (This.beforeKey === '4') rx -=stepScale;
+                else if (This.beforeKey === '5') ry -=stepScale;
+                else if (This.beforeKey === '6') rz -=stepScale;
+            }
+            obj.rotation.set(rx,ry,rz);
+            if (e.key === '1' || e.key === '2' || e.key === '3'||e.key === '4' || e.key === '5' || e.key === '6') This.beforeKey = e.key;
+        }*/
+    },
     autoPlay:function() {//每帧更新一次动画--
         scope.time+=scope.speed;//t=0;
         var time=Math.floor(scope.time%scope.frameMax);
@@ -233,7 +309,7 @@ SkinnedMeshController.prototype={
         for(i=0;i<bones.length;i++){
             //console.log(3*i,3*i+1,3*i+2,"time:"+time);
             bones[i].matrixAutoUpdate=false;
-            bones[i].matrix=scope.compose(
+            bones[i].matrix=this.compose(
                 animation.tracks[3*i+1].values[4*time],
                 animation.tracks[3*i+1].values[4*time+1],
                 animation.tracks[3*i+1].values[4*time+2],

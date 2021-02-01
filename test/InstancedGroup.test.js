@@ -96,7 +96,7 @@ InstancedGroupTest.prototype={
                 //开始测试
                 var scope=this;
                 var loader= new THREE.GLTFLoader();
-                loader.load("myModel/avatar/host.glb", (glb) => {
+                loader.load("test/avatar/mm.glb", (glb) => {
                         glb.scene.traverse(node => {
                                 if (node.geometry) {
                                         createObj(node);
@@ -136,16 +136,19 @@ InstancedGroupTest.prototype={
                 var loader= new THREE.GLTFLoader();
                 //"test/avatar/male_run.glb"
                 //"myModel/avatar/Female.glb"
-                loader.load("test/avatar/male_run.glb", (glb0) => {
+                loader.load("myModel/avatar/Female.glb", (glb0) => {
                         //console.log(glb0);
-                        loader.load("myModel/avatar/Female.glb", (glb) => {
-                                //console.log(glb);
-                                glb.scene.children[0].traverse(node => {
+                        loader.load("test/avatar/mm.glb", (glb) => {
+                                console.log(glb);
+                                /*glb.scene.children[0].traverse(node => {
                                         if (node instanceof THREE.SkinnedMesh) {
                                                 createObj(node);
                                         }
-                                });
-
+                                });*/
+                                var myMesh=glb.scene.children[0].children[1].children[0];
+                                //scope.scene.add(myMesh);
+                                createObj(myMesh);
+                                //console.log(myMesh);
                                 function createObj(mesh) {
                                         //console.log(mesh);
                                         var myController=new SkinnedMeshController();
@@ -244,10 +247,8 @@ InstancedGroupTest.prototype={
                             [mesh],//这些mesh的网格应该一致
                             glb.animations[0]
                         );
-                        var texSrc = [];
-                        for (i = 0; i < 16; i++) texSrc.push('./img/texture/w/w' + i + '.jpg');
                         peoples.init(
-                            texSrc
+                            ['./img/texture/w/w0.jpg']
                         );
                         for (var i = 0; i < 1; i++) {
                                 peoples.rotationSet(i, [Math.PI / 2, 0, 0]);
@@ -256,7 +257,6 @@ InstancedGroupTest.prototype={
                                 peoples.speedSet(i,0.1);
                         }
                         scope.scene.add(peoples.obj);
-                        console.log(mesh)
 
 
                         updateAnimation();//
@@ -327,7 +327,39 @@ InstancedGroupTest.prototype={
                 });//
                 //完成测试
         },
+        //动画修改测试
+        test5_2:function (contextType){
+                if(typeof(contextType)==="undefined")this.setContext();
+                var nameTest="输出帧序号，用于验证";
+                console.log('start test:'+nameTest);
+                //开始测试
+                var scope=this;
+                var loader= new THREE.GLTFLoader();
+                loader.load("myModel/avatar/Female.glb", (glb) => {
+                        console.log(glb);//OnlyArm
+                        var mesh=glb.scene.children[0].children[1];//"myModel/avatar/Female.glb"
 
+                        var controller=new SkinnedMeshController();
+                        controller.init(mesh,glb.animations[0]);
+                        controller.mesh.rotation.set(Math.PI / 2, 0, 0);
+                        controller.mesh.scale.set(0.5,0.5,0.5);
+                        controller.mesh.position.set(0,-25,-100);
+                        scope.scene.add(controller.mesh);
+
+                        var measure=new ParamMeasure(glb.animations[0],2);
+                        measure.boneIndex=8;
+                        scope.tag.reStr("骨骼序号："+measure.boneIndex);
+
+                        updateAnimation();//
+                        function updateAnimation() {//每帧更新一次动画
+                                requestAnimationFrame(updateAnimation);
+                                //输出帧序号，用于验证
+
+                                //完成验证
+                        }
+                });//
+                //完成测试
+        },
 
         //观察贴图效果，区分男女贴图
         test_texture:function (contextType){
@@ -1453,5 +1485,5 @@ InstancedGroupTest.prototype={
         },
 }
 var myInstancedGroupTest=new InstancedGroupTest();
-myInstancedGroupTest.test1();
+myInstancedGroupTest.test5_2();
 //myInstancedGroupTest.test_texture();
