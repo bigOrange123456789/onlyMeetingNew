@@ -1,6 +1,3 @@
-#define SKELETON_SIZE0 204.0 //用于求不动位置的骨骼//骨骼(25-8)*12=204//骨骼矩阵
-#define SKELETON_SIZE1 768.0 //鼓掌动画//8个手臂骨骼的数据//帧数8*骨骼8*12=768
-#define SKELETON_SIZE2 96.0//96.0//举手动作//8*12=96
 precision highp float;//highp
 uniform sampler2D dataTexture;//帧数8*骨骼8*12=768//用于求手臂骨骼//8个手臂骨骼的数据
 uniform mat4 modelViewMatrix,projectionMatrix;
@@ -23,7 +20,9 @@ varying vec3 myTest01;
 //bool Test_meetExpectations();float Animation_getNumByTexture(float n);
 void Animation_init();
 mat4 Animation_computeMatrix();
-
+float SKELETON_SIZE0=204.0; //用于求不动位置的骨骼//骨骼(25-8)*12=204//骨骼矩阵
+float SKELETON_SIZE1=768.0;//鼓掌动画//8个手臂骨骼的数据//帧数8*骨骼8*12=768
+float SKELETON_SIZE2=96.0;//96.0//举手动作//8*12=96
 void main(){
     vec3 vPosition = position;
 
