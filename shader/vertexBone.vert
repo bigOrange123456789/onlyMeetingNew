@@ -1,6 +1,6 @@
-#define skeletonSize0 204.0 //用于求不动位置的骨骼//骨骼(25-8)*12=204//骨骼矩阵
-#define skeletonSize1 768.0 //鼓掌动画//8个手臂骨骼的数据//帧数8*骨骼8*12=768
-#define skeletonSize2 96.0//96.0//举手动作//8*12=96
+#define SKELETON_SIZE0 204.0 //用于求不动位置的骨骼//骨骼(25-8)*12=204//骨骼矩阵
+#define SKELETON_SIZE1 768.0 //鼓掌动画//8个手臂骨骼的数据//帧数8*骨骼8*12=768
+#define SKELETON_SIZE2 96.0//96.0//举手动作//8*12=96
 precision highp float;//highp
 uniform sampler2D dataTexture;//帧数8*骨骼8*12=768//用于求手臂骨骼//8个手臂骨骼的数据
 uniform mat4 modelViewMatrix,projectionMatrix;
@@ -19,8 +19,8 @@ varying vec3 varyColor;
 varying float type_part,texType;
 varying vec3 myTest01;
 
-void Test_init();
-bool Test_meetExpectations();float Animation_getNumByTexture(float n);
+//void Test_init();
+//bool Test_meetExpectations();float Animation_getNumByTexture(float n);
 void Animation_init();
 mat4 Animation_computeMatrix();
 
@@ -53,7 +53,7 @@ void main(){
     );
     gl_Position = projectionMatrix * modelViewMatrix * matrix2  * matrix1 * vec4(position, 1.0);
 
-    Test_init();
+    //Test_init();
     //if(!Test_meetExpectations())gl_Position =vec4(0.,0.,0.,0.);
 }
 //尽可以按照面向对象的编程思想来编写下面的代码
@@ -206,16 +206,16 @@ mat4 Animation_computeMatrix(){
 }
 void Animation_init(){
     oAnimation.skeletonPos0=0.0;
-    oAnimation.skeletonPos1=(oAnimation.skeletonPos0+skeletonSize0);
-    oAnimation.skeletonPos2=(oAnimation.skeletonPos1+skeletonSize1);
-    //oAnimation.skeletonLast=(oAnimation.skeletonPos1+skeletonSize1);
-    oAnimation.skeletonLast=(oAnimation.skeletonPos2+skeletonSize2);
+    oAnimation.skeletonPos1=(oAnimation.skeletonPos0+SKELETON_SIZE0);
+    oAnimation.skeletonPos2=(oAnimation.skeletonPos1+SKELETON_SIZE1);
+    //oAnimation.skeletonLast=(oAnimation.skeletonPos1+SKELETON_SIZE1);
+    oAnimation.skeletonLast=(oAnimation.skeletonPos2+SKELETON_SIZE2);
     oAnimation.dataTextureHeight=(oAnimation.skeletonLast*2.0/3.0);
 
     Animation_frameIndexSet();//设置全局变量frame_index的值
 }
 
-struct Test{
+/*struct Test{
     //计算误差computeErr
     //int pos;
     float err;
@@ -276,7 +276,7 @@ bool Test_meetExpectations(){//判断代码的测试结果是否符合预期
     //Test_assertFloat(Animation_getNumByTexture(0.0),177.0);
     //oAnimation.skeletonLast
     //Test_assertFloat(oAnimation.skeletonPos1,204.0);
-    //Test_assertFloat(skeletonSize0,204.0);
+    //Test_assertFloat(SKELETON_SIZE0,204.0);
     //Test_assertFloat(oAnimation.skeletonPos0,0.0);
     //Test_assertFloat(floor(oAnimation.skeletonPos1+0.5),204.0);
     Test_assertFloat(oAnimation.skeletonLast,975.);//972.0+3.0
@@ -286,25 +286,6 @@ bool Test_meetExpectations(){//判断代码的测试结果是否符合预期
     //Test_assertFloat(Animation_getNumByTexture(973.0)*255.0,162.0);//这里遇到了问题
     Test_assertFloat(Animation_decode(177.0/255.0,162.0/255.0),-4.18);//Animation_decode
 
-    /*Test_assertFloat(Animation_getElem1(0.0),-4.18);
-    Test_assertFloat(floor(Animation_getElem1(1.0)*10.),948.0);
-    Test_assertFloat(Animation_getElem1(10.0),-33.4);//-33.4
-    Test_assertFloat(Animation_getElem1(100.0),16.6);//16.6*/
-    //Animation_getElem1(float n)//-4.18
-    //Test_assertFloat(floor(Animation_getNumByTexture(0.0)+0.4),177.0);
-
-
-    //开始测试
-    /*float n=0.0;
-    Test_assertFloat(n+oAnimation.skeletonPos0,0.0);//n+oAnimation.skeletonLast+oAnimation.skeletonPos0
-    Test_assertFloat(oAnimation.skeletonLast,1068.0);
-    Test_assertFloat(n+oAnimation.skeletonLast+oAnimation.skeletonPos0,1068.0);
-    float A=Animation_getNumByTexture(n+oAnimation.skeletonPos0), B=Animation_getNumByTexture(n+oAnimation.skeletonLast+oAnimation.skeletonPos0);
-    Test_assertFloat(A*255.0,177.0);
-    Test_assertFloat(B*255.0,162.0);
-    float result=Animation_decode(A, B);
-    Test_assertFloat(result,-4.18);*/
-    //完成测试
 
     if(true){//开始解码部分代码测试
         //[50,106]期望对应6.18,实际对应6.6~
@@ -341,4 +322,4 @@ void Test_init(){//用于测试
         //modFloor(floor(result*10.0),10.0)/255.0//Test_computeErr(446)
     );
 
-}/**/
+}*/
