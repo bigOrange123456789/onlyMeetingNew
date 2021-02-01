@@ -38,15 +38,10 @@ function RoomManager(){//myVideoManager_
                     myText0.wrapT = THREE.RepeatWrapping;
                     myText0.needsUpdate = true;
                     myText0.repeat.set(1, 1);
-                    console.log(myText0);
-                    console.log(mesh.material);
                     mesh.material = new THREE.MeshBasicMaterial({
-                        // color: 0x0000ff,
-                        // 设置颜色纹理贴图：Texture对象作为材质map属性的属性值
                         map: myText0,//设置颜色贴图属性值
                     });
-                    //mesh.material=myText0;
-                });/**/
+                });
             }
             var obj=gltf.scene;
             //console.log(url+":"+gltf.scene.children[0].name);
@@ -64,8 +59,23 @@ function RoomManager(){//myVideoManager_
     this.myLoad_door=function(url){
         this.loader.load(url, (gltf) => {
             var obj=gltf.scene;
-            //console.log(url);
-            //alert(url+":"+gltf.scene.children[0].name);
+            console.log(gltf);
+            /*var mesh1=gltf.scene.children[0];
+            var mesh2=gltf.scene.children[1];//125 112 103
+            mesh2.material = mesh1.material =new THREE.MeshBasicMaterial({color:0x7d7067});
+            var myText= THREE.ImageUtils.loadTexture("myModel/room/door.jpg",null,function () {
+                myText.flipY=false;
+                myText.wrapS = THREE.RepeatWrapping;
+                myText.wrapT = THREE.RepeatWrapping;
+                myText.needsUpdate = true;
+                myText.repeat.set(1, 1);
+                mesh2.material = mesh1.material = new THREE.MeshBasicMaterial({
+                    map: myText,//设置颜色贴图属性值
+                });
+                mesh2.material = new THREE.MeshBasicMaterial({
+                    map: myText,//设置颜色贴图属性值
+                });
+            });*/
             var door1,door2;
             //console.log(gltf)
             for(var i=0;i<gltf.scene.children.length;i++){
@@ -98,7 +108,7 @@ function RoomManager(){//myVideoManager_
         //i=46;
         if(!fileError(i))
         this.myLoad2('myModel/room/new'+i+'.gltf');
-        this.myLoad_door('myModel/room/door.glb');
+        this.myLoad_door('myModel/room/door.gltf');
         //this.myLoad3('myModel/room/door.glb');
         //var test=new THREE.Box3();
         //console.log(test);
