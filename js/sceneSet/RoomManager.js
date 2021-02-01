@@ -29,6 +29,27 @@ function RoomManager(){//myVideoManager_
     }
     this.myLoad2=function(url){
         this.loader.load(url, (gltf) => {
+            if(url==="myModel/room/new24.gltf"){
+                console.log(gltf);
+                var mesh=gltf.scene.children[0];
+                //console.log(mesh.material)
+                mesh.material=new THREE.MeshBasicMaterial({color:0xf0f0c8});
+                var myText0= THREE.ImageUtils.loadTexture("myModel/room/new24.jpg",null,function () {
+                    myText0.flipY=false;
+                    myText0.wrapS = THREE.RepeatWrapping;
+                    myText0.wrapT = THREE.RepeatWrapping;
+                    myText0.needsUpdate = true;
+                    myText0.repeat.set(1, 1);
+                    console.log(myText0);
+                    console.log(mesh.material);
+                    mesh.material = new THREE.MeshBasicMaterial({
+                        // color: 0x0000ff,
+                        // 设置颜色纹理贴图：Texture对象作为材质map属性的属性值
+                        map: myText0,//设置颜色贴图属性值
+                    });
+                    //mesh.material=myText0;
+                });/**/
+            }
             var obj=gltf.scene;
             //console.log(url+":"+gltf.scene.children[0].name);
             for(var i=0;i<gltf.scene.children.length;i++){
@@ -70,16 +91,9 @@ function RoomManager(){//myVideoManager_
     }
     this.loadRoom=function(){
         this.room.scale.set(10,10,10);
-        /*var urls=[];
-        //urls.push('myModel/room/component/0010.glb');
-        for(var i=1;i<=9;i++)
-             urls.push('myModel/room/component/00'+i+'.glb');
-        urls.push('myModel/room/room.glb');
-        for(var i=0;i<urls.length;i++)this.myLoad(urls[i]);*/
+        this.myLoad2('myModel/room/new24.gltf');
 
         for(var i=0;i<90;i++)
-
-
         //for(var i=60;i<90;i++)
         //for(var i=80;i<85;i++)
         //for(var i=45;i<50;i++)
@@ -93,6 +107,7 @@ function RoomManager(){//myVideoManager_
         //var test2=new THREE.Sphere();
         function fileError(k){
             var arr=[
+                24,//特殊处理的部件
                 0,37
             ];
             var arrRange=[

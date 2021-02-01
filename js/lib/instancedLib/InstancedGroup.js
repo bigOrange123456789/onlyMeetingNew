@@ -162,6 +162,7 @@ InstancedGroup.prototype={
                 for(var i=0;i<data.length;i++){//972
                     data[i]=data0[i];
                 }
+                console.log(data);
                 var dataTexture = new THREE.DataTexture(
                     data,
                     width,

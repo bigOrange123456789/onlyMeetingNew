@@ -22,7 +22,15 @@
     <list default="true" id="b7b6123d-caec-4b82-a432-424a6b5be5dd" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/js/ParamMeasure.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/ParamMeasure.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/js/lib/instancedLib/SkinnedMeshController.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/lib/instancedLib/SkinnedMeshController.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/lib/instancedLib/InstancedGroup.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/lib/instancedLib/InstancedGroup.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/sceneSet/RoomManager.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/sceneSet/RoomManager.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/new.glb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/new0.gltf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/new24.gltf" beforeDir="false" afterPath="$PROJECT_DIR$/myModel/room/new24.gltf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/new86.gltf" beforeDir="false" afterPath="$PROJECT_DIR$/myModel/room/new86.gltf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/room/new89.gltf" beforeDir="false" afterPath="$PROJECT_DIR$/myModel/room/new89.gltf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shader/fragment.frag" beforeDir="false" afterPath="$PROJECT_DIR$/shader/fragment.frag" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shader/vertexBone.vert" beforeDir="false" afterPath="$PROJECT_DIR$/shader/vertexBone.vert" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test/InstancedGroup.test.js" beforeDir="false" afterPath="$PROJECT_DIR$/test/InstancedGroup.test.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -44,7 +52,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../myFile/研一上学期/VRmeeting/项目备份/WebVRmeeting" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../showRoom" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -133,7 +141,7 @@
       <workItem from="1611737889521" duration="32942000" />
       <workItem from="1611821669345" duration="10569000" />
       <workItem from="1611898961303" duration="30381000" />
-      <workItem from="1612016600972" duration="14114000" />
+      <workItem from="1612016600972" duration="26925000" />
     </task>
     <servers />
   </component>
@@ -157,10 +165,10 @@
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="379" y="141" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1280.680@0.0.1280.680" timestamp="1610685129999" />
-    <state x="523" y="120" key="FileChooserDialogImpl" timestamp="1612020086780">
+    <state x="523" y="120" key="FileChooserDialogImpl" timestamp="1612166998190">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state x="523" y="120" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1612020086780" />
+    <state x="523" y="120" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1612166998190" />
     <state x="785" y="184" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1609483059436" />
     <state x="335" y="92" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1609487862309">
       <screen x="0" y="0" width="1920" height="1040" />
