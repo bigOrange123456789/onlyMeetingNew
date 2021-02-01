@@ -21,15 +21,10 @@
   <component name="ChangeListManager">
     <list default="true" id="b7b6123d-caec-4b82-a432-424a6b5be5dd" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/js/ParamMeasure.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/ParamMeasure.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/animationData.json" beforeDir="false" afterPath="$PROJECT_DIR$/animationData.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/js/lib/instancedLib/InstancedGroup.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/lib/instancedLib/InstancedGroup.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/sceneSet/AvatarManager.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/sceneSet/AvatarManager.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/js/sceneSet/RoomManager.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/sceneSet/RoomManager.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/myModel/room/new.glb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/myModel/room/new0.gltf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/myModel/room/new24.gltf" beforeDir="false" afterPath="$PROJECT_DIR$/myModel/room/new24.gltf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/myModel/room/new86.gltf" beforeDir="false" afterPath="$PROJECT_DIR$/myModel/room/new86.gltf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/myModel/room/new89.gltf" beforeDir="false" afterPath="$PROJECT_DIR$/myModel/room/new89.gltf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shader/fragment.frag" beforeDir="false" afterPath="$PROJECT_DIR$/shader/fragment.frag" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/shader/vertexBone.vert" beforeDir="false" afterPath="$PROJECT_DIR$/shader/vertexBone.vert" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test/InstancedGroup.test.js" beforeDir="false" afterPath="$PROJECT_DIR$/test/InstancedGroup.test.js" afterDir="false" />
     </list>
@@ -141,7 +136,7 @@
       <workItem from="1611737889521" duration="32942000" />
       <workItem from="1611821669345" duration="10569000" />
       <workItem from="1611898961303" duration="30381000" />
-      <workItem from="1612016600972" duration="26925000" />
+      <workItem from="1612016600972" duration="32557000" />
     </task>
     <servers />
   </component>

@@ -30,9 +30,7 @@ function RoomManager(){//myVideoManager_
     this.myLoad2=function(url){
         this.loader.load(url, (gltf) => {
             if(url==="myModel/room/new24.gltf"){
-                console.log(gltf);
                 var mesh=gltf.scene.children[0];
-                //console.log(mesh.material)
                 mesh.material=new THREE.MeshBasicMaterial({color:0xf0f0c8});
                 var myText0= THREE.ImageUtils.loadTexture("myModel/room/new24.jpg",null,function () {
                     myText0.flipY=false;

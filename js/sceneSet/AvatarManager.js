@@ -6,6 +6,7 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
 
     this.positions=mySeatManager.positions;
     //this.types=[];//贴图类型
+    this.animations=[];//动画类型
     this.colors=[];
     this.sexs=[];//0表示女性，1表示男性
     this.manNum=0;
@@ -21,6 +22,8 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
             this.sexs.push(1);
             this.manNum++;
         }
+        if(Math.random()<0.7)this.animations.push(0);
+        else this.animations.push(1);
     }
 
 
@@ -65,7 +68,7 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
                 peoples.positionSet(index,[scope.positions[i][0]+1.8,scope.positions[i][1]+1.5,scope.positions[i][2]]);
                 peoples.scaleSet(index,[0.045,0.045,0.04+Math.random()*0.01]);
 
-                //peoples.typeSet(index,scope.types[i]);//设置贴图类型//贴图类型可以自动随机多样性
+                peoples.animationSet(index,scope.animations[i]);
                 peoples.colorSet(index,scope.colors[i]);
                 peoples.speedSet(index,0.15+Math.random()*1.5);
                 //else peoples.speedSet(i,2+Math.random()*1.92);
@@ -93,7 +96,7 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
                         peoples.positionSet(index,[scope.positions[i][0]+1.8,scope.positions[i][1]+1.5,scope.positions[i][2]]);
                         peoples.scaleSet(index,[0.045,0.045,0.04+Math.random()*0.01]);
 
-                        //peoples.typeSet(index,scope.types[i]);//设置贴图类型//贴图类型可以自动随机多样性
+                        peoples.animationSet(index,scope.animations[i]);
                         peoples.colorSet(index,scope.colors[i]);
                         peoples.speedSet(index,0.15+Math.random()*1.5);
                         //else peoples.speedSet(i,2+Math.random()*1.92);

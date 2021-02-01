@@ -162,7 +162,6 @@ InstancedGroup.prototype={
                 for(var i=0;i<data.length;i++){//972
                     data[i]=data0[i];
                 }
-                console.log(data);
                 var dataTexture = new THREE.DataTexture(
                     data,
                     width,
@@ -309,11 +308,19 @@ InstancedGroup.prototype={
 
         this.setMatrix(i,this.dummy.matrix);
     },
-    typeSet:function (i,type) {
+    typeSet:function (i,type) {//设置贴图和动画类型
         this.type.array[4*i  ]=type[0];
         this.type.array[4*i+1]=type[1];
         this.type.array[4*i+2]=type[2];
-        this.type.array[4*i+3]=type[3];
+        this.type.array[4*i+3]=type[3];//动画类型 0,1
+    },
+    textureSet: function (i, type) {//设置贴图和动画类型
+        this.type.array[4 * i] = type[0];
+        this.type.array[4 * i + 1] = type[1];
+        this.type.array[4 * i + 2] = type[2];
+    },
+    animationSet:function(i,animationType){
+        this.type.array[4*i+3]=animationType;//动画类型 0,1
     },
     colorSet:function (i,color) {
         this.colors.array[3*i  ]=color[0];
