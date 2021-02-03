@@ -35,41 +35,64 @@
 	<script src="js/Main.js"></script>
 
 	<script>
-			var myVideoManager=new VideoManager();
-			myVideoManager.init();
 
-			var myRoomManager=new RoomManager();
-			myRoomManager.loadRoom();//myVideoManager
+		var myVideoManager = new VideoManager();
+		myVideoManager.init();
 
-			var myMain=new Main();
-			myMain.start();
-			myMain.scene.add(myRoomManager.room);
+		var myRoomManager = new RoomManager();
+		myRoomManager.loadRoom();//myVideoManager
 
-			new PlayerControl(myMain.camera);
+		var myMain = new Main();
+		myMain.start();
+		myMain.scene.add(myRoomManager.room);
 
-			var mySeatManager=new SeatManager();
-			mySeatManager.init();
-			myMain.scene.add(mySeatManager.chairs);
+		new PlayerControl(myMain.camera);
 
-			var myAvatarManager=new AvatarManager(mySeatManager,myMain.camera);
-			myAvatarManager.init();
-			myMain.scene.add(myAvatarManager.obj);
+		var mySeatManager = new SeatManager();
+		mySeatManager.init();
+		myMain.scene.add(mySeatManager.chairs);
 
-			//开始自动漫游路径
-			var mydata = [//自动漫游路径
-				//x         y      z      angel       time  展板编号  展板初始旋转(单位是90度)
-				[-155,41,22,-1.5572,-1.47875,-1.55714,80]
-				,[-119,39,24,-0.91,-1.48,-0.91,80]
-				,[-59,48,-14,-1.25,-1.52,-1.24,80]
-				,[129,37,-66,-1.25,-1.52,-1.24,50]
-				,[130,37,-12,-1.25,-1.52,-1.24,50]
-				,[129,37,-27,-1.25,-1.52,-1.24,50]
-				,[229,29,-19,-1.21,1.46,1.19,80]
-				,[183,63,-19,-1.67,1.35,1.66,80]
-			];
-			var myPreviewManager=new PreviewManager(myMain.camera,mydata,myVideoManager);
-			myPreviewManager.createCameraButton('./img/1.png','./img/2.png');
-			//结束自动漫游路径
+		var myAvatarManager = new AvatarManager(mySeatManager, myMain.camera);
+		myAvatarManager.init();
+		myMain.scene.add(myAvatarManager.obj);
+
+		//开始自动漫游路径
+		var mydata = [//自动漫游路径
+			//x         y      z      angel       time  展板编号  展板初始旋转(单位是90度)
+			[-155, 41, 22, -1.5572, -1.47875, -1.55714, 80]
+			, [-119, 39, 24, -0.91, -1.48, -0.91, 80]
+			, [-59, 48, -14, -1.25, -1.52, -1.24, 80]
+			, [129, 37, -66, -1.25, -1.52, -1.24, 50]
+			, [130, 37, -12, -1.25, -1.52, -1.24, 50]
+			, [129, 37, -27, -1.25, -1.52, -1.24, 50]
+			, [229, 29, -19, -1.21, 1.46, 1.19, 80]
+			, [183, 63, -19, -1.67, 1.35, 1.66, 80]
+		];
+		var myPreviewManager = new PreviewManager(myMain.camera, mydata, myVideoManager);
+		myPreviewManager.createCameraButton('./img/1.png', './img/2.png');
+		//结束自动漫游路径
+		//开始帧数统计
+		var tag = document.createElement('h1');
+		tag.style.cssText =
+				'color:green;' +//文字颜色
+				'font-size:' + 50 + 'px;' +//文字大小
+				'font-weight:normal;' +
+				'position:fixed;' +//到窗体的位置
+				'left:' + 0 + 'px;' +//到部件左边距离
+				'top:' + 0 + 'px;'; //到部件右边 距离
+		document.body.appendChild(tag);
+		var frameIndex = 0, frameIndexPre = 0;
+		frameIndexUpdate();
+		setInterval(computeFPS, 1000);
+		function frameIndexUpdate() {
+			frameIndex++;
+			requestAnimationFrame(frameIndexUpdate);
+		}
+		function computeFPS() {
+			tag.innerHTML = "FPS:" + (frameIndex - frameIndexPre);
+			frameIndexPre = frameIndex;
+		}
+		//完成帧数统计
 	</script>
 	</body>
 </html>

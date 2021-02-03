@@ -6,9 +6,12 @@ function InstancedGroupTest(){
         this.tag;
         this.button_flag;
         this.referee;
+        this.frameIndex;
+        this.frameIndexPre;
 }
 InstancedGroupTest.prototype={
         setContext:function () {
+                this.frameIndex=this.frameIndexPre=0;
                 var nameContext="";
                 console.log('set context:'+nameContext);
 
@@ -25,6 +28,11 @@ InstancedGroupTest.prototype={
                 var light;
                 init();
                 render();
+                function computeFPS() {
+                        scope.tag.reStr("FPS:"+(scope.frameIndex-scope.frameIndexPre));
+                        scope.frameIndexPre=scope.frameIndex;
+                }
+                setInterval(computeFPS,1000);
                 function init() {
                         camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.01, 10000);
                         camera.position.z = 20;
@@ -47,6 +55,7 @@ InstancedGroupTest.prototype={
                         new PlayerControl(camera);
                 }
                 function render(){
+                        scope.frameIndex++;
                         renderer.render( scene, camera );
                         requestAnimationFrame(render);
                 }
@@ -682,7 +691,7 @@ InstancedGroupTest.prototype={
                 });//
                 //完成测试
         },
-        //举手动作
+        //举手动作的数据
         test6_2:function (contextType){
                 if(typeof(contextType)==="undefined")this.setContext();
                 var nameTest="输出帧序号，用于验证";
@@ -1846,5 +1855,5 @@ InstancedGroupTest.prototype={
         },
 }
 var myInstancedGroupTest=new InstancedGroupTest();
-myInstancedGroupTest.test6_2();
+myInstancedGroupTest.test5_0();
 //myInstancedGroupTest.test_texture();

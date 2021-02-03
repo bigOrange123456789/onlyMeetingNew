@@ -48,7 +48,7 @@ void main(){
         vec4(mcol0, 0),
         vec4(mcol1, 0),
         vec4(mcol2, 0),
-        vec4(mcol3, 1)
+        vec4(mcol3, 1)//实例化物体对象世界矩阵
     );
     gl_Position = projectionMatrix * modelViewMatrix * matrix2  * matrix1 * vec4(position, 1.0);
 

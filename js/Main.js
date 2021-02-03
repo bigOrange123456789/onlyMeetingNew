@@ -35,7 +35,7 @@ function Main(){
 
 
         //性能监视器stats.js开始
-        var stats = new Stats();
+        /*var stats = new Stats();
         //stats.setMode(0);
         //stats.domElement.style.position = 'absolute';
         //stats.domElement.style.left = '0px';
@@ -44,7 +44,7 @@ function Main(){
         setInterval(function () {
             stats.begin();
             stats.end();
-        }, 100)
+        }, 100)*/
         //性能监视器stats.js结束
 
     }
