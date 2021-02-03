@@ -27,8 +27,8 @@ SkinnedMeshController.prototype={
         this.mesh.add(this.mesh.skeleton.bones[0]);//添加骨骼
         this.mesh.bind(this.mesh.skeleton,this.mesh.matrixWorld);//绑定骨架
 
-        this.autoTest();
-        //this.autoPlay0();
+        //this.autoTest();
+        this.autoPlay0();
         function cloneBones(rootBone , boneArray){//用于加载完gltf文件后的骨骼动画的处理
             var rootBoneClone=rootBone.clone();
             rootBoneClone.children.splice(0,rootBoneClone.children.length);
@@ -42,7 +42,6 @@ SkinnedMeshController.prototype={
             t+=0.2;
             var time=Math.floor(t%36);
 
-            //console.log(time);
             for(i=0;i<bones.length;i++) {
                 //position
                 x = animation.tracks[3 * i].values[3 * time];
@@ -69,8 +68,6 @@ SkinnedMeshController.prototype={
                     2 * x * z - 2 * y * w, 2 * y * z + 2 * x * w, 1 - 2 * x * x - 2 * y * y, 0,
                     0, 0, 0, 1
                 );
-                //if(i===0)console.log(m2.elements[0])
-
                 //scale
                 x = animation.tracks[3 * i + 2].values[3 * time];
                 y = animation.tracks[3 * i + 2].values[3 * time + 1];
@@ -226,66 +223,11 @@ SkinnedMeshController.prototype={
             var str=this.animation.tracks[k].name;
             str=str.replace('mixamo', '');
             str=str.replace('.position', '');
-            console.log((k/3)+":"+str);//7,8,9,10
         }
 
         var i=7;
         var time=0;
-        console.log(
-            this.animation.tracks[3*i],//position
-            this.animation.tracks[3*i+1],//quaternion
-            this.animation.tracks[3*i+2]//scale
-        );
-        console.log(
-            this.animation.tracks[3*i].values[3*time],//position
-            this.animation.tracks[3*i].values[3*time+1],
-            this.animation.tracks[3*i].values[3*time+2],
-            this.animation.tracks[3*i+1],//quaternion
-            this.animation.tracks[3*i+2]//scale
-        );
         //new ParamMeasure(this.animation,2);
-        /*var animation=this.animation;
-        var This={};
-        This.beforeKey="";
-        document.onkeydown = function (e) {
-            var i=7;
-            var time=0;
-            var obj={};
-            obj.position={};
-            obj.position.x=animation.tracks[3*i].values[3*time];
-            obj.position.y=animation.tracks[3*i].values[3*time+1];
-            obj.position.z=animation.tracks[3*i].values[3*time+2];
-
-            if (e.key === "t") obj.position.x += step;
-            else if (e.key === "g") obj.position.x -= step;
-            else if (e.key === "r") obj.position.y += step;
-            else if (e.key === "y") obj.position.y -= step;
-            else if (e.key === "f") obj.position.z += step;
-            else if (e.key === "h") obj.position.z -= step;
-            else if (e.key === "v")
-                console.log(
-
-                );
-            var rx=obj.rotation.x,ry=obj.rotation.y,rz=obj.rotation.z;
-            //console.log(obj.rotation,rx,ry,rz,1,"stepScale"+stepScale);
-            if (e.key === '=') {
-                if (This.beforeKey === '1') obj.scale.x +=stepScale;
-                else if (This.beforeKey === '2') obj.scale.y +=stepScale;
-                else if (This.beforeKey === '3') obj.scale.z +=stepScale;
-                else if (This.beforeKey === '4') rx +=stepScale;
-                else if (This.beforeKey === '5') ry +=stepScale;
-                else if (This.beforeKey === '6') rz +=stepScale;
-            } else if (e.key === '-') {
-                if (This.beforeKey === '1') obj.scale.x -=stepScale;
-                else if (This.beforeKey === '2') obj.scale.y -=stepScale;
-                else if (This.beforeKey === '3') obj.scale.z -=stepScale;
-                else if (This.beforeKey === '4') rx -=stepScale;
-                else if (This.beforeKey === '5') ry -=stepScale;
-                else if (This.beforeKey === '6') rz -=stepScale;
-            }
-            obj.rotation.set(rx,ry,rz);
-            if (e.key === '1' || e.key === '2' || e.key === '3'||e.key === '4' || e.key === '5' || e.key === '6') This.beforeKey = e.key;
-        }*/
     },
     autoPlay:function() {//每帧更新一次动画--
         scope.time+=scope.speed;//t=0;
@@ -307,7 +249,6 @@ SkinnedMeshController.prototype={
         var animation=this.animation;
         var bones=this.bones;
         for(i=0;i<bones.length;i++){
-            //console.log(3*i,3*i+1,3*i+2,"time:"+time);
             bones[i].matrixAutoUpdate=false;
             bones[i].matrix=this.compose(
                 animation.tracks[3*i+1].values[4*time],
@@ -339,4 +280,118 @@ SkinnedMeshController.prototype={
         );
         return te;
     },
+}
+//以下代码用于项目性能的分析
+function InstancedGroup2(instanceCount,originMesh,animationClip ){
+    //若有骨骼，则需要源mesh是skinnedMesh
+    this.obj=new THREE.Object3D();
+    this.instanceCount=instanceCount;
+
+    //记录有无骨骼动画
+    this.haveSkeleton = !(typeof (animationClip) == "undefined" || animationClip === false);
+    this.originMeshs=originMesh;//这是一个数组，每个元素播放一种动画
+    this.animationClip=animationClip;
+    this.obj=new THREE.Object3D();//实例化渲染对象的网格
+    this.meshs=[];
+
+    this.speed;
+    this.mcol0;//变换矩阵的一部分
+    this.mcol1;
+    this.mcol2;
+    this.mcol3;
+    this.type;
+    this.colors;
+    this.texSrc;
+
+    this.time=0;//每帧自动加1，加到一定值之后自动归0
+
+    this.dummy=new THREE.Object3D();//dummy仿制品//工具对象
+}
+InstancedGroup2.prototype={
+
+    init:function (texSrc){//纹理贴图资源路径，贴图中包含纹理的个数
+        this.texSrc=texSrc;
+        for(var i=0;i<this.instanceCount;i++){
+            var controller=new SkinnedMeshController();
+            controller.init(this.originMeshs[0],this.animationClip);
+            var mesh=controller.mesh;
+            this.meshs.push(mesh);
+            this.obj.add(mesh);
+        }
+        //this.meshs[0].position.set(10,0,0);
+        //console.log(this.meshs);
+        //完成进行实例化渲染
+    },
+    handleSkeletonAnimation:function(){
+        var scope=this;
+        //var scope=this;//scope范围//为了避免this重名
+        updateAnimation();
+        function updateAnimation() {//每帧更新一次动画
+            requestAnimationFrame(updateAnimation);
+            scope.time=(scope.time+1.0)%60000;
+            scope.mesh.material.uniforms.time={value: scope.time};
+        }
+    },
+
+    setMatrix:function (i,matrix){//获取实例化对象第i个成员的变换矩阵
+        this.mcol0.array[3*i  ]=matrix.elements[0];
+        this.mcol0.array[3*i+1]=matrix.elements[1];
+        this.mcol0.array[3*i+2]=matrix.elements[2];
+
+        this.mcol1.array[3*i  ]=matrix.elements[4];
+        this.mcol1.array[3*i+1]=matrix.elements[5];
+        this.mcol1.array[3*i+2]=matrix.elements[6];
+
+        this.mcol2.array[3*i  ]=matrix.elements[8];
+        this.mcol2.array[3*i+1]=matrix.elements[9];
+        this.mcol2.array[3*i+2]=matrix.elements[10];
+
+        this.mcol3.array[3*i  ]=matrix.elements[12];
+        this.mcol3.array[3*i+1]=matrix.elements[13];
+        this.mcol3.array[3*i+2]=matrix.elements[14];
+    },
+    getMatrix:function (i){//获取实例化对象第i个成员的变换矩阵
+        var matrix=new THREE.Matrix4();
+        matrix.set(
+            this.mcol0.array[3*i  ],this.mcol1.array[3*i  ],this.mcol2.array[3*i  ],this.mcol3.array[3*i  ],
+            this.mcol0.array[3*i+1],this.mcol1.array[3*i+1],this.mcol2.array[3*i+1],this.mcol3.array[3*i+1],
+            this.mcol0.array[3*i+2],this.mcol1.array[3*i+2],this.mcol2.array[3*i+2],this.mcol3.array[3*i+2],
+            0                      ,0                      ,0                      ,1
+        );
+        return matrix;
+    },
+
+    positionSet:function (i,pos){
+        this.meshs[i].position.set(pos[0],pos[1],pos[2]);
+    },
+    rotationSet:function (i,rot){
+        this.meshs[i].rotation.set(rot[0],rot[1],rot[2]);
+    },
+    scaleSet:function(i,size){
+        this.meshs[i].scale.set(size[0],size[1],size[2]);
+    },
+    typeSet:function (i,type) {//设置贴图和动画类型
+        this.type.array[4*i  ]=type[0];
+        this.type.array[4*i+1]=type[1];
+        this.type.array[4*i+2]=type[2];
+        this.type.array[4*i+3]=type[3];//动画类型 0,1
+    },
+    textureSet: function (i, type) {//设置贴图和动画类型
+        var material=THREE.ImageUtils.loadTexture(this.texSrc[type]);
+        material.flipY=false;
+        material.wrapS = material.wrapT = THREE.ClampToEdgeWrapping;
+        this.meshs[i].material.map=material;
+    },
+    animationSet:function(i,animationType){
+        this.type.array[4*i+3]=animationType;//动画类型 0,1
+    },
+    colorSet:function (i,color) {
+        this.colors.array[3*i  ]=color[0];
+        this.colors.array[3*i+1]=color[1];
+        this.colors.array[3*i+2]=color[2];
+    },
+    speedSet:function (i,speed) {//设置动画速度
+        this.speed.array[i]=speed;
+    },
+
 }

@@ -47,8 +47,8 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
             scope.loadGuest1(glbObj);
             scope.loadGuest2(glbObj);
         });
-        //this.createPeople_haveAnimation();
-        this.analysis();
+        this.createPeople_haveAnimation();
+        //this.analysis2();
     }
     this.createPeople_haveAnimation=function(){
         var loader= new THREE.GLTFLoader();
@@ -195,7 +195,11 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
                 var myInterval=setInterval(function () {
                     result=result+","+tag.innerHTML;
                     //console.log(tag)
-                    console.log(parseInt(tag.innerHTML),peoples.instanceCount);
+                    if(peoples.instanceCount>=scope.positions.length){
+                        window.clearInterval(myInterval);
+                        console.log(result);
+                        return;
+                    }else console.log(parseInt(tag.innerHTML),peoples.instanceCount);
                     var obj0=peoples.obj;
                     var count=peoples.instanceCount;
                     peoples=new InstancedGroup(
@@ -217,10 +221,71 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
                     scope.obj.remove(obj0);
                     scope.obj.add(peoples.obj);
 
+
+                },2000);
+            },10000);
+
+        });
+    }
+    this.analysis2=function () {
+        var loader= new THREE.GLTFLoader();
+        loader.load('myModel/avatar/Female.glb', (glb) => {
+            //console.log(glb.scene.children[0].children[1])
+            //开始
+            var peoples = new InstancedGroup2(
+                1,
+                [glb.scene.children[0].children[1].clone()],//这些mesh的网格应该一致
+                glb.animations[0].clone()
+            );
+            var srcs=[];
+            for(var i=0;i<16;i++){
+                srcs.push("performanceAnalysis/texture/m/m"+i+".jpg");
+            }
+            peoples.init(srcs,16);
+            for(var index=0;index<peoples.instanceCount;index++){
+                peoples.rotationSet(index,[Math.PI/2,0,3*Math.PI/2]);
+                peoples.positionSet(index,[scope.positions[index][0]+1.8,scope.positions[index][1]+1.5,scope.positions[index][2]]);
+                peoples.scaleSet(index,[0.045,0.045,0.04+Math.random()*0.01]);
+
+                peoples.textureSet(index,Math.floor(Math.random()*16));
+            }
+            //完成
+            scope.obj.add(peoples.obj);
+
+            //先等待贴图的加载，以防初始时贴图未完全加载影响测量结果
+            setTimeout(function () {
+                var result="";
+                var myInterval=setInterval(function () {
+                    result=result+","+tag.innerHTML;
+                    //console.log(tag)
                     if(peoples.instanceCount>=scope.positions.length){
                         window.clearInterval(myInterval);
                         console.log(result);
+                        return;
+                    }else console.log(parseInt(tag.innerHTML),peoples.instanceCount);
+                    var obj0=peoples.obj;
+                    var count=peoples.instanceCount;
+                    peoples = new InstancedGroup2(
+                        count+10,
+                        [glb.scene.children[0].children[1].clone()],//这些mesh的网格应该一致
+                        glb.animations[0].clone()
+                    );
+                    var srcs=[];
+                    for(var i=0;i<16;i++){
+                        srcs.push("performanceAnalysis/texture/m/m"+i+".jpg");
                     }
+                    peoples.init(srcs,16);
+                    for(var index=0;index<peoples.instanceCount;index++){
+                        peoples.rotationSet(index,[Math.PI/2,0,3*Math.PI/2]);
+                        peoples.positionSet(index,[scope.positions[index][0]+1.8,scope.positions[index][1]+1.5,scope.positions[index][2]]);
+                        peoples.scaleSet(index,[0.045,0.045,0.04+Math.random()*0.01]);
+
+                        peoples.textureSet(index,Math.floor(Math.random()*16));
+                    }
+                    scope.obj.remove(obj0);
+                    scope.obj.add(peoples.obj);
+
+
                 },2000);
             },10000);
 

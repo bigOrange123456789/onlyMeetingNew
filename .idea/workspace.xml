@@ -22,8 +22,11 @@
     <list default="true" id="b7b6123d-caec-4b82-a432-424a6b5be5dd" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/lib/instancedLib/SkinnedMeshController.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/lib/instancedLib/SkinnedMeshController.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/js/sceneSet/AvatarManager.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/sceneSet/AvatarManager.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/performanceAnalysis/InstancedGroup.test.js" beforeDir="false" afterPath="$PROJECT_DIR$/performanceAnalysis/InstancedGroup.test.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/performanceAnalysis/InstancedGroup2.js" beforeDir="false" afterPath="$PROJECT_DIR$/performanceAnalysis/InstancedGroup2.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/performanceAnalysis/launch.js" beforeDir="false" afterPath="$PROJECT_DIR$/performanceAnalysis/launch.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

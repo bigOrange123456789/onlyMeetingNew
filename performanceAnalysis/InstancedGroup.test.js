@@ -112,16 +112,18 @@ InstancedGroupTest.prototype={
                         var result="";
                         var myInterval=setInterval(function () {
                                 var count=100;
-                                var FPS;
+                                var FPS,obj;
                                 if(peoples){
                                         FPS=scope.frameIndex-scope.frameIndexPre_10s;
                                         console.log("人数:"+peoples.instanceCount+
                                             ",帧数:"+FPS
                                         );
-                                        scope.scene.remove(peoples.obj);
+                                        //scope.scene.remove(peoples.obj);
+                                        obj=peoples.obj;
                                         count+=peoples.instanceCount;
                                 }else{
                                         FPS=60;
+                                        obj=null;
                                 }
                                 peoples = new InstancedGroup(
                                     count,
@@ -136,6 +138,7 @@ InstancedGroupTest.prototype={
                                         peoples.speedSet(i,0.5);
                                         peoples.animationSet(i,0);
                                 }
+                                if(obj)scope.scene.remove(obj);
                                 scope.scene.add(peoples.obj);
                                 scope.frameIndexPre_10s=scope.frameIndex;
                                 if(FPS<30){
@@ -164,47 +167,59 @@ InstancedGroupTest.prototype={
                         //console.log(glb);//OnlyArm
                         var mesh=glb.scene.children[0].children[1];//"myModel/avatar/Female.glb"
                         this.frameIndexPre_10s=this.frameIndex;
-                        var controller=new SkinnedMeshController();
-                        controller.init(mesh,glb.animations[0]);
-                        scope.scene.add(peoples.obj);
-                        /*var peoples=null;
+
+
+
+
+
+                        var peoples=null;
                         var result="";
                         var myInterval=setInterval(function () {
                                 var count=100;
-                                var FPS;
+                                var FPS,obj;
                                 if(peoples){
                                         FPS=scope.frameIndex-scope.frameIndexPre_10s;
                                         console.log("人数:"+peoples.instanceCount+
                                             ",帧数:"+FPS
                                         );
-                                        scope.scene.remove(peoples.obj);
+                                        //scope.scene.remove(peoples.obj);
+                                        obj=peoples.obj;
                                         count+=peoples.instanceCount;
                                 }else{
                                         FPS=60;
+                                        obj=null;
                                 }
-                                peoples = new InstancedGroup(
+
+
+                                peoples = new InstancedGroup2(
                                     count,
                                     [mesh],//这些mesh的网格应该一致
                                     glb.animations[0]
                                 );
-                                peoples.init(['./img/texture/w/w0.jpg'],16);
+                                var srcs=[];
+                                for(var i=0;i<16;i++){
+                                        srcs.push("performanceAnalysis/texture/m/m"+i+".jpg");
+                                }
+                                peoples.init(srcs,16);
                                 for (var i = 0; i < peoples.instanceCount; i++) {
                                         peoples.rotationSet(i, [Math.PI / 2, 0, 0]);
-                                        peoples.positionSet(i, [3 * i, 0, 0]);
+                                        peoples.positionSet(i, [5 * i, 0, 0]);
                                         peoples.scaleSet(i, [0.03, 0.03, 0.03]);
-                                        peoples.speedSet(i,0.5);
-                                        peoples.animationSet(i,0);
+                                        peoples.textureSet(i,Math.floor(Math.random()*16));
+                                        //peoples.speedSet(i,0.5);
+                                        //peoples.animationSet(i,0);
                                 }
+                                if(obj)scope.scene.remove(obj);
                                 scope.scene.add(peoples.obj);
+
                                 scope.frameIndexPre_10s=scope.frameIndex;
                                 if(FPS<30){
                                         window.clearInterval(myInterval);
                                         console.log(result);
                                 }
                                 result+=(","+FPS);
-                                //60,58,59,59,59,59,59,59,59,59,59,59,59,59,59,59,59,58,55,52,48,47,46,44,44,41,41,39,37,37,34,34,31
                         },1000);
-                        */
+
 
 
                         updateAnimation();//
@@ -274,4 +289,4 @@ InstancedGroupTest.prototype={
 
 }
 var myInstancedGroupTest=new InstancedGroupTest();
-myInstancedGroupTest.test5_0();
+myInstancedGroupTest.test6();
