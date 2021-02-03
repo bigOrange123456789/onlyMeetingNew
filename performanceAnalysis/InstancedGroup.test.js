@@ -76,7 +76,7 @@ InstancedGroupTest.prototype={
                         var mesh=glb.scene.children[0].children[1];//"myModel/avatar/Female.glb"
 
                         var peoples = new InstancedGroup(
-                            1000,
+                            16000,
                             [mesh],//这些mesh的网格应该一致
                             glb.animations[0]
                         );
@@ -98,8 +98,125 @@ InstancedGroupTest.prototype={
                 });//
                 //完成测试
         },
-        //帧数统计
+        //进行轻量化处理帧数统计
         test6:function (contextType){
+                if(typeof(contextType)==="undefined")this.setContext();
+                //开始测试
+                var scope=this;
+                var loader= new THREE.GLTFLoader();
+                loader.load("myModel/avatar/Female.glb", (glb) => {
+                        //console.log(glb);//OnlyArm
+                        var mesh=glb.scene.children[0].children[1];//"myModel/avatar/Female.glb"
+                        this.frameIndexPre_10s=this.frameIndex;
+                        var peoples=null;
+                        var result="";
+                        var myInterval=setInterval(function () {
+                                var count=100;
+                                var FPS;
+                                if(peoples){
+                                        FPS=scope.frameIndex-scope.frameIndexPre_10s;
+                                        console.log("人数:"+peoples.instanceCount+
+                                            ",帧数:"+FPS
+                                        );
+                                        scope.scene.remove(peoples.obj);
+                                        count+=peoples.instanceCount;
+                                }else{
+                                        FPS=60;
+                                }
+                                peoples = new InstancedGroup(
+                                    count,
+                                    [mesh],//这些mesh的网格应该一致
+                                    glb.animations[0]
+                                );
+                                peoples.init(['./img/texture/w/w0.jpg'],16);
+                                for (var i = 0; i < peoples.instanceCount; i++) {
+                                        peoples.rotationSet(i, [Math.PI / 2, 0, 0]);
+                                        peoples.positionSet(i, [3 * i, 0, 0]);
+                                        peoples.scaleSet(i, [0.03, 0.03, 0.03]);
+                                        peoples.speedSet(i,0.5);
+                                        peoples.animationSet(i,0);
+                                }
+                                scope.scene.add(peoples.obj);
+                                scope.frameIndexPre_10s=scope.frameIndex;
+                                if(FPS<30){
+                                        window.clearInterval(myInterval);
+                                        console.log(result);
+                                }
+                                result+=(","+FPS);
+                                //60,58,59,59,59,59,59,59,59,59,59,59,59,59,59,59,59,58,55,52,48,47,46,44,44,41,41,39,37,37,34,34,31
+                        },1000);
+
+
+                        updateAnimation();//
+                        function updateAnimation() {//每帧更新一次动画
+                                requestAnimationFrame(updateAnimation);
+                        }
+                });//
+                //完成测试
+        },
+        //不进行轻量化处理帧数统计
+        test7:function (contextType){
+                if(typeof(contextType)==="undefined")this.setContext();
+                //开始测试
+                var scope=this;
+                var loader= new THREE.GLTFLoader();
+                loader.load("myModel/avatar/Female.glb", (glb) => {
+                        //console.log(glb);//OnlyArm
+                        var mesh=glb.scene.children[0].children[1];//"myModel/avatar/Female.glb"
+                        this.frameIndexPre_10s=this.frameIndex;
+                        var controller=new SkinnedMeshController();
+                        controller.init(mesh,glb.animations[0]);
+                        scope.scene.add(peoples.obj);
+                        /*var peoples=null;
+                        var result="";
+                        var myInterval=setInterval(function () {
+                                var count=100;
+                                var FPS;
+                                if(peoples){
+                                        FPS=scope.frameIndex-scope.frameIndexPre_10s;
+                                        console.log("人数:"+peoples.instanceCount+
+                                            ",帧数:"+FPS
+                                        );
+                                        scope.scene.remove(peoples.obj);
+                                        count+=peoples.instanceCount;
+                                }else{
+                                        FPS=60;
+                                }
+                                peoples = new InstancedGroup(
+                                    count,
+                                    [mesh],//这些mesh的网格应该一致
+                                    glb.animations[0]
+                                );
+                                peoples.init(['./img/texture/w/w0.jpg'],16);
+                                for (var i = 0; i < peoples.instanceCount; i++) {
+                                        peoples.rotationSet(i, [Math.PI / 2, 0, 0]);
+                                        peoples.positionSet(i, [3 * i, 0, 0]);
+                                        peoples.scaleSet(i, [0.03, 0.03, 0.03]);
+                                        peoples.speedSet(i,0.5);
+                                        peoples.animationSet(i,0);
+                                }
+                                scope.scene.add(peoples.obj);
+                                scope.frameIndexPre_10s=scope.frameIndex;
+                                if(FPS<30){
+                                        window.clearInterval(myInterval);
+                                        console.log(result);
+                                }
+                                result+=(","+FPS);
+                                //60,58,59,59,59,59,59,59,59,59,59,59,59,59,59,59,59,58,55,52,48,47,46,44,44,41,41,39,37,37,34,34,31
+                        },1000);
+                        */
+
+
+                        updateAnimation();//
+                        function updateAnimation() {//每帧更新一次动画
+                                requestAnimationFrame(updateAnimation);
+                        }
+                });//
+                //完成测试
+        },
+
+        //场景中人数变化的帧数统计
+        test8:function (contextType){
                 if(typeof(contextType)==="undefined")this.setContext();
                 //开始测试
                 var scope=this;
@@ -157,4 +274,4 @@ InstancedGroupTest.prototype={
 
 }
 var myInstancedGroupTest=new InstancedGroupTest();
-myInstancedGroupTest.test6();
+myInstancedGroupTest.test5_0();

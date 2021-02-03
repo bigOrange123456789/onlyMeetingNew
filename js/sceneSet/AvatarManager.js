@@ -47,7 +47,8 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
             scope.loadGuest1(glbObj);
             scope.loadGuest2(glbObj);
         });
-        this.createPeople_haveAnimation();
+        //this.createPeople_haveAnimation();
+        this.analysis();
     }
     this.createPeople_haveAnimation=function(){
         var loader= new THREE.GLTFLoader();
@@ -165,5 +166,64 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
         //new ParamMeasure(myModel,0);
         this.obj.add(myModel);
         //完成创建PM对象
+    }
+    this.analysis=function () {
+        var loader= new THREE.GLTFLoader();
+        loader.load('myModel/avatar/Female.glb', (glb) => {
+            //console.log(glb.scene.children[0].children[1])
+            var peoples=new InstancedGroup(
+                1,
+                [glb.scene.children[0].children[1].clone()],//这些mesh的网格应该一致
+                glb.animations[0].clone()
+            );
+            peoples.init(['./img/texture/m/m00.jpg','./img/texture/m/m0.jpg'],32);
+            for(var index=0;index<peoples.instanceCount;index++)
+                {
+                    peoples.rotationSet(index,[Math.PI/2,0,3*Math.PI/2]);
+                    peoples.positionSet(index,[scope.positions[index][0]+1.8,scope.positions[index][1]+1.5,scope.positions[index][2]]);
+                    peoples.scaleSet(index,[0.045,0.045,0.04+Math.random()*0.01]);
+
+                    peoples.animationSet(index,scope.animations[index]);
+                    peoples.colorSet(index,scope.colors[index]);
+                    peoples.speedSet(index,0.15+Math.random()*1.5);
+                }
+            scope.obj.add(peoples.obj);
+
+            //先等待贴图的加载，以防初始时贴图未完全加载影响测量结果
+            setTimeout(function () {
+                var result="";
+                var myInterval=setInterval(function () {
+                    result=result+","+tag.innerHTML;
+                    //console.log(tag)
+                    console.log(parseInt(tag.innerHTML),peoples.instanceCount);
+                    var obj0=peoples.obj;
+                    var count=peoples.instanceCount;
+                    peoples=new InstancedGroup(
+                        count+10,
+                        [glb.scene.children[0].children[1].clone()],//这些mesh的网格应该一致
+                        glb.animations[0].clone()
+                    );
+                    peoples.init(['./img/texture/m/m00.jpg','./img/texture/m/m0.jpg'],32);
+                    for(var index=0;index<peoples.instanceCount;index++)
+                    {
+                        peoples.rotationSet(index,[Math.PI/2,0,3*Math.PI/2]);
+                        peoples.positionSet(index,[scope.positions[index][0]+1.8,scope.positions[index][1]+1.5,scope.positions[index][2]]);
+                        peoples.scaleSet(index,[0.045,0.045,0.04+Math.random()*0.01]);
+
+                        peoples.animationSet(index,scope.animations[index]);
+                        peoples.colorSet(index,scope.colors[index]);
+                        peoples.speedSet(index,0.15+Math.random()*1.5);
+                    }
+                    scope.obj.remove(obj0);
+                    scope.obj.add(peoples.obj);
+
+                    if(peoples.instanceCount>=scope.positions.length){
+                        window.clearInterval(myInterval);
+                        console.log(result);
+                    }
+                },2000);
+            },10000);
+
+        });
     }
 }
