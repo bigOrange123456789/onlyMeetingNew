@@ -87,8 +87,8 @@
 			requestAnimationFrame(frameIndexUpdate);
 		}
 		function computeFPS() {
-			tag.innerHTML =(frameIndex - frameIndexPre);
-			//tag.innerHTML = "FPS:" + (frameIndex - frameIndexPre);
+			//tag.innerHTML =(frameIndex - frameIndexPre);
+			tag.innerHTML = "FPS:" + (frameIndex - frameIndexPre);
 			frameIndexPre = frameIndex;
 		}
 		//完成帧数统计

@@ -77,23 +77,18 @@ MyPMLoader.prototype={
         var baseMeshUrl = this.url + '/basemesh.json';
         var skeletonUrl = this.url + '/skeleton.json';
         var skeletonIndexUrl = this.url + '/skeletonindex.json';
-        var manager=THREE.DefaultLoadingManager;
-        var baseMeshloader = new THREE.XHRLoader(manager);
-        baseMeshloader.load(baseMeshUrl, function(baseMesh)
-        {
-            var skeletonLoader = new THREE.XHRLoader(manager);
-            skeletonLoader.load(skeletonUrl, function(skeleton)
-            {
-                var skeletonIndexLoader = new THREE.XHRLoader(manager);
-                skeletonIndexLoader.load(skeletonIndexUrl, function(skeletonIndex)
-                {
+        var loader = new THREE.XHRLoader(THREE.DefaultLoadingManager);
+        loader.load(baseMeshUrl, function(baseMesh){
+            loader.load(skeletonUrl, function(skeleton){
+                loader.load(skeletonIndexUrl, function(skeletonIndex){
                     THIS.handlePMJson_i( baseMesh, skeleton, skeletonIndex, animationClips);
                 });
             });
         });
-
     },
     handlePMJson_i:function(baseMesh, skeleton, skeletonIndex, animationClips) {
+        var THIS=this;
+        THIS.mesh={};
         var skeletonBones=this.skeletonBones;
         var skeletonMatrix=this.SkeletonMatrix;
         var rootObject =this.rootObject ;// new THREE.Object3D();
@@ -112,7 +107,7 @@ MyPMLoader.prototype={
         var mapMaterial={};
 
         var material_id=0;
-        var mesh=this.mesh;
+        //var mesh=this.mesh;
 
         var meshMaterialMap = {};
 
@@ -131,7 +126,7 @@ MyPMLoader.prototype={
 
 
         //设置新网格//复制vertices
-        for (var i = 0 ; i < jsonData.geometries[0].data.vertices.length / 3 ; ++i)
+        for (i = 0 ; i < jsonData.geometries[0].data.vertices.length / 3 ; ++i)
             meshData.vertices.push([
                 jsonData.geometries[0].data.vertices[i * 3    ] ,
                 jsonData.geometries[0].data.vertices[i * 3 + 1] ,
@@ -145,7 +140,7 @@ MyPMLoader.prototype={
             meshData.weights.push(skeletonData.weights[skeletonId]);
         }
         //uvs
-        for(var i = 0 ; i < jsonData.geometries[0].data.uvs.length / 2 ; ++i)
+        for(i = 0 ; i < jsonData.geometries[0].data.uvs.length / 2 ; ++i)
         {
             meshData.uvs.push([
                 jsonData.geometries[0].data.uvs[i * 2    ] ,
@@ -153,7 +148,7 @@ MyPMLoader.prototype={
             ]);
         }
         //
-        for(var i = 0 ; i < jsonData.geometries[0].data.faces.length; ++i)
+        for(i = 0 ; i < jsonData.geometries[0].data.faces.length; ++i)
         {
             if(jsonData.geometries[0].data.faces[i].length>0)
             {
@@ -182,13 +177,13 @@ MyPMLoader.prototype={
 
         computeIncidentFaces();
 
-        for(var i=0; i< meshData.materials.length;i++)
+        for(i=0; i< meshData.materials.length;i++)
         {
             meshMat[i] = new THREE.MeshStandardMaterial(
                 {
                     metalness : 0.2,
                     roughness : 0.8,
-                    map: null,//THREE.ImageUtils.loadTexture(texFilesUrl + '/' + meshData.materials[i]),
+                    map: null,//ImageUtils.loadTexture(texFilesUrl + '/' + meshData.materials[i]),
                     transparent: false,
                     opacity : true,
                     skinning : true
@@ -200,19 +195,16 @@ MyPMLoader.prototype={
             restoreMesh(Meshid);//应该是处理基模时使用的，只被执行一次
         }
 
-        var THIS=this;
-        loadLocalFile(pmFilesUrl + 'desc.json',function (data)
-        {
+        loadLocalFile(pmFilesUrl + 'desc.json',function (data) {
             var jsonData = JSON.parse(data);
             splitCount = jsonData.splitCount;
             startPmLoading(THIS);
-
         });
 
 
         this.rootObject.animations=animationClips;//animationClips是AnimationClip数组类型的，存放了5个动画//animationClips里面有多个动作，动作的切换是可行的//animationClips[0]=animationClips[1];//Clip是削减的意思
 
-        THIS.animationMixer=new THREE.AnimationMixer(THIS.rootObject);//动画混合器animationMixer是用于场景中特定对象的动画的播放器
+        THIS.animationMixer=new THREE.AnimationMixer(THIS.rootObject.children[0]);//动画混合器animationMixer是用于场景中特定对象的动画的播放器
         THIS.animationMixer.clipAction(THIS.rootObject.animations[THIS.animationType]).play();//动画剪辑AnimationClip是一个可重用的关键帧轨道集，它代表动画。
         //完成设置动画
         for(var k=0;k<THIS.rootObject.animations.length;k++)
@@ -253,7 +245,7 @@ MyPMLoader.prototype={
                     imageLodLevel++;
 
                     if (!isSrcImage && imageLodLevel <= MaxLODLevel)//setTimeout(function(){} , imgLoadingGapTime);
-                        loadLodImage(imageFileNameWithoutEx, imageFileExtension, imageLodLevel == MaxLODLevel);
+                        loadLodImage(imageFileNameWithoutEx, imageFileExtension, imageLodLevel === MaxLODLevel);
                 },
                 undefined,
                 function ( err )
@@ -310,7 +302,7 @@ MyPMLoader.prototype={
                         index = i;
                         objectF.faceIndex=(vsfi/6);
                     }
-                    else if (vsData.Faces[vsfi+2*i] != meshData.faces[Meshid][face][i])
+                    else if (vsData.Faces[vsfi+2*i] !== meshData.faces[Meshid][face][i])
                     {
                         isFace = false;
                     }
@@ -382,9 +374,9 @@ MyPMLoader.prototype={
             for (var sfi = 0 ; sfi < vsData.Faces.length ; sfi+=6)
             {
                 var hasST;
-                if(vsData.Faces[sfi+0] == vsData.S){hasST=(vsData.Faces[sfi+2] ==t ||vsData.Faces[sfi+4] == t)}
-                else if(vsData.Faces[sfi+2] == vsData.S){hasST=(vsData.Faces[sfi+0] ==t ||vsData.Faces[sfi+4] == t)}
-                else if(vsData.Faces[sfi+4] == vsData.S){hasST=(vsData.Faces[sfi+0] ==t ||vsData.Faces[sfi+2] == t)}
+                if(vsData.Faces[sfi+0] === vsData.S){hasST=(vsData.Faces[sfi+2] ===t ||vsData.Faces[sfi+4] === t)}
+                else if(vsData.Faces[sfi+2] === vsData.S){hasST=(vsData.Faces[sfi+0] ===t ||vsData.Faces[sfi+4] === t)}
+                else if(vsData.Faces[sfi+4] === vsData.S){hasST=(vsData.Faces[sfi+0] ===t ||vsData.Faces[sfi+2] === t)}
                 else{hasST=false;}
 
                 if (!hasST)continue;
@@ -397,7 +389,7 @@ MyPMLoader.prototype={
                 meshData.faces[Meshid].push(newFace);
 
                 // Update incident faces
-                for (var i = 0 ; i < newFace.length ; ++i)
+                for (i = 0 ; i < newFace.length ; ++i)
                     incidentFaces[newFace[i]].push(num);
             }
         }
@@ -419,27 +411,29 @@ MyPMLoader.prototype={
         }
 
         //创建新的模型，将还原后的结果渲染到场景中
-        function restoreMesh(Meshid,index,lengthindex,THIS)//Meshid始终为0
+
+        function restoreMesh(Meshid,index,lengthindex)//Meshid始终为0
         {//index:0-330   lengthindex:331
             var useSkinning = true;
-            rootObject.remove(mesh[Meshid]);//将mesh从对象中移除//this is a tag 0000
+            rootObject.remove(THIS.mesh[0]);//将mesh从对象中移除//this is a tag 0000
 
             var geometry=new THREE.BufferGeometry();
             updateGeometry(geometry,meshData,Meshid);//相关运算
 
-            if(useSkinning==false){//没有骨骼动画
-                mesh[Meshid]=new THREE.Mesh(geometry,meshMat[Meshid]);
+            //console.log(mesh)
+            if(!useSkinning){//没有骨骼动画
+                THIS.mesh[0]=new THREE.Mesh(geometry,meshMat[Meshid]);
             }else{//有骨骼动画
-                mesh[Meshid]=new THREE.SkinnedMesh(geometry,meshMat[Meshid]);
+                THIS.mesh[0]=new THREE.SkinnedMesh(geometry,meshMat[Meshid]);
                 meshMat[Meshid].skinning=true;
             }//console.log(Meshid);输出了356次的0
 
-            rootObject.add(mesh[Meshid]);//将新的mesh添加到对象中//
+            rootObject.add(THIS.mesh[0]);//将新的mesh添加到对象中//
             setupPmSkinnedMesh(rootObject, skeletonBones, skeletonMatrix);//重要
 
             if(typeof(index)!='undefined')
-                if(index==lengthindex-1||index%Math.ceil(lengthindex/(numberLOD-1))==0)
-                    pmMeshHistory.push(mesh[Meshid]);//记录mesh
+                if(index===lengthindex-1||index%Math.ceil(lengthindex/(numberLOD-1))===0)
+                    pmMeshHistory.push(THIS.mesh[0]);//记录mesh
         }
 
         function updateGeometry(geometry, meshData, Meshid)
@@ -453,7 +447,7 @@ MyPMLoader.prototype={
             //var f1=0;
             for (var key=0;key<meshData.faces[Meshid].length;key++)
             {
-                indicesArray[key * 3 + 0]=key * 3 + 0;
+                indicesArray[key * 3 ]=key * 3 ;
                 indicesArray[key * 3 + 1]=key * 3 + 1;
                 indicesArray[key * 3 + 2]=key * 3 + 2;
 
@@ -461,7 +455,7 @@ MyPMLoader.prototype={
                 var fx=meshData.faces[Meshid][key][0];
                 var fy=meshData.faces[Meshid][key][1];
                 var fz=meshData.faces[Meshid][key][2];
-                verticesArray[key*9+0]=meshData.vertices[fx][0];
+                verticesArray[key*9]=meshData.vertices[fx][0];
                 verticesArray[key*9+1]=meshData.vertices[fx][1];
                 verticesArray[key*9+2]=meshData.vertices[fx][2];
                 verticesArray[key*9+3]=meshData.vertices[fy][0];
@@ -472,7 +466,7 @@ MyPMLoader.prototype={
                 verticesArray[key*9+8]=meshData.vertices[fz][2];
 
                 // joint
-                jointArray[key * 12 + 0] = meshData.joints[fx][0];
+                jointArray[key * 12 ] = meshData.joints[fx][0];
                 jointArray[key * 12 + 1] = meshData.joints[fx][1];
                 jointArray[key * 12 + 2] = meshData.joints[fx][2];
                 jointArray[key * 12 + 3] = meshData.joints[fx][3];
@@ -486,7 +480,7 @@ MyPMLoader.prototype={
                 jointArray[key * 12 + 11] = meshData.joints[fz][3];
 
                 // weight
-                weightArray[key * 12 + 0] = meshData.weights[fx][0];
+                weightArray[key * 12 ] = meshData.weights[fx][0];
                 weightArray[key * 12 + 1] = meshData.weights[fx][1];
                 weightArray[key * 12 + 2] = meshData.weights[fx][2];
                 weightArray[key * 12 + 3] = meshData.weights[fx][3];
@@ -500,7 +494,7 @@ MyPMLoader.prototype={
                 weightArray[key * 12 + 11] = meshData.weights[fz][3];
 
                 //uv
-                uvsArray[key*6+0]=meshData.uvs[meshData.Uvfaces[Meshid][key][0]][0];
+                uvsArray[key*6]=meshData.uvs[meshData.Uvfaces[Meshid][key][0]][0];
                 uvsArray[key*6+1]=meshData.uvs[meshData.Uvfaces[Meshid][key][0]][1];
                 uvsArray[key*6+2]=meshData.uvs[meshData.Uvfaces[Meshid][key][1]][0];
                 uvsArray[key*6+3]=meshData.uvs[meshData.Uvfaces[Meshid][key][1]][1];

@@ -148,12 +148,12 @@ InstancedGroupTest.prototype={
                 loader.load("myModel/avatar/Female.glb", (glb0) => {
                         //console.log(glb0);
                         loader.load("test/avatar/mm.glb", (glb) => {
-                                console.log(glb);
-                                /*glb.scene.children[0].traverse(node => {
+                                //console.log(glb);//scene.children[0].children[1].children
+                                glb.scene.children[0].traverse(node => {
                                         if (node instanceof THREE.SkinnedMesh) {
                                                 createObj(node);
                                         }
-                                });*/
+                                });/**/
                                 var myMesh=glb.scene.children[0].children[1].children[0];
                                 //scope.scene.add(myMesh);
                                 createObj(myMesh);
@@ -162,7 +162,8 @@ InstancedGroupTest.prototype={
                                         //console.log(mesh);
                                         var myController=new SkinnedMeshController();
                                         myController.init(mesh,glb.animations[0]);
-                                        //myController.mesh.position.set(0,0,0);
+                                        myController.mesh.position.set(0,0,0);
+                                        myController.mesh.scale.set(1,1,1);
                                         //myController.mesh.scale.set(4.5,4.5,4.5);
                                         //var time=0;
                                         //myController.setTime(time);
@@ -1855,5 +1856,5 @@ InstancedGroupTest.prototype={
         },
 }
 var myInstancedGroupTest=new InstancedGroupTest();
-myInstancedGroupTest.test5_0();
+myInstancedGroupTest.test2_1();
 //myInstancedGroupTest.test_texture();

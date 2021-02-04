@@ -5,6 +5,8 @@ function SkinnedMeshController() {
     this.boneNum;//骨骼个数
     this.time;
     this.speed;
+
+    this.animationMixer;//动画混合器
 }
 SkinnedMeshController.prototype={
     init:function (originMesh,animation) {
@@ -227,19 +229,21 @@ SkinnedMeshController.prototype={
         var time=0;
         //new ParamMeasure(this.animation,2);
     },
+    //帧动画
     autoPlay:function() {//每帧更新一次动画--
-        scope.time+=scope.speed;//t=0;
-        var time=Math.floor(scope.time%scope.frameMax);
-        scope.setTime(time);
-        requestAnimationFrame(scope.autoPlay);
+        this.time+=this.speed;//t=0;
+        var time=Math.floor(this.time%this.frameMax);
+        this.setTime(time);
+        requestAnimationFrame(this.autoPlay);
     },
+    //使用AnimationMixer
     autoPlay0:function () {
         var scope=this;
-        var animationMixer=new THREE.AnimationMixer(this.mesh);//搞清动画混合器AnimationMixer的作用至关重要
-        animationMixer.clipAction(this.animation).play();//不清楚这里的作用//可能是进行帧的插值
+        this.animationMixer=new THREE.AnimationMixer(this.mesh);//搞清动画混合器AnimationMixer的作用至关重要
+        this.animationMixer.clipAction(this.animation).play();//不清楚这里的作用//可能是进行帧的插值
         myPlay();
         function myPlay() {
-            animationMixer.update(scope.speed);
+            scope.animationMixer.update(scope.speed);
             requestAnimationFrame(myPlay);
         }
     },
@@ -278,4 +282,9 @@ SkinnedMeshController.prototype={
         );
         return te;
     },
+}
+SkinnedMeshController.prototype.pmHandle=function (obj,animation) {
+    this.animationMixer=new THREE.AnimationMixer(obj);//动画混合器animationMixer是用于场景中特定对象的动画的播放器
+    this.animationMixer.clipAction(animation).play();//动画剪辑AnimationClip是一个可重用的关键帧轨道集，它代表动画。
+    return this.animationMixer;
 }

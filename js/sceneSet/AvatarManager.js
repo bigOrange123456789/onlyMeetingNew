@@ -154,9 +154,9 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
             0.02     //动画播放速度//可以通过调整pmLoader.animationSpeed来调整速度
         );//pmLoader = new myPMLoader('myModel/dongshizhang', LODNumber);//pmLoader = new THREE.PMLoader();//加载PM文件
         var myModel=pmLoader.obj;
-        //myModel.scale.set(1.5,1.5,1.5);
-        myModel.position.set(191,9,-11);//191,9,-11
-        myModel.rotation.set(0,-Math.PI/2,0);
+        myModel.scale.set(0.024,0.024,0.024);
+        myModel.position.set(191,18.1,-11);//191,9,-11
+        myModel.rotation.set(0,Math.PI,0);
         //new ParamMeasure(myModel,0);
         this.obj.add(myModel);
         //完成创建PM对象
