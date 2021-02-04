@@ -527,10 +527,8 @@ MyPMLoader.prototype={
             {
                 if (pmCount < splitCount)//splitCount是总数
                 {
-                    if(pmDeltaTime==0)startPmLoading(THIS);//setTimeout(function(){} , pmDeltaTime);
-                }
-                else
-                {
+                    if(pmDeltaTime===0)startPmLoading(THIS);//setTimeout(function(){} , pmDeltaTime);
+                } else {//完成了全部PM文件的加载
                     function loopLODCheck(){
                         requestAnimationFrame(loopLODCheck);
                         THIS.LODCheck();
@@ -561,26 +559,27 @@ MyPMLoader.prototype={
         this.animationMixer=this.animationMixers[i];
         this.animationMixer.play();
         for(var k=0;k<this.animationMixers.length;k++)
-            if(k!=i)this.animationMixers[k].stop();
+            if(k!==i)this.animationMixers[k].stop();
     },
 
     //以下是与LOD相关的代码
-    LODCheck:function(){
+    LODCheck:function(){//完成加载全部PM文件后就不断执行这个函数
         this.updateMesh(this.computeLODLevel());//数组的下标0-(l+1)
     },
-    computeLODLevel:function(){//等级越大模型越精细
-        var distance=Math.sqrt(
-            Math.pow(this.camera.position.x - this.rootObject.position.x,2)
-            + Math.pow(this.camera.position.y - this.rootObject.position.y,2)
-            + Math.pow(this.camera.position.z - this.rootObject.position.z,2)
+    computeLODLevel:function(){//计算LOD等级//等级越大模型越精细
+        var distance=Math.sqrt(//this.rootObject的位置估计是在原点
+            Math.pow(this.camera.position.x - this.obj.position.x,2)
+            + Math.pow(this.camera.position.y - this.obj.position.y,2)
+            + Math.pow(this.camera.position.z - this.obj.position.z,2)
         );
-        var level=this.LODArray.length;//分几段就有几个等级，级别编号从0开始,这是等级编号的最大值
-        if(distance<this.LODArray[0])level=0;
+        var level=0;//位置处于(l-1)之后精度最低//分几段就有几个等级，级别编号从0开始,这是等级编号的最大值
+        if(distance<this.LODArray[0])level=this.LODArray.length;//位置处于0之前精度最高
         for(var i=1;i<this.LODArray.length;i++)
             if(distance>this.LODArray[i-1]&&distance<this.LODArray[i]){
-                level=i;
+                level=this.LODArray.length-i-1;
+                break;
             }
-        return this.LODArray.length-level;//越远等级越小
+        return level;//越远等级越小
     },
     updateMesh:function(i){//这个函数的作用是协助实现LOD//0 - pmMeshHistory-1
         var skeletonBones=this.skeletonBones,skeletonMatrix=this.skeletonMatrix;

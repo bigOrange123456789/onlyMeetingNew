@@ -41,10 +41,10 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
 
     this.loadAvatar=function () {
         this.host();
-        var animLoader = new PMAnimLoader();//估计是通过gltf文件加载的动画
+        var animLoader = new THREE.GLTFLoader();//= new PMAnimLoader();//估计是通过gltf文件加载的动画
         animLoader.load('./myModel/skeleton/scene.gltf', function (glbObj){
             glbObj.scene.visible=false;
-            scope.loadGuest1(glbObj);
+            //scope.loadGuest1(glbObj);
             scope.loadGuest2(glbObj);
         });
         this.createPeople_haveAnimation();
@@ -123,10 +123,7 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
     }
     this.loadGuest1=function (glbObj) {
         //开始创建PM对象
-        var LODArray=[200,300]//4个数字表示距离，可以将模型分为5级;
-        //var path='/myModel/childFemale_idle';//childFemale_crawl
-        //var path='/myModel/childFemale_crawl';
-        //var path='/myModel/Female01';
+        var LODArray=[150]//4个数字表示距离，可以将模型分为5级;
         var path='./myModel/zhao1';
         var pmLoader = new MyPMLoader(
             glbObj,
@@ -146,10 +143,7 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
     }
     this.loadGuest2=function (glbObj) {
         //开始创建PM对象
-        var LODArray=[200,300]//4个数字表示距离，可以将模型分为5级;
-        //var path='/myModel/childFemale_idle';//childFemale_crawl
-        //var path='/myModel/childFemale_crawl';
-        //var path='/myModel/Female01';
+        var LODArray=[50]//4个数字表示距离，可以将模型分为5级;
         var path='./myModel/dongshizhang5';
         var pmLoader = new MyPMLoader(
             glbObj,

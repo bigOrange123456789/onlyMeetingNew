@@ -5,8 +5,8 @@ function RoomManager(){//myVideoManager_
 RoomManager.prototype={
     loadRoom:function(){
         this.room.scale.set(10,10,10);
-        this.myLoad('myModel/room/new24.gltf');
-        this.myLoad('myModel/room/new33.gltf');
+        this.myLoad('myModel/room/new24.gltf');//外墙
+        this.myLoad('myModel/room/new33.gltf');//地面
 
         for(var i=0;i<90;i++)
             if(!fileError(i))
@@ -30,19 +30,18 @@ RoomManager.prototype={
     myLoad:function(url){
         var scope=this;
         this.loader.load(url, (gltf) => {
-            if(url==="myModel/room/new24.gltf"){
+            if(url==="myModel/room/new24.gltf"){//外墙
                 var mesh=gltf.scene.children[0];
                 mesh.material=new THREE.MeshBasicMaterial({color:0xf0f0c8});
                 var myText0= THREE.ImageUtils.loadTexture("myModel/room/new24.jpg",null,function () {
-                    //myText0.flipY=false;
                     myText0.wrapS = THREE.RepeatWrapping;
                     myText0.wrapT = THREE.RepeatWrapping;
-                    //myText0.needsUpdate = true;
+                    myText0.repeat.set(2,2);
                     mesh.material = new THREE.MeshBasicMaterial({
                         map: myText0,//设置颜色贴图属性值
                     });
                 });
-            }else if(url==="myModel/room/new33.gltf"){
+            }else if(url==="myModel/room/new33.gltf"){//地面
                 var mesh2=gltf.scene.children[0];
                 mesh2.material=new THREE.MeshBasicMaterial({color:0x4c1c18});//76 28 24
                 var myText2= THREE.ImageUtils.loadTexture("myModel/room/new33.jpg",null,function () {
@@ -80,7 +79,6 @@ RoomManager.prototype={
             scope.room.add(obj);
             var z=Math.PI/2;
             function test(){
-                //console.log(door1.rotation.z,door2.rotation.y)
                 if(door1.rotation.z>0){
                     z-=0.02;
                     door1.rotation.z=z;
