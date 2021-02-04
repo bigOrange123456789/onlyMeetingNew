@@ -6,7 +6,7 @@ function InstancedGroup(instanceCount,originMesh,animationClip ){
     //记录有无骨骼动画
     this.haveSkeleton = !(typeof (animationClip) == "undefined" || animationClip === false);
     this.originMeshs=originMesh;//这是一个数组，每个元素播放一种动画
-    this.animationClip=animationClip;
+    //this.animationClip=animationClip;
     this.mesh=null;//实例化渲染对象的网格
 
     this.speed;
@@ -130,7 +130,17 @@ InstancedGroup.prototype={
         text0.flipY=false;
         text0.wrapS = text0.wrapT = THREE.ClampToEdgeWrapping;
 
-        let material;
+        var uniforms={
+            text0: {type: 't', value: text0}
+            ,textNum:{value: textNum}
+        };
+        var path_v=this.haveSkeleton?"shader/vertexBone.vert":"shader/vertex.vert",
+            path_f="shader/fragment.frag";
+        let material = new THREE.RawShaderMaterial();//原始着色器材质
+        material.side=THREE.DoubleSide;
+        material.uniforms= uniforms;
+        material.vertexShader=load(path_v);
+        material.fragmentShader=load(path_f);
         function load(name) {
             let xhr = new XMLHttpRequest(),
                 okStatus = document.location.protocol === "file:" ? 0 : 200;
@@ -140,47 +150,16 @@ InstancedGroup.prototype={
             return xhr.status === okStatus ? xhr.responseText : null;
         }
         if(this.haveSkeleton){
-            material = new THREE.RawShaderMaterial({//原始着色器材质
-                uniforms: {
-                    dataTexture: {type: 't', value:[]}
-                    ,text0: {type: 't', value: text0}
-                    ,time:{value: 0.0}
-                    ,textNum:{value: textNum}
-                },
-                vertexShader: load("shader/vertexBone.vert"),
-                fragmentShader:load("shader/fragment.frag"),
-                side: THREE.DoubleSide
-            });
-
+            uniforms.dataTexture={type: 't', value:[]};
+            uniforms.time={value: 0.0};
             var loader = new THREE.XHRLoader(THREE.DefaultLoadingManager);
-            loader.load("animationData.json", function(str)
-            {
+            loader.load("animationData.json", function(str){//dataTexture
                 var data0=JSON.parse(str).data;//204
-                //dataTexture
                 var data = new Uint8Array( data0.length);//1944
                 var width = 1 , height = data.length/3 ;//648
-                for(var i=0;i<data.length;i++){//972
-                    data[i]=data0[i];
-                }
-                var dataTexture = new THREE.DataTexture(
-                    data,
-                    width,
-                    height,
-                    THREE.RGBFormat
-                );
-                material.uniforms.dataTexture={
-                    "value":dataTexture
-                };
-            });
-        }else{
-            material = new THREE.RawShaderMaterial({//原始着色器材质
-                uniforms: {
-                    text0: {type: 't', value: text0}//textureHandle
-                    ,textNum:{value: textNum}
-                },
-                vertexShader: load("shader/vertex.vert"),
-                fragmentShader: load("shader/fragment.frag"),
-                side: THREE.DoubleSide
+                for(var i=0;i<data.length;i++)data[i]=data0[i];//972
+                var dataTexture = new THREE.DataTexture(data, width, height, THREE.RGBFormat);
+                uniforms.dataTexture={"value":dataTexture};
             });
         }
         //以下是根据material设置的uniform
@@ -195,7 +174,8 @@ InstancedGroup.prototype={
                 setText0();
             });
         }
-        setText0();
+        if(typeof(texSrc[0])==="string")setText0();//传入资源地址
+        else material.uniforms.text0={value:texSrc[0]};//传入map类型
 
         this.mesh = new THREE.Mesh(geometry, material);//重要
         this.mesh.frustumCulled=false;

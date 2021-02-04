@@ -282,6 +282,7 @@ SkinnedMeshController.prototype={
     },
 }
 //以下代码用于项目性能的分析
+/*
 function InstancedGroup2(instanceCount,originMesh,animationClip ){
     //若有骨骼，则需要源mesh是skinnedMesh
     this.obj=new THREE.Object3D();
@@ -395,3 +396,4 @@ InstancedGroup2.prototype={
     },
 
 }
+*/

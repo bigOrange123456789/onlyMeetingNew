@@ -34,7 +34,7 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
 
     this.init=function () {
         this.obj.name="AvatarManager_obj";
-        for(var i=0;i<this.positions.length;i++)
+        for(var i=0;i<this.positions.length;i++)//共有1677个位置
             this.positionsType.push(Math.floor(Math.random()*4)+1);//1-4
         this.loadAvatar();
     }
