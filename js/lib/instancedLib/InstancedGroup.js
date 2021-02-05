@@ -253,7 +253,7 @@ InstancedGroup.prototype={
         return [scale.x,scale.y,scale.z];
     },
 
-    positionSet:function (i,pos){
+    positionSet:function (i,pos){//.instanceMatrix.needsUpdate=true;
         this.mcol3.array[3*i  ]=pos[0];
         this.mcol3.array[3*i+1]=pos[1];
         this.mcol3.array[3*i+2]=pos[2];

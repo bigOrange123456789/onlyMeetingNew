@@ -49,29 +49,7 @@ MyPMLoader.prototype={
 
         //处理骨骼动画
         var animationClips=THIS.glbObj.animations;//获取动画
-        THIS.glbObj.scene.traverse( function(node){//获取骨骼
-            if (node instanceof THREE.Mesh&&!THIS.skeletonBones)//node是THREE.Mesh类型的实例，且pmSkeletonBones为空
-            {//00001//存储所有的骨骼骨头和变换矩阵
-                var bones = [];
-                cloneBones(node.skeleton.bones[0], bones);
-                THIS.skeletonBones=THIS.skeletonBones= new THREE.Skeleton(bones, node.skeleton.boneInverses);
-                THIS.skeletonMatrix=THIS.SkeletonMatrix =  node.matrixWorld.clone();
-            }
-        });
-        loopAnimationRun();
-        function loopAnimationRun(){//循环播放动画
-            requestAnimationFrame(loopAnimationRun);
-            THIS.animationRun();
-        }
-        function cloneBones(rootBone, boneArray)//用于加载完gltf文件后的骨骼动画的处理
-        {
-            var rootBoneClone=rootBone.clone();
-            rootBoneClone.children.splice(0,rootBoneClone.children.length);
-            boneArray.push(rootBoneClone);
-            for (var i = 0 ; i < rootBone.children.length ; ++i)
-                rootBoneClone.add(cloneBones(rootBone.children[i], boneArray));
-            return rootBoneClone;
-        }
+        this.ainmationInit();
 
         //加载基模的三个JSON文件,然后进行解析、执行parse函数
         var baseMeshUrl = this.url + '/basemesh.json';
@@ -202,15 +180,7 @@ MyPMLoader.prototype={
         });
 
 
-        this.rootObject.animations=animationClips;//animationClips是AnimationClip数组类型的，存放了5个动画//animationClips里面有多个动作，动作的切换是可行的//animationClips[0]=animationClips[1];//Clip是削减的意思
-
-        THIS.animationMixer=new THREE.AnimationMixer(THIS.rootObject.children[0]);//动画混合器animationMixer是用于场景中特定对象的动画的播放器
-        THIS.animationMixer.clipAction(THIS.rootObject.animations[THIS.animationType]).play();//动画剪辑AnimationClip是一个可重用的关键帧轨道集，它代表动画。
-        //完成设置动画
-        for(var k=0;k<THIS.rootObject.animations.length;k++)
-            THIS.animationMixers.push(
-                THIS.animationMixer.clipAction(THIS.rootObject.animations[k])
-            );
+        this.aimationMixerInit(animationClips);
         THIS.obj.add(THIS.rootObject);
 
         /***********************程序到此执行结束，以下为工具函数****************************************************************************************/
@@ -546,6 +516,43 @@ MyPMLoader.prototype={
     },
 
     //以下与动画相关的代码
+    ainmationInit:function(){//存储骨骼矩阵，循环播放动画
+        var THIS=this;
+        THIS.glbObj.scene.traverse( function(node){//获取骨骼
+            if (node instanceof THREE.Mesh&&!THIS.skeletonBones)//node是THREE.Mesh类型的实例，且pmSkeletonBones为空
+            {//00001//存储所有的骨骼骨头和变换矩阵
+                var bones = [];
+                cloneBones(node.skeleton.bones[0], bones);
+                THIS.skeletonBones=THIS.skeletonBones= new THREE.Skeleton(bones, node.skeleton.boneInverses);
+                THIS.skeletonMatrix=THIS.SkeletonMatrix =  node.matrixWorld.clone();
+            }
+        });
+
+        loopAnimationRun();
+        function loopAnimationRun(){//循环播放动画
+            requestAnimationFrame(loopAnimationRun);
+            THIS.animationRun();
+        }
+        function cloneBones(rootBone, boneArray)//用于加载完gltf文件后的骨骼动画的处理
+        {
+            var rootBoneClone=rootBone.clone();
+            rootBoneClone.children.splice(0,rootBoneClone.children.length);
+            boneArray.push(rootBoneClone);
+            for (var i = 0 ; i < rootBone.children.length ; ++i)
+                rootBoneClone.add(cloneBones(rootBone.children[i], boneArray));
+            return rootBoneClone;
+        }
+    },
+    aimationMixerInit:function(animationClips){//生成动画混合器
+        this.rootObject.animations=animationClips;//animationClips是AnimationClip数组类型的，存放了5个动画//animationClips里面有多个动作，动作的切换是可行的//animationClips[0]=animationClips[1];//Clip是削减的意思
+        this.animationMixer=new THREE.AnimationMixer(this.rootObject.children[0]);//动画混合器animationMixer是用于场景中特定对象的动画的播放器
+        this.animationMixer.clipAction(this.rootObject.animations[this.animationType]).play();//动画剪辑AnimationClip是一个可重用的关键帧轨道集，它代表动画。
+        //完成设置动画
+        for(var k=0;k<this.rootObject.animations.length;k++)
+            this.animationMixers.push(
+                this.animationMixer.clipAction(this.rootObject.animations[k])
+            );
+    },
     animationRun:function(){//更新动作从而播放连续的动画
         if(this.animationMixer)this.animationMixer.update(this.animationSpeed);
     },
