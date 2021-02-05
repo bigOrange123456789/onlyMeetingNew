@@ -5,13 +5,13 @@ function RoomManager(){//myVideoManager_
 RoomManager.prototype={
     loadRoom:function(){
         this.room.scale.set(10,10,10);
+        this.myLoad_door('myModel/room/door.gltf');
         this.myLoad('myModel/room/new24.gltf');//外墙
         this.myLoad('myModel/room/new33.gltf');//地面
 
         for(var i=0;i<90;i++)
             if(!fileError(i))
                 this.myLoad('myModel/room/new'+i+'.gltf');
-        this.myLoad_door('myModel/room/door.gltf');
         function fileError(k){
             var arr=[//以下两个数组记录需要特殊处理的模型资源路径
                 33,24,//提前加载的部件
@@ -75,10 +75,12 @@ RoomManager.prototype={
             var geometry1=gltf.scene.children[0].children[1].geometry;
             var geometry2=gltf.scene.children[0].children[2].geometry;
             //553828
-            var material0=new THREE.MeshBasicMaterial({color:0x37261c});//gltf.scene.children[0].children[0].material;
-            var material1=new THREE.MeshBasicMaterial({color:0xf3f3f3});//gltf.scene.children[0].children[1].material;
-            var material2=new THREE.MeshBasicMaterial({color:0xc5d8e6});//197 216 230//gltf.scene.children[0].children[2].material;
-            material1.side=THREE.DoubleSide;
+            //var material0=new THREE.MeshBasicMaterial({color:0x37261c});//gltf.scene.children[0].children[0].material;
+            //var material1=new THREE.MeshBasicMaterial({color:0xf3f3f3});material1.side=THREE.DoubleSide;//gltf.scene.children[0].children[1].material;
+            //var material2=new THREE.MeshBasicMaterial({color:0xc5d8e6});//197 216 230//gltf.scene.children[0].children[2].material;
+            var material0=gltf.scene.children[0].children[0].material;
+            var material1=gltf.scene.children[0].children[1].material;
+            var material2=gltf.scene.children[0].children[2].material;
 
             var mesh0=new THREE.InstancedMesh(geometry0,material0,4);
             var mesh1=new THREE.InstancedMesh(geometry1,material1,4);
