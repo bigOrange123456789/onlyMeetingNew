@@ -84,6 +84,7 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
                 peoples.colorSet(index,scope.colors[i]);
                 peoples.speedSet(index,0.15+Math.random()*1.5);
                 peoples.textureSet0(index,scope.types[i]);
+                //console.log(scope.types[i])
                 //peoples.textureSet(index,[scope.types[i],scope.types[i],scope.types[i]]);
                 index++;
             }

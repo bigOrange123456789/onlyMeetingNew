@@ -21,29 +21,8 @@
   <component name="ChangeListManager">
     <list default="true" id="b7b6123d-caec-4b82-a432-424a6b5be5dd" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animationData.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/texture/m/m0.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/img/texture/m/m0.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/texture/m/m00.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/img/texture/m/m00.jpg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/js/lib/instancedLib/InstancedGroup.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/lib/instancedLib/InstancedGroup.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/js/sceneSet/AvatarManager.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/sceneSet/AvatarManager.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pretreatment/Compute.js" beforeDir="false" afterPath="$PROJECT_DIR$/pretreatment/Compute.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pretreatment/index1.html" beforeDir="false" afterPath="$PROJECT_DIR$/pretreatment/index1.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/Compute.test.js" beforeDir="false" afterPath="$PROJECT_DIR$/test/Compute.test.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/InstancedGroup.test.js" beforeDir="false" afterPath="$PROJECT_DIR$/test/InstancedGroup.test.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/testLaunch.js" beforeDir="false" afterPath="$PROJECT_DIR$/test/testLaunch.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/texture/m/m10.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/test/texture/m/m10.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/texture/m/m2.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/test/texture/m/m2.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/texture/m/m20.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/test/texture/m/m20.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/texture/m/m24.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/test/texture/m/m24.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/texture/m/m28.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/test/texture/m/m28.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/texture/m/m33.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/test/texture/m/m33.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/texture/m/m36.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/texture/m/m38.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/texture/m/m39.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/texture/m/m4.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/test/texture/m/m4.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/texture/m/m40.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/texture/m/m41.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/texture/m/m42.jpg" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -157,7 +136,7 @@
       <workItem from="1612420477735" duration="38483000" />
       <workItem from="1612515173986" duration="7700000" />
       <workItem from="1612524679638" duration="29016000" />
-      <workItem from="1612606419159" duration="2518000" />
+      <workItem from="1612606419159" duration="3463000" />
     </task>
     <servers />
   </component>

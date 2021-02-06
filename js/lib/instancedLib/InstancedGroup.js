@@ -300,7 +300,10 @@ InstancedGroup.prototype={
         this.type.array[4 * i + 2] = type[2];
     },
     textureSet0: function (i, type) {//设置贴图和动画类型
-        this.type.array[4 * i] = type[0];//设置贴图
+        this.type.array[4 * i] = type;//设置贴图
+    },
+    textureSet1: function (i, type) {//设置贴图和动画类型
+        this.type.array[4 * i+ 1] = type;//设置贴图
     },
     animationSet:function(i,animationType){
         this.type.array[4*i+3]=animationType;//动画类型 0,1
