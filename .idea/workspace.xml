@@ -21,9 +21,29 @@
   <component name="ChangeListManager">
     <list default="true" id="b7b6123d-caec-4b82-a432-424a6b5be5dd" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/animationData0.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/animationData.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/img/texture/m/m0.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/img/texture/m/m0.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/img/texture/m/m00.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/img/texture/m/m00.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/lib/instancedLib/InstancedGroup.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/lib/instancedLib/InstancedGroup.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/sceneSet/AvatarManager.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/sceneSet/AvatarManager.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pretreatment/Compute.js" beforeDir="false" afterPath="$PROJECT_DIR$/pretreatment/Compute.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pretreatment/index1.html" beforeDir="false" afterPath="$PROJECT_DIR$/pretreatment/index1.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/Compute.test.js" beforeDir="false" afterPath="$PROJECT_DIR$/test/Compute.test.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/InstancedGroup.test.js" beforeDir="false" afterPath="$PROJECT_DIR$/test/InstancedGroup.test.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test/testLaunch.js" beforeDir="false" afterPath="$PROJECT_DIR$/test/testLaunch.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/texture/m/m10.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/test/texture/m/m10.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/texture/m/m2.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/test/texture/m/m2.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/texture/m/m20.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/test/texture/m/m20.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/texture/m/m24.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/test/texture/m/m24.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/texture/m/m28.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/test/texture/m/m28.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/texture/m/m33.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/test/texture/m/m33.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/texture/m/m36.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/texture/m/m38.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/texture/m/m39.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/texture/m/m4.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/test/texture/m/m4.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/texture/m/m40.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/texture/m/m41.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/texture/m/m42.jpg" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -136,7 +156,8 @@
       <workItem from="1612016600972" duration="34399000" />
       <workItem from="1612420477735" duration="38483000" />
       <workItem from="1612515173986" duration="7700000" />
-      <workItem from="1612524679638" duration="23238000" />
+      <workItem from="1612524679638" duration="29016000" />
+      <workItem from="1612606419159" duration="2518000" />
     </task>
     <servers />
   </component>
@@ -160,10 +181,10 @@
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="379" y="141" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1280.680@0.0.1280.680" timestamp="1610685129999" />
-    <state x="523" y="120" key="FileChooserDialogImpl" timestamp="1612514238879">
+    <state x="523" y="120" key="FileChooserDialogImpl" timestamp="1612606238445">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state x="523" y="120" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1612514238879" />
+    <state x="523" y="120" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1612606238445" />
     <state x="785" y="184" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1609483059436" />
     <state x="335" y="92" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1609487862309">
       <screen x="0" y="0" width="1920" height="1040" />

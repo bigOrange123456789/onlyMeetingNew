@@ -1,42 +1,53 @@
 function AvatarManager(mySeatManager,camera){//camera用于LOD
     var scope=this;
     this.obj=new THREE.Object3D();
-    //this.obj1=new THREE.Object3D();
-    //this.obj2=new THREE.Object3D();
 
     this.positions=mySeatManager.positions;
-    //this.types=[];//贴图类型
+    this.types=[];//贴图类型
     this.animations=[];//动画类型
     this.colors=[];
     this.sexs=[];//0表示女性，1表示男性
     this.manNum=0;
 
-    for(var i=0;i<scope.positions.length;i++){//共有1677张椅子
-        this.colors.push([
-            Math.random()/4 ,
-            Math.random()/4 ,
-            Math.random()/4
-        ]);
-        if(Math.random()<0.33)this.sexs.push(0);
-        else {
-            this.sexs.push(1);
-            this.manNum++;
-        }
-        if(Math.random()<0.7)this.animations.push(0);
-        else this.animations.push(1);
-    }
-
-
-
     this.camera=camera;
     this.positionsType=[];
 
-
     this.init=function () {
-        this.obj.name="AvatarManager_obj";
-        for(var i=0;i<this.positions.length;i++)//共有1677个位置
-            this.positionsType.push(Math.floor(Math.random()*4)+1);//1-4
-        this.loadAvatar();
+
+
+        var loader = new THREE.XHRLoader(THREE.DefaultLoadingManager);
+        loader.load("json/textureSetData.json", function(str){//dataTexture
+            for(i=0;i<scope.positions.length;i++){//共有1677张椅子
+                scope.colors.push([
+                    Math.random()/4 ,
+                    Math.random()/4 ,
+                    Math.random()/4
+                ]);
+                /*if(Math.random()<0.33)scope.sexs.push(0);
+                 else {
+                     scope.sexs.push(1);
+                     //scope.manNum++;
+                 }*/
+                if(Math.random()<0.7)scope.animations.push(0);
+                else scope.animations.push(1);
+            }
+            for(var i=0;i<scope.positions.length;i++)//共有1677个位置
+                scope.positionsType.push(Math.floor(Math.random()*4)+1);//1-4
+
+
+            var data=JSON.parse(str).data;
+            for(i=0;i<data.length;i++){
+                if(data[i]<16){
+                    scope.sexs[i]=0;
+                    scope.types[i]=data[i];
+                }else{
+                    scope.sexs[i]=1;
+                    scope.types[i]=data[i]-16;
+                    scope.manNum++;
+                }
+            }
+            scope.loadAvatar();
+        });
     }
 
     this.loadAvatar=function () {
@@ -72,7 +83,8 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
                 peoples.animationSet(index,scope.animations[i]);
                 peoples.colorSet(index,scope.colors[i]);
                 peoples.speedSet(index,0.15+Math.random()*1.5);
-                //else peoples.speedSet(i,2+Math.random()*1.92);
+                peoples.textureSet0(index,scope.types[i]);
+                //peoples.textureSet(index,[scope.types[i],scope.types[i],scope.types[i]]);
                 index++;
             }
 
@@ -100,6 +112,8 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
                         peoples.animationSet(index,scope.animations[i]);
                         peoples.colorSet(index,scope.colors[i]);
                         peoples.speedSet(index,0.15+Math.random()*1.5);
+                        peoples.textureSet0(index,scope.types[i]);
+                        //peoples.textureSet(i,[scope.types[i],scope.types[i],scope.types[i]]);
                         //else peoples.speedSet(i,2+Math.random()*1.92);
                         index++;
                     }

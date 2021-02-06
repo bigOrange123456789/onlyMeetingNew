@@ -383,16 +383,18 @@ InstancedGroupTest.prototype={
                         console.log(glb);//OnlyArm
                         var mesh=glb.scene.children[0].children[1];//"myModel/avatar/Female.glb"
 
-                        for(var k=0;k<3;k++){
-                                var peoples = new InstancedGroup(1, [mesh], glb.animations[0]);
 
-                                peoples.init(['./img/texture/m/m'+0+'.jpg'],32);
-                                peoples.rotationSet(0, [Math.PI / 2, 0, 0]);
-                                peoples.positionSet(0, [2*k, 0, 0]);
-                                peoples.scaleSet(0, [0.03, 0.03, 0.03]);
-                                peoples.speedSet(0,0.1);
-                                scope.scene.add(peoples.obj);
-                        }
+                        var peoples = new InstancedGroup(11, [mesh], glb.animations[0]);
+                        peoples.init(['./img/texture/m/m'+0+'.jpg'],32);
+                        for(var k=0;k<peoples.instanceCount;k++){
+                                        peoples.rotationSet(k, [Math.PI / 2, 0, 0]);
+                                        peoples.positionSet(k, [2*k, 0, 0]);
+                                        peoples.scaleSet(k, [0.03, 0.03, 0.03]);
+                                        //peoples.speedSet(0,0.1);
+                                        peoples.textureSet(k,[k,k,k])
+                                        scope.scene.add(peoples.obj);
+
+                                }
 
 
 
@@ -1183,8 +1185,7 @@ InstancedGroupTest.prototype={
                 });//
                 //完成测试
         },
-        //使用男性模型
-        //求skeletonData.json//手臂骨骼动画的数据
+        //使用男性模型//求skeletonData.json//手臂骨骼动画的数据
         test6_1:function (contextType){
                 if(typeof(contextType)==="undefined")this.setContext();
                 var nameTest="输出帧序号，用于验证";
@@ -1761,8 +1762,7 @@ InstancedGroupTest.prototype={
         },
 
 
-        //探索如何使用新的男性模型
-        //无骨骼动画
+        //探索如何使用新的男性模型//无骨骼动画
         test9:function (contextType){
                 if(typeof(contextType)==="undefined")this.setContext();
                 var nameTest="固定姿势模型";
@@ -1856,5 +1856,5 @@ InstancedGroupTest.prototype={
         },
 }
 var myInstancedGroupTest=new InstancedGroupTest();
-myInstancedGroupTest.test2_1();
-//myInstancedGroupTest.test_texture();
+//myInstancedGroupTest.test2_1();
+myInstancedGroupTest.test_texture();

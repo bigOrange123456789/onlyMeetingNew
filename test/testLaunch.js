@@ -1,9 +1,9 @@
 //这一部分用于单元测试
 var  myTestFilePath=[
     //"Template",
-    //"InstancedGroup",
+    "InstancedGroup",
     //"MyPMLoader",
-    "Compute",
+    //"Compute",
 ];
 
 document.write("<script language=javascript src=test/tool/OrbitControls.js></script>");

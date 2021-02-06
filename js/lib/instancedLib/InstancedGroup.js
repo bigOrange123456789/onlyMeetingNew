@@ -153,7 +153,7 @@ InstancedGroup.prototype={
             uniforms.dataTexture={type: 't', value:[]};
             uniforms.time={value: 0.0};
             var loader = new THREE.XHRLoader(THREE.DefaultLoadingManager);
-            loader.load("animationData.json", function(str){//dataTexture
+            loader.load("json/animationData.json", function(str){//dataTexture
                 var data0=JSON.parse(str).data;//204
                 var data = new Uint8Array( data0.length);//1944
                 var width = 1 , height = data.length/3 ;//648
@@ -298,6 +298,9 @@ InstancedGroup.prototype={
         this.type.array[4 * i] = type[0];
         this.type.array[4 * i + 1] = type[1];
         this.type.array[4 * i + 2] = type[2];
+    },
+    textureSet0: function (i, type) {//设置贴图和动画类型
+        this.type.array[4 * i] = type[0];//设置贴图
     },
     animationSet:function(i,animationType){
         this.type.array[4*i+3]=animationType;//动画类型 0,1

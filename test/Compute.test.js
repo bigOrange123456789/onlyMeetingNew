@@ -60,12 +60,12 @@ ComputeTest.prototype={
         var myCompute=new Compute();
         //myCompute.init(1,2,2);
 
-        myCompute.init(9,9,10);
+        myCompute.init(12+17,13*3,48);
         //myCompute.setMatOne(0,0);
         //myCompute.setMatOne(0,1);
         console.log(myCompute.mat);
         //myCompute.mat[0][1]=1;
-        console.log(myCompute.computeF())
+        //console.log(myCompute.computeF())
         /*var result=[
             [-1,-1],[-1,-1],[-1,-1],
         ];

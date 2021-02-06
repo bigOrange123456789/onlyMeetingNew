@@ -3,6 +3,7 @@ function Compute() {
     this.mat_w;
     this.elemTypeNum;
     this.mat;
+    this.badPos;
 }
 Compute.prototype={
     init:function (mat_h,mat_w,elemTypeNum) {
@@ -51,7 +52,11 @@ Compute.prototype={
                                 Math.pow(j2-j1,2)
                                 ,0.5);
                             //console.log([i1,j1],[i2,j2],l);
-                            min=l<min?l:min;
+                            //min=l<min?l:min;
+                            if(l<min){
+                                min=l;
+                                this.badPos=[i1,j1,i2,j2];
+                            }
                         }
 
                     }

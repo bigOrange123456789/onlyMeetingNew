@@ -1,6 +1,44 @@
 <script src="Compute.js"></script>
 <script>
     var myCompute=new Compute();
-    myCompute.init(3,2,4);
+    myCompute.init(12+17,13*3,48);
+    var data=[];
+
+    for(k=0;k<3;k++)
+    for(i=0;i<12;i++)
+        for(j=0;j<13;j++)
+            data.push(
+                myCompute.mat[i][j+k*13]
+            );
+
+    for(k=0;k<3;k++)
+        for(i=12;i<12+17;i++)
+            for(j=0;j<13;j++)
+                data.push(
+                    myCompute.mat[i][j+k*13]
+                );
+
+
     console.log(myCompute.mat);
+    console.log(myCompute.computeF(),myCompute.badPos);
+
+
+    myCompute.init(14,13*3,48);
+
+    for(k=0;k<3;k++)
+        for(i=0;i<14;i++)
+            for(j=0;j<13;j++)
+                data.push(
+                    myCompute.mat[i][j+k*13]
+                );
+
+    console.log(myCompute.mat);
+    console.log(myCompute.computeF(),myCompute.badPos);
+
+    console.log(data);
+    console.log(data.toString())
+    var str ="";
+    for(i=0;i<data.length;i++)str=","+data[i];
+    console.log(str)
+
 </script>
