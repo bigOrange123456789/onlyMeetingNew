@@ -21,10 +21,9 @@
   <component name="ChangeListManager">
     <list default="true" id="b7b6123d-caec-4b82-a432-424a6b5be5dd" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/js/sceneSet/RoomManager.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/sceneSet/RoomManager.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/myModel/room/door.bin" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/myModel/room/door.gltf" beforeDir="false" afterPath="$PROJECT_DIR$/myModel/room/door.gltf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/myModel/room/door.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/animationData0.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/testLaunch.js" beforeDir="false" afterPath="$PROJECT_DIR$/test/testLaunch.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -136,7 +135,8 @@
       <workItem from="1611898961303" duration="30381000" />
       <workItem from="1612016600972" duration="34399000" />
       <workItem from="1612420477735" duration="38483000" />
-      <workItem from="1612515173986" duration="5891000" />
+      <workItem from="1612515173986" duration="7700000" />
+      <workItem from="1612524679638" duration="23238000" />
     </task>
     <servers />
   </component>
