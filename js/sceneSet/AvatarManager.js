@@ -59,8 +59,60 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
             //scope.loadGuest1(glbObj);
             scope.loadGuest2(glbObj);
         });
-        this.createPeople_haveAnimation();
+        this.createPeople_haveAnimation2();
         //this.analysis2();
+    }
+    this.createPeople_haveAnimation2=function(){
+        var loader= new THREE.GLTFLoader();
+        //加载女性
+        loader.load('myModel/avatar/Female.glb', (glb) => {
+
+                //开始创建PM对象
+                var LODArray=[]//4个数字表示距离，可以将模型分为5级;
+                var path='./myModel/Female';
+                var pmLoader = new MyPMLoader(
+                    glb,
+                    path,    //模型路径
+                    LODArray,//LOD等级的数组
+                    scope.camera,  //LOD需要判断到相机的距离
+                    0,       //有多个动画时,表示第0个动画//可以通过pmLoader.updateAnimation(i)来切换动画
+                    0     //动画播放速度//可以通过调整pmLoader.animationSpeed来调整速度
+                );//pmLoader = new myPMLoader('myModel/dongshizhang', LODNumber);//pmLoader = new THREE.PMLoader();//加载PM文件
+                //完成创建PM对象
+
+            var peoples=null;
+            var timeId=setInterval(function () {
+                if(pmLoader.obj.children[0]){
+                    var peoplesPre=null;
+                    if(peoples!=null)peoplesPre=peoples;//console.log(peoples.obj);
+
+                    var mesh=pmLoader.obj.children[0].children[0];
+                    peoples=new InstancedGroup(
+                        1000,
+                        [mesh],//这些mesh的网格应该一致
+                        glb.animations[0].clone()
+                    );
+                    peoples.init(['./img/texture/w/w00.jpg','./img/texture/w/w0.jpg'],16);
+                    for(var i=0;i<peoples.instanceCount;i++){
+                        peoples.rotationSet(i,[Math.PI/2,0,3*Math.PI/2]);
+                        peoples.positionSet(i,[scope.positions[i][0]+1.8,scope.positions[i][1]+1.5,scope.positions[i][2]]);
+                        peoples.scaleSet(i,[0.045,0.045,0.04+Math.random()*0.01]);
+
+                        peoples.animationSet(i,scope.animations[i]);
+                        peoples.colorSet(i,scope.colors[i]);
+                        peoples.speedSet(i,0.15+Math.random()*1.5);
+                        peoples.textureSet0(i,scope.types[i]);
+                    }
+
+                    scope.obj.add(peoples.obj);
+                    if(peoplesPre!=null)scope.obj.remove(peoplesPre.obj);
+                    if(pmLoader.finished)window.clearInterval(timeId)
+                }
+            },1000);
+
+        });
+        //完成加载女性听众
+
     }
     this.createPeople_haveAnimation=function(){
         var loader= new THREE.GLTFLoader();
@@ -76,51 +128,51 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
 
             var index=0;
             for(var i=0;i<scope.positions.length;i++)
-            if(this.sexs[i]===0){
-                peoples.rotationSet(index,[Math.PI/2,0,3*Math.PI/2]);
-                peoples.positionSet(index,[scope.positions[i][0]+1.8,scope.positions[i][1]+1.5,scope.positions[i][2]]);
-                peoples.scaleSet(index,[0.045,0.045,0.04+Math.random()*0.01]);
+                if(this.sexs[i]===0){
+                    peoples.rotationSet(index,[Math.PI/2,0,3*Math.PI/2]);
+                    peoples.positionSet(index,[scope.positions[i][0]+1.8,scope.positions[i][1]+1.5,scope.positions[i][2]]);
+                    peoples.scaleSet(index,[0.045,0.045,0.04+Math.random()*0.01]);
 
-                peoples.animationSet(index,scope.animations[i]);
-                peoples.colorSet(index,scope.colors[i]);
-                peoples.speedSet(index,0.15+Math.random()*1.5);
-                peoples.textureSet0(index,scope.types[i]);
-                //console.log(scope.types[i])
-                //peoples.textureSet(index,[scope.types[i],scope.types[i],scope.types[i]]);
-                index++;
-            }
+                    peoples.animationSet(index,scope.animations[i]);
+                    peoples.colorSet(index,scope.colors[i]);
+                    peoples.speedSet(index,0.15+Math.random()*1.5);
+                    peoples.textureSet0(index,scope.types[i]);
+                    //console.log(scope.types[i])
+                    //peoples.textureSet(index,[scope.types[i],scope.types[i],scope.types[i]]);
+                    index++;
+                }
 
             scope.obj.add(peoples.obj);
             //开始加载男性听众
             //loader.load('myModel/avatar/1.glb', (glb2) => {//console.log(glb2.scene.children[0].children[3]);
-                //return;
-                //console.log(glb2);
-                //console.log(glb2.scene.children[0].children[0].children[2]);
-                var peoples=new InstancedGroup(
-                    scope.manNum,
-                    [glb.scene.children[0].children[1]],
-                    //[glb2.scene.children[0].children[0].children[2]],//这些mesh的网格应该一致
-                    glb.animations[0]
-                );
-                peoples.init(['./img/texture/m/m00.jpg','./img/texture/m/m0.jpg'],32);
+            //return;
+            //console.log(glb2);
+            //console.log(glb2.scene.children[0].children[0].children[2]);
+            var peoples=new InstancedGroup(
+                scope.manNum,
+                [glb.scene.children[0].children[1]],
+                //[glb2.scene.children[0].children[0].children[2]],//这些mesh的网格应该一致
+                glb.animations[0]
+            );
+            peoples.init(['./img/texture/m/m00.jpg','./img/texture/m/m0.jpg'],32);
 
-                var index=0;
-                for(var i=0;i<scope.positions.length;i++)
-                    if(this.sexs[i]===1){
-                        peoples.rotationSet(index,[Math.PI/2,0,3*Math.PI/2]);
-                        peoples.positionSet(index,[scope.positions[i][0]+1.8,scope.positions[i][1]+1.5,scope.positions[i][2]]);
-                        peoples.scaleSet(index,[0.045,0.045,0.04+Math.random()*0.01]);
+            var index=0;
+            for(var i=0;i<scope.positions.length;i++)
+                if(this.sexs[i]===1){
+                    peoples.rotationSet(index,[Math.PI/2,0,3*Math.PI/2]);
+                    peoples.positionSet(index,[scope.positions[i][0]+1.8,scope.positions[i][1]+1.5,scope.positions[i][2]]);
+                    peoples.scaleSet(index,[0.045,0.045,0.04+Math.random()*0.01]);
 
-                        peoples.animationSet(index,scope.animations[i]);
-                        peoples.colorSet(index,scope.colors[i]);
-                        peoples.speedSet(index,0.15+Math.random()*1.5);
-                        peoples.textureSet0(index,scope.types[i]);
-                        //peoples.textureSet(i,[scope.types[i],scope.types[i],scope.types[i]]);
-                        //else peoples.speedSet(i,2+Math.random()*1.92);
-                        index++;
-                    }
+                    peoples.animationSet(index,scope.animations[i]);
+                    peoples.colorSet(index,scope.colors[i]);
+                    peoples.speedSet(index,0.15+Math.random()*1.5);
+                    peoples.textureSet0(index,scope.types[i]);
+                    //peoples.textureSet(i,[scope.types[i],scope.types[i],scope.types[i]]);
+                    //else peoples.speedSet(i,2+Math.random()*1.92);
+                    index++;
+                }
 
-                scope.obj.add(peoples.obj);
+            scope.obj.add(peoples.obj);
             //});
             //完成加载男性听众
         });

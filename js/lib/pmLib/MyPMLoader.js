@@ -4,6 +4,7 @@ function MyPMLoader(glbObj,url,LODArray,camera,animationType,animationSpeed){
     this.glbObj;//=glbObj;
     this.rootObject;//=new THREE.Object3D();
     this.mesh;//={};
+    this.finished;
 
     //以下是配合实现动画功能的一些成员变量
     this.animationMixer;//当前动画
@@ -28,6 +29,7 @@ MyPMLoader.prototype={
         this.obj=new THREE.Object3D();
         this.rootObject=new THREE.Object3D();
         this.mesh={};
+        this.finished=false;
 
         //以下是配合实现动画功能的一些成员变量
         this.animationMixers=[];
@@ -493,6 +495,7 @@ MyPMLoader.prototype={
                 {
                     if(pmDeltaTime===0)startPmLoading(THIS);//setTimeout(function(){} , pmDeltaTime);
                 } else {//完成了全部PM文件的加载
+                    THIS.finished=true;
                     function loopLODCheck(){
                         requestAnimationFrame(loopLODCheck);
                         THIS.LODCheck();

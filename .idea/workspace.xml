@@ -21,57 +21,9 @@
   <component name="ChangeListManager">
     <list default="true" id="b7b6123d-caec-4b82-a432-424a6b5be5dd" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/js/lib/instancedLib/SkinnedMeshController.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/lib/instancedLib/SkinnedMeshController.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/js/lib/pmLib/新建文件夹/PMAnimLoader.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/lib/instancedLib/InstancedGroup.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/lib/instancedLib/InstancedGroup.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/lib/pmLib/MyPMLoader.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/lib/pmLib/MyPMLoader.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/js/sceneSet/AvatarManager.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/sceneSet/AvatarManager.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pretreatment/Compute.js" beforeDir="false" afterPath="$PROJECT_DIR$/pretreatment/Compute.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pretreatment/index1.html" beforeDir="false" afterPath="$PROJECT_DIR$/pretreatment/index1.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/InstancedGroup.test.js" beforeDir="false" afterPath="$PROJECT_DIR$/test/InstancedGroup.test.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/MyPMLoader.test.js" beforeDir="false" afterPath="$PROJECT_DIR$/test/MyPMLoader.test.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/avatar/childFemale_crawl.glb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/avatar/childFemale_idle.glb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/avatar/childFemale_run.glb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/avatar/childMale_crawl.glb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/avatar/childMale_idle.glb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/avatar/childMale_run.glb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/avatar/d.glb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/avatar/female_bend.glb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/avatar/female_crawl.glb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/avatar/female_idle.glb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/avatar/female_run.glb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/avatar/female_walk.glb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/avatar/granny_bend.glb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/avatar/granny_idle.glb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/avatar/granny_walk.glb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/avatar/male_bend.glb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/avatar/male_crawl.glb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/avatar/male_idle.glb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/avatar/male_run.glb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/avatar/male_walk.glb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/avatar/mm.glb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/resource/1.glb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/resource/2.glb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/resource/city2.glb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/resource/data.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/resource/dongshizhang.glb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/resource/dongshizhang8pix.glb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/resource/skeletonMatrix.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/resource/zhao.glb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/testLaunch.js" beforeDir="false" afterPath="$PROJECT_DIR$/test/testLaunch.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/tool/OrbitControls.js" beforeDir="false" afterPath="$PROJECT_DIR$/test/tool/OrbitControls.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/新建文件夹/city.glb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/新建文件夹/door.glb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/新建文件夹/door.gltf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/新建文件夹/new.glb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/新建文件夹/new0.gltf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/新建文件夹/new21_.gltf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/新建文件夹/new24.gltf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/新建文件夹/new24/Image_0.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/新建文件夹/new24/Image_1.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/新建文件夹/new86.gltf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/新建文件夹/new86.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/新建文件夹/new89.gltf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/新建文件夹/new89.jpg" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -191,7 +143,7 @@
       <workItem from="1612668642410" duration="4498000" />
       <workItem from="1612684427711" duration="1520000" />
       <workItem from="1612698087704" duration="374000" />
-      <workItem from="1612755115459" duration="893000" />
+      <workItem from="1612755115459" duration="4951000" />
     </task>
     <servers />
   </component>

@@ -66,8 +66,9 @@ InstancedGroup.prototype={
         var B=d;
         return [A,B];
     },
-    init:function (texSrc,textNum){//纹理贴图资源路径，贴图中包含纹理的个数
+    init:function (texSrc,textNum,texFlipY){//纹理贴图资源路径，贴图中包含纹理的个数
         if(typeof(textNum)=="undefined")textNum=16;
+        if(typeof(texFlipY)=="undefined")texFlipY=true;
         //const instanceCount =2*2;//10 0000//1089
 
         this.originMeshs[0].geometry=this.originMeshs[0].geometry.toNonIndexed();
@@ -127,7 +128,7 @@ InstancedGroup.prototype={
         geometry.setAttribute('color', this.colors);
 
         let text0= THREE.ImageUtils.loadTexture(texSrc[0]);
-        text0.flipY=false;
+        text0.flipY=texFlipY;
         text0.wrapS = text0.wrapT = THREE.ClampToEdgeWrapping;
 
         var uniforms={
@@ -168,7 +169,7 @@ InstancedGroup.prototype={
             if(texSrc_index>=texSrc.length)return;
             var myText0= THREE.ImageUtils.loadTexture(texSrc[texSrc_index],null,function () {
                 texSrc_index++;
-                myText0.flipY=false;
+                myText0.flipY=texFlipY;
                 myText0.wrapS = myText0.wrapT = THREE.ClampToEdgeWrapping;
                 material.uniforms.text0={value: myText0};
                 setText0();
@@ -182,10 +183,10 @@ InstancedGroup.prototype={
 
         if(this.haveSkeleton){
             this.handleSkeletonAnimation();
-            for(i=0;i<this.originMeshs.length;i++){
+            /*for(i=0;i<this.originMeshs.length;i++){
                 this.originMeshs[i].visible=false;
                 this.obj.add(this.originMeshs[i]);//threeJS中模型的位置尺寸角度变化，似乎是通过骨骼来实现的
-            }
+            }*/
         }
 
         this.obj.add(this.mesh);
