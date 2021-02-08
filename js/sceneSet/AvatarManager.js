@@ -78,34 +78,69 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
                     0,       //有多个动画时,表示第0个动画//可以通过pmLoader.updateAnimation(i)来切换动画
                     0     //动画播放速度//可以通过调整pmLoader.animationSpeed来调整速度
                 );//pmLoader = new myPMLoader('myModel/dongshizhang', LODNumber);//pmLoader = new THREE.PMLoader();//加载PM文件
-                //完成创建PM对象
+            //完成创建PM对象
+
 
             var peoples=null;
+            var peoples2=null;
             var timeId=setInterval(function () {
                 if(pmLoader.obj.children[0]){
+                    var mesh=pmLoader.obj.children[0].children[0];
+
+
+                    //女性开始
                     var peoplesPre=null;
                     if(peoples!=null)peoplesPre=peoples;//console.log(peoples.obj);
-
-                    var mesh=pmLoader.obj.children[0].children[0];
                     peoples=new InstancedGroup(
-                        1000,
-                        [mesh],//这些mesh的网格应该一致
-                        glb.animations[0].clone()
+                        scope.positions.length-scope.manNum,
+                        [mesh.clone()],//这些mesh的网格应该一致
+                        true
                     );
                     peoples.init(['./img/texture/w/w00.jpg','./img/texture/w/w0.jpg'],16);
-                    for(var i=0;i<peoples.instanceCount;i++){
-                        peoples.rotationSet(i,[Math.PI/2,0,3*Math.PI/2]);
-                        peoples.positionSet(i,[scope.positions[i][0]+1.8,scope.positions[i][1]+1.5,scope.positions[i][2]]);
-                        peoples.scaleSet(i,[0.045,0.045,0.04+Math.random()*0.01]);
+                    var index=0;
+                    for(var i=0;i<scope.positions.length;i++)//1677
+                        if(scope.sexs[i]===0){
+                        peoples.rotationSet(index,[Math.PI/2,0,3*Math.PI/2]);
+                        peoples.positionSet(index,[scope.positions[i][0]+1.8,scope.positions[i][1]+1.5,scope.positions[i][2]]);
+                        peoples.scaleSet(index,[0.045,0.045,0.04+Math.random()*0.01]);
 
-                        peoples.animationSet(i,scope.animations[i]);
-                        peoples.colorSet(i,scope.colors[i]);
-                        peoples.speedSet(i,0.15+Math.random()*1.5);
-                        peoples.textureSet0(i,scope.types[i]);
+                        peoples.animationSet(index,scope.animations[i]);
+                        peoples.colorSet(index,scope.colors[i]);
+                        peoples.speedSet(index,0.15+Math.random()*1.5);
+                        peoples.textureSet0(index,scope.types[i]);
+                        index++;
                     }
-
                     scope.obj.add(peoples.obj);
                     if(peoplesPre!=null)scope.obj.remove(peoplesPre.obj);
+                    //女性结束
+
+                    console.log(scope.positions.length,scope.manNum);
+                    //男性开始
+                    var peoplesPre2=null;
+                    if(peoples2!=null)peoplesPre2=peoples2;//console.log(peoples.obj);
+                    peoples2=new InstancedGroup(
+                        scope.manNum,//908
+                        [mesh.clone()],//这些mesh的网格应该一致
+                        true
+                    );
+                    peoples2.init(['./img/texture/m/m00.jpg','./img/texture/m/m0.jpg'],32);
+                    index=0;
+                    for(i=0;i<scope.positions.length;i++)
+                        if(scope.sexs[i]===1){
+                        peoples2.rotationSet(index,[Math.PI/2,0,3*Math.PI/2]);
+                        peoples2.positionSet(index,[scope.positions[i][0]+1.8,scope.positions[i][1]+1.5,scope.positions[i][2]]);
+                        peoples2.scaleSet(index,[0.045,0.045,0.04+Math.random()*0.01]);
+
+                        peoples2.animationSet(index,scope.animations[i]);
+                        peoples2.colorSet(index,scope.colors[i]);
+                        peoples2.speedSet(index,0.15+Math.random()*1.5);
+                        peoples2.textureSet0(index,scope.types[i]);
+                        index++;
+                    }
+                    scope.obj.add(peoples2.obj);
+                    if(peoplesPre2!=null)scope.obj.remove(peoplesPre2.obj);
+                    //男性结束
+                    console.log(pmLoader.finished);
                     if(pmLoader.finished)window.clearInterval(timeId)
                 }
             },1000);
