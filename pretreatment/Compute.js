@@ -6,6 +6,21 @@ function Compute() {
     this.badPos;
 }
 Compute.prototype={
+    initRandom:function (mat_h,mat_w,elemTypeNum) {//用于测试
+        this.mat_h=mat_h;
+        this.mat_w=mat_w;
+        this.elemTypeNum=elemTypeNum;
+        this.mat=[];
+        for(var i=0;i<this.mat_h;i++){
+            this.mat.push([]);
+            for(var j=0;j<this.mat_w;j++){
+                this.mat[i].push(-1);
+            }
+        }
+        for(i=0;i<this.mat_h;i++)
+            for(j=0;j<this.mat_w;j++)
+                this.mat[i][j]=Math.floor(Math.random()*this.elemTypeNum);
+    },
     init:function (mat_h,mat_w,elemTypeNum) {
         this.mat_h=mat_h;
         this.mat_w=mat_w;
@@ -67,7 +82,7 @@ Compute.prototype={
 
 
 
-    symmetry:function(mat0,type){
+    /*symmetry:function(mat0,type){
         if(mat0.length===0)alert();
         var mat=[];
         var h=mat0.length;
@@ -101,15 +116,7 @@ Compute.prototype={
                 }
             }
 
-            /*var k=i-1;
-            var kk=0;
-            for(;i>=0;i--){
-                kk++;
-                mat.push([]);
-                for(j=0;j<i;j++){
-                    mat[k+kk].push(mat0[k+kk][j]);
-                }
-            }*/
+
         }
         return mat;
     },
@@ -164,5 +171,5 @@ Compute.prototype={
             return mat;
         }
 
-    },
+    },*/
 }

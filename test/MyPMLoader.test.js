@@ -61,11 +61,11 @@ MyPMLoaderTest.prototype={
         console.log('start test:'+nameTest);
         //开始测试
         var scope=this;
-        var animLoader = new PMAnimLoader();//估计是通过gltf文件加载的动画
-        animLoader.load('./myModel/skeleton/scene.gltf', function (glbObj){
+        var loader = new THREE.GLTFLoader();//估计是通过gltf文件加载的动画
+        loader.load('./myModel/avatar/Female.glb', function (glbObj){
             //var loader= new THREE.GLTFLoader();
             //loader.load('./myModel/skeleton/scene.gltf', (glbObj) => {
-            glbObj.scene.visible=false;
+            //glbObj.scene.visible=false;
             loadGuest1(glbObj);
             //loadGuest2(glbObj);
             function loadGuest1(glbObj) {
@@ -74,7 +74,7 @@ MyPMLoaderTest.prototype={
                 //var path='/myModel/childFemale_idle';//childFemale_crawl
                 //var path='/myModel/childFemale_crawl';
                 //var path='/myModel/Female01';
-                var path='./myModel/zhao1';
+                var path='./myModel/Female';
                 var pmLoader = new MyPMLoader(
                     glbObj,
                     path,    //模型路径

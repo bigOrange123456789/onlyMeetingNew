@@ -1,4 +1,4 @@
-//controls = new THREE.OrbitControls(camera , renderer.domElement);
+//new OrbitControls(camera , renderer.domElement);
 //这是一个构造函数
 function OrbitControls( object,domElement) {
 	this.object = object;

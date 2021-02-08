@@ -62,6 +62,54 @@ InstancedGroupTest.prototype={
                 this.scene=scene;
                 this.camera=camera;
         },
+        setContext2:function () {
+                this.frameIndex=this.frameIndexPre=0;
+                var nameContext="";
+                console.log('set context:'+nameContext);
+
+                var scope=this;
+                this.referee=new Referee();
+                this.tag=new Text("","green",25);
+                this.button_flag=true;
+                var button=new Button("test","green",25);
+                button.addEvent(function () {
+                        scope.button_flag=!scope.button_flag;
+                });
+
+                var camera, scene, renderer;
+                var light;
+                init();
+                render();
+                function init() {
+                        camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.01, 10000);
+                        camera.position.z = 20;
+
+                        scene = new THREE.Scene();
+
+                        renderer = new THREE.WebGLRenderer();
+                        renderer.setPixelRatio(window.devicePixelRatio);
+                        renderer.setSize(window.innerWidth, window.innerHeight);
+                        renderer.setClearColor(0xffffff);
+                        document.body.appendChild( renderer.domElement );
+                        //container.appendChild(renderer.domElement);
+
+                        if (renderer.capabilities.isWebGL2 === false && renderer.extensions.has('ANGLE_instanced_arrays') === false) {
+                                document.getElementById('notSupported').style.display = '';
+                                return;
+                        }
+                        light = new THREE.AmbientLight(0xffffff,1.0)
+                        scene.add(light);
+                        new OrbitControls(camera , renderer.domElement);
+                        //new PlayerControl(camera);
+                }
+                function render(){
+                        scope.frameIndex++;
+                        renderer.render( scene, camera );
+                        requestAnimationFrame(render);
+                }
+                this.scene=scene;
+                this.camera=camera;
+        },
         //无动画测试
         test1:function (contextType){
                 if(typeof(contextType)==="undefined")this.setContext();
@@ -145,33 +193,40 @@ InstancedGroupTest.prototype={
                 var loader= new THREE.GLTFLoader();
                 //"test/avatar/male_run.glb"
                 //"myModel/avatar/Female.glb"
-                loader.load("myModel/avatar/Female.glb", (glb0) => {
+                loader.load("test/female_run.glb", (glb1) => {
                         //console.log(glb0);
-                        loader.load("test/avatar/mm.glb", (glb) => {
-                                //console.log(glb);//scene.children[0].children[1].children
-                                glb.scene.children[0].traverse(node => {
+                        loader.load("test/female_bend.glb", (glb2) => {
+                                console.log(glb1);//scene.children[0].children[1].children
+                                console.log(glb2);
+                                var myGlb=glb1;
+                                /*myGlb.scene.children[0].traverse(node => {
                                         if (node instanceof THREE.SkinnedMesh) {
-                                                createObj(node);
+                                                createObj(node,myGlb.animations[0]);
                                         }
-                                });/**/
-                                var myMesh=glb.scene.children[0].children[1].children[0];
-                                //scope.scene.add(myMesh);
-                                createObj(myMesh);
+                                });*/
+                                //var myMesh=glb.scene.children[0].children[3].children[0];
+                                //createObj(myMesh);
                                 //console.log(myMesh);
-                                function createObj(mesh) {
+                                createObj2(myGlb);
+                                function createObj2(G) {
+                                        //console.log(mesh);
+
+                                        var meshMixer2 = new THREE.AnimationMixer(G.scene);
+                                        meshMixer2.clipAction(glb1.animations[0]).play();
+                                        setInterval(function () {
+                                                meshMixer2.update(0.01);
+                                        },100)
+                                        scope.scene.add(G.scene);
+                                }
+                                function createObj(mesh,animation) {
                                         //console.log(mesh);
                                         var myController=new SkinnedMeshController();
-                                        myController.init(mesh,glb.animations[0]);
+                                        //myController.init(mesh,animation);
+                                        myController.init2(mesh,animation,myGlb.scene);
+                                        myController.speed=0.01;
                                         myController.mesh.position.set(0,0,0);
                                         myController.mesh.scale.set(1,1,1);
-                                        //myController.mesh.scale.set(4.5,4.5,4.5);
-                                        //var time=0;
-                                        //myController.setTime(time);
                                         scope.scene.add(myController.mesh);
-                                        /*setInterval(function () {
-                                                myController.setTime(time);
-                                                time=(time+1)%10;
-                                        },100);*/
                                 }
                         });//
                 });
@@ -338,8 +393,10 @@ InstancedGroupTest.prototype={
                 //完成测试
         },
         //动画修改测试
-        test5_2:function (contextType){
-                if(typeof(contextType)==="undefined")this.setContext();
+        test5_2:function (){
+                this.setContext2();
+                console.log(this,this.camera)
+                //this.camera.position.set(0,0,-20);
                 var nameTest="输出帧序号，用于验证";
                 console.log('start test:'+nameTest);
                 //开始测试
@@ -360,12 +417,9 @@ InstancedGroupTest.prototype={
                         measure.boneIndex=8;
                         scope.tag.reStr("骨骼序号："+measure.boneIndex);
 
-                        updateAnimation();//
+                        //updateAnimation();//
                         function updateAnimation() {//每帧更新一次动画
                                 requestAnimationFrame(updateAnimation);
-                                //输出帧序号，用于验证
-
-                                //完成验证
                         }
                 });//
                 //完成测试
@@ -1856,5 +1910,5 @@ InstancedGroupTest.prototype={
         },
 }
 var myInstancedGroupTest=new InstancedGroupTest();
-//myInstancedGroupTest.test2_1();
-myInstancedGroupTest.test_texture();
+myInstancedGroupTest.test5_2();
+//myInstancedGroupTest.test_texture();

@@ -10,6 +10,7 @@ function SkinnedMeshController() {
 }
 SkinnedMeshController.prototype={
     init:function (originMesh,animation) {
+        console.log(originMesh);
         this.animation=animation;
         this.mesh=originMesh.clone();//new THREE.SkinnedMesh(originMesh.geometry.clone(),originMesh.material)
         this.frameMax=this.animation.tracks[0].times.length;
@@ -203,6 +204,40 @@ SkinnedMeshController.prototype={
         function updateAnimation() {//每帧更新一次动画
             animationMixer0.update(0.05);
             requestAnimationFrame(updateAnimation);
+        }
+    },
+    init2:function (originMesh,animation,scene) {
+        console.log(originMesh);
+        this.animation=animation;
+        this.mesh=originMesh;//new THREE.SkinnedMesh(originMesh.geometry.clone(),originMesh.material)
+        this.frameMax=this.animation.tracks[0].times.length;
+        this.speed=0.5;
+        this.time=0;
+
+        this.bones = [];
+        cloneBones(this.mesh.skeleton.bones[0], this.bones);
+        this.mesh.skeleton=new THREE.Skeleton(this.bones, this.mesh.skeleton.boneInverses);
+
+        this.mesh.add(this.mesh.skeleton.bones[0]);//添加骨骼
+        this.mesh.matrixWorldNeedsUpdate=true;
+        this.mesh.bind(this.mesh.skeleton,this.mesh.matrixWorld);//绑定骨架
+
+
+        this.animationMixer=new THREE.AnimationMixer(scene);//搞清动画混合器AnimationMixer的作用至关重要
+        this.animationMixer.clipAction(this.animation).play();//不清楚这里的作用//可能是进行帧的插值
+        var scope=this;
+        myPlay();
+        function myPlay() {
+            scope.animationMixer.update(scope.speed);
+            requestAnimationFrame(myPlay);
+        }
+        function cloneBones(rootBone , boneArray){//用于加载完gltf文件后的骨骼动画的处理
+            var rootBoneClone=rootBone.clone();
+            rootBoneClone.children.splice(0,rootBoneClone.children.length);
+            boneArray.push(rootBoneClone);
+            for (var i = 0 ; i < rootBone.children.length ; ++i)
+                rootBoneClone.add(cloneBones(rootBone.children[i], boneArray));
+            return rootBoneClone;
         }
     },
     autoTest:function(){
