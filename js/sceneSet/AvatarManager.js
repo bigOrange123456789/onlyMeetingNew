@@ -64,15 +64,26 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
     }
     this.createPeople_haveAnimation2=function(){
         //加载女性
+        //开始创建PM对象
         var pmLoader = new MyPMLoader(
             {animations: []},
             './myModel/Female',    //模型路径
-            [],//LOD等级的数组
+            [],//没有LOD分级//LOD等级的数组
             scope.camera,  //LOD需要判断到相机的距离
             0,       //有多个动画时,表示第0个动画//可以通过pmLoader.updateAnimation(i)来切换动画
             0,     //动画播放速度//可以通过调整pmLoader.animationSpeed来调整速度
             []
         );//pmLoader = new myPMLoader('myModel/dongshizhang', LODNumber);//pmLoader = new THREE.PMLoader();//加载PM文件
+        var pmLoader2 = new MyPMLoader(
+            {animations: []},
+            './myModel/Male',    //模型路径
+            [],//没有LOD分级//LOD等级的数组
+            scope.camera,  //LOD需要判断到相机的距离
+            0,       //有多个动画时,表示第0个动画//可以通过pmLoader.updateAnimation(i)来切换动画
+            0,     //动画播放速度//可以通过调整pmLoader.animationSpeed来调整速度
+            []
+        );//pmLoader = new myPMLoader('myModel/dongshizhang', LODNumber);//pmLoader = new THREE.PMLoader();//加载PM文件
+
         //完成创建PM对象
 
 
@@ -81,7 +92,6 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
         var timeId = setInterval(function () {
             if (pmLoader.obj.children[0]) {
                 var mesh = pmLoader.obj.children[0].children[0];
-
 
                 //女性开始
                 var peoplesPre = null;
@@ -109,12 +119,17 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
                 if (peoplesPre != null) scope.obj.remove(peoplesPre.obj);
                 //女性结束
 
+                console.log(pmLoader.finished);
+                if (pmLoader.finished) window.clearInterval(timeId)
+            }
+            if (pmLoader2.obj.children[0]) {
+                var mesh2 = pmLoader2.obj.children[0].children[0];
                 //男性开始
                 var peoplesPre2 = null;
                 if (peoples2 != null) peoplesPre2 = peoples2;//console.log(peoples.obj);
                 peoples2 = new InstancedGroup(
                     scope.manNum,//908
-                    [mesh],//这些mesh的网格应该一致
+                    [mesh2],//这些mesh的网格应该一致
                     true
                 );
                 peoples2.init(['./img/texture/m/m00.jpg', './img/texture/m/m0.jpg'], 32);
@@ -138,7 +153,6 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
                 if (pmLoader.finished) window.clearInterval(timeId)
             }
         }, 1000);
-        //完成加载女性听众
 
     }
     this.createPeople_haveAnimation=function(){

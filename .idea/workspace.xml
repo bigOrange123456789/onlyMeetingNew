@@ -23,19 +23,10 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/js/lib/pmLib/MyPMLoader.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/lib/pmLib/MyPMLoader.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/js/sceneSet/AvatarManager.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/sceneSet/AvatarManager.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/myModel/Female/Texture_0.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/myModel/Female/Texture_0_.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/myModel/Female/Texture_0_0.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/myModel/Female/Texture_0_1.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/myModel/Female/Texture_0_2.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/myModel/Female/Texture_0_3.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/myModel/Female/Texture_0_4.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/myModel/dongshizhang5/Texture_0.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/myModel/dongshizhang5/Texture_0_0.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/myModel/dongshizhang5/Texture_0_1.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/myModel/dongshizhang5/Texture_0_2.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/myModel/dongshizhang5/Texture_0_3.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/myModel/dongshizhang5/Texture_0_4.jpeg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/Man01/basemesh.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/Man01/pm/desc.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/Man01/skeleton.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/Man01/skeletonindex.json" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -158,7 +149,7 @@
       <workItem from="1612755115459" duration="5131000" />
       <workItem from="1612771977057" duration="319000" />
       <workItem from="1612796643610" duration="8734000" />
-      <workItem from="1612840660467" duration="2972000" />
+      <workItem from="1612840660467" duration="6058000" />
     </task>
     <servers />
   </component>

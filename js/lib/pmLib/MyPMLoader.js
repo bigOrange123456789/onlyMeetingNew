@@ -503,7 +503,8 @@ MyPMLoader.prototype={
                     function loopLODCheck(){
                         requestAnimationFrame(loopLODCheck);
                         THIS.LODCheck();
-                    }loopLODCheck();
+                    }
+                    if(THIS.LODArray.length>0)loopLODCheck();
                     console.log('already loaded all PM file!');
                 }
             });
