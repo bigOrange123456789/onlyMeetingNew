@@ -12,7 +12,7 @@ attribute vec4 type;//设置贴图0-2,type[3]用处不明
 attribute vec3 color;
 
 varying vec2 outUV;
-varying vec3 varyColor;
+varying vec3 varyColor,varyType;
 varying float type_part,texType;
 varying vec3 myTest01;
 
@@ -28,6 +28,7 @@ void main(){
 
     outUV = inUV;
     varyColor=vec3(color[0], color[1], color[2]);
+    varyType=vec3(type[0], type[1], type[2]);
 
     //0.15 0.59
     if (vPosition.y<=0.15&&(vPosition.z<0.35&&vPosition.z>-0.35)){

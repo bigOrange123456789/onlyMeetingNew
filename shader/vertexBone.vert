@@ -12,8 +12,8 @@ attribute vec4 type;//设置贴图0-2,type[3]用处不明
 attribute vec3 color;
 
 varying vec2 outUV;
-varying vec3 varyColor;
-varying float type_part,texType;
+varying vec3 varyColor,varyType;
+varying float type_part;//,texType;
 varying vec3 myTest01;
 
 //void Test_init();
@@ -28,8 +28,8 @@ void main(){
 
     outUV = inUV;
     varyColor=vec3(color[0], color[1], color[2]);
-
-    if (vPosition.y<0.15&&(vPosition.z<0.35&&vPosition.z>-0.35)){
+    varyType=vec3(type[0], type[1], type[2]);
+    /*if (vPosition.y<0.15&&(vPosition.z<0.35&&vPosition.z>-0.35)){
         type_part=0.0;//下身
         texType=floor(type[0]+0.5);
     } else if (vPosition.y<0.59) {
@@ -38,8 +38,10 @@ void main(){
     } else{
         type_part=2.0;//头部
         texType=floor(type[2]+0.5);
-    }
-
+    }*/
+    if (vPosition.y<0.15&&(vPosition.z<0.35&&vPosition.z>-0.35))type_part=0.0;//下身
+    else if (vPosition.y<0.59) type_part=1.0;//上身
+    else type_part=2.0;//头部
 
     Animation_init();
     mat4 matrix1=Animation_computeMatrix();//计算动画的变换矩阵

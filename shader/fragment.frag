@@ -3,13 +3,19 @@ precision highp float;
 uniform sampler2D text0;
 uniform float textNum;//贴图个数
 
-varying float type_part,texType;//身体的哪个部分，贴图类型
-varying vec3 varyColor;
+varying float type_part;//,texType;//身体的哪个部分，贴图类型
+varying vec3 varyColor,varyType;
 varying vec2 outUV;
+float texType;
 //varying vec3 myTest01;//用于测试
 vec4 TextureController_computeMyTexture();
 void main(){
     //gl_FragColor = vec4 (myTest01,1.0);return;//用于测试
+
+    if (floor(type_part)==0.0)texType=varyType[0];//下身
+    else if (floor(type_part)==1.0)texType=varyType[1];
+    else if (floor(type_part)==2.0)texType=varyType[2];
+
     vec4 myTexture=TextureController_computeMyTexture();
 
     if (floor(type_part)==0.0){ //下身
