@@ -24,6 +24,7 @@ mat4 Animation_computeMatrix();
 float SKELETON_SIZE0=204.0; //用于求不动位置的骨骼//骨骼(25-8)*12=204//骨骼矩阵
 float SKELETON_SIZE1=768.0;//鼓掌动画//8个手臂骨骼的数据//帧数8*骨骼8*12=768
 float SKELETON_SIZE2=96.0;//96.0//举手动作//8*12=96
+float SKELETON_SIZE3=96.0;//96.0//举手动作//8*12=96
 void main(){
     vec3 vPosition = position;
 
@@ -98,6 +99,7 @@ struct Animation{
         float skeletonPos0;
         float skeletonPos1;
         float skeletonPos2;
+        float skeletonPos3;
         float skeletonLast;
         float dataTextureHeight;
 
@@ -129,11 +131,15 @@ float Animation_decode(float A, float B){ //0-1
     if (a==1.0)num*=-1.0;
     return num;
 }
-float Animation_getElem3(float n){ //取手臂骨骼数据
+float Animation_getElem4(float n){ //静止//取手臂骨骼数据
+    float A=Animation_getNumByTexture(n+oAnimation.skeletonPos3), B=Animation_getNumByTexture(n+oAnimation.skeletonLast+oAnimation.skeletonPos3);
+    return Animation_decode(A, B);
+}
+float Animation_getElem3(float n){ //举手//取手臂骨骼数据
     float A=Animation_getNumByTexture(n+oAnimation.skeletonPos2), B=Animation_getNumByTexture(n+oAnimation.skeletonLast+oAnimation.skeletonPos2);
     return Animation_decode(A, B);
 }
-float Animation_getElem2(float n){ //取手臂骨骼数据
+float Animation_getElem2(float n){ //鼓掌//取手臂骨骼数据
     float A=Animation_getNumByTexture(n+oAnimation.skeletonPos1), B=Animation_getNumByTexture(n+oAnimation.skeletonLast+oAnimation.skeletonPos1);
     return Animation_decode(A, B);
 }
@@ -151,12 +157,19 @@ mat4 Animation_getMatrix2(float iii){ //求手臂骨骼
             Animation_getElem2(frame_index*96.+i*12.+6.), Animation_getElem2(frame_index*96.+i*12.+7.), Animation_getElem2(frame_index*96.+i*12.+8.), 0,
             Animation_getElem2(frame_index*96.+i*12.+9.), Animation_getElem2(frame_index*96.+i*12.+10.), Animation_getElem2(frame_index*96.+i*12.+11.), 1
         );
-    } else {
+    } else if (type[3]<1.5){
         return mat4(//最后一列是：0 0 0 1
             Animation_getElem3(i*12.+0.), Animation_getElem3(i*12.+1.), Animation_getElem3(i*12.+2.), 0,
             Animation_getElem3(i*12.+3.), Animation_getElem3(i*12.+4.), Animation_getElem3(i*12.+5.), 0,
             Animation_getElem3(i*12.+6.), Animation_getElem3(i*12.+7.), Animation_getElem3(i*12.+8.), 0,
             Animation_getElem3(i*12.+9.), Animation_getElem3(i*12.+10.), Animation_getElem3(i*12.+11.), 1
+        );
+    }else {
+        return mat4(//最后一列是：0 0 0 1
+        Animation_getElem4(i*12.+0.), Animation_getElem4(i*12.+1.), Animation_getElem4(i*12.+2.), 0,
+        Animation_getElem4(i*12.+3.), Animation_getElem4(i*12.+4.), Animation_getElem4(i*12.+5.), 0,
+        Animation_getElem4(i*12.+6.), Animation_getElem4(i*12.+7.), Animation_getElem4(i*12.+8.), 0,
+        Animation_getElem4(i*12.+9.), Animation_getElem4(i*12.+10.), Animation_getElem4(i*12.+11.), 1
         );
     }
 
@@ -210,8 +223,9 @@ void Animation_init(){
     oAnimation.skeletonPos0=0.0;
     oAnimation.skeletonPos1=(oAnimation.skeletonPos0+SKELETON_SIZE0);
     oAnimation.skeletonPos2=(oAnimation.skeletonPos1+SKELETON_SIZE1);
+    oAnimation.skeletonPos3=(oAnimation.skeletonPos2+SKELETON_SIZE2);
     //oAnimation.skeletonLast=(oAnimation.skeletonPos1+SKELETON_SIZE1);
-    oAnimation.skeletonLast=(oAnimation.skeletonPos2+SKELETON_SIZE2);
+    oAnimation.skeletonLast=(oAnimation.skeletonPos3+SKELETON_SIZE3);
     oAnimation.dataTextureHeight=(oAnimation.skeletonLast*2.0/3.0);
 
     Animation_frameIndexSet();//设置全局变量frame_index的值
