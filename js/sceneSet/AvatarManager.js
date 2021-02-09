@@ -10,7 +10,6 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
     this.manNum=0;
 
     this.camera=camera;
-    this.positionsType=[];
 
     this.init=function () {
         var loader = new THREE.XHRLoader(THREE.DefaultLoadingManager);
@@ -21,28 +20,18 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
                     Math.random()/4 ,
                     Math.random()/4
                 ]);
-                /*if(Math.random()<0.33)scope.sexs.push(0);
-                 else {
-                     scope.sexs.push(1);
-                     //scope.manNum++;
-                 }*/
-                if(Math.random()<0.7)scope.animations.push(0);
-                else scope.animations.push(1);
             }
-            for(var i=0;i<scope.positions.length;i++)//共有1677个位置
-                scope.positionsType.push(Math.floor(Math.random()*4)+1);//1-4
-
 
             var data=JSON.parse(str).data;//种类分布
             for(i=0;i<data.length;i++){
-                if(data[i]<16){
+                if(data[i]%3===2){// 有1/3是女性
                     scope.sexs[i]=0;//女性
-                    scope.types[i]=data[i];
+                    scope.types[i]=Math.floor(data[i]/3);
                     if(Math.random()<0.5)scope.animations[i]=1;
                     else scope.animations[i]=0;
                 }else{
                     scope.sexs[i]=1;//男性
-                    scope.types[i]=data[i]-16;
+                    scope.types[i]=Math.floor(data[i]/3)+(data[i]%3)*16;
                     scope.animations[i]=0;
                     scope.manNum++;
                 }
@@ -89,17 +78,18 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
                         if (scope.sexs[i] === 0) {
                             peoples.rotationSet(index, [Math.PI / 2, 0, 3 * Math.PI / 2]);
                             peoples.positionSet(index, [scope.positions[i][0] + 1.8, scope.positions[i][1] + 1.5, scope.positions[i][2]]);
-                            peoples.scaleSet(index, [0.045, 0.045, 0.04 + Math.random() * 0.01]);
+                            peoples.scaleSet(index, [0.04 + Math.random() * 0.01, 0.04 + Math.random() * 0.01, 0.04 + Math.random() * 0.01]);
 
                             peoples.animationSet(index, scope.animations[i]);
                             peoples.colorSet(index, scope.colors[i]);
                             peoples.speedSet(index, 0.15 + Math.random() * 1.5);
                             peoples.textureSet0(index, scope.types[i]);
+                            peoples.textureSet1(index, scope.types[i]);
                             index++;
                         }
                     scope.obj.add(peoples.obj);
                 }else{
-                    peoples.reGeometry(mesh.geometry);
+                    peoples.setGeometry(mesh.geometry);
                 }
             }
             console.log(pmLoader.finished);
@@ -134,17 +124,18 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
                         if (scope.sexs[i] === 1) {
                             peoples2.rotationSet(index, [Math.PI / 2, 0, 3 * Math.PI / 2]);
                             peoples2.positionSet(index, [scope.positions[i][0] + 1.8, scope.positions[i][1] + 1.5, scope.positions[i][2]]);
-                            peoples2.scaleSet(index, [0.045, 0.045, 0.04 + Math.random() * 0.01]);
+                            peoples2.scaleSet(index, [0.04 + Math.random() * 0.01,  0.04 + Math.random() * 0.01,0.04 + Math.random() * 0.01]);//最后一个是高
 
                             peoples2.animationSet(index, scope.animations[i]);
                             peoples2.colorSet(index, scope.colors[i]);
                             peoples2.speedSet(index, 0.15 + Math.random() * 1.5);
                             peoples2.textureSet0(index, scope.types[i]);
+                            peoples2.textureSet1(index, scope.types[i]);
                             index++;
                         }
                     scope.obj.add(peoples2.obj);
                 }else{
-                    peoples2.reGeometry(mesh2.geometry);
+                    peoples2.setGeometry(mesh2.geometry);
                 }
             }
             console.log(pmLoader2.finished);

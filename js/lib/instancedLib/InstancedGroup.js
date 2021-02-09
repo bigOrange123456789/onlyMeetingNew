@@ -66,13 +66,15 @@ InstancedGroup.prototype={
         var B=d;
         return [A,B];
     },
-    reGeometry:function(geometryNew){//用于和PM技术相结合
+    setGeometry:function(geometryNew){//更新网格//用于和PM技术相结合
         var geometryTemp= new THREE.InstancedBufferGeometry();
         geometryTemp.instanceCount = this.instanceCount;
         geometryTemp.setAttribute('position', geometryNew.attributes.position);//Float32Array
         geometryTemp.setAttribute('inUV',geometryNew.attributes.uv);
-        geometryTemp.setAttribute('skinIndex',geometryNew.attributes.skinIndex);
-        geometryTemp.setAttribute('skinWeight',geometryNew.attributes.skinWeight);
+        if(this.haveSkeleton){
+            geometryTemp.setAttribute('skinIndex',geometryNew.attributes.skinIndex);
+            geometryTemp.setAttribute('skinWeight',geometryNew.attributes.skinWeight);
+        }
 
         geometryTemp.setAttribute('speed', this.speed);
 
@@ -83,7 +85,8 @@ InstancedGroup.prototype={
 
         geometryTemp.setAttribute('type', this.type);
         geometryTemp.setAttribute('color', this.colors);
-        this.mesh.geometry=geometryTemp;
+        if(this.mesh)this.mesh.geometry=geometryTemp;
+        return geometryTemp;
     },
     init:function (texSrc,textNum,texFlipY){//纹理贴图资源路径，贴图中包含纹理的个数
         if(typeof(textNum)=="undefined")textNum=16;
@@ -92,18 +95,8 @@ InstancedGroup.prototype={
 
         this.originMeshs[0].geometry=this.originMeshs[0].geometry.toNonIndexed();
 
-        var geometry = new THREE.InstancedBufferGeometry();//console.log(geometry);
-        geometry.instanceCount = this.instanceCount; // set so its initalized for dat.GUI, will be set in first draw otherwise
-        //以下是使用geometry设置setAttribute(BufferAttribute/InstancedBufferAttribute)
-        //BufferAttribute为每个点分配一组数据:先准备数据再生成空间
-        //1-2
-        geometry.setAttribute('position', this.originMeshs[0].geometry.attributes.position);//Float32Array
-        geometry.setAttribute('inUV',this.originMeshs[0].geometry.attributes.uv);
-        //4-5
-        if(this.haveSkeleton){
-            geometry.setAttribute('skinIndex',this.originMeshs[0].geometry.attributes.skinIndex);
-            geometry.setAttribute('skinWeight',this.originMeshs[0].geometry.attributes.skinWeight);
-        }
+
+
         //InstancedBufferAttribute为每个对象一组数据：先生成空间，再设置数据
         //6-11
         this.speed=new THREE.InstancedBufferAttribute(new Float32Array(this.instanceCount * 1), 1);
@@ -128,18 +121,11 @@ InstancedGroup.prototype={
                 Math.floor(Math.random() * textNum),
                 Math.floor(Math.random() * textNum),
                 Math.floor(Math.random() *2)//Math.random()//这个缓冲区是int类型的//所以这里不能传小数
-            );
+            );/**/
             //this.colors.setXYZ(i, 0.0,0.0,0.0);
         }
-        geometry.setAttribute('speed', this.speed);
 
-        geometry.setAttribute('mcol0', this.mcol0);//四元数、齐次坐标
-        geometry.setAttribute('mcol1', this.mcol1);
-        geometry.setAttribute('mcol2', this.mcol2);
-        geometry.setAttribute('mcol3', this.mcol3);
 
-        geometry.setAttribute('type', this.type);
-        geometry.setAttribute('color', this.colors);
 
         let text0= THREE.ImageUtils.loadTexture(texSrc[0]);
         text0.flipY=texFlipY;
@@ -192,7 +178,9 @@ InstancedGroup.prototype={
         if(typeof(texSrc[0])==="string")setText0();//传入资源地址
         else material.uniforms.text0={value:texSrc[0]};//传入map类型
 
-        this.mesh = new THREE.Mesh(geometry, material);//重要
+        this.mesh = new THREE.Mesh(
+            this.setGeometry(this.originMeshs[0].geometry)
+            , material);//重要
         this.mesh.frustumCulled=false;
 
         if(this.haveSkeleton){
@@ -314,10 +302,10 @@ InstancedGroup.prototype={
         this.type.array[4 * i + 1] = type[1];
         this.type.array[4 * i + 2] = type[2];
     },
-    textureSet0: function (i, type) {//设置贴图和动画类型
+    textureSet0: function (i, type) {//头部贴图
         this.type.array[4 * i] = type;//设置贴图
     },
-    textureSet1: function (i, type) {//设置贴图和动画类型
+    textureSet1: function (i, type) {//设置上身贴图
         this.type.array[4 * i+ 1] = type;//设置贴图
     },
     animationSet:function(i,animationType){
