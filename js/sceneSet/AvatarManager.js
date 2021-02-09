@@ -70,7 +70,8 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
             [],//LOD等级的数组
             scope.camera,  //LOD需要判断到相机的距离
             0,       //有多个动画时,表示第0个动画//可以通过pmLoader.updateAnimation(i)来切换动画
-            0     //动画播放速度//可以通过调整pmLoader.animationSpeed来调整速度
+            0,     //动画播放速度//可以通过调整pmLoader.animationSpeed来调整速度
+            []
         );//pmLoader = new myPMLoader('myModel/dongshizhang', LODNumber);//pmLoader = new THREE.PMLoader();//加载PM文件
         //完成创建PM对象
 
@@ -245,7 +246,8 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
             LODArray,//LOD等级的数组
             this.camera,  //LOD需要判断到相机的距离
             0,       //有多个动画时,表示第0个动画//可以通过pmLoader.updateAnimation(i)来切换动画
-            0.02     //动画播放速度//可以通过调整pmLoader.animationSpeed来调整速度
+            0.02,     //动画播放速度//可以通过调整pmLoader.animationSpeed来调整速度
+            ["Texture_0_0.jpeg","Texture_0_1.jpeg"]
         );//pmLoader = new myPMLoader('myModel/dongshizhang', LODNumber);//pmLoader = new THREE.PMLoader();//加载PM文件
         var myModel=pmLoader.obj;
         myModel.scale.set(0.024,0.024,0.024);

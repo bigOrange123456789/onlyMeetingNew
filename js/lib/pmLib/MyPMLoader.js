@@ -1,4 +1,4 @@
-function MyPMLoader(glbObj,url,LODArray,camera,animationType,animationSpeed){
+function MyPMLoader(glbObj,url,LODArray,camera,animationType,animationSpeed,texNames){
     this.url;//=url;
     this.obj;//=new THREE.Object3D();
     this.glbObj;//=glbObj;
@@ -20,10 +20,13 @@ function MyPMLoader(glbObj,url,LODArray,camera,animationType,animationSpeed){
     this.skeletonBones;//=null;
     this.skeletonMatrix;//=null;
 
-    this.init(glbObj,url,LODArray,camera,animationType,animationSpeed);//初始化函数//00001
+    //以下是纹理贴图地址信息
+    this.texNames;
+
+    this.init(glbObj,url,LODArray,camera,animationType,animationSpeed,texNames);//初始化函数//00001
 }
 MyPMLoader.prototype={
-    init:function(glbObj,url,LODArray,camera,animationType,animationSpeed){//这里是初始要执行的代码
+    init:function(glbObj,url,LODArray,camera,animationType,animationSpeed,texNames){//这里是初始要执行的代码
         this.url=url;
         this.glbObj=glbObj;
         this.obj=new THREE.Object3D();
@@ -42,6 +45,10 @@ MyPMLoader.prototype={
         this.camera=camera;
         this.LODArray=LODArray;
         this.LODNumber=LODArray.length+1;
+
+        //以下是纹理贴图地址信息
+        if(texNames===undefined)this.texNames=["Texture_0_0.jpeg","Texture_0_1.jpeg","Texture_0_2.jpeg","Texture_0_3.jpeg"];
+        else this.texNames=texNames;
 
         this.createPmMesh();
     },
@@ -168,7 +175,8 @@ MyPMLoader.prototype={
                     opacity : true,
                     skinning : true
                 });
-            startLogImageLoading(meshMat[i], meshData.materials[i]);
+            if(THIS.texNames.length>0)
+                startLogImageLoading(meshMat[i], meshData.materials[i]);
         }
 
         for(var Meshid=0;Meshid < meshData.faces.length;Meshid++){//meshData.faces.length为1
@@ -200,14 +208,11 @@ MyPMLoader.prototype={
 
         function loadLodImage(imageFileNameWithoutEx, imageFileExtension, isSrcImage)
         {
-            var imgUrl = texFilesUrl + '/' + imageFileNameWithoutEx + (isSrcImage ? '' : ('_' + imageLodLevel)) + '.' + imageFileExtension;
-
             var loader = new THREE.TextureLoader();
-            loader.load(imgUrl, function ( texture )
-                {
+            loader.load(texFilesUrl + '/' +THIS.texNames[imageLodLevel], function ( texture )
+                {//贴图加载成功
                     var lodImgName = texture.image.src.substring(texture.image.src.lastIndexOf('/') + 1, texture.image.src.length);
                     var srcImgName = isSrcImage ? lodImgName.substring(0, lodImgName.lastIndexOf('.')) : lodImgName.substring(0, lodImgName.lastIndexOf('_'));
-
                     if(meshMaterialMap[srcImgName])
                     {
                         meshMaterialMap[srcImgName].map = texture;
@@ -216,12 +221,11 @@ MyPMLoader.prototype={
 
                     imageLodLevel++;
 
-                    if (!isSrcImage && imageLodLevel <= MaxLODLevel)//setTimeout(function(){} , imgLoadingGapTime);
+                    if ( imageLodLevel <THIS.texNames.length)//setTimeout(function(){} , imgLoadingGapTime);
                         loadLodImage(imageFileNameWithoutEx, imageFileExtension, imageLodLevel === MaxLODLevel);
                 },
                 undefined,
-                function ( err )
-                {
+                function () {//贴图加载失败
                     loadLodImage(imageFileNameWithoutEx, imageFileExtension, true);
                 });
         }
