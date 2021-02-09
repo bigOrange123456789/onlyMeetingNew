@@ -66,6 +66,25 @@ InstancedGroup.prototype={
         var B=d;
         return [A,B];
     },
+    reGeometry:function(geometryNew){//用于和PM技术相结合
+        var geometryTemp= new THREE.InstancedBufferGeometry();
+        geometryTemp.instanceCount = this.instanceCount;
+        geometryTemp.setAttribute('position', geometryNew.attributes.position);//Float32Array
+        geometryTemp.setAttribute('inUV',geometryNew.attributes.uv);
+        geometryTemp.setAttribute('skinIndex',geometryNew.attributes.skinIndex);
+        geometryTemp.setAttribute('skinWeight',geometryNew.attributes.skinWeight);
+
+        geometryTemp.setAttribute('speed', this.speed);
+
+        geometryTemp.setAttribute('mcol0', this.mcol0);//四元数、齐次坐标
+        geometryTemp.setAttribute('mcol1', this.mcol1);
+        geometryTemp.setAttribute('mcol2', this.mcol2);
+        geometryTemp.setAttribute('mcol3', this.mcol3);
+
+        geometryTemp.setAttribute('type', this.type);
+        geometryTemp.setAttribute('color', this.colors);
+        this.mesh.geometry=geometryTemp;
+    },
     init:function (texSrc,textNum,texFlipY){//纹理贴图资源路径，贴图中包含纹理的个数
         if(typeof(textNum)=="undefined")textNum=16;
         if(typeof(texFlipY)=="undefined")texFlipY=true;
@@ -80,11 +99,6 @@ InstancedGroup.prototype={
         //1-2
         geometry.setAttribute('position', this.originMeshs[0].geometry.attributes.position);//Float32Array
         geometry.setAttribute('inUV',this.originMeshs[0].geometry.attributes.uv);
-        //3
-        var randoms=new Float32Array(this.originMeshs[0].geometry.attributes.position.count);
-        for(i=0;i<randoms.length;i++)
-            randoms[i]=Math.random();
-        geometry.setAttribute('random',new THREE.BufferAttribute(randoms,1));
         //4-5
         if(this.haveSkeleton){
             geometry.setAttribute('skinIndex',this.originMeshs[0].geometry.attributes.skinIndex);
