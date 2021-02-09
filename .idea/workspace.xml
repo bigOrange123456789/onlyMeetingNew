@@ -21,10 +21,10 @@
   <component name="ChangeListManager">
     <list default="true" id="b7b6123d-caec-4b82-a432-424a6b5be5dd" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/js/lib/instancedLib/InstancedGroup.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/lib/instancedLib/InstancedGroup.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/js/sceneSet/AvatarManager.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/sceneSet/AvatarManager.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shader/vertexBone.vert" beforeDir="false" afterPath="$PROJECT_DIR$/shader/vertexBone.vert" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shader/vertexBone2.vert" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pretreatment/Compute.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pretreatment/index1.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/InstancedGroup.test.js" beforeDir="false" afterPath="$PROJECT_DIR$/test/InstancedGroup.test.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/testLaunch.js" beforeDir="false" afterPath="$PROJECT_DIR$/test/testLaunch.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -149,7 +149,7 @@
       <workItem from="1612796643610" duration="8734000" />
       <workItem from="1612840660467" duration="6140000" />
       <workItem from="1612854235866" duration="7035000" />
-      <workItem from="1612869023234" duration="1746000" />
+      <workItem from="1612869023234" duration="4496000" />
     </task>
     <servers />
   </component>
