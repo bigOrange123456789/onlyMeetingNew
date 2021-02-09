@@ -51,7 +51,7 @@ MyPMLoader.prototype={
 
         //处理骨骼动画
         var animationClips=THIS.glbObj.animations;//获取动画
-        this.ainmationInit();
+        if(animationClips.length>0)this.ainmationInit();
 
         //加载基模的三个JSON文件,然后进行解析、执行parse函数
         var baseMeshUrl = this.url + '/basemesh.json';
@@ -182,7 +182,7 @@ MyPMLoader.prototype={
         });
 
 
-        this.aimationMixerInit(animationClips);
+        if(animationClips.length>0)this.aimationMixerInit(animationClips);
         THIS.obj.add(THIS.rootObject);
 
         /***********************程序到此执行结束，以下为工具函数****************************************************************************************/
@@ -265,11 +265,11 @@ MyPMLoader.prototype={
 
                 for (var i = 0 ; i < 3 ; ++i)
                 {
-                    if(vsData.Faces[vsfi+2*i] == meshData.faces[Meshid][face][i])
+                    if(vsData.Faces[vsfi+2*i] === meshData.faces[Meshid][face][i])
                     {
                         objectF.faceSIndex=(vsfi/6);
                     }
-                    if (vsData.Faces[vsfi+2*i] == tIndex && meshData.faces[Meshid][face][i]== vsData.S)
+                    if (vsData.Faces[vsfi+2*i] === tIndex && meshData.faces[Meshid][face][i]== vsData.S)
                     {
                         index = i;
                         objectF.faceIndex=(vsfi/6);
@@ -401,7 +401,7 @@ MyPMLoader.prototype={
             }//console.log(Meshid);输出了356次的0
 
             rootObject.add(THIS.mesh[0]);//将新的mesh添加到对象中//
-            setupPmSkinnedMesh(rootObject, skeletonBones, skeletonMatrix);//重要
+            if(animationClips.length>0)setupPmSkinnedMesh(rootObject, skeletonBones, skeletonMatrix);//重要
 
             if(typeof(index)!='undefined')
                 if(index===lengthindex-1||index%Math.ceil(lengthindex/(numberLOD-1))===0)
@@ -595,9 +595,12 @@ MyPMLoader.prototype={
 
             this.mesh[0]=this.pmMeshHistory[i];//console.log(this.pmMeshHistory);
 
-            var skinnedMesh =this.rootObject.children[0];
-            skinnedMesh.add(skeletonBones.bones[0]);
-            skinnedMesh.bind(skeletonBones,skeletonMatrix);
+            if(skeletonBones!==undefined){
+                var skinnedMesh =this.rootObject.children[0];
+                skinnedMesh.add(skeletonBones.bones[0]);
+                skinnedMesh.bind(skeletonBones,skeletonMatrix);
+            }
+
         }
     },
 }
