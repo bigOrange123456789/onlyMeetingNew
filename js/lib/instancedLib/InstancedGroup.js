@@ -20,6 +20,10 @@ function InstancedGroup(instanceCount,originMesh,animationClip ){
     this.time=0;//每帧自动加1，加到一定值之后自动归0
 
     this.dummy=new THREE.Object3D();//dummy仿制品//工具对象
+
+    //shader地址
+    this.vertURL;
+    this.fragURL;
 }
 InstancedGroup.prototype={
     decode:function(A,B) {
@@ -135,13 +139,13 @@ InstancedGroup.prototype={
             text0: {type: 't', value: text0}
             ,textNum:{value: textNum}
         };
-        var path_v=this.haveSkeleton?"shader/vertexBone.vert":"shader/vertex.vert",
-            path_f="shader/fragment.frag";
+        if(this.vertURL===undefined)this.vertURL=this.haveSkeleton?"shader/vertexBone.vert":"shader/vertex.vert";
+        if(this.fragURL===undefined)this.fragURL="shader/fragment.frag";
         let material = new THREE.RawShaderMaterial();//原始着色器材质
         material.side=THREE.DoubleSide;
         material.uniforms= uniforms;
-        material.vertexShader=load(path_v);
-        material.fragmentShader=load(path_f);
+        material.vertexShader=load(this.vertURL);
+        material.fragmentShader=load(this.fragURL);
         function load(name) {
             let xhr = new XMLHttpRequest(),
                 okStatus = document.location.protocol === "file:" ? 0 : 200;
