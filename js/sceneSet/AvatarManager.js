@@ -118,7 +118,8 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
                         [mesh2],//这些mesh的网格应该一致
                         true
                     );
-                    peoples2.vertURL="shader/vertexBone2.vert";
+                    peoples2.neckPosition=0.68;
+                    //peoples2.vertURL="shader/vertexBone2.vert";
                     //peoples2.fragURL="shader/fragment2.frag";
                     peoples2.init(['./img/texture/m/m00.jpg', './img/texture/m/m0.jpg'], 32);
                     index = 0;

@@ -24,6 +24,9 @@ function InstancedGroup(instanceCount,originMesh,animationClip ){
     //shader地址
     this.vertURL;
     this.fragURL;
+
+    //以下参数用于将模型划分为头、上身、下身三部分
+    this.neckPosition;
 }
 InstancedGroup.prototype={
     decode:function(A,B) {
@@ -139,6 +142,12 @@ InstancedGroup.prototype={
             text0: {type: 't', value: text0}
             ,textNum:{value: textNum}
         };
+        uniforms.neckPosition={
+            value: (
+                (this.neckPosition===undefined)?0.59:this.neckPosition
+            )
+        };
+
         if(this.vertURL===undefined)this.vertURL=this.haveSkeleton?"shader/vertexBone.vert":"shader/vertex.vert";
         if(this.fragURL===undefined)this.fragURL="shader/fragment.frag";
         let material = new THREE.RawShaderMaterial();//原始着色器材质
@@ -146,6 +155,7 @@ InstancedGroup.prototype={
         material.uniforms= uniforms;
         material.vertexShader=load(this.vertURL);
         material.fragmentShader=load(this.fragURL);
+
         function load(name) {
             let xhr = new XMLHttpRequest(),
                 okStatus = document.location.protocol === "file:" ? 0 : 200;

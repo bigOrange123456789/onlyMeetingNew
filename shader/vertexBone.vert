@@ -2,6 +2,7 @@ precision highp float;//highp
 uniform sampler2D dataTexture;//帧数8*骨骼8*12=768//用于求手臂骨骼//8个手臂骨骼的数据
 uniform mat4 modelViewMatrix,projectionMatrix;
 uniform float time;//0-10000
+uniform float neckPosition;
 
 attribute vec3 position;
 attribute vec2 inUV;
@@ -27,7 +28,7 @@ void main(){
     vec3 vPosition = position;
 
     outUV = inUV;
-    varyColor=vec3(color[0], color[1], color[2]);
+    varyColor=color;
     varyType=vec3(type[0], type[1], type[2]);
     /*if (vPosition.y<0.15&&(vPosition.z<0.35&&vPosition.z>-0.35)){
         type_part=0.0;//下身
@@ -40,7 +41,7 @@ void main(){
         texType=floor(type[2]+0.5);
     }*/
     if (vPosition.y<0.15&&(vPosition.z<0.35&&vPosition.z>-0.35))type_part=0.0;//下身
-    else if (vPosition.y<0.59) type_part=1.0;//上身
+    else if (vPosition.y<neckPosition) type_part=1.0;//上身
     else type_part=2.0;//头部
 
     Animation_init();
