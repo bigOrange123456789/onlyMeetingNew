@@ -6,7 +6,7 @@ uniform float neckPosition;
 
 attribute vec3 position;
 attribute vec2 inUV;
-attribute vec4 skinIndex;
+attribute vec4 skinIndex,skinWeight;
 attribute float speed;
 attribute vec3 mcol0,mcol1,mcol2,mcol3;
 attribute vec4 type;//设置贴图0-2,type[3]用处不明
@@ -25,6 +25,7 @@ float SKELETON_SIZE0=204.0; //用于求不动位置的骨骼//骨骼(25-8)*12=20
 float SKELETON_SIZE1=768.0;//鼓掌动画//8个手臂骨骼的数据//帧数8*骨骼8*12=768
 float SKELETON_SIZE2=96.0;//96.0//举手动作//8*12=96
 float SKELETON_SIZE3=96.0;//96.0//举手动作//8*12=96
+float SKELETON_SIZE4=96.0;
 void main(){
     vec3 vPosition = position;
 
@@ -100,6 +101,7 @@ struct Animation{
         float skeletonPos1;
         float skeletonPos2;
         float skeletonPos3;
+        float skeletonPos4;
         float skeletonLast;
         float dataTextureHeight;
 
@@ -130,6 +132,10 @@ float Animation_decode(float A, float B){ //0-1
     float num=c_d*pow(10.0, b-5.0);
     if (a==1.0)num*=-1.0;
     return num;
+}
+float Animation_getElem5(float n){ //静止//取手臂骨骼数据
+    float A=Animation_getNumByTexture(n+oAnimation.skeletonPos4), B=Animation_getNumByTexture(n+oAnimation.skeletonLast+oAnimation.skeletonPos4);
+    return Animation_decode(A, B);
 }
 float Animation_getElem4(float n){ //静止//取手臂骨骼数据
     float A=Animation_getNumByTexture(n+oAnimation.skeletonPos3), B=Animation_getNumByTexture(n+oAnimation.skeletonLast+oAnimation.skeletonPos3);
@@ -164,12 +170,19 @@ mat4 Animation_getMatrix2(float iii){ //求手臂骨骼
             Animation_getElem3(i*12.+6.), Animation_getElem3(i*12.+7.), Animation_getElem3(i*12.+8.), 0,
             Animation_getElem3(i*12.+9.), Animation_getElem3(i*12.+10.), Animation_getElem3(i*12.+11.), 1
         );
-    }else {
+    }else if (type[3]<2.5){
         return mat4(//最后一列是：0 0 0 1
-        Animation_getElem4(i*12.+0.), Animation_getElem4(i*12.+1.), Animation_getElem4(i*12.+2.), 0,
-        Animation_getElem4(i*12.+3.), Animation_getElem4(i*12.+4.), Animation_getElem4(i*12.+5.), 0,
-        Animation_getElem4(i*12.+6.), Animation_getElem4(i*12.+7.), Animation_getElem4(i*12.+8.), 0,
-        Animation_getElem4(i*12.+9.), Animation_getElem4(i*12.+10.), Animation_getElem4(i*12.+11.), 1
+            Animation_getElem4(i*12.+0.), Animation_getElem4(i*12.+1.), Animation_getElem4(i*12.+2.), 0,
+            Animation_getElem4(i*12.+3.), Animation_getElem4(i*12.+4.), Animation_getElem4(i*12.+5.), 0,
+            Animation_getElem4(i*12.+6.), Animation_getElem4(i*12.+7.), Animation_getElem4(i*12.+8.), 0,
+            Animation_getElem4(i*12.+9.), Animation_getElem4(i*12.+10.), Animation_getElem4(i*12.+11.), 1
+        );
+    } else {
+        return mat4(//最后一列是：0 0 0 1
+            Animation_getElem5(i*12.+0.), Animation_getElem5(i*12.+1.), Animation_getElem5(i*12.+2.), 0,
+            Animation_getElem5(i*12.+3.), Animation_getElem5(i*12.+4.), Animation_getElem5(i*12.+5.), 0,
+            Animation_getElem5(i*12.+6.), Animation_getElem5(i*12.+7.), Animation_getElem5(i*12.+8.), 0,
+            Animation_getElem5(i*12.+9.), Animation_getElem5(i*12.+10.), Animation_getElem5(i*12.+11.), 1
         );
     }
 
@@ -216,6 +229,10 @@ mat4 Animation_computeMatrix(){
     //计算动画的变换矩阵：matrix1=skinWeight[0]*matrixs[mySkinIndex[0]]+...
     mat4 matrix1;//每个点只与一个骨骼相关
     matrix1=Animation_getMatrix(skinIndex[0]);
+    /*skinWeight[0]*Animation_getMatrix(skinIndex[0])
+   +skinWeight[1]*Animation_getMatrix(skinIndex[1])
+   +skinWeight[2]*Animation_getMatrix(skinIndex[2])
+   +skinWeight[3]*Animation_getMatrix(skinIndex[3]);*/
 
     return matrix1;
 }
@@ -224,8 +241,8 @@ void Animation_init(){
     oAnimation.skeletonPos1=(oAnimation.skeletonPos0+SKELETON_SIZE0);
     oAnimation.skeletonPos2=(oAnimation.skeletonPos1+SKELETON_SIZE1);
     oAnimation.skeletonPos3=(oAnimation.skeletonPos2+SKELETON_SIZE2);
-    //oAnimation.skeletonLast=(oAnimation.skeletonPos1+SKELETON_SIZE1);
-    oAnimation.skeletonLast=(oAnimation.skeletonPos3+SKELETON_SIZE3);
+    oAnimation.skeletonPos4=(oAnimation.skeletonPos3+SKELETON_SIZE3);
+    oAnimation.skeletonLast=(oAnimation.skeletonPos4+SKELETON_SIZE4);
     oAnimation.dataTextureHeight=(oAnimation.skeletonLast*2.0/3.0);
 
     Animation_frameIndexSet();//设置全局变量frame_index的值

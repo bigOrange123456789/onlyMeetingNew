@@ -121,7 +121,7 @@ RoomManager.prototype={
             set(d1,[mesh0,mesh1,mesh2],3,pre3);
 
 
-            move();
+            //move();
             function move(){
                 if(d0.rotation.z>0) {
                     d0.rotation.z-=0.02;
@@ -133,6 +133,16 @@ RoomManager.prototype={
                     requestAnimationFrame(move);
                 }
             }
+            var myInterval=setInterval(function () {
+                if(d0.rotation.z>0) {
+                    d0.rotation.z-=0.02;
+                    d1.rotation.z-=0.02;
+                    set(d0, [mesh0,mesh1,mesh2], 0);
+                    set(d0, [mesh0,mesh1,mesh2], 1,pre1);
+                    set(d1, [mesh0,mesh1,mesh2], 2,pre2);
+                    set(d1, [mesh0,mesh1,mesh2], 3,pre3);
+                }else clearInterval(myInterval);
+            },10);
 
 
             function set(du,m,i,pre) {

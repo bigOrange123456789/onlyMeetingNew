@@ -1794,5 +1794,5 @@ InstancedGroupTest.prototype={
         },
 }
 var myInstancedGroupTest=new InstancedGroupTest();
-myInstancedGroupTest.test6_2();
+myInstancedGroupTest.test2_1();
 //myInstancedGroupTest.test_texture();

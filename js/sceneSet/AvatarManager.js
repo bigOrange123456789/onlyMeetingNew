@@ -20,6 +20,7 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
                     Math.random()/4 ,
                     Math.random()/4
                 ]);
+                scope.animations[i]=Math.floor(Math.random()*4);
             }
 
             var data=JSON.parse(str).data;//种类分布
@@ -27,14 +28,10 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
                 if(data[i]%3===2){// 有1/3是女性
                     scope.sexs[i]=0;//女性
                     scope.types[i]=Math.floor(data[i]/3);
-                    if(Math.random()<0.3)scope.animations[i]=1;
-                    else if(Math.random()<0.5)scope.animations[i]=0;
-                    else scope.animations[i]=2;
                 }else{
                     scope.sexs[i]=1;//男性
                     scope.types[i]=Math.floor(data[i]/3)+(data[i]%3)*16;
-                    if(Math.random()<0.75)scope.animations[i]=0;
-                    else scope.animations[i]=2;
+                    if(scope.animations[i]===1)scope.animations[i]=0;
                     scope.manNum++;
                 }
             }

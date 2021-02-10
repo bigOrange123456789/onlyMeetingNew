@@ -79,6 +79,7 @@ InstancedGroup.prototype={
         geometryTemp.setAttribute('position', geometryNew.attributes.position);//Float32Array
         geometryTemp.setAttribute('inUV',geometryNew.attributes.uv);
         if(this.haveSkeleton){
+            console.log(geometryNew.attributes);//skinWeight
             geometryTemp.setAttribute('skinIndex',geometryNew.attributes.skinIndex);
             geometryTemp.setAttribute('skinWeight',geometryNew.attributes.skinWeight);
         }
