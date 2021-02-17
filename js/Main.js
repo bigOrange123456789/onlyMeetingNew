@@ -3,6 +3,7 @@ function Main(){
     var scope=this;
     this.scene=new THREE.Scene();
     this.camera=new THREE.PerspectiveCamera( 70,window.innerWidth /window.innerHeight, 0.1, 1000 );;
+    this.render;
     //this.camera = new THREE.OrthographicCamera(window.innerWidth/ - 1,window.innerWidth,window.innerHeight,window.innerHeight/ - 1, 0, 100000 );
     this.winWidth = window.innerWidth;
     this.winHeight = window.innerHeight;
@@ -13,18 +14,18 @@ function Main(){
     }
     this.init=function()
     {
-        renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true});
-        renderer.autoClear = false;
-        renderer.setPixelRatio( window.devicePixelRatio );
+        this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true});
+        this.renderer.autoClear = false;
+        this.renderer.setPixelRatio( window.devicePixelRatio );
 
-        renderer.gammaInput = true;
-        renderer.gammaOutput = true;
+        this.renderer.gammaInput = true;
+        this.renderer.gammaOutput = true;
 
         winWidth = window.innerWidth;
         winHeight = window.innerHeight;
 
-        renderer.setSize(winWidth, winHeight);
-        document.body.appendChild( renderer.domElement );
+        this.renderer.setSize(winWidth, winHeight);
+        document.body.appendChild( this.renderer.domElement );
 
         // CAMERAS
         this.camera.position.set(-155,41,22,-2.07);//-155,41,22,-2.07,-1.49,-2.07
@@ -60,7 +61,7 @@ function Main(){
     }
     this.animate=function()
     {
-        renderer.render(scope.scene,scope.camera);
+        scope.renderer.render(scope.scene,scope.camera);
         //scope.divInfo.textContent='场景中三角面个数:' + renderer.info.render.triangles;
         if (window.innerWidth !== scope.winWidth || window.innerHeight !== scope.winHeight) scope._onResize();
         requestAnimationFrame(scope.animate);

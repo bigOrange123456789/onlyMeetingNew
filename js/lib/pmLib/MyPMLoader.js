@@ -588,8 +588,7 @@ MyPMLoader.prototype={
                 level=this.LODArray.length-i-1;
                 break;
             }
-        return 0;
-        //return level;//越远等级越小
+        return 2;//越远等级越小
     },
     updateMesh:function(i){//这个函数的作用是协助实现LOD//0 - pmMeshHistory-1
         var skeletonBones=this.skeletonBones,skeletonMatrix=this.skeletonMatrix;

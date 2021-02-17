@@ -32,16 +32,19 @@
 	<script src="js/ParamMeasure.js"></script>
 	<script src="js/Main.js"></script>
 
-	<script>
+	<script  type="module">
+		import { VRButton } from './js//lib/VRButton.js';//负责VR视觉
+
 		var myVideoManager = new VideoManager();
 		myVideoManager.init();
 
-		var myRoomManager = new RoomManager();
+		var myRoomManager = new RoomManager(myVideoManager);
 		myRoomManager.loadRoom();//myVideoManager
 
 		var myMain = new Main();
 		myMain.start();
 		myMain.scene.add(myRoomManager.room);
+		document.body.appendChild( VRButton.createButton( myMain.renderer ) );
 
 		new PlayerControl(myMain.camera);
 

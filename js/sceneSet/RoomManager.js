@@ -1,6 +1,7 @@
-function RoomManager(){//myVideoManager_
+function RoomManager(myVideoManager0){//myVideoManager_
     this.loader= new THREE.GLTFLoader();
     this.room=new THREE.Object3D();
+    this.myVideoManager=myVideoManager0;
 }
 RoomManager.prototype={
     loadRoom:function(){
@@ -60,7 +61,7 @@ RoomManager.prototype={
                 if( gltf.scene.children[i].name==="室内-小显示器屏幕（非）"||
                     gltf.scene.children[i].name==="室内-大显示器屏幕（非）"){//室内-大显示器屏幕（非）
                     var screen=gltf.scene.children[i];
-                    myVideoManager.setMaterial(screen);
+                    scope.myVideoManager.setMaterial(screen);
                 }
                 //室内-电子显示屏（非）
             }

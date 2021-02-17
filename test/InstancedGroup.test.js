@@ -193,12 +193,13 @@ InstancedGroupTest.prototype={
                 var loader= new THREE.GLTFLoader();
                 //"test/avatar/male_run.glb"
                 //"myModel/avatar/Female.glb"
-                loader.load("test/female_run.glb", (glb1) => {
+                loader.load("test/model/avatar/childMale_run.glb", (glb1) => {
                         //console.log(glb0);
-                        loader.load("test/female_bend.glb", (glb2) => {
+                        loader.load("test/model/female_bend.glb", (glb2) => {
                                 console.log(glb1);//scene.children[0].children[1].children
                                 console.log(glb2);
                                 var myGlb=glb1;
+                                console.log(myGlb.scene.children[0].children[3]);
                                 /*myGlb.scene.children[0].traverse(node => {
                                         if (node instanceof THREE.SkinnedMesh) {
                                                 createObj(node,myGlb.animations[0]);
@@ -216,7 +217,21 @@ InstancedGroupTest.prototype={
                                         setInterval(function () {
                                                 meshMixer2.update(0.01);
                                         },100)
-                                        scope.scene.add(G.scene);
+                                        //scope.scene.add(G.scene);
+                                        //console.log(G.scene.children[0].children[3].children[0]);
+                                        var mesh=G.scene.children[0].children[3];
+                                        var mesh0=new THREE.Mesh();
+                                        mesh0.rotation.set(3*Math.PI/2,0,0);
+                                        mesh0.scale.set(10,10,10);
+                                        mesh0.geometry=mesh.geometry;
+                                        mesh0.material=mesh.material;
+
+                                        mesh0.material.map= THREE.ImageUtils.loadTexture('test/texture/m/m1.jpg', {}, function() {
+                                                //console.log(m)
+                                                mesh0.material.map.flipY=false;//true;//
+                                                console.log(mesh0.material.map);
+                                        });
+                                        scope.scene.add(mesh0);
                                 }
                                 function createObj(mesh,animation) {
                                         //console.log(mesh);
@@ -227,6 +242,11 @@ InstancedGroupTest.prototype={
                                         myController.mesh.position.set(0,0,0);
                                         myController.mesh.scale.set(1,1,1);
                                         scope.scene.add(myController.mesh);
+                                        var mesh0=new THREE.Mesh();
+                                        mesh0.geometry=myController.mesh.geometry;
+                                        mesh0.material=myController.mesh.material;
+                                        //scope.scene.add(mesh0);
+                                        //console.log(mesh0)
                                 }
                         });//
                 });
@@ -1795,4 +1815,4 @@ InstancedGroupTest.prototype={
 }
 var myInstancedGroupTest=new InstancedGroupTest();
 myInstancedGroupTest.test2_1();
-//myInstancedGroupTest.test_texture();
+//myInstancedGroupTest.test1();
