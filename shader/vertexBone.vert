@@ -229,7 +229,7 @@ mat4 Animation_computeMatrix(){
     //计算动画的变换矩阵：matrix1=skinWeight[0]*matrixs[mySkinIndex[0]]+...
     mat4 matrix1;//每个点只与一个骨骼相关
     matrix1=Animation_getMatrix(skinIndex[0]);
-    /*skinWeight[0]*Animation_getMatrix(skinIndex[0])
+    /*matrix1=skinWeight[0]*Animation_getMatrix(skinIndex[0])
    +skinWeight[1]*Animation_getMatrix(skinIndex[1])
    +skinWeight[2]*Animation_getMatrix(skinIndex[2])
    +skinWeight[3]*Animation_getMatrix(skinIndex[3]);*/

@@ -198,7 +198,7 @@ InstancedGroupTest.prototype={
                         loader.load("test/model/female_bend.glb", (glb2) => {
                                 console.log(glb1);//scene.children[0].children[1].children
                                 console.log(glb2);
-                                var myGlb=glb1;
+                                var myGlb=glb2;
                                 console.log(myGlb.scene.children[0].children[3]);
                                 /*myGlb.scene.children[0].traverse(node => {
                                         if (node instanceof THREE.SkinnedMesh) {
@@ -213,26 +213,77 @@ InstancedGroupTest.prototype={
                                         //console.log(mesh);
 
                                         var meshMixer2 = new THREE.AnimationMixer(G.scene);
-                                        meshMixer2.clipAction(glb1.animations[0]).play();
+                                        meshMixer2.clipAction(glb2.animations[0]).play();
                                         setInterval(function () {
                                                 meshMixer2.update(0.01);
                                         },100)
-                                        //scope.scene.add(G.scene);
+                                        scope.scene.add(G.scene);
                                         //console.log(G.scene.children[0].children[3].children[0]);
-                                        var mesh=G.scene.children[0].children[3];
-                                        var mesh0=new THREE.Mesh();
-                                        mesh0.rotation.set(3*Math.PI/2,0,0);
-                                        mesh0.scale.set(10,10,10);
-                                        mesh0.geometry=mesh.geometry;
-                                        mesh0.material=mesh.material;
+                                        console.log(G.scene);
+                                        for(i=0;i<myGlb.scene.children.length;i++)
+                                        myGlb.scene.children[i].traverse(mesh => {
+                                                if (mesh instanceof THREE.SkinnedMesh) {
+                                                        var mesh0=new THREE.Mesh();
+                                                        mesh0.rotation.set(3*Math.PI/2,0,0);
+                                                        mesh0.scale.set(10,10,10);
+                                                        mesh0.geometry=mesh.geometry;
+                                                        //材质处理
+                                                        var type=1;
+                                                        if(type===0){
+                                                                mesh0.material=mesh.material;
+                                                                mesh0.material.map= THREE.ImageUtils.loadTexture('test/texture/m/m1.jpg', {}, function() {
+                                                                        //console.log(m)
+                                                                        mesh0.material.map.flipY=false;//true;//
+                                                                        console.log(mesh0.material.map);
+                                                                });
+                                                        }else{
+                                                                mesh0.material=new THREE.MeshBasicMaterial( { color: 0x000000, wireframe: true, transparent: true } );
+                                                        }
 
-                                        mesh0.material.map= THREE.ImageUtils.loadTexture('test/texture/m/m1.jpg', {}, function() {
-                                                //console.log(m)
-                                                mesh0.material.map.flipY=false;//true;//
-                                                console.log(mesh0.material.map);
+                                                        //scope.scene.add(mesh0);
+                                                }
                                         });
-                                        scope.scene.add(mesh0);
+
                                 }
+                        });//
+                });
+
+                //完成测试
+        },
+        //有动画测试和无动画测试
+        test2_2:function (contextType){
+                if(typeof(contextType)==="undefined")this.setContext();
+                var nameTest="多模块模型";
+                console.log('start test:'+nameTest);
+                //开始测试
+                var scope=this;
+                var loader= new THREE.GLTFLoader();
+                //"test/avatar/male_run.glb"
+                //"myModel/avatar/Female.glb"
+                loader.load("test/model/test.gltf", (glb1) => {
+                        //console.log(glb0);
+                        //loader.load("test/model/female_bend.glb", (glb2) => {
+                                console.log(glb1);//scene.children[0].children[1].children
+                                var myGlb=glb1;
+                                myGlb.scene.children[0].traverse(node => {
+                                        if (node instanceof THREE.SkinnedMesh) {
+                                                //createObj(node,myGlb.animations[0]);
+                                                //createObjNoAnimation(node,myGlb.animations[0]);
+                                                for(var i1=0;i1<2;i1++)
+                                                        for(var i2=0;i2<2;i2++){
+                                                                var mesh=createObjNoAnimation(node,myGlb.animations[0]);
+
+                                                                var k=(i1*2+i2)*0.2;//
+                                                                mesh.scale.set(0.8+k*1.5,0.8+0.4-k*0.7,0.8+k*1.5);
+                                                                mesh.rotation.set(0,3*Math.PI/2,0);
+
+                                                                if(i1===0&&i2===0)mesh.position.set(0*2+2,0*2,0);
+                                                                else if(i1===1&&i2===0)mesh.position.set(i1*2-2,i2*2,0);
+                                                                else mesh.position.set(i1*2,i2*2,0);
+                                                        }/**/
+
+                                        }
+                                });/**/
                                 function createObj(mesh,animation) {
                                         //console.log(mesh);
                                         var myController=new SkinnedMeshController();
@@ -241,14 +292,35 @@ InstancedGroupTest.prototype={
                                         myController.speed=0.01;
                                         myController.mesh.position.set(0,0,0);
                                         myController.mesh.scale.set(1,1,1);
+                                        //myController.mesh.material=new THREE.MeshBasicMaterial( { color: 0x000000, wireframe: true, transparent: true } );
                                         scope.scene.add(myController.mesh);
                                         var mesh0=new THREE.Mesh();
                                         mesh0.geometry=myController.mesh.geometry;
-                                        mesh0.material=myController.mesh.material;
+                                        mesh0.material=new THREE.TextureLoader().load('test/texture/w/w1.jpg');
                                         //scope.scene.add(mesh0);
                                         //console.log(mesh0)
                                 }
-                        });//
+                        function createObjNoAnimation(mesh,animation) {
+                                //console.log(mesh);
+                                var myController=new SkinnedMeshController();
+                                //myController.init(mesh,animation);
+                                myController.init2(mesh,animation,myGlb.scene);
+                                myController.speed=0.01;
+                                myController.mesh.position.set(0,0,0);
+                                myController.mesh.scale.set(1,1,1);
+                                //myController.mesh.material=new THREE.MeshBasicMaterial( { color: 0x000000, wireframe: true, transparent: true } );
+
+                                //scope.scene.add(myController.mesh);
+                                var mesh0=new THREE.Mesh();
+                                mesh0.geometry=myController.mesh.geometry;
+                                mesh0.material=myController.mesh.material;
+                                mesh0.material.map=THREE.ImageUtils.loadTexture('test/texture/w/w1.jpg');
+                                mesh0.material.map.flipY=false;
+                                scope.scene.add(mesh0);
+                                return mesh0;
+                                //console.log(mesh0)
+                        }
+                        //});//
                 });
 
                 //完成测试
@@ -384,26 +456,84 @@ InstancedGroupTest.prototype={
                 var scope=this;
                 var loader= new THREE.GLTFLoader();
                 loader.load("myModel/avatar/Female.glb", (glb) => {
-                        console.log(glb);//OnlyArm
-                        var mesh=glb.scene.children[0].children[1];//"myModel/avatar/Female.glb"
+                        f2();
 
-                        var peoples = new InstancedGroup(
-                            1,
-                            [mesh],//这些mesh的网格应该一致
-                            glb.animations[0]
-                        );
-                        var texSrc = [];
-                        for (i = 0; i < 16; i++) texSrc.push('./img/texture/w/w' + i + '.jpg');
-                        peoples.init(
-                            texSrc
-                        );
-                        for (var i = 0; i < 1; i++) {
-                                peoples.rotationSet(i, [Math.PI / 2, 0, 0]);
-                                peoples.positionSet(i, [3 * i, 0, 0]);
-                                peoples.scaleSet(i, [0.03, 0.03, 0.03]);
-                                peoples.speedSet(i,0.5);
+                        function f3() {
+                                var peoples=new THREE.Object3D();
+                                var mesh0=glb.scene.children[0].children[1];//"myModel/avatar/Female.glb"
+
+                                var mesh=new THREE.Mesh(
+                                    mesh0.geometry,
+                                    mesh0.material
+                                );
+                                peoples.add(mesh0);
+                                scope.scene.add(peoples);
                         }
-                        scope.scene.add(peoples.obj);
+                        function f2(){
+                                var mesh=glb.scene.children[0].children[1];//"myModel/avatar/Female.glb"
+
+                                var peoples = new InstancedGroup(
+                                    4,
+                                    [mesh],//这些mesh的网格应该一致
+                                    glb.animations[0]
+                                );
+                                peoples.init(
+                                    ['./img/texture/w/w00.jpg', './img/texture/w/w0.jpg'],
+                                    16,
+                                    false);
+
+                                var i=0;
+                                for (var i1 = 0; i1 < 2; i1++)
+                                        for (var i2 = 0; i2 < 2; i2++) {
+
+                                                peoples.rotationSet(i, [Math.PI / 2, 0, 0]);
+                                                peoples.positionSet(i, [35 * i1, 35 * i2, 0]);
+                                                peoples.scaleSet(i, [0.3, 0.3, 0.3]);
+                                                //peoples.speedSet(i,0);
+                                                peoples.speedSet(i,0);
+                                                peoples.textureSet(i,[0,0,0,0])
+                                                peoples.animationSet(i,i)
+                                                peoples.colorSet(i,[0,0,0])
+                                                i++;
+                                        }
+                                console.log(peoples.obj.children[0].material);
+                                peoples.obj.children[0].material.color=0x000000;
+                                peoples.obj.children[0].material.transparent=true;
+                                scope.scene.add(peoples.obj);
+                        }
+                        function f1(){
+                                var mesh=glb.scene.children[0].children[1];//"myModel/avatar/Female.glb"
+
+                                var peoples = new InstancedGroup(
+                                    81,
+                                    [mesh],//这些mesh的网格应该一致
+                                    glb.animations[0]
+                                );
+                                peoples.init(
+                                    ['./img/texture/m/m00.jpg', './img/texture/m/m0.jpg'],
+                                    32,
+                                    false);
+
+                                var i=0;
+                                for (var i1 = 0; i1 < 9; i1++)
+                                        for (var i2 = 0; i2 < 9; i2++) {
+
+                                                peoples.rotationSet(i, [Math.PI / 2, 0, 0]);
+                                                peoples.positionSet(i, [35 * i1, 35 * i2, 0]);
+                                                peoples.scaleSet(i, [0.3, 0.3, 0.3]);
+                                                peoples.speedSet(i,Math.random()*2);
+                                                peoples.textureSet(i,[30,30,30,0])
+                                                peoples.animationSet(i,Math.floor(Math.random()*3))
+                                                peoples.colorSet(i,[0,0,0])
+                                                i++;
+                                        }
+                                console.log(peoples.obj.children[0].material);
+                                peoples.obj.children[0].material.color=0x000000;
+                                peoples.obj.children[0].material.transparent=true;
+                                scope.scene.add(peoples.obj);
+                        }
+                        //peoples.obj.children[0].material=new THREE.MeshBasicMaterial( { color: 0x000000, wireframe: true, transparent: true } );
+
 
                         updateAnimation();//
                         function updateAnimation() {//每帧更新一次动画
@@ -1814,5 +1944,5 @@ InstancedGroupTest.prototype={
         },
 }
 var myInstancedGroupTest=new InstancedGroupTest();
-myInstancedGroupTest.test2_1();
+myInstancedGroupTest.test5_0();
 //myInstancedGroupTest.test1();

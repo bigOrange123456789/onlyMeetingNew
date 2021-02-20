@@ -57,7 +57,7 @@ function Main(){
         this.camera.aspect = winWidth / winHeight;
         this.camera.updateProjectionMatrix();
 
-        renderer.setSize(winWidth, winHeight);
+        this.renderer.setSize(winWidth, winHeight);
     }
     this.animate=function()
     {

@@ -1,5 +1,5 @@
 function SeatManager(){
-    this.positions=[];
+    this.positions=[];//1677
     this.chairs=new THREE.Object3D();
 
     this.init=function () {
