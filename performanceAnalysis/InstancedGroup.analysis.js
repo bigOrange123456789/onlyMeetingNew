@@ -30,7 +30,8 @@ InstancedGroupTest.prototype={
                 init();
                 render();
                 function computeFPS() {
-                        scope.tag.reStr("FPS:"+(scope.frameIndex-scope.frameIndexPre));
+                        scope.tag.reStr((scope.frameIndex-scope.frameIndexPre));
+                        //scope.tag.reStr("FPS:"+(scope.frameIndex-scope.frameIndexPre));
                         scope.frameIndexPre=scope.frameIndex;
                 }
                 setInterval(computeFPS,1000);
@@ -175,10 +176,10 @@ InstancedGroupTest.prototype={
                         var peoples=null;
                         var result="";
                         var myInterval=setInterval(function () {
-                                var count=100;
+                                var count=1;
                                 var FPS,obj;
                                 if(peoples){
-                                        FPS=scope.frameIndex-scope.frameIndexPre_10s;
+                                        FPS=scope.tag.element.innerHTML;//(scope.frameIndex-scope.frameIndexPre_10s)/2;
                                         console.log("人数:"+peoples.instanceCount+
                                             ",帧数:"+FPS
                                         );
@@ -213,13 +214,16 @@ InstancedGroupTest.prototype={
                                 scope.scene.add(peoples.obj);
 
                                 scope.frameIndexPre_10s=scope.frameIndex;
-                                if(FPS<30){
+                                if(FPS<=5){
                                         window.clearInterval(myInterval);
                                         console.log(result);
                                 }
                                 result+=(","+FPS);
-                        },1000);
+                        },2500);
 
+                        //笔记本测试结果
+                        //60,60,60,60,60,60,60,60,60,60,60,60,60,60,60,60,60,59,60,55,60,47,49,41,37,36,41,35,33,60,60,61,60,59,59,59,60,52,56,53,50,49,47,43,37,40,37,37,37,37,34,34,32,33,30,30,28,27,24,25,24,24,23,22,21,21,20,20,20,19,17,18,16,17,16,15,14,15,13,14,13,13,12,13,12,13,11,11,11,12,11,11,8,10,9,9,7,7,8,9,8,7,8,8,6,8,7,6,6,8
+                        //60,60,60,60,60,60,60,60,60,59,60,60,60,60,60,60,60,60,60,60,60,60,60,60,60,60,59,59,61,60,60,59,56,58,59,59,59,58,56,53,51,50,46,46,43,41,40,38,36,36,34,34,31,30,29,29,27,27,26,25,24,24,22,22,21,22,19,19,18,19,17,17,17,16,15,15,15,15,14,14,12,13,11,13,12,12,11,10,10,11,10,10,10,10,9,10,8,9,8,8,7,7,6,6,6,7,6,6,6,7,6,7,6,6,7,6
 
 
                         updateAnimation();//
@@ -289,4 +293,4 @@ InstancedGroupTest.prototype={
 
 }
 var myInstancedGroupTest=new InstancedGroupTest();
-myInstancedGroupTest.test6();
+myInstancedGroupTest.test7();

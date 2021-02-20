@@ -12,5 +12,5 @@ document.write("<script language=javascript src="+path1+"/tool/Referee.js></scri
 document.write("<script language=javascript src="+path1+"/InstancedGroup2.js></script>");
 for(var i=0;i<myTestFilePath.length;i++){
     console.log("The file being tested is "+myTestFilePath[i]+".js");
-    document.write("<script language=javascript src="+path1+"/"+myTestFilePath[i]+".test.js></script>");
+    document.write("<script language=javascript src="+path1+"/"+myTestFilePath[i]+".analysis.js></script>");
 }

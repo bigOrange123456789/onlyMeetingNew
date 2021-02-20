@@ -10,7 +10,6 @@ function SkinnedMeshController() {
 }
 SkinnedMeshController.prototype={
     init:function (originMesh,animation) {
-        console.log(originMesh);
         this.animation=animation;
         this.mesh=originMesh.clone();//new THREE.SkinnedMesh(originMesh.geometry.clone(),originMesh.material)
         this.frameMax=this.animation.tracks[0].times.length;
