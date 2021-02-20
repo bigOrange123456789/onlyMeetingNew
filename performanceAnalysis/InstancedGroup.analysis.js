@@ -112,7 +112,7 @@ InstancedGroupTest.prototype={
                         var peoples=null;
                         var result="";
                         var myInterval=setInterval(function () {
-                                var count=100;
+                                var count=500;
                                 var FPS,obj;
                                 if(peoples){
                                         FPS=scope.tag.element.innerHTML;//scope.frameIndex-scope.frameIndexPre_10s;
@@ -148,7 +148,7 @@ InstancedGroupTest.prototype={
                                 }
                                 result+=(","+FPS);
                                 //台式机测试结果
-                                //60,58,59,59,59,59,59,59,59,59,59,59,59,59,59,59,59,58,55,52,48,47,46,44,44,41,41,39,37,37,34,34,31
+
                                 //笔记本测试结果
                                 //60,60,60,60,60,60,60,60,60,60,60,60,60,60,60,60,60,57,56,54,51,50,46,44,43,39,38,36,35,34,32,32,32,30,30
                         },2500);
