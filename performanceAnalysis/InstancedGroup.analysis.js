@@ -131,7 +131,7 @@ InstancedGroupTest.prototype={
                                     [mesh],//这些mesh的网格应该一致
                                     glb.animations[0]
                                 );
-                                peoples.init(['./img/texture/w/w0.jpg'],16);
+                                peoples.init(['./img/texture/w/w0.jpg'],16,false);
                                 for (var i = 0; i < peoples.instanceCount; i++) {
                                         peoples.rotationSet(i, [Math.PI / 2, 0, 0]);
                                         peoples.positionSet(i, [3 * i, 0, 0]);
@@ -147,7 +147,10 @@ InstancedGroupTest.prototype={
                                         console.log(result);
                                 }
                                 result+=(","+FPS);
+                                //台式机测试结果
                                 //60,58,59,59,59,59,59,59,59,59,59,59,59,59,59,59,59,58,55,52,48,47,46,44,44,41,41,39,37,37,34,34,31
+                                //笔记本测试结果
+                                //60,60,60,60,60,60,60,60,60,60,60,60,60,60,60,60,60,57,56,54,51,50,46,44,43,39,38,36,35,34,32,32,32,30,30
                         },2500);
 
 
