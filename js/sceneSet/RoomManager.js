@@ -1,6 +1,7 @@
 function RoomManager(myVideoManager0){//myVideoManager_
     this.loader= new THREE.GLTFLoader();
     this.room=new THREE.Object3D();
+    //this.room.visible=false;
     this.myVideoManager=myVideoManager0;
 }
 RoomManager.prototype={

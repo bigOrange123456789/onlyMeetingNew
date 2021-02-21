@@ -1,6 +1,7 @@
 function SeatManager(){
     this.positions=[];//1677
     this.chairs=new THREE.Object3D();
+    //this.chairs.visible=false;
 
     this.init=function () {
         //一楼前部分

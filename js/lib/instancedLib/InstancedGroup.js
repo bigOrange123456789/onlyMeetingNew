@@ -73,6 +73,16 @@ InstancedGroup.prototype={
         var B=d;
         return [A,B];
     },
+    updateGeometry:function(mesh){//用于和PM技术相结合
+        var position=mesh.geometry.attributes.position,//网格
+            uv=mesh.geometry.attributes.uv,//贴图
+            skinIndex=mesh.geometry.attributes.skinIndex,//骨骼
+            skinWeight=mesh.geometry.attributes.skinWeight;
+        this.mesh.geometry.setAttribute('position', position);
+        this.mesh.geometry.setAttribute('inUV',uv);
+        this.mesh.geometry.setAttribute('skinIndex',skinIndex);
+        //this.mesh.geometry.setAttribute('skinWeight',skinWeight);
+    },
     setGeometry:function(geometryNew){//更新网格//用于和PM技术相结合
         var geometryTemp= new THREE.InstancedBufferGeometry();
         geometryTemp.instanceCount = this.instanceCount;

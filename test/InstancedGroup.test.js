@@ -589,11 +589,12 @@ InstancedGroupTest.prototype={
 
 
                         var peoples = new InstancedGroup(11, [mesh], glb.animations[0]);
-                        peoples.init(['./img/texture/m/m'+0+'.jpg'],32);
+                        peoples.init(['./img/texture/w/w'+0+'.jpg'],16,false);
                         for(var k=0;k<peoples.instanceCount;k++){
                                         peoples.rotationSet(k, [Math.PI / 2, 0, 0]);
                                         peoples.positionSet(k, [2*k, 0, 0]);
                                         peoples.scaleSet(k, [0.03, 0.03, 0.03]);
+                                        peoples.animationSet(k,0)
                                         //peoples.speedSet(0,0.1);
                                         peoples.textureSet(k,[k,k,k])
                                         scope.scene.add(peoples.obj);
@@ -1944,5 +1945,5 @@ InstancedGroupTest.prototype={
         },
 }
 var myInstancedGroupTest=new InstancedGroupTest();
-myInstancedGroupTest.test5_0();
+myInstancedGroupTest.test_texture();
 //myInstancedGroupTest.test1();

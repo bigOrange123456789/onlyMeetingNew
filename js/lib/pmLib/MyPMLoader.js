@@ -497,7 +497,10 @@ MyPMLoader.prototype={
             {
                 if (pmCount < splitCount)//splitCount是总数
                 {
-                    if(pmDeltaTime===0)startPmLoading(THIS);//setTimeout(function(){} , pmDeltaTime);
+                    setTimeout(function () {
+                        if(pmDeltaTime===0)startPmLoading(THIS);
+                    },100);//增量信息的加载优先级不是很高
+                    //setTimeout(function(){} , pmDeltaTime);
                 } else {//完成了全部PM文件的加载
                     THIS.finished=true;
                     function loopLODCheck(){

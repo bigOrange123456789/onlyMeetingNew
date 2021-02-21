@@ -47,8 +47,8 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
             //scope.loadGuest1(glbObj);
             scope.loadGuest2(glbObj);
         });
-        //this.createPeople_haveAnimation2();
-        this.analysis2();
+        this.createPeople_haveAnimation2();
+        //this.analysis();
     }
     this.createPeople_haveAnimation2=function(){
         //女性开始
@@ -88,7 +88,9 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
                         }
                     scope.obj.add(peoples.obj);
                 }else{
-                    peoples.setGeometry(mesh.geometry);
+                    //peoples.setGeometry(mesh.geometry);
+                    peoples.updateGeometry(mesh);
+                    console.log(mesh.geometry);
                 }
             }
             console.log(pmLoader.finished);
