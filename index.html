@@ -73,6 +73,7 @@
 		//结束自动漫游路径
 		//开始帧数统计
 		var tag = document.createElement('h1');
+		window.tag=tag;
 		tag.style.cssText =
 				'color:green;' +//文字颜色
 				'font-size:' + 20 + 'px;' +//文字大小
@@ -89,8 +90,8 @@
 			requestAnimationFrame(frameIndexUpdate);
 		}
 		function computeFPS() {
-			//tag.innerHTML =(frameIndex - frameIndexPre);
-			tag.innerHTML = "FPS:" + (frameIndex - frameIndexPre);
+			tag.innerHTML =(frameIndex - frameIndexPre);
+			//tag.innerHTML = "FPS:" + (frameIndex - frameIndexPre);
 			frameIndexPre = frameIndex;
 		}
 		//完成帧数统计

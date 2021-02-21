@@ -47,8 +47,8 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
             //scope.loadGuest1(glbObj);
             scope.loadGuest2(glbObj);
         });
-        this.createPeople_haveAnimation2();
-        //this.analysis2();
+        //this.createPeople_haveAnimation2();
+        this.analysis2();
     }
     this.createPeople_haveAnimation2=function(){
         //女性开始
@@ -351,13 +351,14 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
             setTimeout(function () {
                 var result="";
                 var myInterval=setInterval(function () {
+                    var tag=window.tag;
                     result=result+","+tag.innerHTML;
                     //console.log(tag)
-                    if(peoples.instanceCount>=scope.positions.length){
+                    if(peoples.instanceCount>=scope.positions.length||parseInt(tag.innerHTML)<=2){
                         window.clearInterval(myInterval);
                         console.log(result);
                         return;
-                    }else console.log(parseInt(tag.innerHTML),peoples.instanceCount);
+                    }else console.log(result);//console.log(parseInt(tag.innerHTML),peoples.instanceCount);
                     var obj0=peoples.obj;
                     var count=peoples.instanceCount;
                     peoples = new InstancedGroup2(
@@ -381,7 +382,7 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
                     scope.obj.add(peoples.obj);
 
 
-                },2000);
+                },2500);
             },10000);
 
         });

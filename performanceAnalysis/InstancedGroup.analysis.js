@@ -142,7 +142,7 @@ InstancedGroupTest.prototype={
                                 if(obj)scope.scene.remove(obj);
                                 scope.scene.add(peoples.obj);
                                 scope.frameIndexPre_10s=scope.frameIndex;
-                                if(FPS<30){
+                                if(FPS<5){
                                         window.clearInterval(myInterval);
                                         console.log(result);
                                 }
@@ -150,7 +150,7 @@ InstancedGroupTest.prototype={
                                 //台式机测试结果
 
                                 //笔记本测试结果
-                                //60,60,60,60,60,60,60,60,60,60,60,60,60,60,60,60,60,57,56,54,51,50,46,44,43,39,38,36,35,34,32,32,32,30,30
+                                //60,60,60,60,51,42,35,30,27,24,22,20,17,17,16,15,14,12,12,11,10,10,9,9,8,8,8,7,7,9,6,7,5,6,6,6,6,5,6,5
                         },2500);
 
 
@@ -220,6 +220,7 @@ InstancedGroupTest.prototype={
                                 if(FPS<=5){
                                         window.clearInterval(myInterval);
                                         console.log(result);
+                                        alert(result)
                                 }
                                 result+=(","+FPS);
                         },2500);
@@ -300,4 +301,4 @@ InstancedGroupTest.prototype={
 
 }
 var myInstancedGroupTest=new InstancedGroupTest();
-myInstancedGroupTest.test6();
+myInstancedGroupTest.test7();
