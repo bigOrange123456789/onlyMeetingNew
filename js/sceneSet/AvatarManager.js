@@ -90,7 +90,7 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
                 }else{
                     //peoples.setGeometry(mesh.geometry);
                     peoples.updateGeometry(mesh);
-                    console.log(mesh.geometry);
+                    //console.log(mesh.geometry);
                 }
             }
             console.log(pmLoader.finished);
