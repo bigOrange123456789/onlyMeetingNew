@@ -99,7 +99,7 @@ InstancedGroupTest.prototype={
                 });//
                 //完成测试
         },
-        //进行轻量化处理帧数统计
+        //帧数统计
         test6:function (contextType){
                 if(typeof(contextType)==="undefined")this.setContext();
                 //开始测试
@@ -122,9 +122,9 @@ InstancedGroupTest.prototype={
                         this.frameIndexPre_10s=this.frameIndex;
                         peoples=null;
                         var result="";
-                        var count0=1700;
-                        var countStep=1;
-                        var countLast=1800;
+                        var count0=551;
+                        var countStep=5;
+                        var countLast=300;
                         var count=count0;
                         var myInterval=setInterval(function () {
                                 var FPS,obj;
@@ -142,7 +142,7 @@ InstancedGroupTest.prototype={
                                         FPS=60;
                                         obj=null;
                                 }
-                                peoples = new InstancedGroup(
+                                peoples = new InstancedGroup2(
                                     count,
                                     [mesh],//这些mesh的网格应该一致
                                     glb.animations[0]
@@ -162,7 +162,7 @@ InstancedGroupTest.prototype={
                                         window.clearInterval(myInterval);
                                         console.log(result);
 
-                                        let link = document.createElement('a');
+                                        /*let link = document.createElement('a');
                                         link.style.display = 'none';
                                         document.body.appendChild(link);
                                         link.href = URL.createObjectURL(new Blob([
@@ -171,7 +171,16 @@ InstancedGroupTest.prototype={
                                             +");"
                                         ], { type: 'text/plain' }));
                                         link.download = name;
-                                        link.click();
+                                        link.click();*/
+
+                                        communication(
+                                            "result=getAvatarNumber(result,"+
+                                            "["+result+"]"+","+count0+","+countStep
+                                            +");"
+                                        );
+                                        alert("result=getAvatarNumber(result,"+
+                                            "["+result+"]"+","+count0+","+countStep
+                                            +");");
                                 }
 
                                 //台式机测试结果

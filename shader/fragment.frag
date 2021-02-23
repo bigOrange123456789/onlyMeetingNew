@@ -12,9 +12,9 @@ vec4 TextureController_computeMyTexture();
 void main(){
     //gl_FragColor = vec4 (myTest01,1.0);return;//用于测试
 
-    if (floor(type_part)==0.0)texType=varyType[0];//下身
-    else if (floor(type_part)==1.0)texType=varyType[1];
-    else if (floor(type_part)==2.0)texType=varyType[2];
+    if (type_part<0.5)texType=varyType[0];//下身//0
+    else if (type_part<1.5)texType=varyType[1];//1
+    else texType=varyType[2];//2
 
     vec4 myTexture=TextureController_computeMyTexture();
 

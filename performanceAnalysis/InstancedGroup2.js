@@ -99,7 +99,7 @@ InstancedGroup2.prototype={
         this.meshs[i].material.map=material;
     },
     animationSet:function(i,animationType){
-        this.type.array[4*i+3]=animationType;//动画类型 0,1
+        //this.type.array[4*i+3]=animationType;//动画类型 0,1
     },
     colorSet:function (i,color) {
         this.colors.array[3*i  ]=color[0];
@@ -107,7 +107,7 @@ InstancedGroup2.prototype={
         this.colors.array[3*i+2]=color[2];
     },
     speedSet:function (i,speed) {//设置动画速度
-        this.speed.array[i]=speed;
+        //this.speed.array[i]=speed;
     },
 
 }
