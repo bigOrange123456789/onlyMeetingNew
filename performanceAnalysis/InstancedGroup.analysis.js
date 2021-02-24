@@ -685,4 +685,4 @@ InstancedGroupTest.prototype={
         },
 }
 var myInstancedGroupTest=new InstancedGroupTest();
-myInstancedGroupTest.test11(2);
+myInstancedGroupTest.test11(1);

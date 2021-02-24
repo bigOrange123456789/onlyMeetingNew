@@ -217,7 +217,7 @@ InstancedGroupTest.prototype={
                                         setInterval(function () {
                                                 meshMixer2.update(0.01);
                                         },100)
-                                        scope.scene.add(G.scene);
+                                        //scope.scene.add(G.scene);
                                         //console.log(G.scene.children[0].children[3].children[0]);
                                         console.log(G.scene);
                                         for(i=0;i<myGlb.scene.children.length;i++)
@@ -240,7 +240,7 @@ InstancedGroupTest.prototype={
                                                                 mesh0.material=new THREE.MeshBasicMaterial( { color: 0x000000, wireframe: true, transparent: true } );
                                                         }
 
-                                                        //scope.scene.add(mesh0);
+                                                        scope.scene.add(mesh0);
                                                 }
                                         });
 
@@ -456,19 +456,118 @@ InstancedGroupTest.prototype={
                 var scope=this;
                 var loader= new THREE.GLTFLoader();
                 loader.load("myModel/avatar/Female.glb", (glb) => {
-                        f2();
-
-                        function f3() {
-                                var peoples=new THREE.Object3D();
-                                var mesh0=glb.scene.children[0].children[1];//"myModel/avatar/Female.glb"
-
-                                var mesh=new THREE.Mesh(
-                                    mesh0.geometry,
-                                    mesh0.material
+                        f4();
+                        function f4() {
+                                var h=100,w=100;
+                                //男性开始
+                                var pmLoader2 = new MyPMLoader(
+                                    {animations: []},
+                                    './myModel/Male',    //模型路径
+                                    [],//没有LOD分级//LOD等级的数组
+                                    scope.camera,  //LOD需要判断到相机的距离
+                                    0,       //有多个动画时,表示第0个动画//可以通过pmLoader.updateAnimation(i)来切换动画
+                                    0,     //动画播放速度//可以通过调整pmLoader.animationSpeed来调整速度
+                                    []
                                 );
-                                peoples.add(mesh0);
-                                scope.scene.add(peoples);
+                                var peoples2 = null;
+                                var timeId2 = setInterval(function () {
+                                        if (pmLoader2.obj.children[0]) {
+                                                var mesh2 = pmLoader2.obj.children[0].children[0];
+                                                //男性开始
+                                                if (peoples2 == null) {
+                                                        peoples2 = new InstancedGroup(
+                                                            w*h,//908
+                                                            [mesh2],//这些mesh的网格应该一致
+                                                            true
+                                                        );
+                                                        peoples2.neckPosition=0.68;
+                                                        peoples2.init(['./img/texture/m/m00.jpg', './img/texture/m/m0.jpg'], 32);
+                                                        index = 0;
+                                                        for (i1 = 0; i1 < h; i1++)
+                                                                for (i2 = 0; i2 < w; i2++) {
+                                                                        i=i1*w+i2;
+                                                                peoples2.rotationSet(i, [Math.PI / 2, 0, 0]);
+                                                                peoples2.positionSet(i, [-45 * i1, 0, -45 * i2]);
+                                                                peoples2.scaleSet(i, [0.4 + Math.random() * 0.1, 0.4 + Math.random() * 0.1, 0.4 + Math.random() * 0.1]);
+                                                                peoples2.speedSet(i,0);
+                                                                peoples2.speedSet(i,Math.random());
+                                                                peoples2.colorSet(i,[
+                                                                        Math.random()/4,
+                                                                        Math.random()/4,
+                                                                        Math.random()/4
+                                                                ]);
+                                                                //peoples2.textureSet(i,[1,1,1,0])
+                                                                var r=Math.floor(Math.random()*4);
+                                                                if(r===1)r=0;
+                                                                if(r===3)r=2;
+                                                                peoples2.animationSet(i,r);
+
+                                                                //peoples2.colorSet(i,[0,0,0])//peoples2.textureSet1(index, scope.types[i]);
+                                                                index++;
+                                                        }
+                                                        //scope.obj.add(peoples2.obj);
+                                                        scope.scene.add(peoples2.obj);
+                                                }else{
+                                                        peoples2.setGeometry(mesh2.geometry);
+                                                }
+                                        }
+                                        console.log(pmLoader2.finished);
+                                        if (pmLoader2.finished) window.clearInterval(timeId2)
+                                }, 1000);
+                                //男性结束
+
+
                         }
+                        function f3() {
+                                //男性开始
+                                var pmLoader2 = new MyPMLoader(
+                                    {animations: []},
+                                    './myModel/Male',    //模型路径
+                                    [],//没有LOD分级//LOD等级的数组
+                                    scope.camera,  //LOD需要判断到相机的距离
+                                    0,       //有多个动画时,表示第0个动画//可以通过pmLoader.updateAnimation(i)来切换动画
+                                    0,     //动画播放速度//可以通过调整pmLoader.animationSpeed来调整速度
+                                    []
+                                );
+                                var peoples2 = null;
+                                var timeId2 = setInterval(function () {
+                                        if (pmLoader2.obj.children[0]) {
+                                                var mesh2 = pmLoader2.obj.children[0].children[0];
+                                                //男性开始
+                                                if (peoples2 == null) {
+                                                        peoples2 = new InstancedGroup(
+                                                            1,//908
+                                                            [mesh2],//这些mesh的网格应该一致
+                                                            true
+                                                        );
+                                                        peoples2.neckPosition=0.68;
+                                                        peoples2.init(['./img/texture/m/m00.jpg', './img/texture/m/m0.jpg'], 32);
+                                                        index = 0;
+                                                        for (i = 0; i < 1; i++) {
+                                                                        peoples2.rotationSet(i, [Math.PI / 2, 0, 0]);
+                                                                        //peoples2.positionSet(i, [35 * i1, 35 * i2, 0]);
+                                                                        peoples2.scaleSet(i, [0.3, 0.3, 0.3]);
+                                                                        //peoples.speedSet(i,0);
+                                                                        peoples2.speedSet(i,0);
+                                                                        peoples2.textureSet(i,[1,1,1,0])
+                                                                        peoples2.animationSet(i,i)
+                                                                        peoples2.colorSet(i,[0,0,0])//peoples2.textureSet1(index, scope.types[i]);
+                                                                        index++;
+                                                                }
+                                                        //scope.obj.add(peoples2.obj);
+                                                        scope.scene.add(peoples2.obj);
+                                                }else{
+                                                        peoples2.setGeometry(mesh2.geometry);
+                                                }
+                                        }
+                                        console.log(pmLoader2.finished);
+                                        if (pmLoader2.finished) window.clearInterval(timeId2)
+                                }, 1000);
+                                //男性结束
+
+
+                        }
+                        //2×2的有动画方阵
                         function f2(){
                                 var mesh=glb.scene.children[0].children[1];//"myModel/avatar/Female.glb"
 
@@ -1945,5 +2044,5 @@ InstancedGroupTest.prototype={
         },
 }
 var myInstancedGroupTest=new InstancedGroupTest();
-myInstancedGroupTest.test_texture();
+myInstancedGroupTest.test5_0();
 //myInstancedGroupTest.test1();
