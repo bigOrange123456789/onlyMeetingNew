@@ -1,24 +1,25 @@
+#version 300 es
 precision highp float;
 uniform mat4 modelViewMatrix;
 uniform mat4 projectionMatrix;
 
-attribute vec3 position;
-attribute vec2 inUV;
+in vec3 position;
+in vec2 inUV;
 
-attribute float random;
+in float random;
 
-attribute vec3 mcol0;
-attribute vec3 mcol1;
-attribute vec3 mcol2;
-attribute vec3 mcol3;
+in vec3 mcol0;
+in vec3 mcol1;
+in vec3 mcol2;
+in vec3 mcol3;
 
-attribute vec4 type;   //type[3]是0或1，用于表示动画
-attribute vec3 color;
+in vec4 type;   //type[3]是0或1，用于表示动画
+in vec3 color;
 
-varying vec2 outUV;
-varying vec3 varyColor;
-varying float type_part,texType;
-varying float myTest00;
+out vec2 outUV;
+out vec3 varyColor;
+out float type_part,texType;
+out float myTest00;
 
 void main(){
     vec3 vPosition = position;

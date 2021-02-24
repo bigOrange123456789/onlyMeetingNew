@@ -1,11 +1,14 @@
+#version 300 es
 //shader里面使用8位二进制数0-255表示颜色，形式为0-1 x/255
 precision highp float;
 uniform sampler2D text0;
 uniform float textNum;//贴图个数
 
-varying float type_part;//,texType;//身体的哪个部分，贴图类型
-varying vec3 varyColor,varyType;
-varying vec2 outUV;
+in float type_part;//,texType;//身体的哪个部分，贴图类型
+in vec3 varyColor,varyType;
+in vec2 outUV;
+out vec4 myOutputColor;
+
 float texType;
 //varying vec3 myTest01;//用于测试
 vec4 TextureController_computeMyTexture();
@@ -19,14 +22,14 @@ void main(){
     vec4 myTexture=TextureController_computeMyTexture();
 
     if (type_part<0.5){ //下身
-        gl_FragColor = vec4 (
+        myOutputColor = vec4 (
             myTexture.r+varyColor[0],
             myTexture.g+varyColor[1],
             myTexture.b+varyColor[2],
             myTexture.a
         );
     }else{//上身或头部
-        gl_FragColor = vec4 (
+        myOutputColor = vec4 (
             myTexture.r+varyColor[1]/2.0,
             myTexture.g+varyColor[2]/2.0,
             myTexture.b+varyColor[0]/2.0,
@@ -50,7 +53,7 @@ vec4 TextureController_computeMyTexture(){
     oTextureController.uPixel=oTextureController.imgStart+u/textNum;
     //oTextureController.uPixel=(texType+u)/TEXT_NUM;
     //if(oTextureController.uPixel>)
-    oTextureController.myTexture =texture2D(
+    oTextureController.myTexture =texture(
             text0,
             vec2(oTextureController.uPixel,outUV.y)
     );

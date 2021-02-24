@@ -1,21 +1,22 @@
+#version 300 es
 precision highp float;//highp
 uniform sampler2D dataTexture;//帧数8*骨骼8*12=768//用于求手臂骨骼//8个手臂骨骼的数据
 uniform mat4 modelViewMatrix,projectionMatrix;
 uniform float time;//0-10000
 uniform float neckPosition;
 
-attribute vec3 position;
-attribute vec2 inUV;
-attribute vec4 skinIndex,skinWeight;
-attribute float speed;
-attribute vec3 mcol0,mcol1,mcol2,mcol3;
-attribute vec4 type;//设置贴图0-2,type[3]用处不明
-attribute vec3 color;
+in vec3 position;
+in vec2 inUV;
+in vec4 skinIndex,skinWeight;
+in float speed;
+in vec3 mcol0,mcol1,mcol2,mcol3;
+in vec4 type;//设置贴图0-2,type[3]用处不明
+in vec3 color;
 
-varying vec2 outUV;
-varying vec3 varyColor,varyType;
-varying float type_part;//,texType;
-varying vec3 myTest01;
+out vec2 outUV;
+out vec3 varyColor,varyType;
+out float type_part;//,texType;
+out vec3 myTest01;
 
 //void Test_init();
 //bool Test_meetExpectations();float Animation_getNumByTexture(float n);
@@ -109,7 +110,7 @@ struct Animation{
         float frameIndex_f;
 }oAnimation;
 float Animation_getNumByTexture(float n){
-    vec3 tttt=texture2D(dataTexture, vec2(
+    vec3 tttt=texture(dataTexture, vec2(
         (0.5+0.0)/1.0, //宽width
         (0.5+floor(n/3.0))/oAnimation.dataTextureHeight//高height
     )).xyz;
