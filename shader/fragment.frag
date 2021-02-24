@@ -18,7 +18,7 @@ void main(){
 
     vec4 myTexture=TextureController_computeMyTexture();
 
-    if (floor(type_part)==0.0){ //下身
+    if (type_part<0.5){ //下身
         gl_FragColor = vec4 (
             myTexture.r+varyColor[0],
             myTexture.g+varyColor[1],

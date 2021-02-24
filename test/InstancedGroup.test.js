@@ -458,11 +458,11 @@ InstancedGroupTest.prototype={
                 loader.load("myModel/avatar/Female.glb", (glb) => {
                         f4();
                         function f4() {
-                                var h=100,w=100;
+                                var h=200,w=200;
                                 //男性开始
                                 var pmLoader2 = new MyPMLoader(
                                     {animations: []},
-                                    './myModel/Male',    //模型路径
+                                    './myModel/Female',    //模型路径
                                     [],//没有LOD分级//LOD等级的数组
                                     scope.camera,  //LOD需要判断到相机的距离
                                     0,       //有多个动画时,表示第0个动画//可以通过pmLoader.updateAnimation(i)来切换动画
@@ -480,8 +480,8 @@ InstancedGroupTest.prototype={
                                                             [mesh2],//这些mesh的网格应该一致
                                                             true
                                                         );
-                                                        peoples2.neckPosition=0.68;
-                                                        peoples2.init(['./img/texture/m/m00.jpg', './img/texture/m/m0.jpg'], 32);
+                                                        //peoples2.neckPosition=0.68;
+                                                        peoples2.init(['./img/texture/w/w00.jpg', './img/texture/w/w0.jpg'], 16);
                                                         index = 0;
                                                         for (i1 = 0; i1 < h; i1++)
                                                                 for (i2 = 0; i2 < w; i2++) {
