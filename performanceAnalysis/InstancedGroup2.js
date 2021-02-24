@@ -33,6 +33,7 @@ InstancedGroup2.prototype={
             var mesh=controller.mesh;
             this.meshs.push(mesh);
             this.obj.add(mesh);
+            this.textureSet(i,Math.floor(Math.random()*texSrc.length));
         }
         //this.meshs[0].position.set(10,0,0);
         //console.log(this.meshs);

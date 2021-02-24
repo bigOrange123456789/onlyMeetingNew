@@ -99,7 +99,7 @@ InstancedGroupTest.prototype={
                 });//
                 //完成测试
         },
-        //帧数统计
+        //行轻量化处理帧数统计
         test6:function (contextType){
                 if(typeof(contextType)==="undefined")this.setContext();
                 //开始测试
@@ -122,9 +122,9 @@ InstancedGroupTest.prototype={
                         this.frameIndexPre_10s=this.frameIndex;
                         peoples=null;
                         var result="";
-                        var count0=551;
-                        var countStep=5;
-                        var countLast=300;
+                        var count0=1;
+                        var countStep=10;
+                        var countLast=200;
                         var count=count0;
                         var myInterval=setInterval(function () {
                                 var FPS,obj;
@@ -142,7 +142,7 @@ InstancedGroupTest.prototype={
                                         FPS=60;
                                         obj=null;
                                 }
-                                peoples = new InstancedGroup2(
+                                peoples = new InstancedGroup(
                                     count,
                                     [mesh],//这些mesh的网格应该一致
                                     glb.animations[0]
@@ -204,70 +204,76 @@ InstancedGroupTest.prototype={
                 var scope=this;
                 var loader= new THREE.GLTFLoader();
                 loader.load("myModel/avatar/Female.glb", (glb) => {
+                        //预先加载一下资源
+                        var peoples = new InstancedGroup2(
+                            1,
+                            [glb.scene.children[0].children[1]],//这些mesh的网格应该一致
+                            glb.animations[0]
+                        );
+                        peoples.init(['./img/texture/w/w0.jpg'],16,false);
+                        scope.scene.add(peoples.obj);
+                        scope.scene.remove(peoples.obj);
+
+
                         //console.log(glb);//OnlyArm
                         var mesh=glb.scene.children[0].children[1];//"myModel/avatar/Female.glb"
                         this.frameIndexPre_10s=this.frameIndex;
-
-
-
-
-
-                        var peoples=null;
+                        peoples=null;
                         var result="";
+                        var count0=71;
+                        var countStep=2;
+                        var countLast=100;
+                        var count=count0;
                         var myInterval=setInterval(function () {
-                                var count=1;
                                 var FPS,obj;
                                 if(peoples){
-                                        FPS=scope.tag.element.innerHTML;//(scope.frameIndex-scope.frameIndexPre_10s)/2;
+                                        FPS=scope.tag.element.innerHTML;//scope.frameIndex-scope.frameIndexPre_10s;
                                         console.log("人数:"+peoples.instanceCount+
                                             ",帧数:"+FPS
                                         );
                                         //scope.scene.remove(peoples.obj);
                                         obj=peoples.obj;
-                                        count+=peoples.instanceCount;
+                                        count+=countStep;
+                                        if(result==="")result+=FPS;
+                                        else result+=(","+FPS);
                                 }else{
                                         FPS=60;
                                         obj=null;
                                 }
-
-
                                 peoples = new InstancedGroup2(
                                     count,
                                     [mesh],//这些mesh的网格应该一致
                                     glb.animations[0]
                                 );
-                                var srcs=[];
-                                for(var i=0;i<16;i++){
-                                        srcs.push("performanceAnalysis/texture/m/m"+i+".jpg");
-                                }
-                                peoples.init(srcs,16);
+                                peoples.init(['./img/texture/w/w0.jpg'],16,false);
                                 for (var i = 0; i < peoples.instanceCount; i++) {
                                         peoples.rotationSet(i, [Math.PI / 2, 0, 0]);
-                                        peoples.positionSet(i, [5 * i, 0, 0]);
+                                        peoples.positionSet(i, [3 * i, 0, 0]);
                                         peoples.scaleSet(i, [0.03, 0.03, 0.03]);
-                                        peoples.textureSet(i,Math.floor(Math.random()*16));
-                                        //peoples.speedSet(i,0.5);
-                                        //peoples.animationSet(i,0);
+                                        peoples.speedSet(i,0.5);
+                                        peoples.animationSet(i,0);
                                 }
                                 if(obj)scope.scene.remove(obj);
                                 scope.scene.add(peoples.obj);
-
                                 scope.frameIndexPre_10s=scope.frameIndex;
-                                if(FPS<=5){
+                                if(FPS<5||count>countLast){
                                         window.clearInterval(myInterval);
                                         console.log(result);
-                                        alert(result)
+
+                                        communication(
+                                            "result=getAvatarNumber(result,"+
+                                            "["+result+"]"+","+count0+","+countStep
+                                            +");"
+                                        );
+                                        alert("result=getAvatarNumber(result,"+
+                                            "["+result+"]"+","+count0+","+countStep
+                                            +");");
                                 }
-                                result+=(","+FPS);
+
+                                //台式机测试结果
+
+                                //笔记本测试结果
                         },2500);
-
-                        //笔记本测试结果
-                        //60,60,60,60,60,60,60,60,60,60,60,60,60,60,60,60,60,59,60,55,60,47,49,41,37,36,41,35,33,60,60,61,60,59,59,59,60,52,56,53,50,49,47,43,37,40,37,37,37,37,34,34,32,33,30,30,28,27,24,25,24,24,23,22,21,21,20,20,20,19,17,18,16,17,16,15,14,15,13,14,13,13,12,13,12,13,11,11,11,12,11,11,8,10,9,9,7,7,8,9,8,7,8,8,6,8,7,6,6,8
-                        //60,60,60,60,60,60,60,60,60,59,60,60,60,60,60,60,60,60,60,60,60,60,60,60,60,60,59,59,61,60,60,59,56,58,59,59,59,58,56,53,51,50,46,46,43,41,40,38,36,36,34,34,31,30,29,29,27,27,26,25,24,24,22,22,21,22,19,19,18,19,17,17,17,16,15,15,15,15,14,14,12,13,11,13,12,12,11,10,10,11,10,10,10,10,9,10,8,9,8,8,7,7,6,6,6,7,6,6,6,7,6,7,6,6,7,6
-
-                        //台式机测试结果
-                        //60,60,60,60,60,60,60,60,60,60,60,60,60,60,60,60,60,60,60,60,61,59,60,59,60,59,59,56,58,57,56,58,59,57,57,59,57,56,58,57,56,56,48,49,47,46,44,29,40,38,37,36,33,32,31,32,28,28,29,26,25,25,22,24,22,23,19,19,21,19,19,17,12,17,17,16,15,15,15,14,14,13,14,12,13,13,12,12,11,11,11,6,10,11,10,10,9,10,9,9,8,9,8,8,8,6,7,8,7,8,7,7,7,6,7,6,7,6,6
-                        //60,60,60,60,60,60,60,60,60,60,60,60,60,60,60,60,60,60,60,59,60,60,60,60,60,60,60,60,60,60,60,60,60,59,55,54,60,58,60,58,55,53,52,50,46,44,43,41,40,40,39,35,35,33,33,32,29,30,28,27,25,26,24,23,22,22,21,21,20,20,19,19,19,18,18,17,18,17,15,16,15,15,14,15,13,13,12,13,13,12,11,12,11,12,11,11,12,10,10,10,10,10,9,10,8,9,8,8,8,8,7,7,7,7,8,7,7,8,7,6,6,7,7,6,7,6,6
 
 
                         updateAnimation();//
@@ -278,6 +284,161 @@ InstancedGroupTest.prototype={
                 //完成测试
         },
 
+
+        //帧数，进行和不进行帧数统计
+        test11:function (PCType){
+                //PCType:1手机,2笔记本,3电脑
+                var count0,countStep,count0OPT,countStepOPT;
+                if(PCType===1){
+                        count0=100;
+                        countStep=10;
+
+                        count0OPT=1;
+                        countStepOPT=500;
+                }else if(PCType===2){//2笔记本
+                        count0=100;
+                        countStep=25;
+
+                        count0OPT=1;
+                        countStepOPT=1000;
+                }else{//3电脑
+                        count0=100;
+                        countStep=25;
+
+                        count0OPT=1;
+                        countStepOPT=1500;
+                }
+                countLast=9999999;//正无穷
+                this.setContext();
+                //开始测试
+                var scope=this;
+                var loader= new THREE.GLTFLoader();
+                loader.load("myModel/avatar/Female.glb", (glb) => {
+                        analysis(1);
+                        function analysis(time) {//time为1或2
+
+                                //预先加载一下资源
+                                var peoples = time===1?new InstancedGroup(
+                                    1,
+                                    [glb.scene.children[0].children[1]],//这些mesh的网格应该一致
+                                    glb.animations[0]
+                                ):new InstancedGroup2(
+                                    1,
+                                    [glb.scene.children[0].children[1]],//这些mesh的网格应该一致
+                                    glb.animations[0]
+                                );
+                                peoples.init(['./img/texture/w/w0.jpg'],16,false);
+                                scope.scene.add(peoples.obj);
+                                scope.scene.remove(peoples.obj);
+
+
+                                //console.log(glb);//OnlyArm
+                                var mesh=glb.scene.children[0].children[1];//"myModel/avatar/Female.glb"
+                                this.frameIndexPre_10s=this.frameIndex;
+                                peoples=null;
+                                var result=[];
+                                var count=time===1?count0OPT:count0;
+                                var myInterval=setInterval(function () {
+                                        var FPS,obj;
+                                        if(peoples){
+                                                FPS=scope.tag.element.innerHTML;//scope.frameIndex-scope.frameIndexPre_10s;
+                                                console.log("人数:"+peoples.instanceCount+
+                                                    ",帧数:"+FPS
+                                                );
+                                                //scope.scene.remove(peoples.obj);
+                                                obj=peoples.obj;
+                                                count=time===1?count+countStepOPT:count+countStep;
+                                                result.push(FPS);
+                                        }else{
+                                                FPS=60;
+                                                obj=null;
+                                        }
+                                        peoples = time===1?new InstancedGroup(
+                                            count,
+                                            [mesh],//这些mesh的网格应该一致
+                                            glb.animations[0]
+                                        ):new InstancedGroup2(
+                                            count,
+                                            [mesh],//这些mesh的网格应该一致
+                                            glb.animations[0]
+                                        );
+                                        if(time===1)peoples.init(['./img/texture/w/w0.jpg'],16,false);
+                                        else {
+                                                var srcs=[];
+                                                for(i=0;i<16;i++)
+                                                        srcs.push("performanceAnalysis/texture/w/w"+i+".jpg");
+                                                peoples.init(srcs);
+                                        }
+                                        for (var i = 0; i < peoples.instanceCount; i++) {
+                                                peoples.rotationSet(i, [Math.PI / 2, 0, 0]);
+                                                peoples.positionSet(i, [3 * i, 0, 0]);
+                                                peoples.scaleSet(i, [0.03, 0.03, 0.03]);
+                                                peoples.speedSet(i,0.5);
+                                                peoples.animationSet(i,0);
+                                        }
+                                        if(obj)scope.scene.remove(obj);
+                                        scope.scene.add(peoples.obj);
+                                        scope.frameIndexPre_10s=scope.frameIndex;
+                                        if(FPS<5||count>countLast){
+                                                window.clearInterval(myInterval);
+                                                scope.scene.remove(peoples.obj);
+                                                console.log(result);
+
+                                                if(time===1){
+                                                        window.result1=result;
+                                                        analysis(2);
+                                                }else{
+                                                        result1=window.result1;
+                                                        result2=result;
+                                                        function getAvatarNumber(FNS,PN0,step) {
+                                                                var ANS=[];
+                                                                for(i=0;i<=60;i++)ANS.push(0);
+
+                                                                var PN=PN0;
+                                                                for(i=0;i<FNS.length;i++){
+                                                                        if(FNS[i]<=60)
+                                                                                ANS[Math.floor(FNS[i])]=PN;
+                                                                        PN+=step;
+                                                                }
+                                                                return ANS;
+                                                        }
+                                                        function print(arr0,name) {//name:"","OPT"
+                                                                var X=[],Y=[];//X是帧数，Y是人数
+                                                                for(i=0;i<arr0.length;i++){
+                                                                        if(arr0[i]!==0){
+                                                                                X.push(i);
+                                                                                Y.push(arr0[i]);
+                                                                        }
+                                                                }
+                                                                for(i=Y.length-1;i>0;i--)
+                                                                        if(Y[i-1]<Y[i])Y[i-1]=Y[i];
+                                                                return (
+                                                                    "X"+PCType+name+"=["+X.toString()+"];"+
+                                                                    "Y"+PCType+name+"=["+Y.toString()+"];"
+                                                                );
+                                                        }
+                                                        communication(
+                                                            print(
+                                                                getAvatarNumber(result2,count0   ,countStep   ),""
+                                                            )+print(
+                                                                getAvatarNumber(result1,count0OPT,countStepOPT),"OPT"
+                                                            )
+                                                        );
+                                                        alert("finished!");
+                                                }
+
+                                        }
+
+                                        //台式机测试结果
+
+                                        //笔记本测试结果
+                                        //60,60,60,60,51,42,35,30,27,24,22,20,17,17,16,15,14,12,12,11,10,10,9,9,8,8,8,7,7,9,6,7,5,6,6,6,6,5,6,5
+                                },2500);
+                        }
+
+                });//
+                //完成测试
+        },
 
         //场景中人数变化的帧数统计
         test8:function (contextType){
@@ -524,4 +685,4 @@ InstancedGroupTest.prototype={
         },
 }
 var myInstancedGroupTest=new InstancedGroupTest();
-myInstancedGroupTest.test6();
+myInstancedGroupTest.test11(2);
