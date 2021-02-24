@@ -69,9 +69,10 @@ void noShader(){
     gl_Position=vec4(0.0, 0.0, 0.0, 0.0);
 }
 float modFloor(float a, float b){
+    //return float(int(a)%int(b));
     return (a/b-floor(a/b))*b;
 }
-int float2int(float n){
+/*int float2int(float n){
     if (n>0.0){
         int a=0;
         for (float b=0.0;b<=1000.0;b+=1.0){
@@ -94,7 +95,7 @@ float int2float(int n){
     } else {
         return -1.0;
     }
-}
+}*/
 void Tool_init(){}
 
 struct Animation{
@@ -121,8 +122,8 @@ float Animation_getNumByTexture(float n){
     else return tttt.z;
 }
 float Animation_decode(float A, float B){ //0-1
-    A*=255.0;
-    B*=255.0;
+    A=round(A*255.0);//解决了移动端的问题
+    B=round(B*255.0);//解决了移动端的问题
     float a, b, c, d;
     a=floor(A/128.0);
     b=floor((modFloor(A, 128.0))/16.0);
