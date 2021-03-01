@@ -297,7 +297,7 @@ InstancedGroupTest.prototype={
                         count0OPT=80;
                         countStepOPT=20;
 
-                        countLast=300;//正无穷
+                        countLast=1700;//正无穷
                 }else if(PCType===2){//2笔记本
                         count0=150;
                         countStep=10;
@@ -305,7 +305,7 @@ InstancedGroupTest.prototype={
                         count0OPT=150;
                         countStepOPT=30;
 
-                        countLast=360;//正无穷
+                        countLast=1700;//正无穷
                 }else{//3电脑
                         count0=100;
                         countStep=25;
@@ -313,7 +313,7 @@ InstancedGroupTest.prototype={
                         count0OPT=1;
                         countStepOPT=1500;
 
-                        countLast=9999999;//正无穷
+                        countLast=1700;//正无穷
                 }
 
                 this.setContext();
@@ -345,6 +345,8 @@ InstancedGroupTest.prototype={
                                 peoples=null;
                                 var result=[];
                                 var count=time===1?count0OPT:count0;
+                                if(PCType)timeInterval=3000;
+                                else timeInterval=1500;
                                 var myInterval=setInterval(function () {
                                         var FPS,obj;
                                         if(peoples){
@@ -387,7 +389,7 @@ InstancedGroupTest.prototype={
                                         scope.scene.add(peoples.obj);
                                         scope.frameIndexPre_10s=scope.frameIndex;
                                         console.log(FPS,count);
-                                        if(FPS<15||count>countLast){
+                                        if(FPS<5||count>countLast){
                                                 window.clearInterval(myInterval);
                                                 scope.scene.remove(peoples.obj);
                                                 console.log(result);
