@@ -285,30 +285,37 @@ InstancedGroupTest.prototype={
         },
 
 
-        //帧数，进行和不进行帧数统计
+        //采用轻量化处理与不采用的比较//输出//帧数，进行和不进行帧数统计
         test11:function (PCType){
                 //PCType:1手机,2笔记本,3电脑
-                var count0,countStep,count0OPT,countStepOPT;
+                var count0,countStep,count0OPT,countStepOPT,resultType;
+                resultType=0;//0：x(人数)y(帧数)//1：x(帧数)y(人数)
                 if(PCType===1){
                         count0=100;
+                        countStep=20;
+
+                        count0OPT=100;
+                        countStepOPT=20;
+
+                        countLast=300;//正无穷
+                }else if(PCType===2){//2笔记本
+                        count0=150;
                         countStep=10;
 
-                        count0OPT=1;
-                        countStepOPT=500;
-                }else if(PCType===2){//2笔记本
-                        count0=100;
-                        countStep=25;
+                        count0OPT=150;
+                        countStepOPT=30;
 
-                        count0OPT=1;
-                        countStepOPT=1000;
+                        countLast=360;//正无穷
                 }else{//3电脑
                         count0=100;
                         countStep=25;
 
                         count0OPT=1;
                         countStepOPT=1500;
+
+                        countLast=9999999;//正无穷
                 }
-                countLast=9999999;//正无穷
+
                 this.setContext();
                 //开始测试
                 var scope=this;
@@ -379,7 +386,8 @@ InstancedGroupTest.prototype={
                                         if(obj)scope.scene.remove(obj);
                                         scope.scene.add(peoples.obj);
                                         scope.frameIndexPre_10s=scope.frameIndex;
-                                        if(FPS<5||count>countLast){
+                                        console.log(FPS,count);
+                                        if(FPS<15||count>countLast){
                                                 window.clearInterval(myInterval);
                                                 scope.scene.remove(peoples.obj);
                                                 console.log(result);
@@ -390,40 +398,69 @@ InstancedGroupTest.prototype={
                                                 }else{
                                                         result1=window.result1;
                                                         result2=result;
-                                                        function getAvatarNumber(FNS,PN0,step) {
-                                                                var ANS=[];
-                                                                for(i=0;i<=60;i++)ANS.push(0);
-
-                                                                var PN=PN0;
-                                                                for(i=0;i<FNS.length;i++){
-                                                                        if(FNS[i]<=60)
-                                                                                ANS[Math.floor(FNS[i])]=PN;
-                                                                        PN+=step;
-                                                                }
-                                                                return ANS;
-                                                        }
-                                                        function print(arr0,name) {//name:"","OPT"
-                                                                var X=[],Y=[];//X是帧数，Y是人数
-                                                                for(i=0;i<arr0.length;i++){
-                                                                        if(arr0[i]!==0){
-                                                                                X.push(i);
-                                                                                Y.push(arr0[i]);
-                                                                        }
-                                                                }
-                                                                for(i=Y.length-1;i>0;i--)
-                                                                        if(Y[i-1]<Y[i])Y[i-1]=Y[i];
-                                                                return (
-                                                                    "X"+PCType+name+"=["+X.toString()+"];"+
-                                                                    "Y"+PCType+name+"=["+Y.toString()+"];"
+                                                        if(resultType===0){
+                                                                console.log(
+                                                                    print0(
+                                                                        result2,count0   ,countStep   ,""
+                                                                    )+print0(
+                                                                    result1,count0OPT,countStepOPT,"OPT"
+                                                                    )
+                                                                )
+                                                                communication(
+                                                                    print0(
+                                                                        result2,count0   ,countStep   ,""
+                                                                    )+print0(
+                                                                        result1,count0OPT,countStepOPT,"OPT"
+                                                                    )
                                                                 );
+                                                                function print0(data,c0,cStep,name){
+                                                                        var X=[],Y=[];
+                                                                        for(i=0;i<data.length;i++)
+                                                                        if(data[i]<=60){//大于60的数据显然为错误数据
+                                                                                X.push(c0+cStep*i);
+                                                                                Y.push(data[i])
+                                                                        }
+                                                                        return (
+                                                                            "X"+PCType+name+"=["+X.toString()+"];"+
+                                                                            "Y"+PCType+name+"=["+Y.toString()+"];"
+                                                                        );
+                                                                }
+                                                        }else{
+                                                                communication(
+                                                                    print(
+                                                                        getAvatarNumber(result2,count0   ,countStep   ),""
+                                                                    )+print(
+                                                                        getAvatarNumber(result1,count0OPT,countStepOPT),"OPT"
+                                                                    )
+                                                                );
+                                                                function getAvatarNumber(FNS,PN0,step) {
+                                                                        var ANS=[];
+                                                                        for(i=0;i<=60;i++)ANS.push(0);
+
+                                                                        var PN=PN0;
+                                                                        for(i=0;i<FNS.length;i++){
+                                                                                if(FNS[i]<=60)
+                                                                                        ANS[Math.floor(FNS[i])]=PN;
+                                                                                PN+=step;
+                                                                        }
+                                                                        return ANS;
+                                                                }
+                                                                function print(arr0,name) {//name:"","OPT"
+                                                                        var X=[],Y=[];//X是帧数，Y是人数
+                                                                        for(i=0;i<arr0.length;i++){
+                                                                                if(arr0[i]!==0){
+                                                                                        X.push(i);
+                                                                                        Y.push(arr0[i]);
+                                                                                }
+                                                                        }
+                                                                        for(i=Y.length-1;i>0;i--)
+                                                                                if(Y[i-1]<Y[i])Y[i-1]=Y[i];
+                                                                        return (
+                                                                            "X"+PCType+name+"=["+X.toString()+"];"+
+                                                                            "Y"+PCType+name+"=["+Y.toString()+"];"
+                                                                        );
+                                                                }
                                                         }
-                                                        communication(
-                                                            print(
-                                                                getAvatarNumber(result2,count0   ,countStep   ),""
-                                                            )+print(
-                                                                getAvatarNumber(result1,count0OPT,countStepOPT),"OPT"
-                                                            )
-                                                        );
                                                         alert("finished!");
                                                 }
 

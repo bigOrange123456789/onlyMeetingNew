@@ -21,7 +21,8 @@
   <component name="ChangeListManager">
     <list default="true" id="b7b6123d-caec-4b82-a432-424a6b5be5dd" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shader/vertexBone.vert" beforeDir="false" afterPath="$PROJECT_DIR$/shader/vertexBone.vert" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/performanceAnalysis/InstancedGroup.analysis.js" beforeDir="false" afterPath="$PROJECT_DIR$/performanceAnalysis/InstancedGroup.analysis.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/performanceAnalysis/data.txt" beforeDir="false" afterPath="$PROJECT_DIR$/performanceAnalysis/data.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,7 +43,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../InstanceRenderingTest" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -171,11 +172,13 @@
       <workItem from="1614165408712" duration="6773000" />
       <workItem from="1614174763964" duration="44000" />
       <workItem from="1614174815375" duration="336000" />
+      <workItem from="1614559026289" duration="4751000" />
+      <workItem from="1614563861745" duration="3719000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="3" />
+    <option name="version" value="2" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
