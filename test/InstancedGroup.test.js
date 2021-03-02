@@ -458,11 +458,11 @@ InstancedGroupTest.prototype={
                 loader.load("myModel/avatar/Female.glb", (glb) => {
                         f4();
                         function f4() {
-                                var h=200,w=200;
+                                var h=50,w=50;
                                 //男性开始
                                 var pmLoader2 = new MyPMLoader(
                                     {animations: []},
-                                    './myModel/Female',    //模型路径
+                                    './myModel/Male',    //模型路径
                                     [],//没有LOD分级//LOD等级的数组
                                     scope.camera,  //LOD需要判断到相机的距离
                                     0,       //有多个动画时,表示第0个动画//可以通过pmLoader.updateAnimation(i)来切换动画
@@ -481,15 +481,13 @@ InstancedGroupTest.prototype={
                                                             true
                                                         );
                                                         //peoples2.neckPosition=0.68;
-                                                        peoples2.init(['./img/texture/w/w00.jpg', './img/texture/w/w0.jpg'], 16);
-                                                        index = 0;
+                                                        peoples2.init(['./img/texture/m/m00.jpg', './img/texture/m/m0.jpg'], 32);
                                                         for (i1 = 0; i1 < h; i1++)
                                                                 for (i2 = 0; i2 < w; i2++) {
                                                                         i=i1*w+i2;
                                                                 peoples2.rotationSet(i, [Math.PI / 2, 0, 0]);
                                                                 peoples2.positionSet(i, [-45 * i1, 0, -45 * i2]);
-                                                                peoples2.scaleSet(i, [0.4 + Math.random() * 0.1, 0.4 + Math.random() * 0.1, 0.4 + Math.random() * 0.1]);
-                                                                peoples2.speedSet(i,0);
+                                                                peoples2.scaleSet(i, [0.4 + Math.random() * 0.2, 0.4 + Math.random() * 0.2, 0.4 + Math.random() * 0.2]);
                                                                 peoples2.speedSet(i,Math.random());
                                                                 peoples2.colorSet(i,[
                                                                         Math.random()/4,
@@ -501,9 +499,7 @@ InstancedGroupTest.prototype={
                                                                 if(r===1)r=0;
                                                                 if(r===3)r=2;
                                                                 peoples2.animationSet(i,r);
-
-                                                                //peoples2.colorSet(i,[0,0,0])//peoples2.textureSet1(index, scope.types[i]);
-                                                                index++;
+                                                                peoples2.animationSet(i,0);
                                                         }
                                                         //scope.obj.add(peoples2.obj);
                                                         scope.scene.add(peoples2.obj);

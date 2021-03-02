@@ -16,6 +16,7 @@ function InstancedGroup(instanceCount,originMesh,animationClip ){
     this.mcol3;
     this.type;
     this.colors;
+    this.bonesWidth;
 
     this.time=0;//每帧自动加1，加到一定值之后自动归0
 
@@ -103,6 +104,9 @@ InstancedGroup.prototype={
 
         geometryTemp.setAttribute('type', this.type);
         geometryTemp.setAttribute('color', this.colors);
+        geometryTemp.setAttribute('bonesWidth', this.bonesWidth);
+
+
         if(this.mesh)this.mesh.geometry=geometryTemp;
         return geometryTemp;
     },
@@ -126,6 +130,7 @@ InstancedGroup.prototype={
 
         this.type=new THREE.InstancedBufferAttribute(new Uint16Array(this.instanceCount*4), 4);//头部、上衣、裤子、动作
         this.colors=new THREE.InstancedBufferAttribute(new Float32Array(this.instanceCount*3), 3);
+        this.bonesWidth=new THREE.InstancedBufferAttribute(new Float32Array(this.instanceCount*4), 4);
 
         for(i=0;i<this.instanceCount;i++){
             //this.speed.setX(i,0.01);
@@ -141,6 +146,11 @@ InstancedGroup.prototype={
                 Math.floor(Math.random() *2)//Math.random()//这个缓冲区是int类型的//所以这里不能传小数
             );/**/
             //this.colors.setXYZ(i, 0.0,0.0,0.0);
+
+            //this.boneWidthSet(i,0,Math.random()*2-0.5);
+            this.boneWidthSet(i,1,Math.random()*2-0.5);
+            //this.boneWidthSet(i,2,Math.random()*2-0.5);
+            //this.boneWidthSet(i,3,Math.random()*2-0.5);
         }
 
 
@@ -340,6 +350,9 @@ InstancedGroup.prototype={
         this.colors.array[3*i  ]=color[0];
         this.colors.array[3*i+1]=color[1];
         this.colors.array[3*i+2]=color[2];
+    },
+    boneWidthSet:function (avatarIndex,regionIndex,width) {
+        this.bonesWidth.array[4*avatarIndex+regionIndex]=width;
     },
     speedSet:function (i,speed) {//设置动画速度
         this.speed.array[i]=speed;

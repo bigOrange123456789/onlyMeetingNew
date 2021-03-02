@@ -12,6 +12,12 @@ in float speed;
 in vec3 mcol0,mcol1,mcol2,mcol3;
 in vec4 type;//设置贴图0-2,type[3]用处不明
 in vec3 color;
+in vec4 bonesWidth;//选出4个部位
+//4个部位
+//0躯干 0-3
+//1头部 4-6
+//2手臂 7-10，11-14
+//3腿部 15-19-20-24
 
 out vec2 outUV;
 out vec3 varyColor,varyType;
@@ -46,7 +52,6 @@ void main(){
     if (vPosition.y<0.15&&(vPosition.z<0.35&&vPosition.z>-0.35))type_part=0.0;//下身
     else if (vPosition.y<neckPosition) type_part=1.0;//上身
     else type_part=2.0;//头部
-
     Animation_init();
     mat4 matrix1=Animation_computeMatrix();//计算动画的变换矩阵
 
@@ -56,7 +61,19 @@ void main(){
         vec4(mcol2, 0),
         vec4(mcol3, 1)//实例化物体对象世界矩阵
     );
-    gl_Position = projectionMatrix * modelViewMatrix * matrix2  * matrix1 * vec4(position, 1.0);
+
+    float w;
+    //0躯干 0-3
+    //1头部 4-6
+    //2手臂 7-10，11-14
+    //3腿部 15-19-20-24
+    if(skinIndex[0]<3.5)w=bonesWidth[0];//0躯干
+    else if(skinIndex[0]<6.5)w=bonesWidth[1];//1头部
+    else if(skinIndex[0]>14.5)w=bonesWidth[3];//3腿部
+    else w=bonesWidth[2];//2手臂
+    w=w+1.;
+
+    gl_Position = projectionMatrix * modelViewMatrix * matrix2  * matrix1 * vec4(position.x*w,position.y,position.z*w, 1.0);
 
     //Test_init();
     //if(!Test_meetExpectations())gl_Position =vec4(0.,0.,0.,0.);
