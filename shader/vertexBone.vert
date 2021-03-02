@@ -34,23 +34,12 @@ float SKELETON_SIZE2=96.0;//96.0//举手动作//8*12=96
 float SKELETON_SIZE3=96.0;//96.0//举手动作//8*12=96
 float SKELETON_SIZE4=96.0;
 void main(){
-    vec3 vPosition = position;
 
     outUV = inUV;
     varyColor=color;
     varyType=vec3(type[0], type[1], type[2]);
-    /*if (vPosition.y<0.15&&(vPosition.z<0.35&&vPosition.z>-0.35)){
-        type_part=0.0;//下身
-        texType=floor(type[0]+0.5);
-    } else if (vPosition.y<0.59) {
-        type_part=1.0;//上身
-        texType=floor(type[1]+0.5);
-    } else{
-        type_part=2.0;//头部
-        texType=floor(type[2]+0.5);
-    }*/
-    if (vPosition.y<0.15&&(vPosition.z<0.35&&vPosition.z>-0.35))type_part=0.0;//下身
-    else if (vPosition.y<neckPosition) type_part=1.0;//上身
+    if (position.y<0.15&&(position.z<0.35&&position.z>-0.35))type_part=0.0;//下身
+    else if (position.y<neckPosition) type_part=1.0;//上身
     else type_part=2.0;//头部
     Animation_init();
     mat4 matrix1=Animation_computeMatrix();//计算动画的变换矩阵
@@ -68,12 +57,12 @@ void main(){
     //2手臂 7-10，11-14
     //3腿部 15-19-20-24
     if(skinIndex[0]<3.5)w=bonesWidth[0];//0躯干
-    else if(skinIndex[0]<6.5)w=bonesWidth[1];//1头部
+    else if(3.5<skinIndex[0]&&skinIndex[0]<6.5)w=bonesWidth[1];//1头部
     else if(skinIndex[0]>14.5)w=bonesWidth[3];//3腿部
     else w=bonesWidth[2];//2手臂
     w=w+1.;
 
-    gl_Position = projectionMatrix * modelViewMatrix * matrix2  * matrix1 * vec4(position.x*w,position.y,position.z*w, 1.0);
+    gl_Position = projectionMatrix * modelViewMatrix * matrix2 * matrix1  * vec4(position.x,position.y,position.z*w, 1.0);
 
     //Test_init();
     //if(!Test_meetExpectations())gl_Position =vec4(0.,0.,0.,0.);
