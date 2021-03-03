@@ -291,13 +291,13 @@ InstancedGroupTest.prototype={
                 var count0,countStep,count0OPT,countStepOPT,resultType;
                 resultType=0;//0：x(人数)y(帧数)//1：x(帧数)y(人数)
                 if(PCType===1){
-                        count0=80;
+                        count0=1;
                         countStep=20;
 
-                        count0OPT=80;
+                        count0OPT=1;
                         countStepOPT=20;
 
-                        countLast=1700;//正无穷
+                        countLast=1500;//正无穷
                 }else if(PCType===2){//2笔记本
                         count0=150;
                         countStep=10;

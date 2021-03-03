@@ -41,6 +41,7 @@ void main(){
     if (position.y<0.15&&(position.z<0.35&&position.z>-0.35))type_part=0.0;//下身
     else if (position.y<neckPosition) type_part=1.0;//上身
     else type_part=2.0;//头部
+
     Animation_init();
     mat4 matrix1=Animation_computeMatrix();//计算动画的变换矩阵
 
@@ -62,7 +63,7 @@ void main(){
     else w=bonesWidth[2];//2手臂
     w=w+1.;
 
-    gl_Position = projectionMatrix * modelViewMatrix * matrix2 * matrix1  * vec4(position.x,position.y,position.z*w, 1.0);
+    gl_Position = projectionMatrix * modelViewMatrix * matrix2 * matrix1  * vec4(position.x*w,position.y,position.z*w, 1.0);
 
     //Test_init();
     //if(!Test_meetExpectations())gl_Position =vec4(0.,0.,0.,0.);
