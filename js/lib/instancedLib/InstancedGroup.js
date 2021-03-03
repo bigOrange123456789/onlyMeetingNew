@@ -152,7 +152,8 @@ InstancedGroup.prototype={
             //2手臂 7-10，11-14
             //3腿部 15-19-20-24
             this.boneWidthSet(i,0,Math.random()/2-0.25);
-            this.boneWidthSet(i,1,Math.random()*2-0.5);//头部
+            this.boneWidthSet(i,1,Math.random()+0.5);//头部
+            //this.boneWidthSet(i,1,Math.random()*2-0.5);//头部
             //this.boneWidthSet(i,2,Math.random()*2-0.5);
             this.boneWidthSet(i,3,Math.random()/2-0.25);
         }

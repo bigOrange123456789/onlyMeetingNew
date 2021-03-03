@@ -1,9 +1,11 @@
 function Main(){
     //console.log(2);
     var scope=this;
+    this.VR=false;
     this.scene=new THREE.Scene();
     this.camera=new THREE.PerspectiveCamera( 70,window.innerWidth /window.innerHeight, 0.1, 1000 );;
     this.render;
+    this.effect;
     //this.camera = new THREE.OrthographicCamera(window.innerWidth/ - 1,window.innerWidth,window.innerHeight,window.innerHeight/ - 1, 0, 100000 );
     this.winWidth = window.innerWidth;
     this.winHeight = window.innerHeight;
@@ -25,6 +27,7 @@ function Main(){
         winHeight = window.innerHeight;
 
         this.renderer.setSize(winWidth, winHeight);
+        if(scope.VR)this.effect = new THREE.StereoEffect(this.renderer)
         document.body.appendChild( this.renderer.domElement );
 
         // CAMERAS
@@ -61,7 +64,8 @@ function Main(){
     }
     this.animate=function()
     {
-        scope.renderer.render(scope.scene,scope.camera);
+        if(scope.VR)scope.effect.render(scope.scene, scope.camera);
+        else scope.renderer.render(scope.scene,scope.camera);
         //scope.divInfo.textContent='场景中三角面个数:' + renderer.info.render.triangles;
         if (window.innerWidth !== scope.winWidth || window.innerHeight !== scope.winHeight) scope._onResize();
         requestAnimationFrame(scope.animate);

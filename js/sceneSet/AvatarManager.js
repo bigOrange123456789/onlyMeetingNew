@@ -41,13 +41,19 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
 
     this.loadAvatar=function () {
         this.host();
+        window.myClock_High0=window.myClock;
         var animLoader = new THREE.GLTFLoader();//= new PMAnimLoader();//估计是通过gltf文件加载的动画
         animLoader.load('./myModel/skeleton/scene.gltf', function (glbObj){
             glbObj.scene.visible=false;
             //scope.loadGuest1(glbObj);
             scope.loadGuest2(glbObj);
         });
-        this.createPeople_haveAnimation2();
+        /*animLoader.load('./test/model/dongshizhang.glb', function (glbObj){
+            console.log("高模加载时间："+(window.myClock-window.myClock_High0));
+            scope.obj.add(glbObj.scene.children[3].children[3]);
+            console.log(glbObj.scene.children[3].children[3]);
+        });*/
+        this.createPeople_haveAnimation();
         //this.analysis();
     }
     this.createPeople_haveAnimation2=function(){
@@ -68,7 +74,7 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
                     [mesh],//这些mesh的网格应该一致
                     true
                 );
-                peoples.init(['./img/texture/w/w00.jpg', './img/texture/w/w0.jpg'], 16);
+                peoples.init(['./img/texture/w/w00.jpg', './img/texture/w/w0.jpg'], 16,false);
                 var index = 0;
                 for (var i = 0; i < scope.positions.length; i++)//1677
                     if (scope.sexs[i] === 0) {
@@ -84,6 +90,7 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
                         index++;
                     }
                 scope.obj.add(peoples.obj);
+                console.log("女性模型加载时间"+(window.myClock-window.myClock_Female0));
                 var timeId1 = setInterval(function () {
                     mesh = pmLoader.rootObject.children[0];
                     peoples.updateGeometry(mesh);
@@ -95,6 +102,7 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
         //女性结束
 
         //男性开始
+        window.myClock_Male0=window.myClock;
         var pmLoader2 = new MyPMLoader(
             {animations: []},
             './myModel/Male',    //模型路径
@@ -129,6 +137,7 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
                         index++;
                     }
                 scope.obj.add(peoples2.obj);
+                //console.log("男性模型加载时间"+(window.myClock-window.myClock_Male0));
                 var timeId2 = setInterval(function () {
                     mesh2 = pmLoader2.rootObject.children[0];
                     peoples2.setGeometry(mesh2.geometry);
@@ -144,14 +153,17 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
     this.createPeople_haveAnimation=function(){
         var loader= new THREE.GLTFLoader();
         //加载女性
+        window.myClock_Male0=window.myClock;
         loader.load('myModel/avatar/Female.glb', (glb) => {
+            console.log("女性模型加载时间"+(window.myClock-window.myClock_Male0));
+
             //console.log(glb.scene.children[0].children[1])
             var peoples=new InstancedGroup(
                 scope.positions.length-this.manNum,
                 [glb.scene.children[0].children[1].clone()],//这些mesh的网格应该一致
                 glb.animations[0].clone()
             );
-            peoples.init(['./img/texture/w/w00.jpg','./img/texture/w/w0.jpg'],16);
+            peoples.init(['./img/texture/w/w00.jpg','./img/texture/w/w0.jpg'],16,false);
 
             var index=0;
             for(var i=0;i<scope.positions.length;i++)
@@ -181,7 +193,7 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
                 //[glb2.scene.children[0].children[0].children[2]],//这些mesh的网格应该一致
                 glb.animations[0]
             );
-            peoples.init(['./img/texture/m/m00.jpg','./img/texture/m/m0.jpg'],32);
+            peoples.init(['./img/texture/m/m00.jpg','./img/texture/m/m0.jpg'],32,false);
 
             var index=0;
             for(var i=0;i<scope.positions.length;i++)
@@ -248,7 +260,10 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
             0,       //有多个动画时,表示第0个动画//可以通过pmLoader.updateAnimation(i)来切换动画
             0.02,     //动画播放速度//可以通过调整pmLoader.animationSpeed来调整速度
             ["Texture_0_0.jpeg","Texture_0_1.jpeg"],
-            null,
+            function(){
+                if(window.myClock_High0)
+                    console.log("高模加载时间："+(window.myClock-window.myClock_High0));
+            },
             50
         );//pmLoader = new myPMLoader('myModel/dongshizhang', LODNumber);//pmLoader = new THREE.PMLoader();//加载PM文件
         var myModel=pmLoader.rootObject;

@@ -458,7 +458,7 @@ InstancedGroupTest.prototype={
                 loader.load("myModel/avatar/Female.glb", (glb) => {
                         f4();
                         function f4() {
-                                var h=50,w=50;
+                                var h=100,w=100;
                                 //男性开始
                                 var pmLoader2 = new MyPMLoader(
                                     {animations: []},
@@ -471,8 +471,8 @@ InstancedGroupTest.prototype={
                                 );
                                 var peoples2 = null;
                                 var timeId2 = setInterval(function () {
-                                        if (pmLoader2.obj.children[0]) {
-                                                var mesh2 = pmLoader2.obj.children[0].children[0];
+                                        if (pmLoader2.rootObject) {
+                                                var mesh2 = pmLoader2.rootObject.children[0];
                                                 //男性开始
                                                 if (peoples2 == null) {
                                                         peoples2 = new InstancedGroup(
@@ -487,7 +487,7 @@ InstancedGroupTest.prototype={
                                                                         i=i1*w+i2;
                                                                 peoples2.rotationSet(i, [Math.PI / 2, 0, 0]);
                                                                 peoples2.positionSet(i, [-45 * i1, 0, -45 * i2]);
-                                                                peoples2.scaleSet(i, [0.4 + Math.random() * 0.2, 0.4 + Math.random() * 0.2, 0.4 + Math.random() * 0.2]);
+                                                                peoples2.scaleSet(i, [0.5 + Math.random() * 0.1, 0.5 + Math.random() * 0.1, 0.5+ Math.random() * 0.1]);
                                                                 peoples2.speedSet(i,Math.random());
                                                                 peoples2.colorSet(i,[
                                                                         Math.random()/4,

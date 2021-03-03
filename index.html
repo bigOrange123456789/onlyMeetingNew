@@ -32,6 +32,7 @@
 	<script src="js/ParamMeasure.js"></script>
 	<script src="js/Main.js"></script>
 
+	<script src="StereoEffect.js"></script>
 	<script  type="module">
 		import { VRButton } from './js//lib/VRButton.js';//负责VR视觉
 
@@ -44,7 +45,7 @@
 		var myMain = new Main();
 		myMain.start();
 		myMain.scene.add(myRoomManager.room);
-		document.body.appendChild( VRButton.createButton( myMain.renderer ) );
+		//document.body.appendChild( VRButton.createButton( myMain.renderer ) );
 		myMain.renderer.xr.enabled = true;
 
 		new PlayerControl(myMain.camera);
