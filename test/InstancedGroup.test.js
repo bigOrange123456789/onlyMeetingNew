@@ -2039,6 +2039,6 @@ InstancedGroupTest.prototype={
                 //完成测试
         },
 }
-var myInstancedGroupTest=new InstancedGroupTest();
-myInstancedGroupTest.test5_0();
+myInstancedGroupTest=new InstancedGroupTest();
+//myInstancedGroupTest.test5_0();
 //myInstancedGroupTest.test1();

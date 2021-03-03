@@ -96,6 +96,12 @@
 			frameIndexPre = frameIndex;
 		}
 		//完成帧数统计
+		//开始添加时钟
+		window.myClock=0;
+		setInterval(function () {
+			window.myClock++;
+		},1)
+		//完成添加时钟
 	</script>
 	</body>
 </html>

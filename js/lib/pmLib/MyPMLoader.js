@@ -1,10 +1,10 @@
-function MyPMLoader(glbObj,url,LODArray,camera,animationType,animationSpeed,texNames){
+function MyPMLoader(glbObj,url,LODArray,camera,animationType,animationSpeed,texNames,finishFunction){
     this.url;//=url;
-    this.obj;//=new THREE.Object3D();
     this.glbObj;//=glbObj;
     this.rootObject;//=new THREE.Object3D();
     this.mesh;//={};
     this.finished;
+    this.finishFunction;
 
     //以下是配合实现动画功能的一些成员变量
     this.animationMixer;//当前动画
@@ -23,13 +23,13 @@ function MyPMLoader(glbObj,url,LODArray,camera,animationType,animationSpeed,texN
     //以下是纹理贴图地址信息
     this.texNames;
 
-    this.init(glbObj,url,LODArray,camera,animationType,animationSpeed,texNames);//初始化函数//00001
+    this.init(glbObj,url,LODArray,camera,animationType,animationSpeed,texNames,finishFunction);//初始化函数//00001
 }
 MyPMLoader.prototype={
-    init:function(glbObj,url,LODArray,camera,animationType,animationSpeed,texNames){//这里是初始要执行的代码
+    init:function(glbObj,url,LODArray,camera,animationType,animationSpeed,texNames,finishFunction){//这里是初始要执行的代码
+        this.finishFunction=finishFunction?finishFunction:null;
         this.url=url;
         this.glbObj=glbObj;
-        this.obj=new THREE.Object3D();
         this.rootObject=new THREE.Object3D();
         this.mesh={};
         this.finished=false;
@@ -191,7 +191,7 @@ MyPMLoader.prototype={
 
 
         if(animationClips.length>0)this.aimationMixerInit(animationClips);
-        THIS.obj.add(THIS.rootObject);
+
 
         /***********************程序到此执行结束，以下为工具函数****************************************************************************************/
         function startLogImageLoading(srcMtl , imgFile)

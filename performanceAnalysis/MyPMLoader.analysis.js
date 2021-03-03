@@ -176,6 +176,39 @@ MyPMLoaderTest.prototype={
         });
         //完成测试
     },
+
+    //统计加载基网格所需时间
+    test4:function (ContextType) {
+        if(typeof(ContextType)==="undefined")this.setContext();
+        var nameTest="董事长模型";
+        console.log('start test:'+nameTest);
+
+        //完成帧数统计
+
+        //开始添加时钟
+        window.myClock=0;
+        setInterval(function () {
+            window.myClock++;
+        },1)
+        //完成添加时钟
+
+        //开始测试
+        var pmLoader = new MyPMLoader(
+            {animations: []},
+            './myModel/Female',    //模型路径
+            [],//没有LOD分级//LOD等级的数组
+            scope.camera,  //LOD需要判断到相机的距离
+            0,       //有多个动画时,表示第0个动画//可以通过pmLoader.updateAnimation(i)来切换动画
+            0,     //动画播放速度//可以通过调整pmLoader.animationSpeed来调整速度
+            [],
+            function() {
+                alert(
+                    window.myClock-window.myClock_Female0
+                );
+            }
+        );
+        //完成测试
+    },
 }
 var myMyPMLoaderTest=new MyPMLoaderTest();
-myMyPMLoaderTest.test1();
+myMyPMLoaderTest.test4();

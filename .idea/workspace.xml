@@ -21,10 +21,17 @@
   <component name="ChangeListManager">
     <list default="true" id="b7b6123d-caec-4b82-a432-424a6b5be5dd" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/performanceAnalysis/InstancedGroup.analysis.js" beforeDir="false" afterPath="$PROJECT_DIR$/performanceAnalysis/InstancedGroup.analysis.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/performanceAnalysis/data.txt" beforeDir="false" afterPath="$PROJECT_DIR$/performanceAnalysis/data.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/performanceAnalysis/symmetric.html" beforeDir="false" afterPath="$PROJECT_DIR$/performanceAnalysis/symmetric.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shader/vertexBone.vert" beforeDir="false" afterPath="$PROJECT_DIR$/shader/vertexBone.vert" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/lib/pmLib/MyPMLoader.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/lib/pmLib/MyPMLoader.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/sceneSet/AvatarManager.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/sceneSet/AvatarManager.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/performanceAnalysis/MyPMLoader.test.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/performanceAnalysis/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/performanceAnalysis/launch.js" beforeDir="false" afterPath="$PROJECT_DIR$/performanceAnalysis/launch.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test.html" beforeDir="false" afterPath="$PROJECT_DIR$/test.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/InstancedGroup.test.js" beforeDir="false" afterPath="$PROJECT_DIR$/test/InstancedGroup.test.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/MyPMLoader.test.js" beforeDir="false" afterPath="$PROJECT_DIR$/test/MyPMLoader.test.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/testLaunch.js" beforeDir="false" afterPath="$PROJECT_DIR$/test/testLaunch.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/tool/UI.js" beforeDir="false" afterPath="$PROJECT_DIR$/test/tool/UI.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,7 +52,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../paper" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -180,7 +187,8 @@
       <workItem from="1614603129930" duration="4285000" />
       <workItem from="1614612640965" duration="17053000" />
       <workItem from="1614739999166" duration="321000" />
-      <workItem from="1614740511645" duration="2802000" />
+      <workItem from="1614740511645" duration="7806000" />
+      <workItem from="1614767862135" duration="5235000" />
     </task>
     <servers />
   </component>
@@ -204,10 +212,10 @@
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="379" y="141" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1280.680@0.0.1280.680" timestamp="1613703509326" />
-    <state x="523" y="120" key="FileChooserDialogImpl" timestamp="1614668034742">
+    <state x="523" y="120" key="FileChooserDialogImpl" timestamp="1614762335087">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state x="523" y="120" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1614668034742" />
+    <state x="523" y="120" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1614762335087" />
     <state x="785" y="184" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1609483059436" />
     <state x="335" y="92" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1609487862309">
       <screen x="0" y="0" width="1920" height="1040" />

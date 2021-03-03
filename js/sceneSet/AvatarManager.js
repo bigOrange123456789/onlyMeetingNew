@@ -52,6 +52,7 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
     }
     this.createPeople_haveAnimation2=function(){
         //女性开始
+        window.myClock_Female0=window.myClock;
         var pmLoader = new MyPMLoader(
             {animations: []},
             './myModel/Female',    //模型路径
@@ -59,12 +60,17 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
             scope.camera,  //LOD需要判断到相机的距离
             0,       //有多个动画时,表示第0个动画//可以通过pmLoader.updateAnimation(i)来切换动画
             0,     //动画播放速度//可以通过调整pmLoader.animationSpeed来调整速度
-            []
+            [],
+            function() {
+                alert(
+                    window.myClock-window.myClock_Female0
+                );
+            }
         );
         var peoples = null;
         var timeId1 = setInterval(function () {
-            if (pmLoader.obj.children[0]) {
-                var mesh = pmLoader.obj.children[0].children[0];
+            if (pmLoader.rootObject) {
+                var mesh = pmLoader.rootObject.children[0];
                 if(peoples == null){
                     peoples = new InstancedGroup(
                         scope.positions.length - scope.manNum,
@@ -110,8 +116,8 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
         );
         var peoples2 = null;
         var timeId2 = setInterval(function () {
-            if (pmLoader2.obj.children[0]) {
-                var mesh2 = pmLoader2.obj.children[0].children[0];
+            if (pmLoader2.rootObject) {
+                var mesh2 = pmLoader2.rootObject.children[0];
                 //男性开始
                 if (peoples2 == null) {
                     peoples2 = new InstancedGroup(
@@ -256,7 +262,7 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
             0.02,     //动画播放速度//可以通过调整pmLoader.animationSpeed来调整速度
             ["Texture_0_0.jpeg","Texture_0_1.jpeg"]
         );//pmLoader = new myPMLoader('myModel/dongshizhang', LODNumber);//pmLoader = new THREE.PMLoader();//加载PM文件
-        var myModel=pmLoader.obj;
+        var myModel=pmLoader.rootObject;
         myModel.scale.set(0.024,0.024,0.024);
         myModel.position.set(191,18.1,-11);//191,9,-11
         myModel.rotation.set(0,Math.PI,0);

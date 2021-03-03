@@ -51,7 +51,30 @@ function Button(str,color,size,parentNode) {
         return oButton;
     }
 }
-Button.prototype=Text.prototype={
+function Panel(color,size,parentNode) {
+    if (typeof(parentNode) == "undefined") parentNode = document.body;
+    this.element=div("",color,"white",size,100,50,parentNode);
+    this.hide=function () {
+        this.element.style.display="none";
+    }
+    function div(html,color,background,size,width,height,parentNode){
+        var oDiv=document.createElement('div');//按钮
+        oDiv.innerHTML=html;
+        oDiv.style.cssText='font-size:'+size+'px;'//字体大小
+            +'width:'+width+'px;height:'+height+'px;'//按钮大小
+            +'color:'+color+';'//字体颜色
+            +'background:'+background+';'//按钮颜色
+            +'margin:20px auto;'
+            +'text-align:center;'
+            +'line-height:40px;'
+            +'position:fixed;'//到窗体的位置
+            +'left:'+(window.innerWidth-width)+'px;'//到部件左边距离
+            +'top:'+0+'px;'; //到部件右边 距离
+        parentNode.appendChild(oDiv);
+        return oDiv;
+    }
+}
+Panel.prototype=Button.prototype=Text.prototype={
     reStr:function(str){
         this.element.innerHTML=str;
     },
