@@ -62,46 +62,36 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
             0,     //动画播放速度//可以通过调整pmLoader.animationSpeed来调整速度
             [],
             function() {
-                alert(
-                    window.myClock-window.myClock_Female0
+                var mesh = pmLoader.rootObject.children[0];
+                var peoples = new InstancedGroup(
+                    scope.positions.length - scope.manNum,
+                    [mesh],//这些mesh的网格应该一致
+                    true
                 );
+                peoples.init(['./img/texture/w/w00.jpg', './img/texture/w/w0.jpg'], 16);
+                var index = 0;
+                for (var i = 0; i < scope.positions.length; i++)//1677
+                    if (scope.sexs[i] === 0) {
+                        peoples.rotationSet(index, [Math.PI / 2, 0, 3 * Math.PI / 2]);
+                        peoples.positionSet(index, [scope.positions[i][0] + 1.8, scope.positions[i][1] + 1.5, scope.positions[i][2]]);
+                        peoples.scaleSet(index, [0.04 + Math.random() * 0.01, 0.04 + Math.random() * 0.01, 0.04 + Math.random() * 0.01]);
+
+                        peoples.animationSet(index, scope.animations[i]);
+                        peoples.colorSet(index, scope.colors[i]);
+                        peoples.speedSet(index, 0.15 + Math.random() * 1.5);
+                        peoples.textureSet0(index, scope.types[i]);
+                        //peoples.textureSet1(index, scope.types[i]);
+                        index++;
+                    }
+                scope.obj.add(peoples.obj);
+                var timeId1 = setInterval(function () {
+                    mesh = pmLoader.rootObject.children[0];
+                    peoples.updateGeometry(mesh);
+                    console.log(pmLoader.finished);
+                    if (pmLoader.finished) window.clearInterval(timeId1)
+                }, 1000);
             }
         );
-        var peoples = null;
-        var timeId1 = setInterval(function () {
-            if (pmLoader.rootObject) {
-                var mesh = pmLoader.rootObject.children[0];
-                if(peoples == null){
-                    peoples = new InstancedGroup(
-                        scope.positions.length - scope.manNum,
-                        [mesh],//这些mesh的网格应该一致
-                        true
-                    );
-                    peoples.init(['./img/texture/w/w00.jpg', './img/texture/w/w0.jpg'], 16);
-                    var index = 0;
-                    for (var i = 0; i < scope.positions.length; i++)//1677
-                        if (scope.sexs[i] === 0) {
-                            peoples.rotationSet(index, [Math.PI / 2, 0, 3 * Math.PI / 2]);
-                            peoples.positionSet(index, [scope.positions[i][0] + 1.8, scope.positions[i][1] + 1.5, scope.positions[i][2]]);
-                            peoples.scaleSet(index, [0.04 + Math.random() * 0.01, 0.04 + Math.random() * 0.01, 0.04 + Math.random() * 0.01]);
-
-                            peoples.animationSet(index, scope.animations[i]);
-                            peoples.colorSet(index, scope.colors[i]);
-                            peoples.speedSet(index, 0.15 + Math.random() * 1.5);
-                            peoples.textureSet0(index, scope.types[i]);
-                            //peoples.textureSet1(index, scope.types[i]);
-                            index++;
-                        }
-                    scope.obj.add(peoples.obj);
-                }else{
-                    //peoples.setGeometry(mesh.geometry);
-                    peoples.updateGeometry(mesh);
-                    //console.log(mesh.geometry);
-                }
-            }
-            console.log(pmLoader.finished);
-            if (pmLoader.finished) window.clearInterval(timeId1)
-        }, 1000);
         //女性结束
 
         //男性开始
@@ -112,45 +102,42 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
             scope.camera,  //LOD需要判断到相机的距离
             0,       //有多个动画时,表示第0个动画//可以通过pmLoader.updateAnimation(i)来切换动画
             0,     //动画播放速度//可以通过调整pmLoader.animationSpeed来调整速度
-            []
-        );
-        var peoples2 = null;
-        var timeId2 = setInterval(function () {
-            if (pmLoader2.rootObject) {
+            [],
+            function () {
                 var mesh2 = pmLoader2.rootObject.children[0];
-                //男性开始
-                if (peoples2 == null) {
-                    peoples2 = new InstancedGroup(
-                        scope.manNum,//908
-                        [mesh2],//这些mesh的网格应该一致
-                        true
-                    );
-                    peoples2.neckPosition=0.68;
-                    //peoples2.vertURL="shader/vertexBone2.vert";
-                    //peoples2.fragURL="shader/fragment2.frag";
-                    peoples2.init(['./img/texture/m/m00.jpg', './img/texture/m/m0.jpg'], 32);
-                    index = 0;
-                    for (i = 0; i < scope.positions.length; i++)
-                        if (scope.sexs[i] === 1) {
-                            peoples2.rotationSet(index, [Math.PI / 2, 0, 3 * Math.PI / 2]);
-                            peoples2.positionSet(index, [scope.positions[i][0] + 1.8, scope.positions[i][1] + 1.5, scope.positions[i][2]]);
-                            peoples2.scaleSet(index, [0.04 + Math.random() * 0.01,  0.04 + Math.random() * 0.01,0.04 + Math.random() * 0.01]);//最后一个是高
+                var peoples2 = new InstancedGroup(
+                    scope.manNum,//908
+                    [mesh2],//这些mesh的网格应该一致
+                    true
+                );
+                peoples2.neckPosition=0.68;
+                //peoples2.vertURL="shader/vertexBone2.vert";
+                //peoples2.fragURL="shader/fragment2.frag";
+                peoples2.init(['./img/texture/m/m00.jpg', './img/texture/m/m0.jpg'], 32);
+                index = 0;
+                for (i = 0; i < scope.positions.length; i++)
+                    if (scope.sexs[i] === 1) {
+                        peoples2.rotationSet(index, [Math.PI / 2, 0, 3 * Math.PI / 2]);
+                        peoples2.positionSet(index, [scope.positions[i][0] + 1.8, scope.positions[i][1] + 1.5, scope.positions[i][2]]);
+                        peoples2.scaleSet(index, [0.04 + Math.random() * 0.01,  0.04 + Math.random() * 0.01,0.04 + Math.random() * 0.01]);//最后一个是高
 
-                            peoples2.animationSet(index, scope.animations[i]);
-                            peoples2.colorSet(index, scope.colors[i]);
-                            peoples2.speedSet(index, 0.15 + Math.random() * 1.5);
-                            peoples2.textureSet0(index, scope.types[i]);
-                            //peoples2.textureSet1(index, scope.types[i]);
-                            index++;
-                        }
-                    scope.obj.add(peoples2.obj);
-                }else{
+                        peoples2.animationSet(index, scope.animations[i]);
+                        peoples2.colorSet(index, scope.colors[i]);
+                        peoples2.speedSet(index, 0.15 + Math.random() * 1.5);
+                        peoples2.textureSet0(index, scope.types[i]);
+                        //peoples2.textureSet1(index, scope.types[i]);
+                        index++;
+                    }
+                scope.obj.add(peoples2.obj);
+                var timeId2 = setInterval(function () {
+                    mesh2 = pmLoader2.rootObject.children[0];
                     peoples2.setGeometry(mesh2.geometry);
-                }
+                    console.log(pmLoader2.finished);
+                    if (pmLoader2.finished) window.clearInterval(timeId2)
+                }, 1000);
             }
-            console.log(pmLoader2.finished);
-            if (pmLoader2.finished) window.clearInterval(timeId2)
-        }, 1000);
+        );
+
         //男性结束
 
     }
@@ -260,7 +247,9 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
             this.camera,  //LOD需要判断到相机的距离
             0,       //有多个动画时,表示第0个动画//可以通过pmLoader.updateAnimation(i)来切换动画
             0.02,     //动画播放速度//可以通过调整pmLoader.animationSpeed来调整速度
-            ["Texture_0_0.jpeg","Texture_0_1.jpeg"]
+            ["Texture_0_0.jpeg","Texture_0_1.jpeg"],
+            null,
+            50
         );//pmLoader = new myPMLoader('myModel/dongshizhang', LODNumber);//pmLoader = new THREE.PMLoader();//加载PM文件
         var myModel=pmLoader.rootObject;
         myModel.scale.set(0.024,0.024,0.024);

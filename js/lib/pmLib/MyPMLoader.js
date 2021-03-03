@@ -1,10 +1,11 @@
-function MyPMLoader(glbObj,url,LODArray,camera,animationType,animationSpeed,texNames,finishFunction){
+function MyPMLoader(glbObj,url,LODArray,camera,animationType,animationSpeed,texNames,finishFunction,delayTime){
     this.url;//=url;
     this.glbObj;//=glbObj;
     this.rootObject;//=new THREE.Object3D();
     this.mesh;//={};
     this.finished;
     this.finishFunction;
+    this.PMDelay=typeof(delayTime)==="undefined"?400:delayTime;
 
     //以下是配合实现动画功能的一些成员变量
     this.animationMixer;//当前动画
@@ -179,9 +180,8 @@ MyPMLoader.prototype={
                 startLogImageLoading(meshMat[i], meshData.materials[i]);
         }
 
-        for(var Meshid=0;Meshid < meshData.faces.length;Meshid++){//meshData.faces.length为1
-            restoreMesh(Meshid);//应该是处理基模时使用的，只被执行一次
-        }
+        restoreMesh(0);//应该是处理基模时使用的，只被执行一次
+        if(THIS.finishFunction!==null)THIS.finishFunction();
 
         loadLocalFile(pmFilesUrl + 'desc.json',function (data) {
             var jsonData = JSON.parse(data);
@@ -404,7 +404,9 @@ MyPMLoader.prototype={
                 meshMat[Meshid].skinning=true;
             }//console.log(Meshid);输出了356次的0
 
-            rootObject.add(THIS.mesh[0]);//将新的mesh添加到对象中//
+            rootObject.add(THIS.mesh[0]);//将更新后的mesh添加到对象中//
+
+
             if(animationClips.length>0)setupPmSkinnedMesh(rootObject, skeletonBones, skeletonMatrix);//重要
 
             if(typeof(index)!='undefined')
@@ -499,7 +501,7 @@ MyPMLoader.prototype={
                 {
                     setTimeout(function () {
                         if(pmDeltaTime===0)startPmLoading(THIS);
-                    },400);//增量信息的加载优先级不是很高
+                    },THIS.PMDelay);//增量信息的加载优先级不是很高
                     //setTimeout(function(){} , pmDeltaTime);
                 } else {//完成了全部PM文件的加载
                     THIS.finished=true;
@@ -513,6 +515,7 @@ MyPMLoader.prototype={
             });
             pmCount++;
         }
+
 
         //加载一个PM的json文件
         function loadPmMesh(index,lengthindex,THIS, callback)
@@ -580,9 +583,9 @@ MyPMLoader.prototype={
     },
     computeLODLevel:function(){//计算LOD等级//等级越大模型越精细
         var distance=Math.sqrt(//this.rootObject的位置估计是在原点
-            Math.pow(this.camera.position.x - this.obj.position.x,2)
-            + Math.pow(this.camera.position.y - this.obj.position.y,2)
-            + Math.pow(this.camera.position.z - this.obj.position.z,2)
+            Math.pow(this.camera.position.x - this.rootObject.position.x,2)
+            + Math.pow(this.camera.position.y - this.rootObject.position.y,2)
+            + Math.pow(this.camera.position.z - this.rootObject.position.z,2)
         );
         var level=0;//位置处于(l-1)之后精度最低//分几段就有几个等级，级别编号从0开始,这是等级编号的最大值
         if(distance<this.LODArray[0])level=this.LODArray.length;//位置处于0之前精度最高
@@ -591,7 +594,7 @@ MyPMLoader.prototype={
                 level=this.LODArray.length-i-1;
                 break;
             }
-        return 2;//越远等级越小
+        return level;//越远等级越小
     },
     updateMesh:function(i){//这个函数的作用是协助实现LOD//0 - pmMeshHistory-1
         var skeletonBones=this.skeletonBones,skeletonMatrix=this.skeletonMatrix;
@@ -599,6 +602,7 @@ MyPMLoader.prototype={
         this.preLODIndex=i;
         if(!this.pmMeshHistory[i].parent){
             this.rootObject.add(this.pmMeshHistory[i]);
+
             this.rootObject.remove(this.mesh[0]);
 
             this.mesh[0]=this.pmMeshHistory[i];//console.log(this.pmMeshHistory);
