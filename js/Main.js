@@ -1,7 +1,7 @@
 function Main(){
     //console.log(2);
     var scope=this;
-    this.VR=false;
+    this.VR=true;
     this.scene=new THREE.Scene();
     this.camera=new THREE.PerspectiveCamera( 70,window.innerWidth /window.innerHeight, 0.1, 1000 );;
     this.render;

@@ -22,12 +22,32 @@ oButton1.element.onclick=function(){
     oButton1.element.style.color="#0ff";
     var panel1=new Panel('#0ff',20,mainPanel.element);
     panel1.rePos(100,50);
-    var oButton1_t5_0=new Button('5_0:有动画测试','#0ff',20,panel1.element);
+
+    var xc=document.body.clientWidth-50;
+    var oButton1_t5_0=new Button('5_0:有动画测试','#0ff',10,panel1.element);
+    oButton1_t5_0.element.style.background="#000";
+    oButton1_t5_0.rePos(xc,50);
     oButton1_t5_0.element.onclick=function(){
         mainPanel.hide();
         myInstancedGroupTest.test5_0();
     }
-    //alert(0)
+
+    var oButton1_t5_01=new Button('5_01:PM结合instancing','#0ff',10,panel1.element);
+    oButton1_t5_01.element.style.background="#000";
+    oButton1_t5_01.rePos(xc,150);
+    oButton1_t5_01.element.onclick=function(){
+        mainPanel.hide();
+        myInstancedGroupTest.test5_01();
+    }
+
+    var oButton1_t5_02=new Button('5_02:多样性结果记录','#0ff',10,panel1.element);
+    oButton1_t5_02.element.style.background="#000";
+    oButton1_t5_02.rePos(xc,250);
+    oButton1_t5_02.element.onclick=function(){
+        mainPanel.hide();
+        myInstancedGroupTest.test5_02();
+    }
+    //al
 };
 
 var oButton2=new Button('MyPMLoader','#00f',20,mainPanel.element);
@@ -43,5 +63,6 @@ oButton2.element.onclick=function(){
         mainPanel.hide();
         myMyPMLoaderTest.test1();
     }
+
     //alert(0)
 };
