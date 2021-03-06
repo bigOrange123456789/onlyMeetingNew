@@ -645,8 +645,8 @@ InstancedGroupTest.prototype={
         //PM结合instancing，快照自动下载
         test5_01:function (contextType){
                 if(typeof(contextType)==="undefined")this.setContext();
-                scope.camera.position.set(-16.437578046539937,  123.30667135020478,  -19.024857272785894);
-                scope.camera.rotation.set(-0.5653623448397892, 0.6230157002504696,  0.3545473011636873);
+                this.camera.position.set(-16.437578046539937,  123.30667135020478,  -19.024857272785894);
+                this.camera.rotation.set(-0.5653623448397892, 0.6230157002504696,  0.3545473011636873);
 
                 var nameTest="输出帧序号，用于验证";
                 console.log('start test:'+nameTest);
@@ -674,7 +674,7 @@ InstancedGroupTest.prototype={
                                 //男性开始
                                 var pmLoader2 = new MyPMLoader(
                                     {animations: []},
-                                    './myModel/Male',    //模型路径
+                                    './test/Ganpa',    //模型路径
                                     [],//没有LOD分级//LOD等级的数组
                                     scope.camera,  //LOD需要判断到相机的距离
                                     0,       //有多个动画时,表示第0个动画//可以通过pmLoader.updateAnimation(i)来切换动画
@@ -694,7 +694,8 @@ InstancedGroupTest.prototype={
                                                             true,
                                                         );
                                                         //peoples2.neckPosition=0.68;
-                                                        peoples2.init(['./img/texture/m/m00.jpg', './img/texture/m/m0.jpg'], 32);
+                                                        peoples2.init(['./img/texture/m/m0.jpg'], 32);
+                                                        //peoples2.init(['./img/texture/m/m00.jpg', './img/texture/m/m0.jpg'], 32);
                                                         for (i1 = 0; i1 < h; i1++)
                                                                 for (i2 = 0; i2 < w; i2++) {
                                                                         i=i1*w+i2;
@@ -1049,6 +1050,159 @@ InstancedGroupTest.prototype={
                                 requestAnimationFrame(updateAnimation);
                         }
                 });//
+                //完成测试
+        },
+
+        //画廊
+        test5_03:function (contextType){
+                if(typeof(contextType)==="undefined")this.setContext();
+                var nameTest="输出帧序号，用于验证";
+                console.log('start test:'+nameTest);
+                //开始测试
+                var scope=this;
+                var loader= new THREE.GLTFLoader();
+
+                //房间模型
+                loader.load("test/model/gallery/gallery.gltf", (glb) => {
+                        //glb.children[0].traverse()
+                        glb.scene.traverse(node => {
+                                if (node.geometry) {
+                                        //console.log(node);
+                                }
+                        });
+
+                        var obj=glb.scene.children[0];
+                        obj.scale.set(50,50,50);
+                        console.log(obj);
+                        scope.scene.add(obj);
+                });
+                //桌子模型
+                loader.load("test/A.glb", (glb) => {
+                        //glb.children[0].traverse()
+                        glb.scene.traverse(node => {
+                                if (node.geometry) {
+                                        //console.log(node);
+                                }
+                        });
+
+                        var obj=glb.scene.children[0];
+                        obj.scale.set(0.02,0.02,0.02);
+                        scope.scene.add(obj);
+                });
+
+                //椅子模型
+                loader.load("test/chair.glb", (glb) => {
+                        //glb.children[0].traverse()
+                        glb.scene.traverse(node => {
+                                if (node.geometry) {
+                                        //console.log(node);
+                                }
+                        });
+
+                        var obj=glb.scene.children[0];
+                        obj.scale.set(0.02,0.02,0.02);
+                        console.log(obj);
+                        scope.scene.add(obj);
+                });//chair.glb
+
+                //女性模型
+                var positions=[
+                        [35,35,0],
+                        [35,0,35]
+                ]
+                var pmLoader = new MyPMLoader(
+                    {animations: []},
+                    './myModel/Female',    //模型路径
+                    [],//没有LOD分级//LOD等级的数组
+                    scope.camera,  //LOD需要判断到相机的距离
+                    0,       //有多个动画时,表示第0个动画//可以通过pmLoader.updateAnimation(i)来切换动画
+                    0,     //动画播放速度//可以通过调整pmLoader.animationSpeed来调整速度
+                    [],
+                    function () {
+                            var mesh = pmLoader2.rootObject.children[0];
+                            var peoples = new InstancedGroup(
+                                positions.length,//908
+                                [mesh],//这些mesh的网格应该一致
+                                true
+                            );
+                            peoples.neckPosition=0.68;
+                            //peoples2.vertURL="shader/vertexBone2.vert";
+                            //peoples2.fragURL="shader/fragment2.frag";
+                            peoples.init(['./img/texture/w/w00.jpg', './img/texture/w/w0.jpg'], 16);
+                            index = 0;
+                            for (i = 0; i < positions.length; i++) {
+                                    peoples.rotationSet(i, [Math.PI / 2, 0, 0]);
+                                    peoples.positionSet(i, positions[i]);
+
+                                    peoples.scaleSet(i, [0.1, 0.1, 0.1]);
+                                    //peoples.speedSet(i,0);
+                                    peoples.speedSet(i,0);
+                                    //peoples.textureSet(i,[0,0,0,0])
+                                    peoples.animationSet(i,i)
+                                    peoples.colorSet(i,[0,0,0])
+
+                            }
+                            //scope.obj.add(peoples2.obj);
+                            scope.scene.add(peoples.obj);
+                            //console.log("男性模型加载时间"+(window.myClock-window.myClock_Male0));
+                            var timeId = setInterval(function () {
+                                    mesh = pmLoader.rootObject.children[0];
+                                    peoples.setGeometry(mesh.geometry);
+                                    console.log(pmLoader.finished);
+                                    if (pmLoader.finished) window.clearInterval(timeId)
+                            }, 1000);
+                    }
+                );
+
+                //男性模型
+                var positions2=[
+                    [0,35,0],
+                    [0,0,35]
+                ]
+                var pmLoader2 = new MyPMLoader(
+                    {animations: []},
+                    './myModel/Male',    //模型路径
+                    [],//没有LOD分级//LOD等级的数组
+                    scope.camera,  //LOD需要判断到相机的距离
+                    0,       //有多个动画时,表示第0个动画//可以通过pmLoader.updateAnimation(i)来切换动画
+                    0,     //动画播放速度//可以通过调整pmLoader.animationSpeed来调整速度
+                    [],
+                    function () {
+                            var mesh2 = pmLoader2.rootObject.children[0];
+                            var peoples2 = new InstancedGroup(
+                                positions2.length,//908
+                                [mesh2],//这些mesh的网格应该一致
+                                true
+                            );
+                            peoples2.neckPosition=0.68;
+                            //peoples2.vertURL="shader/vertexBone2.vert";
+                            //peoples2.fragURL="shader/fragment2.frag";
+                            peoples2.init(['./img/texture/m/m00.jpg', './img/texture/m/m0.jpg'], 32);
+                            index = 0;
+                            for (i = 0; i < positions2.length; i++) {
+                                            peoples2.rotationSet(i, [Math.PI / 2, 0, 0]);
+                                            peoples2.positionSet(i, positions2[i]);
+
+                                            peoples2.scaleSet(i, [0.1, 0.1, 0.1]);
+                                            //peoples.speedSet(i,0);
+                                            peoples2.speedSet(i,0);
+                                            //peoples2.textureSet(i,[0,0,0,0])
+                                            peoples2.animationSet(i,i)
+                                            peoples2.colorSet(i,[0,0,0])
+
+                                    }
+                            //scope.obj.add(peoples2.obj);
+                            scope.scene.add(peoples2.obj);
+                            //console.log("男性模型加载时间"+(window.myClock-window.myClock_Male0));
+                            var timeId2 = setInterval(function () {
+                                    mesh2 = pmLoader2.rootObject.children[0];
+                                    peoples2.setGeometry(mesh2.geometry);
+                                    console.log(pmLoader2.finished);
+                                    if (pmLoader2.finished) window.clearInterval(timeId2)
+                            }, 1000);
+                    }
+                );
+
                 //完成测试
         },
 

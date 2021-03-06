@@ -47,6 +47,14 @@ oButton1.element.onclick=function(){
         mainPanel.hide();
         myInstancedGroupTest.test5_02();
     }
+
+    var oButton1_t5_03=new Button('5_03:画廊','#0ff',10,panel1.element);
+    oButton1_t5_03.element.style.background="#000";
+    oButton1_t5_03.rePos(xc,350);
+    oButton1_t5_03.element.onclick=function(){
+        mainPanel.hide();
+        myInstancedGroupTest.test5_03();
+    }
     //al
 };
 

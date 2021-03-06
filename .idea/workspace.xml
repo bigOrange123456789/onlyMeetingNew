@@ -22,7 +22,7 @@
     <list default="true" id="b7b6123d-caec-4b82-a432-424a6b5be5dd" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/js/Main.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/Main.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/js/lib/pmLib/MyPMLoader.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/lib/pmLib/MyPMLoader.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/sceneSet/AvatarManager.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/sceneSet/AvatarManager.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test/InstancedGroup.test.js" beforeDir="false" afterPath="$PROJECT_DIR$/test/InstancedGroup.test.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test/testLaunch.js" beforeDir="false" afterPath="$PROJECT_DIR$/test/testLaunch.js" afterDir="false" />
     </list>
@@ -45,7 +45,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../showRoom" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -184,6 +184,22 @@
       <workItem from="1614767862135" duration="27707000" />
       <workItem from="1614866234265" duration="839000" />
       <workItem from="1614918291378" duration="10000" />
+      <workItem from="1614941024300" duration="2823000" />
+      <workItem from="1614951682781" duration="1369000" />
+      <workItem from="1615001978894" duration="81000" />
+      <workItem from="1615009403031" duration="2878000" />
+      <workItem from="1615019310365" duration="282000" />
+      <workItem from="1615019987052" duration="8000" />
+      <workItem from="1615026035032" duration="313000" />
+      <workItem from="1615026364536" duration="322000" />
+      <workItem from="1615026708802" duration="344000" />
+      <workItem from="1615027070480" duration="405000" />
+      <workItem from="1615027494238" duration="311000" />
+      <workItem from="1615027830279" duration="678000" />
+      <workItem from="1615028520755" duration="306000" />
+      <workItem from="1615028908932" duration="303000" />
+      <workItem from="1615029227806" duration="301000" />
+      <workItem from="1615029546154" duration="155000" />
     </task>
     <servers />
   </component>
@@ -207,10 +223,10 @@
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="379" y="141" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1280.680@0.0.1280.680" timestamp="1613703509326" />
-    <state x="523" y="120" key="FileChooserDialogImpl" timestamp="1614918299022">
+    <state x="523" y="120" key="FileChooserDialogImpl" timestamp="1615019993169">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state x="523" y="120" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1614918299022" />
+    <state x="523" y="120" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1615019993169" />
     <state x="785" y="184" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1609483059436" />
     <state x="335" y="92" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1609487862309">
       <screen x="0" y="0" width="1920" height="1040" />

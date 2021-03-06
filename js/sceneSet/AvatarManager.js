@@ -53,7 +53,7 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
             scope.obj.add(glbObj.scene.children[3].children[3]);
             console.log(glbObj.scene.children[3].children[3]);
         });*/
-        this.createPeople_haveAnimation();
+        this.createPeople_haveAnimation2();
         //this.analysis();
     }
     this.createPeople_haveAnimation2=function(){
@@ -74,7 +74,7 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
                     [mesh],//这些mesh的网格应该一致
                     true
                 );
-                peoples.init(['./img/texture/w/w00.jpg', './img/texture/w/w0.jpg'], 16,false);
+                peoples.init(['./img/texture/w/w00.jpg', './img/texture/w/w0.jpg'], 16);
                 var index = 0;
                 for (var i = 0; i < scope.positions.length; i++)//1677
                     if (scope.sexs[i] === 0) {
