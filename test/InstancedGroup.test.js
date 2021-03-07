@@ -4,6 +4,7 @@ function InstancedGroupTest(){
         this.camera;
 
         this.tag;
+        this.button;
         this.button_flag;
         this.referee;
         this.frameIndex;
@@ -24,6 +25,7 @@ InstancedGroupTest.prototype={
                         scope.button_flag=!scope.button_flag;
                 });
 
+                this.button=button;
                 var camera, scene, renderer;
                 var light;
                 init();
@@ -80,6 +82,8 @@ InstancedGroupTest.prototype={
                 button.addEvent(function () {
                         scope.button_flag=!scope.button_flag;
                 });
+
+                this.button=button;
 
                 var camera, scene, renderer;
                 var light;
@@ -1060,7 +1064,16 @@ InstancedGroupTest.prototype={
                 console.log('start test:'+nameTest);
                 //开始测试
                 var scope=this;
+                //console.log(this.button);
+                this.button.element.style.display="none";
                 var loader= new THREE.GLTFLoader();
+
+                scope.camera.position.set(
+                    -9, 6,  105
+                );
+                scope.camera.rotation.set(
+                    -0.409,  0.0137,  0.0059
+                );
 
                 //房间模型
                 loader.load("test/model/gallery/gallery.gltf", (glb) => {
@@ -1087,10 +1100,15 @@ InstancedGroupTest.prototype={
 
                         var obj=glb.scene.children[0];
                         obj.scale.set(0.02,0.02,0.02);
+                        obj.position.set(0,-39,0);
                         scope.scene.add(obj);
                 });
 
                 //椅子模型
+                for(var i=0;i<6;i++)
+                {
+
+                }
                 loader.load("test/chair.glb", (glb) => {
                         //glb.children[0].traverse()
                         glb.scene.traverse(node => {
@@ -1101,14 +1119,97 @@ InstancedGroupTest.prototype={
 
                         var obj=glb.scene.children[0];
                         obj.scale.set(0.02,0.02,0.02);
+                        obj.position.set(40,-50,0);
+                        obj.rotation.set(0,-Math.PI/2,0);
+                        console.log(obj);
+                        scope.scene.add(obj);
+                });
+                loader.load("test/chair.glb", (glb) => {
+                        //glb.children[0].traverse()
+                        glb.scene.traverse(node => {
+                                if (node.geometry) {
+                                        //console.log(node);
+                                }
+                        });
+
+                        var obj=glb.scene.children[0];
+                        obj.scale.set(0.02,0.02,0.02);
+                        obj.position.set(-40,-50,0);
+                        obj.rotation.set(0,Math.PI/2,0);
+                        console.log(obj);
+                        scope.scene.add(obj);
+                });
+                loader.load("test/chair.glb", (glb) => {
+                        //glb.children[0].traverse()
+                        glb.scene.traverse(node => {
+                                if (node.geometry) {
+                                        //console.log(node);
+                                }
+                        });
+
+                        var obj=glb.scene.children[0];
+                        obj.scale.set(0.02,0.02,0.02);
+                        obj.position.set(40/3,-50,20);
+                        obj.rotation.set(0,-Math.PI,0);
+                        console.log(obj);
+                        scope.scene.add(obj);
+                });
+                loader.load("test/chair.glb", (glb) => {
+                        //glb.children[0].traverse()
+                        glb.scene.traverse(node => {
+                                if (node.geometry) {
+                                        //console.log(node);
+                                }
+                        });
+
+                        var obj=glb.scene.children[0];
+                        obj.scale.set(0.02,0.02,0.02);
+                        obj.position.set(40/3,-50,-20);
+                        obj.rotation.set(0,0,0);
+                        console.log(obj);
+                        scope.scene.add(obj);
+                });
+                loader.load("test/chair.glb", (glb) => {
+                        //glb.children[0].traverse()
+                        glb.scene.traverse(node => {
+                                if (node.geometry) {
+                                        //console.log(node);
+                                }
+                        });
+
+                        var obj=glb.scene.children[0];
+                        obj.scale.set(0.02,0.02,0.02);
+                        obj.position.set(-40/3,-50,20);
+                        obj.rotation.set(0,-Math.PI,0);
+                        console.log(obj);
+                        scope.scene.add(obj);
+                });
+                loader.load("test/chair.glb", (glb) => {
+                        //glb.children[0].traverse()
+                        glb.scene.traverse(node => {
+                                if (node.geometry) {
+                                        //console.log(node);
+                                }
+                        });
+
+                        var obj=glb.scene.children[0];
+                        obj.scale.set(0.02,0.02,0.02);
+                        obj.position.set(-40/3,-50,-20);
+                        obj.rotation.set(0,0,0);
                         console.log(obj);
                         scope.scene.add(obj);
                 });//chair.glb
 
                 //女性模型
                 var positions=[
-                        [35,35,0],
-                        [35,0,35]
+                        [35,-45.8,0],
+                        [40/3,-45.8,15],
+                        [-40/3,-45.8,-15]
+                ]
+                var rotations=[
+                        [Math.PI / 2,0,Math.PI / 2],
+                        [Math.PI / 2,0,Math.PI],
+                        [Math.PI / 2,0,0],
                 ]
                 var pmLoader = new MyPMLoader(
                     {animations: []},
@@ -1119,22 +1220,22 @@ InstancedGroupTest.prototype={
                     0,     //动画播放速度//可以通过调整pmLoader.animationSpeed来调整速度
                     [],
                     function () {
-                            var mesh = pmLoader2.rootObject.children[0];
+                            var mesh = pmLoader.rootObject.children[0];
                             var peoples = new InstancedGroup(
                                 positions.length,//908
                                 [mesh],//这些mesh的网格应该一致
                                 true
                             );
-                            peoples.neckPosition=0.68;
+                            //peoples.neckPosition=0.68;
                             //peoples2.vertURL="shader/vertexBone2.vert";
                             //peoples2.fragURL="shader/fragment2.frag";
                             peoples.init(['./img/texture/w/w00.jpg', './img/texture/w/w0.jpg'], 16);
                             index = 0;
                             for (i = 0; i < positions.length; i++) {
-                                    peoples.rotationSet(i, [Math.PI / 2, 0, 0]);
+                                    peoples.rotationSet(i, rotations[i]);
                                     peoples.positionSet(i, positions[i]);
 
-                                    peoples.scaleSet(i, [0.1, 0.1, 0.1]);
+                                    peoples.scaleSet(i, [0.15, 0.15, 0.15]);
                                     //peoples.speedSet(i,0);
                                     peoples.speedSet(i,0);
                                     //peoples.textureSet(i,[0,0,0,0])
@@ -1156,8 +1257,14 @@ InstancedGroupTest.prototype={
 
                 //男性模型
                 var positions2=[
-                    [0,35,0],
-                    [0,0,35]
+                        [-35,-45.8,0],
+                        [40/3,-45.8,-15],
+                        [-40/3,-45.8,15],
+                ]
+                var rotations2=[
+                        [Math.PI / 2,0,-Math.PI / 2],
+                        [Math.PI / 2,0,0],
+                        [Math.PI / 2,0,Math.PI],
                 ]
                 var pmLoader2 = new MyPMLoader(
                     {animations: []},
@@ -1180,17 +1287,17 @@ InstancedGroupTest.prototype={
                             peoples2.init(['./img/texture/m/m00.jpg', './img/texture/m/m0.jpg'], 32);
                             index = 0;
                             for (i = 0; i < positions2.length; i++) {
-                                            peoples2.rotationSet(i, [Math.PI / 2, 0, 0]);
-                                            peoples2.positionSet(i, positions2[i]);
+                                    peoples2.rotationSet(i, rotations2[i]);
+                                    peoples2.positionSet(i, positions2[i]);
 
-                                            peoples2.scaleSet(i, [0.1, 0.1, 0.1]);
-                                            //peoples.speedSet(i,0);
-                                            peoples2.speedSet(i,0);
-                                            //peoples2.textureSet(i,[0,0,0,0])
-                                            peoples2.animationSet(i,i)
-                                            peoples2.colorSet(i,[0,0,0])
+                                    peoples2.scaleSet(i, [0.15, 0.15, 0.15]);
+                                    //peoples.speedSet(i,0);
+                                    peoples2.speedSet(i,0);
+                                    //peoples2.textureSet(i,[0,0,0,0])
+                                    peoples2.animationSet(i,0)
+                                    peoples2.colorSet(i,[0,0,0])
 
-                                    }
+                            }
                             //scope.obj.add(peoples2.obj);
                             scope.scene.add(peoples2.obj);
                             //console.log("男性模型加载时间"+(window.myClock-window.myClock_Male0));
