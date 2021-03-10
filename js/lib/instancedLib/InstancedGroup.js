@@ -191,17 +191,24 @@ InstancedGroup.prototype={
             return xhr.status === okStatus ? xhr.responseText : null;
         }
         if(this.haveSkeleton){
-            uniforms.dataTexture={type: 't', value:[]};
             uniforms.time={value: 0.0};
+            uniforms.animL={type: 't', value:[]};
+            uniforms.animR={type: 't', value:[]};
             var loader = new THREE.XHRLoader(THREE.DefaultLoadingManager);
-            loader.load("json/animationData.json", function(str){//dataTexture
+            loader.load("json/animL.json", function(str){//dataTexture
+                uniforms.animL=getTexture(str);
+            });
+            loader.load("json/animR.json", function(str){//dataTexture
+                uniforms.animR=getTexture(str);
+            });
+            function getTexture(str) {
                 var data0=JSON.parse(str).data;//204
                 var data = new Uint8Array( data0.length);//1944
                 var width = 1 , height = data.length/3 ;//648
                 for(var i=0;i<data.length;i++)data[i]=data0[i];//972
                 var dataTexture = new THREE.DataTexture(data, width, height, THREE.RGBFormat);
-                uniforms.dataTexture={"value":dataTexture};
-            });
+                return {"value":dataTexture};
+            }
         }
         //以下是根据material设置的uniform
         var texSrc_index=1;
