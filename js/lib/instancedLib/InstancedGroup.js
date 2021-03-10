@@ -206,9 +206,20 @@ InstancedGroup.prototype={
                 var data = new Uint8Array( data0.length);//1944
                 var width = 1 , height = data.length/3 ;//648
                 for(var i=0;i<data.length;i++)data[i]=data0[i];//972
-                var dataTexture = new THREE.DataTexture(data, width, height, THREE.RGBFormat);
+                var dataTexture = new THREE.DataTexture(data, width, height, THREE.RGBFormat,THREE.UnsignedByteType);
                 return {"value":dataTexture};
             }
+
+            uniforms.test={type: 't', value:[]};
+            var data0=[301.5,2,255];//204
+            //var data = new Uint8Array( data0.length);//1944
+            var data = new Float32Array(data0.length)
+            var width = 1 , height = data.length/3 ;//648
+            for(var i=0;i<data.length;i++)data[i]=data0[i];//972
+            //var dataTexture = new THREE.DataTexture(data, width, height, THREE.RGBFormat,THREE.UnsignedByteType);
+            var dataTexture = new THREE.DataTexture(data, width, height, THREE.RGBFormat,THREE.FloatType);
+            uniforms.test={"value":dataTexture};
+
         }
         //以下是根据material设置的uniform
         var texSrc_index=1;
