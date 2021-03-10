@@ -2,7 +2,7 @@
 precision highp float;//highp
 uniform sampler2D animL;
 uniform sampler2D animR;
-uniform sampler2D test;
+uniform sampler2D animationData;
 uniform mat4 modelViewMatrix,projectionMatrix;
 uniform float time;//0-10000
 uniform float neckPosition;
@@ -37,13 +37,13 @@ float SKELETON_SIZE3=96.0;//96.0//举手动作//8*12=96
 float SKELETON_SIZE4=96.0;
 void main(){
 
-    float tttt=texture(test, vec2(
+    /*float tttt=texture(test, vec2(
         (0.5+0.0)/1.0, //宽width
         (0.5+floor(0./3.0))/(1.)//高height
         )
-    ).x;
+    ).x;*/
     //if(floor(tttt*1.)!=1.)return;
-    if(tttt!=301.5)return;
+    //if(tttt!=301.5)return;
 
 
     outUV = inUV;
@@ -105,8 +105,8 @@ struct Animation{
         int frameIndex;
         float frameIndex_f;
 }oAnimation;
-float Animation_getNumByAnimL(float n){
-    vec3 tttt=texture(animL, vec2(
+float Animation_getNumByAnim(float n){
+    vec3 tttt=texture(animationData, vec2(
     (0.5+0.0)/1.0, //宽width
     (0.5+floor(n/3.0))/(oAnimation.dataTextureHeight/2.)//高height
     )).xyz;
@@ -114,50 +114,21 @@ float Animation_getNumByAnimL(float n){
     if (m<0.5)return tttt.x;
     else if (m<1.5)return tttt.y;
     else return tttt.z;
-}
-float Animation_getNumByAnimR(float n){
-    vec3 tttt=texture(animR, vec2(
-    (0.5+0.0)/1.0, //宽width
-    (0.5+floor(n/3.0))/(oAnimation.dataTextureHeight/2.)//高height
-    )).xyz;
-    float m=modFloor(n, 3.0);
-    if (m<0.5)return tttt.x;
-    else if (m<1.5)return tttt.y;
-    else return tttt.z;
-}
-float Animation_decode(float A, float B){ //0-1
-    A=round(A*255.0);//解决了移动端的问题
-    B=round(B*255.0);//解决了移动端的问题
-    float a, b, c, d;
-    a=floor(A/128.0);
-    b=floor((modFloor(A, 128.0))/16.0);
-    c=modFloor(A, 16.0);
-    d=B;
-
-    float c_d=c*256.0+d;
-    float num=c_d*pow(10.0, b-5.0);
-    if (a==1.0)num*=-1.0;
-    return num;
 }
 float Animation_getElem5(float n){ //静止//取手臂骨骼数据
-    float A=Animation_getNumByAnimL(n+oAnimation.skeletonPos4), B=Animation_getNumByAnimR(n+oAnimation.skeletonLast+oAnimation.skeletonPos4);
-    return Animation_decode(A, B);
+    return Animation_getNumByAnim(n+oAnimation.skeletonPos4);
 }
 float Animation_getElem4(float n){ //静止//取手臂骨骼数据
-    float A=Animation_getNumByAnimL(n+oAnimation.skeletonPos3), B=Animation_getNumByAnimR(n+oAnimation.skeletonPos3);
-    return Animation_decode(A, B);
+    return Animation_getNumByAnim(n+oAnimation.skeletonPos3);
 }
 float Animation_getElem3(float n){ //举手//取手臂骨骼数据
-    float A=Animation_getNumByAnimL(n+oAnimation.skeletonPos2), B=Animation_getNumByAnimR(n+oAnimation.skeletonPos2);
-    return Animation_decode(A, B);
+    return Animation_getNumByAnim(n+oAnimation.skeletonPos2);
 }
 float Animation_getElem2(float n){ //鼓掌//取手臂骨骼数据
-    float A=Animation_getNumByAnimL(n+oAnimation.skeletonPos1), B=Animation_getNumByAnimR(n+oAnimation.skeletonPos1);
-    return Animation_decode(A, B);
+    return Animation_getNumByAnim(n+oAnimation.skeletonPos1);
 }
 float Animation_getElem1(float n){ //求不动位置的骨骼
-    float A=Animation_getNumByAnimL(n+oAnimation.skeletonPos0), B=Animation_getNumByAnimR(n+oAnimation.skeletonPos0);
-    return Animation_decode(A, B);
+    return Animation_getNumByAnim(n+oAnimation.skeletonPos0);
 }
 mat4 Animation_getMatrix2(float iii){ //求手臂骨骼
     float frame_index=oAnimation.frameIndex_f;
