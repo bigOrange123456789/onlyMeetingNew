@@ -35,6 +35,7 @@ float SKELETON_SIZE2=96.0;//96.0//举手动作//8*12=96
 float SKELETON_SIZE3=96.0;//96.0//举手动作//8*12=96
 float SKELETON_SIZE4=96.0;
 float SKELETON_SIZE5=3360.0;
+float SKELETON_SIZE6=96.0;
 void main(){
     outUV = inUV;
     varyColor=color;
@@ -90,6 +91,7 @@ struct Animation{
         float skeletonPos3;
         float skeletonPos4;
         float skeletonPos5;
+        float skeletonPos6;
 
         int frameIndex;
         float frameIndex_f;
@@ -126,6 +128,8 @@ mat4 Animation_getMatrix2(float iii){ //求手臂骨骼
     }else if (type[3]<4.5){
         startPos+=frame_index*96.;
         startPos+=oAnimation.skeletonPos5;
+    }else if (type[3]<5.5){
+        startPos+=oAnimation.skeletonPos6;
     }
     return mat4(//最后一列是：0 0 0 1
         Animation_getElem2(startPos+0.), Animation_getElem2(startPos+1.), Animation_getElem2(startPos+2.), 0,
@@ -177,6 +181,7 @@ void Animation_init(){
     oAnimation.skeletonPos3=(oAnimation.skeletonPos2+SKELETON_SIZE2);
     oAnimation.skeletonPos4=(oAnimation.skeletonPos3+SKELETON_SIZE3);
     oAnimation.skeletonPos5=(oAnimation.skeletonPos4+SKELETON_SIZE4);
+    oAnimation.skeletonPos6=(oAnimation.skeletonPos5+SKELETON_SIZE5);
 
     //if(round(type[3])==4.)Animation_frameIndexSet(35.);//设置全局变量frame_index的值
     //else
