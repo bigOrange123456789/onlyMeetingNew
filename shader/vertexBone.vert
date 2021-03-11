@@ -1,8 +1,7 @@
 #version 300 es
 precision highp float;//highp
-uniform sampler2D animL;
-uniform sampler2D animR;
 uniform sampler2D animationData;
+uniform float animationDataLength;//动画数据的数据个数
 uniform mat4 modelViewMatrix,projectionMatrix;
 uniform float time;//0-10000
 uniform float neckPosition;
@@ -95,10 +94,10 @@ struct Animation{
         int frameIndex;
         float frameIndex_f;
 }oAnimation;
-float Animation_getNumByAnim(float n){
-    vec3 tttt=texture(animationData, vec2(
+float Animation_getNumByAnim(sampler2D smp,float n){
+    vec3 tttt=texture(smp, vec2(
     (0.5+0.0)/1.0, //宽width
-    (0.5+floor(n/3.0))/(oAnimation.dataTextureHeight/2.)//高height
+    (0.5+floor(n/3.0))/(animationDataLength/3.0)//除3是指每个像素点可存储3个数据
     )).xyz;
     float m=modFloor(n, 3.0);
     if (m<0.5)return tttt.x;
@@ -106,19 +105,19 @@ float Animation_getNumByAnim(float n){
     else return tttt.z;
 }
 float Animation_getElem5(float n){ //静止//取手臂骨骼数据
-    return Animation_getNumByAnim(n+oAnimation.skeletonPos4);
+    return Animation_getNumByAnim(animationData,n+oAnimation.skeletonPos4);
 }
 float Animation_getElem4(float n){ //静止//取手臂骨骼数据
-    return Animation_getNumByAnim(n+oAnimation.skeletonPos3);
+    return Animation_getNumByAnim(animationData,n+oAnimation.skeletonPos3);
 }
 float Animation_getElem3(float n){ //举手//取手臂骨骼数据
-    return Animation_getNumByAnim(n+oAnimation.skeletonPos2);
+    return Animation_getNumByAnim(animationData,n+oAnimation.skeletonPos2);
 }
 float Animation_getElem2(float n){ //鼓掌//取手臂骨骼数据
-    return Animation_getNumByAnim(n+oAnimation.skeletonPos1);
+    return Animation_getNumByAnim(animationData,n+oAnimation.skeletonPos1);
 }
 float Animation_getElem1(float n){ //求不动位置的骨骼
-    return Animation_getNumByAnim(n+oAnimation.skeletonPos0);
+    return Animation_getNumByAnim(animationData,n+oAnimation.skeletonPos0);
 }
 mat4 Animation_getMatrix2(float iii){ //求手臂骨骼
     float frame_index=oAnimation.frameIndex_f;

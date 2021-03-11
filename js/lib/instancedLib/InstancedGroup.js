@@ -191,39 +191,36 @@ InstancedGroup.prototype={
             return xhr.status === okStatus ? xhr.responseText : null;
         }
         if(this.haveSkeleton){
+            var scope=this;
             uniforms.time={value: 0.0};
-            uniforms.animL={type: 't', value:[]};
-            uniforms.animR={type: 't', value:[]};
             uniforms.animationData={type: 't', value:[]};
-
+            uniforms.animationDataLength={value:0};
+            this.animationData=[];
+            this.animationConfig=[];
+            var animationDataLength=0;
             var loader = new THREE.XHRLoader(THREE.DefaultLoadingManager);
-            loader.load("json/animL.json", function(str){//dataTexture
-                uniforms.animL=getTexture(str);
+            loader.load("json/animationConfig.json", function(str){
+                scope.animationConfig=JSON.parse(str).data;
+                updateAnimationData(0);
             });
-            loader.load("json/animR.json", function(str){//dataTexture
-                uniforms.animR=getTexture(str);
-            });
-            function getTexture(str) {
-                var data0=JSON.parse(str).data;//204
-                var data = new Uint8Array( data0.length);//1944
-                var width = 1 , height = data.length/3 ;//648
-                for(var i=0;i<data.length;i++)data[i]=data0[i];//972
-                var dataTexture = new THREE.DataTexture(data, width, height, THREE.RGBFormat,THREE.UnsignedByteType);
-                return {"value":dataTexture};
+
+            function updateAnimationData(index) {
+                loader.load("json/animationData"+index+".json", function(str){//dataTexture
+                    animationDataLength+=scope.animationConfig[index];
+                    uniforms.animationDataLength={value:animationDataLength};
+                    scope.animationData= scope.animationData.concat(JSON.parse(str).data);
+                    uniforms.animationData=getTex(scope.animationData);
+                    if(index+1<scope.animationConfig.length)updateAnimationData(index+1);
+                });
             }
-
-            loader.load("json/animationData.json", function(str){//dataTexture
-                var data0=JSON.parse(str).data;//204
-                var data = new Float32Array( data0.length);//1944
+            function getTex(arr) {//(str) {
+                //var data0=JSON.parse(str).data;//204
+                var data = new Float32Array( arr.length);//1944
                 var width = 1 , height = data.length/3 ;//648
-                for(var i=0;i<data.length;i++)data[i]=data0[i];//972
-                var dataTexture = new THREE.DataTexture(data, width, height, THREE.RGBFormat,THREE.FloatType);
-                uniforms.animationData={"value":dataTexture};
-            });
-
-
-
-
+                for(var i=0;i<data.length;i++)data[i]=arr[i];//972
+                var tex=new THREE.DataTexture(data, width, height, THREE.RGBFormat,THREE.FloatType);
+                return {"value":tex};
+            }
         }
         //以下是根据material设置的uniform
         var texSrc_index=1;

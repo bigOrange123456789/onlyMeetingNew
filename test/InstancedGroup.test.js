@@ -874,7 +874,6 @@ InstancedGroupTest.prototype={
                                 scope.camera.rotation.set(
                                     -1.5811992197536768,  1.186763384930026,  1.582016416494
                                 );
-                                var h=1,w=1;
                                 //男性开始
                                 var pmLoader2 = new MyPMLoader(
                                     {animations: []},
@@ -897,13 +896,17 @@ InstancedGroupTest.prototype={
                                                             [mesh2],//这些mesh的网格应该一致
                                                             true,
                                                         );
-                                                        //peoples2.neckPosition=0.68;
+                                                        peoples2.neckPosition=0.68;
                                                         peoples2.init(['./img/texture/m/m00.jpg', './img/texture/m/m0.jpg'], 32);
-
+                                                        //peoples2.neckPosition=0.68;
 
                                                         peoples2.rotationSet(0, [0, 0, 0]);
                                                         peoples2.positionSet(0, [0,0,0]);
-                                                        peoples2.scaleSet(0, [1,1,1]);
+                                                        peoples2.scaleSet(0, [100,100,100]);
+                                                        peoples2.boneWidthSet(0,0,0);
+                                                        peoples2.boneWidthSet(0,1,0);
+                                                        peoples2.boneWidthSet(0,2,0);
+                                                        peoples2.boneWidthSet(0,3,0);
                                                         //0躯干 0-3
                                                         //peoples2.boneWidthSet(0,0,0);
                                                         //1头部 4-6
@@ -914,9 +917,9 @@ InstancedGroupTest.prototype={
                                                         //peoples2.boneWidthSet(3,0,0);
                                                         peoples2.speedSet(0,Math.random());
                                                         peoples2.colorSet(0,[
-                                                            0,0,0
+                                                            0,0,0.1
                                                         ]);
-                                                        peoples2.textureSet(0,[8,0,0,0])
+                                                        peoples2.textureSet(0,[0,0,0,0])
                                                         peoples2.animationSet(0,0);
 
                                                         //scope.obj.add(peoples2.obj);

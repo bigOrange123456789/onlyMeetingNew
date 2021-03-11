@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>MEETING--softwareTest</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<style>
+			body {overflow:hidden;}
+		</style>
+	</head>
+
+	<body>
+
+		<script src="../../js/lib/threeJS/three.js"></script>
+		<script src="../../js/lib/threeJS/OrbitControls.js"></script>
+		<script src="../../js/lib/threeJS/GLTFLoader.js"></script>
+
+		<script src="../../js/lib/pmLib/MyPMLoader.js"></script>
+
+		<script src="../../js/lib/instancedLib/InstancedGroup.js"></script>
+		<script src="../../js/lib/instancedLib/SkinnedMeshController.js"></script>
+
+		<script src="../../js/sceneSet/RoomManager.js"></script>
+		<script src="../../js/sceneSet/SeatManager.js"></script>
+		<script src="../../js/sceneSet/AvatarManager.js"></script>
+
+		<script src="../../js/playerControl/PlayerControl.js"></script>
+		<script src="../../js/playerControl/PreviewManager.js"></script>
+
+		<script src="../../js/ParamMeasure.js"></script>
+		<script src="../../js/Main.js"></script>
+
+		<script src='tool/OrbitControls.js'></script>
+		<script src='tool/UI.js'></script>
+		<script src='tool/Referee.js'></script>
+
+		<script src='addition.js'></script>
+		<script src='computeArmData.js'></script>
+		<script>
+			var loader = new THREE.XHRLoader(THREE.DefaultLoadingManager);
+			loader.load("../../json/animationConfig.json", function (json1) {
+				var config=JSON.parse(json1).data;
+				loader.load("../../json/animationData.json", function (json2) {
+					var data=JSON.parse(json2).data;
+
+					var result;
+					var animationType=0;
+					var i=0;
+					var interval=setInterval(function () {
+						result=[];
+						var nextStart=i+config[animationType];
+						for(;i<nextStart;i++) result.push(data[i]);
+						let link = document.createElement('a');
+						link.style.display = 'none';
+						document.body.appendChild(link);
+						link.href = URL.createObjectURL(new Blob([JSON.stringify({data:result})], { type: 'text/plain' }));
+						link.download ="animationData"+animationType+".json";
+						link.click();
+
+						if(animationType>=config.length-1) clearInterval(interval);
+						else animationType++;
+					},100);
+				});
+
+
+			});
+		</script>
+	</body>
+</html>
