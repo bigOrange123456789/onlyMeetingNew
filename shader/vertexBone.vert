@@ -36,16 +36,6 @@ float SKELETON_SIZE2=96.0;//96.0//举手动作//8*12=96
 float SKELETON_SIZE3=96.0;//96.0//举手动作//8*12=96
 float SKELETON_SIZE4=96.0;
 void main(){
-
-    /*float tttt=texture(test, vec2(
-        (0.5+0.0)/1.0, //宽width
-        (0.5+floor(0./3.0))/(1.)//高height
-        )
-    ).x;*/
-    //if(floor(tttt*1.)!=1.)return;
-    //if(tttt!=301.5)return;
-
-
     outUV = inUV;
     varyColor=color;
     varyType=vec3(type[0], type[1], type[2]);

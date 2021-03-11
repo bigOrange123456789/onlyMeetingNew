@@ -21,7 +21,8 @@
   <component name="ChangeListManager">
     <list default="true" id="b7b6123d-caec-4b82-a432-424a6b5be5dd" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/js/lib/instancedLib/InstancedGroup.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/lib/instancedLib/InstancedGroup.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/json/animL.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/json/animR.json" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/shader/vertexBone.vert" beforeDir="false" afterPath="$PROJECT_DIR$/shader/vertexBone.vert" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -203,7 +204,10 @@
       <workItem from="1615093223278" duration="4343000" />
       <workItem from="1615275289116" duration="4962000" />
       <workItem from="1615292996169" duration="12140000" />
-      <workItem from="1615351931168" duration="7135000" />
+      <workItem from="1615351931168" duration="9144000" />
+      <workItem from="1615383088427" duration="18000" />
+      <workItem from="1615383139890" duration="600000" />
+      <workItem from="1615445517183" duration="313000" />
     </task>
     <servers />
   </component>
