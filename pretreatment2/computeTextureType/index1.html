@@ -1,0 +1,75 @@
+<script src="Compute.js"></script>
+<script>
+    function f() {//计算随机设置面部贴图的
+        var arr=[];
+        for(var i=0;i<1000;i++){
+            var f1,f2,f;
+            var myCompute=new Compute();
+            myCompute.initRandom(12+17,13*3,48);
+            f1=myCompute.computeF();
+            //console.log(myCompute.mat,myCompute.computeF(),myCompute.badPos);
+            myCompute.initRandom(14,13*3,48);
+            f2=myCompute.computeF();
+            //console.log(myCompute.mat,myCompute.computeF(),myCompute.badPos);
+            f=f1<f2?f1:f2;
+            arr.push(f);
+        }
+        console.log(arr);
+    }
+    function f1() {//计算随机设置面部贴图的
+        var str="";
+        for(var i=0;i<10000;i++){
+            var f1;
+            var myCompute=new Compute();
+            myCompute.initRandom(12+17,13*3,48);
+            f1=myCompute.computeF();
+            str=str+","+f1;
+            if(f1!==1)console.log("success");
+        }
+        console.log(str);
+    }
+    f1();
+
+    function computeFaceType() {//计算面部贴图设置数据
+        var myCompute=new Compute();
+        myCompute.init(12+17,13*3,48);
+        var data=[];
+
+        for(k=0;k<3;k++)
+            for(i=0;i<12;i++)
+                for(j=0;j<13;j++)
+                    data.push(
+                        myCompute.mat[i][j+k*13]
+                    );
+
+        for(k=0;k<3;k++)
+            for(i=12;i<12+17;i++)
+                for(j=0;j<13;j++)
+                    data.push(
+                        myCompute.mat[i][j+k*13]
+                    );
+
+
+        console.log(myCompute.mat);
+        console.log(myCompute.computeF(),myCompute.badPos);
+
+
+        myCompute.init(14,13*3,48);
+
+        for(k=0;k<3;k++)
+            for(i=0;i<14;i++)
+                for(j=0;j<13;j++)
+                    data.push(
+                        myCompute.mat[i][j+k*13]
+                    );
+
+        console.log(myCompute.mat);
+        console.log(myCompute.computeF(),myCompute.badPos);
+
+        console.log(data);
+        console.log(data.toString())
+        var str ="";
+        for(i=0;i<data.length;i++)str=","+data[i];
+        console.log(str)
+    }
+</script>

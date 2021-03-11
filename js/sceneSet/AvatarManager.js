@@ -20,7 +20,7 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
                     Math.random()/4 ,
                     Math.random()/4
                 ]);
-                scope.animations[i]=5;//Math.floor(Math.random()*4);
+                scope.animations[i]=4;//Math.floor(Math.random()*4);
             }
 
             var data=JSON.parse(str).data;//种类分布
@@ -61,7 +61,7 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
         window.myClock_Female0=window.myClock;
         var pmLoader = new MyPMLoader(
             {animations: []},
-            './myModel/Female',    //模型路径
+            './myModel/Male',    //模型路径
             [],//没有LOD分级//LOD等级的数组
             scope.camera,  //LOD需要判断到相机的距离
             0,       //有多个动画时,表示第0个动画//可以通过pmLoader.updateAnimation(i)来切换动画
