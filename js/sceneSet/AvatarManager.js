@@ -20,7 +20,7 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
                     Math.random()/4 ,
                     Math.random()/4
                 ]);
-                scope.animations[i]=Math.floor(Math.random()*4);
+                scope.animations[i]=5;//Math.floor(Math.random()*4);
             }
 
             var data=JSON.parse(str).data;//种类分布

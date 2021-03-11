@@ -49,7 +49,9 @@
 					var interval=setInterval(function () {
 						result=[];
 						var nextStart=i+config[animationType];
-						for(;i<nextStart;i++) result.push(data[i]);
+						for(;i<nextStart;i++) result.push(
+								Math.floor(data[i]*100)/100
+						);
 						let link = document.createElement('a');
 						link.style.display = 'none';
 						document.body.appendChild(link);

@@ -3,12 +3,16 @@ loader.load("animationNew.json", function (animationNew) {
     computeArmData(
         JSON.parse(animationNew).data,
         function (data) {
-            loader.load("animationOld.json", function (animationOld) {
-                addition(
-                    JSON.parse(animationOld).data,
-                    data
-                );
-            });
+
+            let link = document.createElement('a');
+            link.style.display = 'none';
+            document.body.appendChild(link);
+            link.href = URL.createObjectURL(new Blob([JSON.stringify({data:data})], { type: 'text/plain' }));
+            link.download ="animationData.json";
+            link.click();
+
+            console.log("数组的长度为：",data.length);
+
         });
 });
 

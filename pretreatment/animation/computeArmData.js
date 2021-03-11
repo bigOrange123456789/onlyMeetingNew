@@ -25,7 +25,7 @@ function computeArmData(myData,callback){
                         //开始计算matrix
                         var animation=glb.animations[0];
                         var data=[];
-                        for(var Time=0;Time<1;Time++){//只输出一帧
+                        for(var Time=0;Time<1;Time++){//输出的帧数
                                 var time=Time/2;
                                 //console.log(time);
                                 matrixs0=[];matrixs=[];
@@ -186,9 +186,6 @@ function computeArmData(myData,callback){
 
                                 for (i of [7, 8, 9, 10, 11, 12, 13, 14]) {
                                         var temp = matrixs[i].toArray();
-                                        for (j = 0; j < 16; j++) {
-                                                //data.push(arr[j]);
-                                        }
                                         data.push(temp[0]);
                                         data.push(temp[1]);
                                         data.push(temp[2]);

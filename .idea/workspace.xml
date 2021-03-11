@@ -21,9 +21,21 @@
   <component name="ChangeListManager">
     <list default="true" id="b7b6123d-caec-4b82-a432-424a6b5be5dd" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/js/lib/instancedLib/InstancedGroup.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/lib/instancedLib/InstancedGroup.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/ParamMeasure.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/ParamMeasure.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/sceneSet/AvatarManager.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/sceneSet/AvatarManager.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/json/animationConfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/json/animationConfig.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/json/animationData.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/json/animationData0.json" beforeDir="false" afterPath="$PROJECT_DIR$/json/animationData0.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/json/animationData1.json" beforeDir="false" afterPath="$PROJECT_DIR$/json/animationData1.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/json/animationData2.json" beforeDir="false" afterPath="$PROJECT_DIR$/json/animationData2.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/json/animationData3.json" beforeDir="false" afterPath="$PROJECT_DIR$/json/animationData3.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/json/animationData4.json" beforeDir="false" afterPath="$PROJECT_DIR$/json/animationData4.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pretreatment/animation/animationNew.json" beforeDir="false" afterPath="$PROJECT_DIR$/pretreatment/animation/animationNew.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pretreatment/animation/computeArmData.js" beforeDir="false" afterPath="$PROJECT_DIR$/pretreatment/animation/computeArmData.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pretreatment/animation/decompose.html" beforeDir="false" afterPath="$PROJECT_DIR$/pretreatment/animation/decompose.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pretreatment/animation/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/pretreatment/animation/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pretreatment/animation/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pretreatment/animation/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/shader/vertexBone.vert" beforeDir="false" afterPath="$PROJECT_DIR$/shader/vertexBone.vert" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/InstancedGroup.test.js" beforeDir="false" afterPath="$PROJECT_DIR$/test/InstancedGroup.test.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -207,7 +219,7 @@
       <workItem from="1615351931168" duration="9144000" />
       <workItem from="1615383088427" duration="18000" />
       <workItem from="1615383139890" duration="600000" />
-      <workItem from="1615445517183" duration="11966000" />
+      <workItem from="1615445517183" duration="19177000" />
     </task>
     <servers />
   </component>
