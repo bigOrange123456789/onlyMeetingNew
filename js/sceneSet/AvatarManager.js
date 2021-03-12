@@ -20,7 +20,7 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
                     Math.random()/4 ,
                     Math.random()/4
                 ]);
-                scope.animations[i]=4;//Math.floor(Math.random()*4);
+                scope.animations[i]=Math.floor(Math.random()*3);
             }
 
             var data=JSON.parse(str).data;//种类分布
@@ -28,10 +28,11 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
                 if(data[i]%3===2){// 有1/3是女性
                     scope.sexs[i]=0;//女性
                     scope.types[i]=Math.floor(data[i]/3);
+                    scope.animations[i]=0;
                 }else{
                     scope.sexs[i]=1;//男性
                     scope.types[i]=Math.floor(data[i]/3)+(data[i]%3)*16;
-                    if(scope.animations[i]===1)scope.animations[i]=0;
+                    //if(scope.animations[i]===1)scope.animations[i]=0;
                     scope.manNum++;
                 }
             }
@@ -61,7 +62,7 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
         window.myClock_Female0=window.myClock;
         var pmLoader = new MyPMLoader(
             {animations: []},
-            './myModel/Male',    //模型路径
+            './myModel/Female',    //模型路径
             [],//没有LOD分级//LOD等级的数组
             scope.camera,  //LOD需要判断到相机的距离
             0,       //有多个动画时,表示第0个动画//可以通过pmLoader.updateAnimation(i)来切换动画
@@ -82,9 +83,9 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
                         peoples.positionSet(index, [scope.positions[i][0] + 1.8, scope.positions[i][1] + 1.5, scope.positions[i][2]]);
                         peoples.scaleSet(index, [0.04 + Math.random() * 0.01, 0.04 + Math.random() * 0.01, 0.04 + Math.random() * 0.01]);
 
-                        peoples.animationSet(index, scope.animations[i]);
+                        peoples.animationSet(index, scope.animations[i]);//
                         peoples.colorSet(index, scope.colors[i]);
-                        peoples.speedSet(index, 0.15 + Math.random() * 1.5);
+                        peoples.speedSet(index, 0.6 + Math.random() * 0.4);
                         peoples.textureSet0(index, scope.types[i]);
                         //peoples.textureSet1(index, scope.types[i]);
                         index++;
@@ -131,7 +132,7 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
 
                         peoples2.animationSet(index, scope.animations[i]);
                         peoples2.colorSet(index, scope.colors[i]);
-                        peoples2.speedSet(index, 0.15 + Math.random() * 1.5);
+                        peoples2.speedSet(index, 0.6 + Math.random() * 0.4);
                         peoples2.textureSet0(index, scope.types[i]);
                         //peoples2.textureSet1(index, scope.types[i]);
                         index++;

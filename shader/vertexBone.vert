@@ -31,11 +31,11 @@ void Animation_init();
 mat4 Animation_computeMatrix();
 float SKELETON_SIZE0=204.0; //用于求不动位置的骨骼//骨骼(25-8)*12=204//骨骼矩阵
 float SKELETON_SIZE1=768.0;//鼓掌动画//8个手臂骨骼的数据//帧数8*骨骼8*12=768
-float SKELETON_SIZE2=96.0;//96.0//举手动作//8*12=96
-float SKELETON_SIZE3=96.0;//96.0//举手动作//8*12=96
-float SKELETON_SIZE4=96.0;
+float SKELETON_SIZE2=3360.0;//96.0//举手动作//8*12=96
+float SKELETON_SIZE3=3360.0;//96.0//举手动作//8*12=96
+float SKELETON_SIZE4=3360.0;
 float SKELETON_SIZE5=3360.0;
-float SKELETON_SIZE6=96.0;
+float SKELETON_SIZE6=3360.0;
 void main(){
     outUV = inUV;
     varyColor=color;
@@ -120,15 +120,19 @@ mat4 Animation_getMatrix2(float iii){ //求手臂骨骼
         startPos+=frame_index*96.;
         startPos+=oAnimation.skeletonPos1;
     } else if (type[3]<1.5){
+        startPos+=frame_index*96.;
         startPos+=oAnimation.skeletonPos2;
     }else if (type[3]<2.5){
+        startPos+=frame_index*96.;
         startPos+=oAnimation.skeletonPos3;
     } else if (type[3]<3.5){
+        startPos+=frame_index*96.;
         startPos+=oAnimation.skeletonPos4;
     }else if (type[3]<4.5){
         startPos+=frame_index*96.;
         startPos+=oAnimation.skeletonPos5;
     }else if (type[3]<5.5){
+        startPos+=frame_index*96.;
         startPos+=oAnimation.skeletonPos6;
     }
     return mat4(//最后一列是：0 0 0 1
@@ -183,8 +187,7 @@ void Animation_init(){
     oAnimation.skeletonPos5=(oAnimation.skeletonPos4+SKELETON_SIZE4);
     oAnimation.skeletonPos6=(oAnimation.skeletonPos5+SKELETON_SIZE5);
 
-    //if(round(type[3])==4.)Animation_frameIndexSet(35.);//设置全局变量frame_index的值
-    //else
-    Animation_frameIndexSet(8.);
+    if(round(type[3])==0.)Animation_frameIndexSet(8.);//设置全局变量frame_index的值
+    else Animation_frameIndexSet(35.);
 }
 
