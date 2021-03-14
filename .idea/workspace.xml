@@ -21,14 +21,11 @@
   <component name="ChangeListManager">
     <list default="true" id="b7b6123d-caec-4b82-a432-424a6b5be5dd" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/js/sceneSet/AvatarManager.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/sceneSet/AvatarManager.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/json/animationConfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/json/animationConfig.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/json/animationData2.json" beforeDir="false" afterPath="$PROJECT_DIR$/json/animationData2.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/json/animationData3.json" beforeDir="false" afterPath="$PROJECT_DIR$/json/animationData3.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/json/animationData4.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/json/animationData5.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/json/animationData6.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/shader/vertexBone.vert" beforeDir="false" afterPath="$PROJECT_DIR$/shader/vertexBone.vert" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/lib/instancedLib/InstancedGroup.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/lib/instancedLib/InstancedGroup.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/sceneSet/RoomManager.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/sceneSet/RoomManager.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test.html" beforeDir="false" afterPath="$PROJECT_DIR$/test.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/InstancedGroup.test.js" beforeDir="false" afterPath="$PROJECT_DIR$/test/InstancedGroup.test.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/testLaunch.js" beforeDir="false" afterPath="$PROJECT_DIR$/test/testLaunch.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -64,12 +61,16 @@
       <recent name="D:\gitHubRepositorys\onlyMeetingNew\test" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="JavaScript Debug.index.html">
     <configuration name="average.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/onlyMeetingNew/performanceAnalysis/average.html" useBuiltInWebServerPort="true">
+      <method v="2" />
+    </configuration>
+    <configuration name="index.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/onlyMeetingNew/index.html" useBuiltInWebServerPort="true">
       <method v="2" />
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JavaScript Debug.index.html" />
         <item itemvalue="JavaScript Debug.average.html" />
       </list>
     </recent_temporary>
@@ -215,7 +216,13 @@
       <workItem from="1615445517183" duration="19177000" />
       <workItem from="1615480538346" duration="3999000" />
       <workItem from="1615541620887" duration="4220000" />
-      <workItem from="1615551512807" duration="2765000" />
+      <workItem from="1615551512807" duration="14004000" />
+      <workItem from="1615633011075" duration="11000" />
+      <workItem from="1615689773013" duration="3078000" />
+      <workItem from="1615707725535" duration="1517000" />
+      <workItem from="1615730883822" duration="297000" />
+      <workItem from="1615731304378" duration="554000" />
+      <workItem from="1615731873371" duration="2510000" />
     </task>
     <servers />
   </component>
@@ -243,10 +250,10 @@
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="93" y="93" width="1095" height="495" key="DiffContextDialog/0.0.1280.680@0.0.1280.680" timestamp="1615548510399" />
-    <state x="523" y="120" key="FileChooserDialogImpl" timestamp="1615550973829">
+    <state x="523" y="120" key="FileChooserDialogImpl" timestamp="1615699869716">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state x="523" y="120" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1615550973829" />
+    <state x="523" y="120" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1615699869716" />
     <state x="785" y="184" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1609483059436" />
     <state x="335" y="92" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1609487862309">
       <screen x="0" y="0" width="1920" height="1040" />
@@ -260,9 +267,9 @@
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="297" y="151" width="672" height="677" key="run.anything.popup/0.0.1280.680@0.0.1280.680" timestamp="1612149117777" />
-    <state x="303" y="1" width="672" height="678" key="search.everywhere.popup" timestamp="1614778417804">
+    <state x="303" y="1" width="672" height="678" key="search.everywhere.popup" timestamp="1615557748793">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state x="303" y="1" width="672" height="678" key="search.everywhere.popup/0.0.1280.680@0.0.1280.680" timestamp="1614778417804" />
+    <state x="303" y="1" width="672" height="678" key="search.everywhere.popup/0.0.1280.680@0.0.1280.680" timestamp="1615557748793" />
   </component>
 </project>

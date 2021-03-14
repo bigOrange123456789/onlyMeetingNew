@@ -76,10 +76,7 @@ RoomManager.prototype={
             var geometry0=gltf.scene.children[0].children[0].geometry;
             var geometry1=gltf.scene.children[0].children[1].geometry;
             var geometry2=gltf.scene.children[0].children[2].geometry;
-            //553828
-            //var material0=new THREE.MeshBasicMaterial({color:0x37261c});//gltf.scene.children[0].children[0].material;
-            //var material1=new THREE.MeshBasicMaterial({color:0xf3f3f3});material1.side=THREE.DoubleSide;//gltf.scene.children[0].children[1].material;
-            //var material2=new THREE.MeshBasicMaterial({color:0xc5d8e6});//197 216 230//gltf.scene.children[0].children[2].material;
+
             var material0=gltf.scene.children[0].children[0].material;
             var material1=gltf.scene.children[0].children[1].material;
             var material2=gltf.scene.children[0].children[2].material;
@@ -135,6 +132,7 @@ RoomManager.prototype={
                     requestAnimationFrame(move);
                 }
             }
+
             var myInterval=setInterval(function () {
                 if(d0.rotation.z>0) {
                     d0.rotation.z-=0.02;
@@ -145,7 +143,6 @@ RoomManager.prototype={
                     set(d1, [mesh0,mesh1,mesh2], 3,pre3);
                 }else clearInterval(myInterval);
             },10);
-
 
             function set(du,m,i,pre) {
                 if(typeof (pre)==="undefined"){

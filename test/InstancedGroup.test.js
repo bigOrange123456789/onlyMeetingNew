@@ -2717,7 +2717,136 @@ InstancedGroupTest.prototype={
 
                 //完成测试
         },
+
+        //blendshape
+        test11:function (contextType){
+                if(typeof(contextType)==="undefined")this.setContext();
+                var nameTest="固定姿势模型";
+                console.log('start test:'+nameTest);
+                //开始测试
+                var scope=this;
+                var loader= new THREE.GLTFLoader();
+                loader.load("myModel/avatar/Female.glb", (glb) => {
+                        window.camera.position.set(-0.2948257529492173, 32.2417580477682,  2.1336880797216);
+                        window.camera.rotation.set(-0.03018656761179614,  0.10495251469894115, 0.0031632934992);
+                        var mesh=glb.scene.children[0].children[1];
+                        var geometry=mesh.geometry;
+                        var attributes=geometry.attributes;
+                        var skinIndex=attributes.skinIndex;
+                        printIndex();
+                        function printIndex() {
+                                //209,210,211,212,213,214,215,216,217,218,421,422,424,425,426,427,428,433,434,435,436,437,438,439,440,441,442,443,444,445,446,447,448,449,450,451,452,453,454,455,456,457,458,459,460,461,462,463,464,465,466,467,468,469,470,471,472,473,474,475,476,477,478,479,480,481,482,483,484,485,486,487,488,489,490,491,492,493,494,495,496,497,498,499,500,501,502,503,504
+                                var arr=[];
+                                for(i=0;i<skinIndex.count;i++){
+                                        //console.log(skinIndex.array[4*i]);
+                                        if(
+                                            Math.abs(skinIndex.array[4*i]-5)<0.5||
+                                            Math.abs(skinIndex.array[4*i+1]-5)<0.5
+                                        )arr.push(i);
+                                }
+                                console.log(arr.toString());
+                        }
+
+
+
+                        //console.log(attributes)
+
+                        var position=attributes.position;
+                        console.log(
+                            position.array[3*440],
+                            position.array[3*440+1],
+                            position.array[3*440+2]
+                        );//0.056  0.6739 -0.055
+                        //position.array[3*440]+=0.1;
+
+                            //position.array[3*440+1];
+                            //position.array[3*440+2];
+                        var peoples = new InstancedGroup2(
+                            1,
+                            [mesh],//这些mesh的网格应该一致
+                            glb.animations[0]
+                        );
+                        peoples.vertURL="shader/vertexBone2.vert";
+                        peoples.init(
+                            ['./img/texture/w/w0.jpg'],16,false
+                        );
+                        for (var i = 0; i < 1; i++) {
+                                peoples.rotationSet(i, [Math.PI / 2, 0, 0]);
+                                peoples.positionSet(i, [5 * i, 0, 0]);
+                                peoples.scaleSet(i, [0.3, 0.3, 0.3]);
+                                peoples.animationSet(0,0);
+                                peoples.textureSet(0,[0,0,0]);
+                        }
+                        peoples.animationSpeed = 0.1;
+                        scope.scene.add(peoples.obj);
+                        position.dynamic=true;
+
+                        function test(){
+                                var arr=[
+                                        209,210,211,212,213,214,215,216,217,218,421,422,424,425,426,427,428,433,434,435,436,437,438,439,440,441,442,443,444,445,446,447,448,449,450,451,452,453,454,455,456,457,458,459,460,461,462,463,464,465,466,467,468,469,470,471,472,473,474,475,476,477,478,479,480,481,482,483,484,485,486,487,488,489,490,491,492,493,494,495,496,497,498,499,500,501,502,503,504
+                                ];
+                                var index=0;
+                                var interval=setInterval(function () {
+                                        if(index!==0)
+                                                mesh.geometry.attributes.position.array[3*index]-=1;
+                                        position.array[3*arr[index]]+=1;
+                                        console.log(arr[index]);
+                                        //peoples.updateGeometry(mesh);
+                                        //peoples.setGeometry(geometry);
+
+                                        index++;
+                                        if(index>=arr.length)clearInterval(interval);
+                                },5)
+                        }
+                });//
+
+                //完成测试
+        },
+
+        //移动
+        test12:function (contextType){
+                this.setContext();
+                //开始测试
+                var scope=this;
+                var loader= new THREE.GLTFLoader();
+                loader.load("myModel/avatar/Female.glb", (glb) => {
+                        window.camera.position.set(-0.2948257529492173, 32.2417580477682,  2.1336880797216);
+                        window.camera.rotation.set(-0.03018656761179614,  0.10495251469894115, 0.0031632934992);
+                        var mesh=glb.scene.children[0].children[1];
+                        //var position=attributes.position;
+
+                        var peoples = new InstancedGroup(
+                            1,
+                            [mesh],//这些mesh的网格应该一致
+                            glb.animations[0]
+                        );
+                        peoples.init(
+                            ['./img/texture/w/w0.jpg'],16,false
+                        );
+                        for (var i = 0; i < 1; i++) {
+                                peoples.rotationSet(i, [Math.PI / 2, 0, 0]);
+                                peoples.positionSet(i, [5 * i, 0, 0]);
+                                peoples.scaleSet(i, [0.3, 0.3, 0.3]);
+                                peoples.animationSet(0,0);
+                                peoples.textureSet(0,[0,0,0]);
+                        }
+                        peoples.animationSpeed = 0.1;
+                        scope.scene.add(peoples.obj);
+                        //position.dynamic=true;
+
+
+                        setInterval(function () {
+                                peoples.rotation(0,[0,0,-0.1]);
+                        },100);
+
+
+
+                });//
+
+                //完成测试
+        },
 }
 myInstancedGroupTest=new InstancedGroupTest();
+//myInstancedGroupTest.test11();
 //myInstancedGroupTest.test5_0();
 //myInstancedGroupTest.test1();

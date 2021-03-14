@@ -1,4 +1,4 @@
-function InstancedGroup(instanceCount,originMesh,animationClip ){
+function InstancedGroup2(instanceCount,originMesh,animationClip ){
     //若有骨骼，则需要源mesh是skinnedMesh
     this.obj=new THREE.Object3D();
     this.instanceCount=instanceCount;
@@ -9,6 +9,7 @@ function InstancedGroup(instanceCount,originMesh,animationClip ){
     //this.animationClip=animationClip;
     this.mesh=null;//实例化渲染对象的网格
 
+    this.position;
     this.speed;
     this.mcol0;//变换矩阵的一部分
     this.mcol1;
@@ -29,7 +30,7 @@ function InstancedGroup(instanceCount,originMesh,animationClip ){
     //以下参数用于将模型划分为头、上身、下身三部分
     this.neckPosition;
 }
-InstancedGroup.prototype={
+InstancedGroup2.prototype={
     decode:function(A,B) {
         var a,b,c,d;
         a=Math.floor(A/128);
@@ -79,7 +80,6 @@ InstancedGroup.prototype={
             uv=mesh.geometry.attributes.uv,//贴图
             skinIndex=mesh.geometry.attributes.skinIndex,//骨骼
             skinWeight=mesh.geometry.attributes.skinWeight;
-        //position.array[3*440]+=0.1;
         this.mesh.geometry.setAttribute('position', position);
         this.mesh.geometry.setAttribute('inUV',uv);
         this.mesh.geometry.setAttribute('skinIndex',skinIndex);
@@ -88,7 +88,21 @@ InstancedGroup.prototype={
     setGeometry:function(geometryNew){//更新网格//用于和PM技术相结合
         var geometryTemp= new THREE.InstancedBufferGeometry();
         geometryTemp.instanceCount = this.instanceCount;
-        geometryTemp.setAttribute('position', geometryNew.attributes.position);//Float32Array
+
+        var indexArray=new Float32Array(geometryNew.attributes.position.count);
+        for(i=0;i<geometryNew.attributes.position.count;i++)
+            indexArray[i]=i;
+        //alert(geometryNew.attributes.position.count);
+
+        this.position= geometryNew.attributes.position;
+        geometryTemp.setAttribute('index',new THREE.BufferAttribute(indexArray , 1));
+        geometryTemp.setAttribute('position', this.position);//Float32Array
+
+        //geometryNew.attributes.position.array[3*200]+=0.1;
+
+
+        //myMesh.geometry.attributes.position.needsUpdate = true;
+
         geometryTemp.setAttribute('inUV',geometryNew.attributes.uv);
         if(this.haveSkeleton){
             //console.log(geometryNew.attributes);//skinWeight
@@ -258,12 +272,19 @@ InstancedGroup.prototype={
     handleSkeletonAnimation:function(){
         var scope=this;
         //var scope=this;//scope范围//为了避免this重名
-        updateAnimation();
+        //updateAnimation();
         function updateAnimation() {//每帧更新一次动画
             requestAnimationFrame(updateAnimation);
             scope.time=(scope.time+1.0)%60000;
             scope.mesh.material.uniforms.time={value: scope.time};
+            //console.log(scope.time);
         }
+        setInterval(function () {
+            requestAnimationFrame(updateAnimation);
+            scope.time=(scope.time+1.0)%60000;
+            scope.mesh.material.uniforms.time={value: scope.time};
+            //console.log(scope.time);
+        },2000)
     },
 
     setMatrix:function (i,matrix){//获取实例化对象第i个成员的变换矩阵
@@ -317,15 +338,11 @@ InstancedGroup.prototype={
     },
 
     positionSet:function (i,pos){//.instanceMatrix.needsUpdate=true;
-        this.mcol3.needsUpdate=true;
         this.mcol3.array[3*i  ]=pos[0];
         this.mcol3.array[3*i+1]=pos[1];
         this.mcol3.array[3*i+2]=pos[2];
     },
     rotationSet:function (i,rot){
-        this.mcol0.needsUpdate=true;
-        this.mcol1.needsUpdate=true;
-        this.mcol2.needsUpdate=true;
         var mat4=this.getMatrix(i);
         var position=new THREE.Vector3();
         var quaternion=new THREE.Quaternion();

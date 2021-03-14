@@ -3,6 +3,7 @@ var  myTestFilePath=[
     //"Template",
     "InstancedGroup",
     "MyPMLoader",
+
     //"Compute",
 ];
 
@@ -54,6 +55,24 @@ oButton1.element.onclick=function(){
     oButton1_t5_03.element.onclick=function(){
         mainPanel.hide();
         myInstancedGroupTest.test5_03();
+    }
+    //al
+
+    var oButton1_t11=new Button('11:blendshape','#0ff',10,panel1.element);
+    oButton1_t11.element.style.background="#000";
+    oButton1_t11.rePos(xc,450);
+    oButton1_t11.element.onclick=function(){
+        mainPanel.hide();
+        myInstancedGroupTest.test11();
+    }
+
+
+    var oButton1_t12=new Button('12:移动','#0ff',10,panel1.element);
+    oButton1_t12.element.style.background="#000";
+    oButton1_t12.rePos(xc,550);
+    oButton1_t12.element.onclick=function(){
+        mainPanel.hide();
+        myInstancedGroupTest.test12();
     }
     //al
 };
