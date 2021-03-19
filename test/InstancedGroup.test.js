@@ -2720,9 +2720,7 @@ InstancedGroupTest.prototype={
 
         //blendshape
         test11:function (contextType){
-                if(typeof(contextType)==="undefined")this.setContext();
-                var nameTest="固定姿势模型";
-                console.log('start test:'+nameTest);
+                this.setContext();
                 //开始测试
                 var scope=this;
                 var loader= new THREE.GLTFLoader();
@@ -2733,7 +2731,8 @@ InstancedGroupTest.prototype={
                         var geometry=mesh.geometry;
                         var attributes=geometry.attributes;
                         var skinIndex=attributes.skinIndex;
-                        printIndex();
+                        console.log(mesh.material.map.image);
+                        //printIndex();
                         function printIndex() {
                                 //209,210,211,212,213,214,215,216,217,218,421,422,424,425,426,427,428,433,434,435,436,437,438,439,440,441,442,443,444,445,446,447,448,449,450,451,452,453,454,455,456,457,458,459,460,461,462,463,464,465,466,467,468,469,470,471,472,473,474,475,476,477,478,479,480,481,482,483,484,485,486,487,488,489,490,491,492,493,494,495,496,497,498,499,500,501,502,503,504
                                 var arr=[];
@@ -2781,6 +2780,7 @@ InstancedGroupTest.prototype={
                         scope.scene.add(peoples.obj);
                         position.dynamic=true;
 
+                        test();
                         function test(){
                                 var arr=[
                                         209,210,211,212,213,214,215,216,217,218,421,422,424,425,426,427,428,433,434,435,436,437,438,439,440,441,442,443,444,445,446,447,448,449,450,451,452,453,454,455,456,457,458,459,460,461,462,463,464,465,466,467,468,469,470,471,472,473,474,475,476,477,478,479,480,481,482,483,484,485,486,487,488,489,490,491,492,493,494,495,496,497,498,499,500,501,502,503,504
@@ -2788,15 +2788,17 @@ InstancedGroupTest.prototype={
                                 var index=0;
                                 var interval=setInterval(function () {
                                         if(index!==0)
-                                                mesh.geometry.attributes.position.array[3*index]-=1;
-                                        position.array[3*arr[index]]+=1;
-                                        console.log(arr[index]);
+                                                mesh.geometry.attributes.position.array[3*arr[index-1]]-=1;
+                                        //console.log(mesh.geometry.attributes.position)
+                                        mesh.geometry.attributes.position.needsUpdate=true;
+                                        mesh.geometry.attributes.position.array[3*arr[index]]+=1;
+                                        //console.log(arr[index]);
                                         //peoples.updateGeometry(mesh);
                                         //peoples.setGeometry(geometry);
 
                                         index++;
                                         if(index>=arr.length)clearInterval(interval);
-                                },5)
+                                },50)
                         }
                 });//
 
