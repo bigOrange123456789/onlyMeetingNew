@@ -8,12 +8,15 @@ RoomManager.prototype={
     loadRoom:function(){
         this.room.scale.set(10,10,10);
         this.myLoad_door('myModel/room/door.gltf');
-        this.myLoad('myModel/room/new24.gltf');//外墙
-        this.myLoad('myModel/room/new33.gltf');//地面
 
-        for(var i=0;i<90;i++)
-            if(!fileError(i))
-                this.myLoad('myModel/room/new'+i+'.gltf');
+        var mapsIndex=[
+            1,1,1,1,1,0,0,1,1,1,1,1,0,1,1,0,1,0,1,1,0,0,0,1,0,1,1,1,0,0,0,0,1,0,1,0,0,0,0
+        ];
+        var roomFileName="ConferenceRoom";
+        for(var i=0;i<mapsIndex.length;i++)
+                this.myLoad('myModel/room/'+roomFileName+i+'.gltf',
+                    mapsIndex[i]===1?'myModel/room/'+roomFileName+i+'.jpg':null
+                );
         function fileError(k){
             var arr=[//以下两个数组记录需要特殊处理的模型资源路径
                 33,24,//提前加载的部件
@@ -29,34 +32,22 @@ RoomManager.prototype={
             return false;
         }
     },
-    myLoad:function(url){
+    myLoad:function(url,mapUrl){
         var scope=this;
         this.loader.load(url, (gltf) => {
-            if(url==="myModel/room/new24.gltf"){//外墙
-                var mesh=gltf.scene.children[0];
-                mesh.material=new THREE.MeshBasicMaterial({color:0xf0f0c8});
-                var myText0= THREE.ImageUtils.loadTexture("myModel/room/new24.jpg",null,function () {
-                    myText0.wrapS = THREE.RepeatWrapping;
-                    myText0.wrapT = THREE.RepeatWrapping;
-                    myText0.repeat.set(2,2);
-                    mesh.material = new THREE.MeshBasicMaterial({
-                        map: myText0,//设置颜色贴图属性值
+            var scene=gltf.scene;
+            var mesh0=scene.children[0];
+            if(mapUrl){
+                var texture=THREE.ImageUtils.loadTexture( mapUrl,null,function () {
+                    texture.wrapS = THREE.RepeatWrapping;
+                    texture.wrapT = THREE.RepeatWrapping;
+                    mesh0.material = new THREE.MeshBasicMaterial({
+                        map: texture,//设置颜色贴图属性值
                     });
                 });
-            }else if(url==="myModel/room/new33.gltf"){//地面
-                var mesh2=gltf.scene.children[0];
-                mesh2.material=new THREE.MeshBasicMaterial({color:0x4c1c18});//76 28 24
-                var myText2= THREE.ImageUtils.loadTexture("myModel/room/new33.jpg",null,function () {
-                    myText2.flipY=false;
-                    myText2.wrapS = THREE.RepeatWrapping;
-                    myText2.wrapT = THREE.RepeatWrapping;
-                    myText2.needsUpdate = true;
-                    mesh2.material = new THREE.MeshBasicMaterial({
-                        map: myText2,//设置颜色贴图属性值
-                    });
-                });
+                //mesh0.material.color=0xffffff;
+                //mesh0.material.map=texture;
             }
-            var obj=gltf.scene;
             //console.log(url+":"+gltf.scene.children[0].name);
             for(var i=0;i<gltf.scene.children.length;i++){
                 if( gltf.scene.children[i].name==="室内-小显示器屏幕（非）"||
@@ -66,7 +57,7 @@ RoomManager.prototype={
                 }
                 //室内-电子显示屏（非）
             }
-            scope.room.add(obj);
+            scope.room.add(scene);
         })
     },
     myLoad_door:function(url){
