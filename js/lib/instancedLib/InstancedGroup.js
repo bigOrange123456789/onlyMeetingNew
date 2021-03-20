@@ -75,29 +75,20 @@ InstancedGroup.prototype={
         material.side=THREE.DoubleSide;
         material.uniforms= uniforms;
 
-        /*
-        if(typeof(texSrc[0])==="string")loadNextMap(0);//setText0();//传入资源地址
-        else material.uniforms.text0={value:texSrc[0]};//传入map类型
-        */
-
-        var texSrc_index=0;
-        function setText0(){
-            if(texSrc_index>=texSrc.length)return;
-            var myText0= THREE.ImageUtils.loadTexture(texSrc[texSrc_index],null,function () {
-                texSrc_index++;
-                myText0.flipY=texFlipY;
-                myText0.wrapS = myText0.wrapT = THREE.ClampToEdgeWrapping;
-                material.uniforms.text0={value: myText0};
-                setText0();
-            });
-        }
-        if(typeof(texSrc[0])==="string")setText0();//传入资源地址
+        if(typeof(texSrc[0])==="string")setText0(0);//loadNextMap(0);//setText0();//传入资源地址
         else material.uniforms.text0={value:texSrc[0]};//传入map类型
 
         return material;
 
-        //以下是根据material设置的uniform
-        function loadNextMap(tex_i) {
+        function setText0(tex_i){
+            var myText0= THREE.ImageUtils.loadTexture(texSrc[tex_i],null,function () {
+                myText0.flipY=texFlipY;
+                myText0.wrapS = myText0.wrapT = THREE.ClampToEdgeWrapping;
+                material.uniforms.text0={value: myText0};
+                if(tex_i<texSrc.length-1)setText0(tex_i+1);
+            });
+        }
+        function loadNextMap(tex_i) {//以下是根据material设置的uniform
             canvas.drawImg(texSrc[tex_i],tex_i,function (tex) {
                 //console.log("./img/texture/m"+tex_i+".jpg");
                 material.uniforms.text0={value: tex};

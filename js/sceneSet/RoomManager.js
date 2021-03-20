@@ -38,13 +38,16 @@ RoomManager.prototype={
             var scene=gltf.scene;
             var mesh0=scene.children[0];
             if(mapUrl){
-                var texture=THREE.ImageUtils.loadTexture( mapUrl,null,function () {
-                    texture.wrapS = THREE.RepeatWrapping;
-                    texture.wrapT = THREE.RepeatWrapping;
-                    mesh0.material = new THREE.MeshBasicMaterial({
-                        map: texture,//设置颜色贴图属性值
+                setTimeout(function () {
+                    var texture=THREE.ImageUtils.loadTexture( mapUrl,null,function () {
+                        texture.wrapS = THREE.RepeatWrapping;
+                        texture.wrapT = THREE.RepeatWrapping;
+                        mesh0.material = new THREE.MeshBasicMaterial({
+                            map: texture,//设置颜色贴图属性值
+                        });
                     });
-                });
+                },1000);
+
                 //mesh0.material.color=0xffffff;
                 //mesh0.material.map=texture;
             }

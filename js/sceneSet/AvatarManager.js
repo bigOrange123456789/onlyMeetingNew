@@ -41,20 +41,27 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
     }
 
     this.loadAvatar=function () {
-        this.host();
-        window.myClock_High0=window.myClock;
-        var animLoader = new THREE.GLTFLoader();//= new PMAnimLoader();//估计是通过gltf文件加载的动画
-        animLoader.load('./myModel/skeleton/scene.gltf', function (glbObj){
-            glbObj.scene.visible=false;
-            //scope.loadGuest1(glbObj);
-            scope.loadGuest2(glbObj);
-        });
+
+
         /*animLoader.load('./test/model/dongshizhang.glb', function (glbObj){
             console.log("高模加载时间："+(window.myClock-window.myClock_High0));
             scope.obj.add(glbObj.scene.children[3].children[3]);
             console.log(glbObj.scene.children[3].children[3]);
         });*/
         this.createPeople_haveAnimation2();
+
+        setTimeout(function () {
+            window.myClock_High0=window.myClock;
+            var animLoader = new THREE.GLTFLoader();//= new PMAnimLoader();//估计是通过gltf文件加载的动画
+            animLoader.load('./myModel/skeleton/scene.gltf', function (glbObj){
+                glbObj.scene.visible=false;
+                //scope.loadGuest1(glbObj);
+                scope.loadGuest2(glbObj);
+            });
+
+            scope.host();
+        },5000)
+
         //this.analysis();
     }
     this.createPeople_haveAnimation2=function(){
