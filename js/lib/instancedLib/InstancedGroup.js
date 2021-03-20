@@ -30,50 +30,6 @@ function InstancedGroup(instanceCount,originMesh,animationClip ){
     this.neckPosition;
 }
 InstancedGroup.prototype={
-    decode:function(A,B) {
-        var a,b,c,d;
-        a=Math.floor(A/128);
-        b=Math.floor((A%128)/16);
-        c=A%16;
-        d=B;
-
-        var c_d=c*256+d;
-        var num=c_d*Math.pow(10,b-5);
-        if(a===1)num*=-1;
-        return num;
-    },
-    encode:function(floatNum) {
-        var a=0,//正数
-            b,//值0-7，10^(b-3)
-            c,
-            d;
-        //计算a//0+ 1-
-        if(floatNum<0){
-            a=1;
-            floatNum*=-1;
-        }
-        //计算b//0~7  -3~4
-        if(floatNum>10000)b=7;
-        else if(floatNum>1000)b=6;
-        else if(floatNum>100)b=5;
-        else if(floatNum>10)b=4;//25.11
-        else if(floatNum>1)b=3;//2.51
-        else if(floatNum>0.1)b=2;//0.512
-        else if(floatNum>0.01)b=1;
-        else if(floatNum>0.001)b=0;
-        else{
-            return [0,0];
-        }
-        //计算c和d
-        var c_d=floatNum*Math.pow(10,7-b-2);//10^(7-b-2)
-        c_d=Math.floor(c_d);//保留十进制3位有效数组
-        c=Math.floor(c_d/256);
-        d=c_d%256;
-
-        var A=a*128+b*16+c;
-        var B=d;
-        return [A,B];
-    },
     updateGeometry:function(mesh){//用于和PM技术相结合
         var position=mesh.geometry.attributes.position,//网格
             uv=mesh.geometry.attributes.uv,//贴图
@@ -111,88 +67,92 @@ InstancedGroup.prototype={
         if(this.mesh)this.mesh.geometry=geometryTemp;
         return geometryTemp;
     },
-    init:function (texSrc,textNum,texFlipY){//纹理贴图资源路径，贴图中包含纹理的个数
+    setMaterial:function(uniforms,texSrc,textNum,colors,texFlipY){
+        var canvas=new CanvasControl(textNum,1,colors,texFlipY);//绘制合并纹理贴图的地方
+        uniforms.text0={type: 't', value: canvas.getTex()};
+
+        let material = new THREE.RawShaderMaterial();//原始着色器材质
+        material.side=THREE.DoubleSide;
+        material.uniforms= uniforms;
+
+        /*
+        if(typeof(texSrc[0])==="string")loadNextMap(0);//setText0();//传入资源地址
+        else material.uniforms.text0={value:texSrc[0]};//传入map类型
+        */
+
+        var texSrc_index=1;
+        function setText0(){
+            if(texSrc_index>=texSrc.length)return;
+            var myText0= THREE.ImageUtils.loadTexture(texSrc[texSrc_index],null,function () {
+                texSrc_index++;
+                myText0.flipY=texFlipY;
+                myText0.wrapS = myText0.wrapT = THREE.ClampToEdgeWrapping;
+                material.uniforms.text0={value: myText0};
+                setText0();
+            });
+        }
+        if(typeof(texSrc[0])==="string")setText0();//传入资源地址
+        else material.uniforms.text0={value:texSrc[0]};//传入map类型
+
+        return material;
+
+        //以下是根据material设置的uniform
+        function loadNextMap(tex_i) {
+            canvas.drawImg(texSrc[tex_i],tex_i,function (tex) {
+                //console.log("./img/texture/m"+tex_i+".jpg");
+                material.uniforms.text0={value: tex};
+                if(++tex_i<textNum)
+                    setTimeout(function () {
+                        loadNextMap(tex_i);
+                    },100)
+            })
+        }
+    },
+    init:function (texSrc,textNum,colors,texFlipY){//纹理贴图资源路径，贴图中包含纹理的个数
+        var scope=this;
         if(typeof(textNum)=="undefined")textNum=16;
         if(typeof(texFlipY)=="undefined")texFlipY=true;
-        //const instanceCount =2*2;//10 0000//1089
-
         this.originMeshs[0].geometry=this.originMeshs[0].geometry.toNonIndexed();
 
-
-
         //InstancedBufferAttribute为每个对象一组数据：先生成空间，再设置数据
-        //6-11
         this.speed=new THREE.InstancedBufferAttribute(new Float32Array(this.instanceCount * 1), 1);
-
         this.mcol0=new THREE.InstancedBufferAttribute(new Float32Array(this.instanceCount * 3), 3);
         this.mcol1=new THREE.InstancedBufferAttribute(new Float32Array(this.instanceCount * 3), 3);
         this.mcol2=new THREE.InstancedBufferAttribute(new Float32Array(this.instanceCount * 3), 3);
         this.mcol3=new THREE.InstancedBufferAttribute(new Float32Array(this.instanceCount * 3), 3);
-
         this.type=new THREE.InstancedBufferAttribute(new Uint16Array(this.instanceCount*4), 4);//头部、上衣、裤子、动作
         this.colors=new THREE.InstancedBufferAttribute(new Float32Array(this.instanceCount*3), 3);
         this.bonesWidth=new THREE.InstancedBufferAttribute(new Float32Array(this.instanceCount*4), 4);
 
         for(i=0;i<this.instanceCount;i++){
-            //this.speed.setX(i,0.01);
             this.mcol0.setXYZ(i, 1,0,0);//随机长宽高
             this.mcol1.setXYZ(i, 0,1,0);//四元数、齐次坐标
             this.mcol2.setXYZ(i, 0,0,1);//mcol3.setXYZ(i, 0,0,0);
-            //this.mcol3.setXYZ(i, 0,0,0);
 
             this.type.setXYZW(i,
                 Math.floor(Math.random() * textNum),
                 Math.floor(Math.random() * textNum),
                 Math.floor(Math.random() * textNum),
                 Math.floor(Math.random() *2)//Math.random()//这个缓冲区是int类型的//所以这里不能传小数
-            );/**/
-            //this.colors.setXYZ(i, 0.0,0.0,0.0);
+            );
 
-            //0躯干 0-3
-            //1头部 4-6
-            //2手臂 7-10，11-14
-            //3腿部 15-19-20-24
             this.boneWidthSet(i,0,Math.random()/2-0.25);
             this.boneWidthSet(i,1,Math.random()+0.5);//头部
-            //this.boneWidthSet(i,1,Math.random()*2-0.5);//头部
-            //this.boneWidthSet(i,2,Math.random()*2-0.5);
             this.boneWidthSet(i,3,Math.random()/2-0.25);
         }
 
-
-
-        let text0= THREE.ImageUtils.loadTexture(texSrc[0]);
-        text0.flipY=texFlipY;
-        text0.wrapS = text0.wrapT = THREE.ClampToEdgeWrapping;
-
         var uniforms={
-            text0: {type: 't', value: text0}
-            ,textNum:{value: textNum}
+            textNum:{value: textNum},
+            neckPosition:{value: (this.neckPosition===undefined)?0.59:this.neckPosition}
         };
-        uniforms.neckPosition={
-            value: (
-                (this.neckPosition===undefined)?0.59:this.neckPosition
-            )
-        };
-
-        if(this.vertURL===undefined)this.vertURL=this.haveSkeleton?"shader/vertexBone.vert":"shader/vertex.vert";
-        if(this.fragURL===undefined)this.fragURL="shader/fragment.frag";
-        let material = new THREE.RawShaderMaterial();//原始着色器材质
-        material.side=THREE.DoubleSide;
-        material.uniforms= uniforms;
-        material.vertexShader=load(this.vertURL);
-        material.fragmentShader=load(this.fragURL);
-
-        function load(name) {
-            let xhr = new XMLHttpRequest(),
-                okStatus = document.location.protocol === "file:" ? 0 : 200;
-            xhr.open('GET', name, false);
-            xhr.overrideMimeType("text/html;charset=utf-8");//默认为utf-8
-            xhr.send(null);
-            return xhr.status === okStatus ? xhr.responseText : null;
-        }
         if(this.haveSkeleton){
-            var scope=this;
+            updateAnimation();
+            function updateAnimation() {//每帧更新一次动画
+                requestAnimationFrame(updateAnimation);
+                scope.time=(scope.time+1.0)%60000;
+                uniforms.time={value: scope.time};
+            }
+
             uniforms.time={value: 0.0};
             uniforms.animationData={type: 't', value:[]};
             uniforms.animationDataLength={value:0};
@@ -223,47 +183,27 @@ InstancedGroup.prototype={
                 return {"value":tex};
             }
         }
-        //以下是根据material设置的uniform
-        var texSrc_index=1;
-        function setText0(){
-            if(texSrc_index>=texSrc.length)return;
-            var myText0= THREE.ImageUtils.loadTexture(texSrc[texSrc_index],null,function () {
-                texSrc_index++;
-                myText0.flipY=texFlipY;
-                myText0.wrapS = myText0.wrapT = THREE.ClampToEdgeWrapping;
-                material.uniforms.text0={value: myText0};
-                setText0();
-            });
+
+        var material=this.setMaterial(uniforms,texSrc,textNum,colors,texFlipY);
+        if(this.vertURL===undefined)this.vertURL=this.haveSkeleton?"shader/vertexBone.vert":"shader/vertex.vert";
+        if(this.fragURL===undefined)this.fragURL="shader/fragment.frag";
+        material.vertexShader=load(this.vertURL);
+        material.fragmentShader=load(this.fragURL);
+        function load(name) {
+            let xhr = new XMLHttpRequest(),
+                okStatus = document.location.protocol === "file:" ? 0 : 200;
+            xhr.open('GET', name, false);
+            xhr.overrideMimeType("text/html;charset=utf-8");//默认为utf-8
+            xhr.send(null);
+            return xhr.status === okStatus ? xhr.responseText : null;
         }
-        if(typeof(texSrc[0])==="string")setText0();//传入资源地址
-        else material.uniforms.text0={value:texSrc[0]};//传入map类型
 
         this.mesh = new THREE.Mesh(
-            this.setGeometry(this.originMeshs[0].geometry)
-            , material);//重要
+            this.setGeometry(this.originMeshs[0].geometry),
+            material
+        );
         this.mesh.frustumCulled=false;
-
-        if(this.haveSkeleton){
-            this.handleSkeletonAnimation();
-            /*for(i=0;i<this.originMeshs.length;i++){
-                this.originMeshs[i].visible=false;
-                this.obj.add(this.originMeshs[i]);//threeJS中模型的位置尺寸角度变化，似乎是通过骨骼来实现的
-            }*/
-        }
-
         this.obj.add(this.mesh);
-
-        //完成进行实例化渲染
-    },
-    handleSkeletonAnimation:function(){
-        var scope=this;
-        //var scope=this;//scope范围//为了避免this重名
-        updateAnimation();
-        function updateAnimation() {//每帧更新一次动画
-            requestAnimationFrame(updateAnimation);
-            scope.time=(scope.time+1.0)%60000;
-            scope.mesh.material.uniforms.time={value: scope.time};
-        }
     },
 
     setMatrix:function (i,matrix){//获取实例化对象第i个成员的变换矩阵
@@ -394,5 +334,59 @@ InstancedGroup.prototype={
     rotation:function (i,dRot){
         var rot=this.rotationGet(i);
         this.rotationSet(i,[rot[0]+dRot[0],rot[1]+dRot[1],rot[2]+dRot[2]]);
+    },
+}
+function CanvasControl(n,h,colors,flipY) {
+    this.canvas;
+    this.context;
+    this.flipY;
+    this.w;
+    this.h;
+    this.init(n,h,colors,flipY);
+}
+CanvasControl.prototype={
+    init:function (n,h,colors,flipY) {
+        this.flipY=typeof(flipY)=="undefined"?true:flipY;
+        this.h=h;
+        this.w=h*n;
+        this.canvas = document.createElement("canvas");
+        this.canvas.width = this.w;
+        this.canvas.height = this.h;
+        this.context = this.canvas.getContext("2d");
+
+        for(var i=0;i<n;i++)
+            this.drawColor(colors[i],i);
+    },
+    drawColor:function(color,k){
+        this.context.fillStyle = color;//"#FFFF00";
+        this.context.fillRect(k*this.h,0,this.h,this.h);
+    },
+    drawImg:function(src,k,myOnload){
+        var scope=this;
+        var myImage = new Image();
+        myImage.src = src;   //你自己本地的图片或者在线图片
+        myImage.crossOrigin = 'Anonymous';
+        myImage.onload = function(){//pos[0],pos[1]是落笔的起始位置，pos[2],pos[3]是落笔区域的大小
+            myImage.width=scope.h;
+            myImage.height=scope.h;
+            scope.context.drawImage(myImage , k*scope.h,0,scope.h,scope.h);
+            if(typeof (myOnload)!="undefined")myOnload(scope.getTex());
+        }
+    },
+    getTex:function () {
+        var texture=new THREE.CanvasTexture(this.canvas);
+        texture.flipY=this.flipY;
+        texture.wrapS = texture.wrapT = THREE.ClampToEdgeWrapping;
+        return texture;
+    },
+    download:function (name) {//将画布的内容保存为图片
+        let url = this.canvas.toDataURL("image/jpeg");
+        //let url = this.canvas.toDataURL("image/png"); //得到图片的base64编码数据
+        //console.log(url);
+        let a = document.createElement("a"); // 生成一个a元素
+        let event = new MouseEvent("click"); // 创建一个单击事件
+        a.download = name || "photo"; // 设置图片名称
+        a.href = url; // 将生成的URL设置为a.href属性
+        a.dispatchEvent(event); // 触发a的单击事件
     },
 }

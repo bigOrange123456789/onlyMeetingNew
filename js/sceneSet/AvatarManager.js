@@ -75,7 +75,13 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
                     [mesh],//这些mesh的网格应该一致
                     true
                 );
-                peoples.init(['./img/texture/w/w00.jpg', './img/texture/w/w0.jpg'], 16);
+                peoples.init(
+                    ["./img/texture/w/w00.jpg","./img/texture/w/w0.jpg"],
+                    16,
+                    ['#b9b9b9','#a48e78','#9a6f49','#684e41','#5e4b46',
+                        '#647357','#8d7b66','#7f7e6b','#414544','#95835d','#856064',
+                        '#5a544e','#a37d67','#a8816f','#b18175','#7b6764','#a3877b']
+                );
                 var index = 0;
                 for (var i = 0; i < scope.positions.length; i++)//1677
                     if (scope.sexs[i] === 0) {
@@ -122,7 +128,13 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
                 peoples2.neckPosition=0.68;
                 //peoples2.vertURL="shader/vertexBone2.vert";
                 //peoples2.fragURL="shader/fragment2.frag";
-                peoples2.init(['./img/texture/m/m00.jpg', './img/texture/m/m0.jpg'], 32);
+                peoples2.init(["./img/texture/m/m00.jpg","./img/texture/m/m0.jpg"],
+                    32,
+                    ['#a9a541','#726050','#836557','#5a4c40','#716365',
+                        '#483530','#695148','#917a6e','#786861','#4d453f','#553531','#8b7a73',
+                        '#5d5146','#6c5b58','#656261','#646058','#5c5653','#5f5042','#6b6665',
+                        '#6e5b4c','#82756d','#8f7462','#8e6b5d','#5a4c40','#6c6f72','#8e7f78',
+                        '#514d50','#423e3f','#644e40','#746255','#524946','#56453d','#60564d']);
                 index = 0;
                 for (i = 0; i < scope.positions.length; i++)
                     if (scope.sexs[i] === 1) {
