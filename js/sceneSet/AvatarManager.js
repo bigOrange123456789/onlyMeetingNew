@@ -76,7 +76,7 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
                     true
                 );
                 peoples.init(
-                    ["./img/texture/w/w00.jpg","./img/texture/w/w0.jpg"],
+                    ["./img/texture/w/w0.jpg","./img/texture/w/w1.jpg","./img/texture/w/w2.jpg"],
                     16,
                     ['#b9b9b9','#a48e78','#9a6f49','#684e41','#5e4b46',
                         '#647357','#8d7b66','#7f7e6b','#414544','#95835d','#856064',
@@ -128,7 +128,7 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
                 peoples2.neckPosition=0.68;
                 //peoples2.vertURL="shader/vertexBone2.vert";
                 //peoples2.fragURL="shader/fragment2.frag";
-                peoples2.init(["./img/texture/m/m00.jpg","./img/texture/m/m0.jpg"],
+                peoples2.init(["./img/texture/m/m0.jpg","./img/texture/m/m1.jpg","./img/texture/m/m2.jpg"],
                     32,
                     ['#a9a541','#726050','#836557','#5a4c40','#716365',
                         '#483530','#695148','#917a6e','#786861','#4d453f','#553531','#8b7a73',
