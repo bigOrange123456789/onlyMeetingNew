@@ -80,7 +80,7 @@ InstancedGroup.prototype={
         else material.uniforms.text0={value:texSrc[0]};//传入map类型
         */
 
-        var texSrc_index=1;
+        var texSrc_index=0;
         function setText0(){
             if(texSrc_index>=texSrc.length)return;
             var myText0= THREE.ImageUtils.loadTexture(texSrc[texSrc_index],null,function () {
