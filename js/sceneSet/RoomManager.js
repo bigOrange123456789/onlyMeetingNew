@@ -1,11 +1,12 @@
 function RoomManager(myVideoManager0){//myVideoManager_
     this.loader= new THREE.GLTFLoader();
     this.room=new THREE.Object3D();
-    this.room.visible=false;
+    //this.room.visible=false;
     this.myVideoManager=myVideoManager0;
+    this.mid=20;
 }
 RoomManager.prototype={
-    loadRoom:function(){
+    create1:function(){
         this.room.scale.set(10,10,10);
         this.myLoad_door('myModel/room/door.gltf');
 
@@ -13,7 +14,7 @@ RoomManager.prototype={
             1,1,1,1,1,0,0,1,1,1,1,1,0,1,1,0,1,0,1,1,0,0,0,1,0,1,1,1,0,0,0,0,1,0,1,0,0,0,0
         ];
         var roomFileName="ConferenceRoom";
-        for(var i=0;i<mapsIndex.length;i++)
+        for(var i=0;i<this.mid;i++)
                 this.myLoad('myModel/room/'+roomFileName+i+'.gltf',
                     mapsIndex[i]===1?'myModel/room/'+roomFileName+i+'.jpg':null
                 );
@@ -31,6 +32,19 @@ RoomManager.prototype={
                 if(arrRange[2*i]<=k&&k<=arrRange[2*i+1])return true;
             return false;
         }
+    },
+    create2:function(){
+        this.room.scale.set(10,10,10);
+        this.myLoad_door('myModel/room/door.gltf');
+
+        var mapsIndex=[
+            1,1,1,1,1,0,0,1,1,1,1,1,0,1,1,0,1,0,1,1,0,0,0,1,0,1,1,1,0,0,0,0,1,0,1,0,0,0,0
+        ];
+        var roomFileName="ConferenceRoom";
+        for(var i=this.mid;i<mapsIndex.length;i++)
+            this.myLoad('myModel/room/'+roomFileName+i+'.gltf',
+                mapsIndex[i]===1?'myModel/room/'+roomFileName+i+'.jpg':null
+            );
     },
     myLoad:function(url,mapUrl){
         var scope=this;
@@ -56,6 +70,7 @@ RoomManager.prototype={
                 if( gltf.scene.children[i].name==="室内-小显示器屏幕（非）"||
                     gltf.scene.children[i].name==="室内-大显示器屏幕（非）"){//室内-大显示器屏幕（非）
                     var screen=gltf.scene.children[i];
+                    if(scope.myVideoManager.video)scope.myVideoManager.init();
                     scope.myVideoManager.setMaterial(screen);
                 }
                 //室内-电子显示屏（非）

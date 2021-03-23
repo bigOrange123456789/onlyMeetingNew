@@ -1,8 +1,9 @@
 function SeatManager(){
     this.positions=[];//1677
     this.chairs=new THREE.Object3D();
-    this.chairs.visible=false;
+    //this.chairs.visible=false;
 
+    this.url="myModel/chair.glb";
     this.init=function () {
         //一楼前部分
         var k,i,j;
@@ -19,13 +20,12 @@ function SeatManager(){
                 for(var j=0;j<13;j++)
                     this.positions.push([-15-9*i,88.55+i*5.0,85-4.1*j-k*75]);//前后、上下、左右
         /**/
-        this.myLoad("myModel/chair.glb");
 
     }
-    this.myLoad=function(url){
+    this.create=function(){
         var scope=this;
         var loader= new THREE.GLTFLoader();
-        loader.load(url, (gltf) => {
+        loader.load(this.url, (gltf) => {
             var obj=gltf.scene.children[0];
 
             var geometry1=obj.children[0].geometry;

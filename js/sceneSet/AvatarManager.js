@@ -1,7 +1,7 @@
 function AvatarManager(mySeatManager,camera){//camera用于LOD
     var scope=this;
     this.obj=new THREE.Object3D();
-    this.obj.visible=false;
+    //this.obj.visible=false;
 
     this.positions=mySeatManager.positions;
     this.types=[];//贴图类型
@@ -12,7 +12,7 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
 
     this.camera=camera;
 
-    this.init=function () {
+    this.create1=function () {
         var loader = new THREE.XHRLoader(THREE.DefaultLoadingManager);
         loader.load("json/textureSetData.json", function(str){//dataTexture
             for(i=0;i<scope.positions.length;i++){//共有1677张椅子
@@ -37,33 +37,23 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
                     scope.manNum++;
                 }
             }
-            scope.loadAvatar();
-        });
-    }
-
-    this.loadAvatar=function () {
-
-
-        /*animLoader.load('./test/model/dongshizhang.glb', function (glbObj){
+            /*animLoader.load('./test/model/dongshizhang.glb', function (glbObj){
             console.log("高模加载时间："+(window.myClock-window.myClock_High0));
             scope.obj.add(glbObj.scene.children[3].children[3]);
             console.log(glbObj.scene.children[3].children[3]);
-        });*/
-        this.createPeople_haveAnimation2();
-
-        setTimeout(function () {
-            window.myClock_High0=window.myClock;
-            var animLoader = new THREE.GLTFLoader();//= new PMAnimLoader();//估计是通过gltf文件加载的动画
-            animLoader.load('./myModel/skeleton/scene.gltf', function (glbObj){
-                glbObj.scene.visible=false;
-                //scope.loadGuest1(glbObj);
-                scope.loadGuest2(glbObj);
-            });
-
-            scope.host();
-        },5000)
-
-        //this.analysis();
+            });*/
+            scope.createPeople_haveAnimation2();
+            //this.analysis();
+        });
+    }
+    this.create2=function () {
+        var animLoader = new THREE.GLTFLoader();//= new PMAnimLoader();//估计是通过gltf文件加载的动画
+        animLoader.load('./myModel/skeleton/scene.gltf', function (glbObj){
+            glbObj.scene.visible=false;
+            //scope.loadGuest1(glbObj);
+            scope.loadGuest2(glbObj);
+        });
+        scope.host();
     }
     this.createPeople_haveAnimation2=function(){
         //女性开始

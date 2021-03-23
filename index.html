@@ -36,25 +36,25 @@
 	<script  type="module">
 		//import { VRButton } from './js//lib/VRButton.js';//负责VR视觉
 
-		/*var myVideoManager = new VideoManager();
-		myVideoManager.init();
+		var myVideoManager = new VideoManager();
+		//myVideoManager.init();
 
 		var myRoomManager = new RoomManager(myVideoManager);
-		myRoomManager.loadRoom();//myVideoManager
-		*/
+
+		/**/
 
 		var myMain = new Main();
 		myMain.start();
-		//myMain.scene.add(myRoomManager.room);
+		myMain.scene.add(myRoomManager.room);
 		//document.body.appendChild( VRButton.createButton( myMain.renderer ) );
 		myMain.renderer.xr.enabled = true;
 
 
-		var pc0=new PlayerControl(myMain.camera);
-		var fru=pc0.computeFrustumFromCamera();
-		console.log(fru)
+		new PlayerControl(myMain.camera);
+		//var fru=pc0.computeFrustumFromCamera();
+		//console.log(fru)
 		//pc0.showFrustum(myMain.scene)
-		for(var i=0;i<6;i++)
+		/*for(var i=0;i<6;i++)
 			for(var j=0;j<4;j++)
 				for(var k=0;k<2;k++){
 					var material = new THREE.MeshNormalMaterial();
@@ -79,18 +79,21 @@
 					}
 				}
 			})
-		},2000)/**/
+		},2000)*/
 
 
-		/*var mySeatManager = new SeatManager();
+		var mySeatManager = new SeatManager();
 		mySeatManager.init();
 		myMain.scene.add(mySeatManager.chairs);
 
 		var myAvatarManager = new AvatarManager(mySeatManager, myMain.camera);
-		myAvatarManager.init();
 		myMain.scene.add(myAvatarManager.obj);
 
-		*/
+		myRoomManager.create1();//外壳
+		myAvatarManager.create1();//听众
+		mySeatManager.create();//椅子
+		myRoomManager.create2();//内部细节
+		myAvatarManager.create2();//嘉宾
 
 
 		//开始自动漫游路径
