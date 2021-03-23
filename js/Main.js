@@ -3,7 +3,11 @@ function Main(){
     var scope=this;
     this.VR=false;
     this.scene=new THREE.Scene();
-    this.camera=new THREE.PerspectiveCamera( 70,window.innerWidth /window.innerHeight, 0.1, 1000 );;
+    var width=window.innerWidth;
+    var height=window.innerHeight;
+    this.camera=
+        //new THREE.OrthographicCamera( width / - 2, width / 2, height / 2, height / - 2, 0.001, 100 );
+        new THREE.PerspectiveCamera( 70,window.innerWidth /window.innerHeight, 0.1, 1000 );;
     this.render;
     this.effect;
     //this.camera = new THREE.OrthographicCamera(window.innerWidth/ - 1,window.innerWidth,window.innerHeight,window.innerHeight/ - 1, 0, 100000 );

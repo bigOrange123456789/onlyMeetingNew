@@ -24,7 +24,18 @@ PlayerControl.prototype={
         this.frustum=frustum;
         return frustum;
     },
-    intersectsSphere(center,radius ) {
+    intersectsSphere(mesh){
+        return this.intersectsSphere0([
+            mesh.geometry.boundingSphere.center.x
+            +mesh.matrixWorld.elements[12],
+            mesh.geometry.boundingSphere.center.y
+            +mesh.matrixWorld.elements[13],
+            mesh.geometry.boundingSphere.center.z
+            +mesh.matrixWorld.elements[14]
+        ],mesh.geometry.boundingSphere.radius );
+    },
+    intersectsSphere0(pos,radius ) {
+        var center=new THREE.Vector3(pos[0],pos[1],pos[2])
         const planes = this.frustum.planes;
         //const center = sphere.center;
         const negRadius = - radius;
@@ -34,6 +45,7 @@ PlayerControl.prototype={
                 return false;//不相交
             }
         }
+        //console.log(center);
         return true;//相交
     },
     showFrustum(scene){
@@ -148,7 +160,7 @@ PlayerControl.prototype={
                 vec_arr[0], vec_arr[1], vec_arr[2]
             );//看成一个列向量
             const vec2=multiplication(m,vec1)
-            vec2.multiplyScalar (-1);
+            vec2.multiplyScalar(-1);
             console.log(vec2);
             return vec2;
             function multiplication(matrix,vector) {
@@ -163,8 +175,6 @@ PlayerControl.prototype={
                 );
             }
         }
-
-
         //m.invert ();
 
 
