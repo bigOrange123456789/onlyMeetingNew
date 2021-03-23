@@ -1,6 +1,7 @@
 function AvatarManager(mySeatManager,camera){//camera用于LOD
     var scope=this;
     this.obj=new THREE.Object3D();
+    this.obj.visible=false;
 
     this.positions=mySeatManager.positions;
     this.types=[];//贴图类型

@@ -34,7 +34,7 @@
 
 	<script src="StereoEffect.js"></script>
 	<script  type="module">
-		import { VRButton } from './js//lib/VRButton.js';//负责VR视觉
+		//import { VRButton } from './js//lib/VRButton.js';//负责VR视觉
 
 		var myVideoManager = new VideoManager();
 		myVideoManager.init();
@@ -48,7 +48,28 @@
 		//document.body.appendChild( VRButton.createButton( myMain.renderer ) );
 		myMain.renderer.xr.enabled = true;
 
-		new PlayerControl(myMain.camera);
+		var pc0=new PlayerControl(myMain.camera);
+		var fru=pc0.computeFrustumFromCamera();
+		console.log(fru)
+		pc0.showFrustum(myMain.scene)
+		/*setInterval(function () {
+			pc0.computeFrustumFromCamera();
+			myMain.scene.traverse(function (node) {
+				if(node  instanceof THREE.Mesh){
+					node.geometry.computeBoundingSphere();
+					node.frustumCulled=false;
+					if(node.geometry.boundingSphere){
+						node.visible=pc0.intersectsSphere(
+								node.geometry.boundingSphere.center,
+								node.geometry.boundingSphere.radius
+						)
+					}else{
+						node.geometry.computeBoundingSphere();
+					}
+				}
+			})
+		},500)*/
+
 
 		var mySeatManager = new SeatManager();
 		mySeatManager.init();

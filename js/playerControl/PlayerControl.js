@@ -1,5 +1,6 @@
 function PlayerControl(camera){
     this.controller=new PlayerControl0(camera);
+    this.frustum;
     this.init=function () {
         var scope=this;
         this.controller.KeyboardMoveStep=8;
@@ -9,7 +10,168 @@ function PlayerControl(camera){
         }tool();
     }
     this.init();
+
 }/**/
+PlayerControl.prototype={
+    computeFrustumFromCamera:function(){//求视锥体
+        var camera=this.controller.camera;
+        var frustum = new THREE.Frustum();
+        //frustum.setFromMatrix( new THREE.Matrix4().multiplyMatrices( camera.projectionMatrix,camera.matrixWorldInverse ) );
+
+        const projScreenMatrix = new THREE.Matrix4();
+        projScreenMatrix.multiplyMatrices( camera.projectionMatrix, camera.matrixWorldInverse );
+        frustum.setFromProjectionMatrix(projScreenMatrix);
+        this.frustum=frustum;
+        return frustum;
+    },
+    intersectsSphere(center,radius ) {
+        const planes = this.frustum.planes;
+        //const center = sphere.center;
+        const negRadius = - radius;
+        for ( let i = 0; i < 6; i ++ ) {
+            const distance = planes[ i ].distanceToPoint( center );//平面到点的距离，
+            if ( distance < negRadius ) {//内正外负
+                return false;//不相交
+            }
+        }
+        return true;//相交
+    },
+    showFrustum(scene){
+
+        /*for(i=0;i<6;i++)
+            for(j=i;j<6;j++)
+                for(k=j;k<6;k++){
+                    var spot=getSpot(
+                        this.frustum.planes[i],
+                        this.frustum.planes[j],
+                        this.frustum.planes[k]
+                    );
+                    console.log(spot);
+                    var material = new THREE.MeshNormalMaterial();
+                    var geometry= new THREE.CubeGeometry(1,1,1);
+                    var mesh= new THREE.Mesh(geometry, material);
+                    mesh.position.set(spot.x,spot.y,spot.z);
+                    scene.add(mesh);
+                }*/
+
+        /*this.frustum.planes[0]={normal:{x:1,y:0,z:0},constant:-1}
+        this.frustum.planes[1]={normal:{x:0,y:1,z:0},constant:-1}
+        this.frustum.planes[2]={normal:{x:0,y:0,z:1},constant:-1}*/
+        /*
+        前后是平行的
+        * 0上
+        * 1下
+        * 2左
+        * 3右
+        * 4前
+        * 5后
+        * */
+
+        var spots=[];
+        for(var i=0;i<2;i++)
+            for(j=0;j<2;j++)
+                for(k=0;k<2;k++)
+                    spots.push(
+                        getSpot(
+                            this.frustum.planes[i],
+                            this.frustum.planes[2+j],
+                            this.frustum.planes[4+k]
+                        ).multiplyScalar(0.1)
+                    );
+        /*
+        console.log(spot0);
+        var material0 = new THREE.MeshNormalMaterial();
+        var geometry0= new THREE.CubeGeometry(1,1,1);
+        var mesh0= new THREE.Mesh(geometry0, material0);
+        mesh0.position.set(spot0.x,spot0.y,spot0.z);
+        */
+        var material = new THREE.LineBasicMaterial( { color: 0x0000ff } );
+        var geometry = new THREE.Geometry();
+        //侧面
+        geometry.vertices.push(spots[0]);
+        geometry.vertices.push(spots[1]);
+        geometry.vertices.push(spots[3]);
+        geometry.vertices.push(spots[2]);
+        geometry.vertices.push(spots[0]);
+
+        //侧面
+        geometry.vertices.push(spots[4]);
+        geometry.vertices.push(spots[6]);
+        geometry.vertices.push(spots[7]);
+        geometry.vertices.push(spots[5]);
+        geometry.vertices.push(spots[4]);
+
+        //前面
+        geometry.vertices.push(spots[4]);
+        geometry.vertices.push(spots[0]);
+        geometry.vertices.push(spots[2]);
+        geometry.vertices.push(spots[6]);
+        geometry.vertices.push(spots[4]);
+
+        //移动
+        geometry.vertices.push(spots[5]);
+
+        //后面
+        geometry.vertices.push(spots[5]);
+        geometry.vertices.push(spots[1]);
+        geometry.vertices.push(spots[3]);
+        geometry.vertices.push(spots[7]);
+        geometry.vertices.push(spots[5]);
+
+        console.log(spots.length)
+        var line = new THREE.Line( geometry, material );
+        scene.add(line );
+        function getSpot(plane0,plane1,plane2) {
+            var n0=plane0.normal;
+            var n1=plane1.normal;
+            var n2=plane2.normal;
+            var array1=[
+                n0.x,n0.y,n0.z,
+                n1.x,n1.y,n1.z,
+                n2.x,n2.y,n2.z
+            ]
+            var array2=[
+                plane0.constant,
+                plane1.constant,
+                plane2.constant
+            ]
+            return getSpotPos(array1,array2);
+        }
+        function getSpotPos(m_arr,vec_arr) {
+            const m = new THREE.Matrix3();
+            m.set(
+                m_arr[0],m_arr[1],m_arr[2],
+                m_arr[3],m_arr[4],m_arr[5],
+                m_arr[6],m_arr[7],m_arr[8],
+                );
+            const vec1 = new THREE.Vector3(
+                vec_arr[0], vec_arr[1], vec_arr[2]
+            );//看成一个列向量
+            const vec2=multiplication(m,vec1)
+            vec2.multiplyScalar (-1);
+            console.log(vec2);
+            return vec2;
+            function multiplication(matrix,vector) {
+                var e=matrix.elements;
+                var x=vector.x;
+                var y=vector.y;
+                var z=vector.z;
+                return new THREE.Vector3(
+                    x*e[0]+y*e[3]+z*e[6],
+                    x*e[1]+y*e[4]+z*e[7],
+                    x*e[2]+y*e[5]+z*e[8]
+                );
+            }
+        }
+
+
+        //m.invert ();
+
+
+
+
+    },
+}
 function PlayerControl0(camera){
     this.camera=camera;
     var scope=this;
