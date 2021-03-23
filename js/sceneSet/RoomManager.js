@@ -57,7 +57,6 @@ RoomManager.prototype={
         var texture=THREE.ImageUtils.loadTexture( mapUrl,null,function () {
             texture.wrapS = THREE.RepeatWrapping;
             texture.wrapT = THREE.RepeatWrapping;
-            console.log(mapUrl);
             scope.room.traverse(node => {
                 if (node.mapUrl===mapUrl) {
                     node.material = new THREE.MeshBasicMaterial({

@@ -86,11 +86,14 @@
 		var myAvatarManager = new AvatarManager(mySeatManager, myMain.camera);
 		myMain.scene.add(myAvatarManager.obj);
 
-		myAvatarManager.create1();//听众
 		myRoomManager.create1();//网格
-		mySeatManager.create();//椅子
-		myRoomManager.create2();//贴图
-		myAvatarManager.create2();//嘉宾
+		myAvatarManager.create1(function () {
+			mySeatManager.create();//椅子
+			myRoomManager.create2();//贴图
+			myAvatarManager.create2();//嘉宾
+		});//听众
+
+
 
 
 		//开始自动漫游路径

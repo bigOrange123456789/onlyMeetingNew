@@ -12,7 +12,8 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
 
     this.camera=camera;
 
-    this.create1=function () {
+
+    this.create1=function (finishFunction0) {
         var loader = new THREE.XHRLoader(THREE.DefaultLoadingManager);
         loader.load("json/crowdData.json", function(str){//dataTexture
             var crowdData_json=JSON.parse(str);
@@ -38,76 +39,15 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
                     scope.manNum++;
                 }
             }
-            /*animLoader.load('./test/model/dongshizhang.glb', function (glbObj){
-            console.log("高模加载时间："+(window.myClock-window.myClock_High0));
-            scope.obj.add(glbObj.scene.children[3].children[3]);
-            console.log(glbObj.scene.children[3].children[3]);
-            });*/
-            scope.createPeople_haveAnimation2(crowdData_json);
-            //this.analysis();
+            scope.createWoman(crowdData_json,function () {
+                scope.createMan(crowdData_json,function () {
+                    if(finishFunction0)finishFunction0();
+                });
+            });
+
         });
     }
-    this.create2=function () {
-        var animLoader = new THREE.GLTFLoader();//= new PMAnimLoader();//估计是通过gltf文件加载的动画
-        animLoader.load('./myModel/skeleton/scene.gltf', function (glbObj){
-            glbObj.scene.visible=false;
-            //scope.loadGuest1(glbObj);
-            scope.loadGuest2(glbObj);
-        });
-        scope.host();
-    }
-    this.createPeople_haveAnimation2=function(crowdData_json){
-        //女性开始
-        window.myClock_Female0=window.myClock;
-        var pmLoader = new MyPMLoader(
-            {animations: []},
-            './myModel/Female',    //模型路径
-            [],//没有LOD分级//LOD等级的数组
-            scope.camera,  //LOD需要判断到相机的距离
-            0,       //有多个动画时,表示第0个动画//可以通过pmLoader.updateAnimation(i)来切换动画
-            0,     //动画播放速度//可以通过调整pmLoader.animationSpeed来调整速度
-            [],
-            function() {
-                var mesh = pmLoader.rootObject.children[0];
-                var peoples = new InstancedGroup(
-                    scope.positions.length - scope.manNum,
-                    [mesh],//这些mesh的网格应该一致
-                    true,
-                    crowdData_json
-                );
-                peoples.init(
-                    ["./img/texture/w/w0.jpg","./img/texture/w/w1.jpg","./img/texture/w/w2.jpg"],
-                    16,
-                    ['#b9b9b9','#a48e78','#9a6f49','#684e41','#5e4b46',
-                        '#647357','#8d7b66','#7f7e6b','#414544','#95835d','#856064',
-                        '#5a544e','#a37d67','#a8816f','#b18175','#7b6764','#a3877b']
-                );
-                var index = 0;
-                for (var i = 0; i < scope.positions.length; i++)//1677
-                    if (scope.sexs[i] === 0) {
-                        peoples.rotationSet(index, [Math.PI / 2, 0, 3 * Math.PI / 2]);
-                        peoples.positionSet(index, [scope.positions[i][0] + 1.8, scope.positions[i][1] + 1.5, scope.positions[i][2]]);
-                        peoples.scaleSet(index, [0.04 + Math.random() * 0.01, 0.04 + Math.random() * 0.01, 0.04 + Math.random() * 0.01]);
-
-                        peoples.animationSet(index, scope.animations[i]);//
-                        peoples.colorSet(index, scope.colors[i]);
-                        peoples.speedSet(index, 0.6 + Math.random() * 0.4);
-                        peoples.textureSet0(index, scope.types[i]);
-                        //peoples.textureSet1(index, scope.types[i]);
-                        index++;
-                    }
-                scope.obj.add(peoples.obj);
-                console.log("女性模型加载时间"+(window.myClock-window.myClock_Female0));
-                var timeId1 = setInterval(function () {
-                    mesh = pmLoader.rootObject.children[0];
-                    peoples.updateGeometry(mesh);
-                    console.log(pmLoader.finished);
-                    if (pmLoader.finished) window.clearInterval(timeId1)
-                }, 1000);
-            }
-        );
-        //女性结束
-
+    this.createMan=function (crowdData_json,finishFunction2) {
         //男性开始
         window.myClock_Male0=window.myClock;
         var pmLoader2 = new MyPMLoader(
@@ -135,7 +75,10 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
                         '#483530','#695148','#917a6e','#786861','#4d453f','#553531','#8b7a73',
                         '#5d5146','#6c5b58','#656261','#646058','#5c5653','#5f5042','#6b6665',
                         '#6e5b4c','#82756d','#8f7462','#8e6b5d','#5a4c40','#6c6f72','#8e7f78',
-                        '#514d50','#423e3f','#644e40','#746255','#524946','#56453d','#60564d']);
+                        '#514d50','#423e3f','#644e40','#746255','#524946','#56453d','#60564d'],
+                    true,
+                    finishFunction2
+                );
                 index = 0;
                 for (i = 0; i < scope.positions.length; i++)
                     if (scope.sexs[i] === 1) {
@@ -162,75 +105,70 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
         );
 
         //男性结束
+    };
+    this.createWoman=function (crowdData_json,finishFunction1) {
+        //女性开始
+        window.myClock_Female0=window.myClock;
+        var pmLoader = new MyPMLoader(
+            {animations: []},
+            './myModel/Female',    //模型路径
+            [],//没有LOD分级//LOD等级的数组
+            scope.camera,  //LOD需要判断到相机的距离
+            0,       //有多个动画时,表示第0个动画//可以通过pmLoader.updateAnimation(i)来切换动画
+            0,     //动画播放速度//可以通过调整pmLoader.animationSpeed来调整速度
+            [],
+            function() {
+                var mesh = pmLoader.rootObject.children[0];
+                var peoples = new InstancedGroup(
+                    scope.positions.length - scope.manNum,
+                    [mesh],//这些mesh的网格应该一致
+                    true,
+                    crowdData_json
+                );
+                peoples.init(
+                    ["./img/texture/w/w0.jpg","./img/texture/w/w1.jpg","./img/texture/w/w2.jpg"],
+                    16,
+                    ['#b9b9b9','#a48e78','#9a6f49','#684e41','#5e4b46',
+                        '#647357','#8d7b66','#7f7e6b','#414544','#95835d','#856064',
+                        '#5a544e','#a37d67','#a8816f','#b18175','#7b6764','#a3877b'],
+                    true,
+                    finishFunction1
+                );
+                var index = 0;
+                for (var i = 0; i < scope.positions.length; i++)//1677
+                    if (scope.sexs[i] === 0) {
+                        peoples.rotationSet(index, [Math.PI / 2, 0, 3 * Math.PI / 2]);
+                        peoples.positionSet(index, [scope.positions[i][0] + 1.8, scope.positions[i][1] + 1.5, scope.positions[i][2]]);
+                        peoples.scaleSet(index, [0.04 + Math.random() * 0.01, 0.04 + Math.random() * 0.01, 0.04 + Math.random() * 0.01]);
 
+                        peoples.animationSet(index, scope.animations[i]);//
+                        peoples.colorSet(index, scope.colors[i]);
+                        peoples.speedSet(index, 0.6 + Math.random() * 0.4);
+                        peoples.textureSet0(index, scope.types[i]);
+                        //peoples.textureSet1(index, scope.types[i]);
+                        index++;
+                    }
+                scope.obj.add(peoples.obj);
+                console.log("女性模型加载时间"+(window.myClock-window.myClock_Female0));
+                var timeId1 = setInterval(function () {
+                    mesh = pmLoader.rootObject.children[0];
+                    peoples.updateGeometry(mesh);
+                    console.log(pmLoader.finished);
+                    if (pmLoader.finished) window.clearInterval(timeId1)
+                }, 1000);
+            }
+        );
+        //女性结束
     }
-    this.createPeople_haveAnimation=function(){
-        var loader= new THREE.GLTFLoader();
-        //加载女性
-        window.myClock_Male0=window.myClock;
-        loader.load('myModel/avatar/Female.glb', (glb) => {
-            console.log("女性模型加载时间"+(window.myClock-window.myClock_Male0));
 
-            //console.log(glb.scene.children[0].children[1])
-            var peoples=new InstancedGroup(
-                scope.positions.length-this.manNum,
-                [glb.scene.children[0].children[1].clone()],//这些mesh的网格应该一致
-                glb.animations[0].clone()
-            );
-            peoples.init(['./img/texture/w/w00.jpg','./img/texture/w/w0.jpg'],16,false);
-
-            var index=0;
-            for(var i=0;i<scope.positions.length;i++)
-                if(this.sexs[i]===0){
-                    peoples.rotationSet(index,[Math.PI/2,0,3*Math.PI/2]);
-                    peoples.positionSet(index,[scope.positions[i][0]+1.8,scope.positions[i][1]+1.5,scope.positions[i][2]]);
-                    peoples.scaleSet(index,[0.045,0.045,0.04+Math.random()*0.01]);
-
-                    peoples.animationSet(index,scope.animations[i]);
-                    peoples.colorSet(index,scope.colors[i]);
-                    peoples.speedSet(index,0.15+Math.random()*1.5);
-                    peoples.textureSet0(index,scope.types[i]);
-                    //console.log(scope.types[i])
-                    //peoples.textureSet(index,[scope.types[i],scope.types[i],scope.types[i]]);
-                    index++;
-                }
-
-            scope.obj.add(peoples.obj);
-            //开始加载男性听众
-            //loader.load('myModel/avatar/1.glb', (glb2) => {//console.log(glb2.scene.children[0].children[3]);
-            //return;
-            //console.log(glb2);
-            //console.log(glb2.scene.children[0].children[0].children[2]);
-            var peoples=new InstancedGroup(
-                scope.manNum,
-                [glb.scene.children[0].children[1]],
-                //[glb2.scene.children[0].children[0].children[2]],//这些mesh的网格应该一致
-                glb.animations[0]
-            );
-            peoples.init(['./img/texture/m/m00.jpg','./img/texture/m/m0.jpg'],32,false);
-
-            var index=0;
-            for(var i=0;i<scope.positions.length;i++)
-                if(this.sexs[i]===1){
-                    peoples.rotationSet(index,[Math.PI/2,0,3*Math.PI/2]);
-                    peoples.positionSet(index,[scope.positions[i][0]+1.8,scope.positions[i][1]+1.5,scope.positions[i][2]]);
-                    peoples.scaleSet(index,[0.045,0.045,0.04+Math.random()*0.01]);
-
-                    peoples.animationSet(index,scope.animations[i]);
-                    peoples.colorSet(index,scope.colors[i]);
-                    peoples.speedSet(index,0.15+Math.random()*1.5);
-                    peoples.textureSet0(index,scope.types[i]);
-                    //peoples.textureSet(i,[scope.types[i],scope.types[i],scope.types[i]]);
-                    //else peoples.speedSet(i,2+Math.random()*1.92);
-                    index++;
-                }
-
-            scope.obj.add(peoples.obj);
-            //});
-            //完成加载男性听众
+    this.create2=function () {
+        var animLoader = new THREE.GLTFLoader();//= new PMAnimLoader();//估计是通过gltf文件加载的动画
+        animLoader.load('./myModel/skeleton/scene.gltf', function (glbObj){
+            glbObj.scene.visible=false;
+            //scope.loadGuest1(glbObj);
+            scope.loadGuest2(glbObj);
         });
-        //完成加载女性听众
-
+        scope.host();
     }
     this.host=function () {
         var loader= new THREE.GLTFLoader();

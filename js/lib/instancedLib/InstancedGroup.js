@@ -10,6 +10,8 @@ function InstancedGroup(instanceCount,originMesh,animationClip,crowdData_json){
     //this.animationClip=animationClip;
     this.mesh=null;//实例化渲染对象的网格
 
+    this.finishFunction;
+
     this.speed;
     this.mcol0;//变换矩阵的一部分
     this.mcol1;
@@ -68,7 +70,7 @@ InstancedGroup.prototype={
         if(this.mesh)this.mesh.geometry=geometryTemp;
         return geometryTemp;
     },
-    initMaterial:function(uniforms,texSrc,textNum,colors,texFlipY){
+    initMaterial:function(uniforms,texSrc,textNum,colors,texFlipY,finishFunction){
         var canvas=new CanvasControl(textNum,1,colors,texFlipY);//绘制合并纹理贴图的地方
         uniforms.text0={type: 't', value: canvas.getTex()};
 
@@ -86,18 +88,9 @@ InstancedGroup.prototype={
                 myText0.flipY=texFlipY;
                 myText0.wrapS = myText0.wrapT = THREE.ClampToEdgeWrapping;
                 material.uniforms.text0={value: myText0};
-                if(tex_i<texSrc.length-1)setText0(tex_i+1);
+                if(tex_i<texSrc.length-1) setText0(tex_i+1);
+                else if(finishFunction)finishFunction();
             });
-        }
-        function loadNextMap(tex_i) {//以下是根据material设置的uniform
-            canvas.drawImg(texSrc[tex_i],tex_i,function (tex) {
-                //console.log("./img/texture/m"+tex_i+".jpg");
-                material.uniforms.text0={value: tex};
-                if(++tex_i<textNum)
-                    setTimeout(function () {
-                        loadNextMap(tex_i);
-                    },100)
-            })
         }
     },
     initAnimation:function(uniforms){
@@ -134,8 +127,7 @@ InstancedGroup.prototype={
             return {"value":tex};
         }
     },
-    init:function (texSrc,textNum,colors,texFlipY){//纹理贴图资源路径，贴图中包含纹理的个数
-        var scope=this;
+    init:function (texSrc,textNum,colors,texFlipY,finishFunction){//纹理贴图资源路径，贴图中包含纹理的个数
         if(typeof(textNum)=="undefined")textNum=16;
         if(typeof(texFlipY)=="undefined")texFlipY=true;
         this.originMeshs[0].geometry=this.originMeshs[0].geometry.toNonIndexed();
@@ -173,7 +165,7 @@ InstancedGroup.prototype={
         };
         if(this.haveSkeleton)this.initAnimation(uniforms);
 
-        var material=this.initMaterial(uniforms,texSrc,textNum,colors,texFlipY);
+        var material=this.initMaterial(uniforms,texSrc,textNum,colors,texFlipY,finishFunction);
         if(this.vertURL===undefined)this.vertURL=this.haveSkeleton?"shader/vertexBone.vert":"shader/vertex.vert";
         if(this.fragURL===undefined)this.fragURL="shader/fragment.frag";
         material.vertexShader=load(this.vertURL);
