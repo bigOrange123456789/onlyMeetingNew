@@ -35,7 +35,6 @@
 	<script src="StereoEffect.js"></script>
 	<script  type="module">
 		//import { VRButton } from './js//lib/VRButton.js';//负责VR视觉
-
 		var myVideoManager = new VideoManager();
 		//myVideoManager.init();
 
@@ -88,9 +87,9 @@
 		myMain.scene.add(myAvatarManager.obj);
 
 		myAvatarManager.create1();//听众
-		myRoomManager.create1();//外壳
+		myRoomManager.create1();//网格
 		mySeatManager.create();//椅子
-		myRoomManager.create2();//内部细节
+		myRoomManager.create2();//贴图
 		myAvatarManager.create2();//嘉宾
 
 

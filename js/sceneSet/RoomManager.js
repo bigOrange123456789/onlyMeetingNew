@@ -14,24 +14,10 @@ RoomManager.prototype={
             1,1,1,1,1,0,0,1,1,1,1,1,0,1,1,0,1,0,1,1,0,0,0,1,0,1,1,1,0,0,0,0,1,0,1,0,0,0,0
         ];
         var roomFileName="ConferenceRoom";
-        for(var i=0;i<this.mid;i++)
-                this.myLoad('myModel/room/'+roomFileName+i+'.gltf',
+        for(var i=0;i<mapsIndex.length;i++)
+                this.myLoad1('myModel/room/'+roomFileName+i+'.gltf',
                     mapsIndex[i]===1?'myModel/room/'+roomFileName+i+'.jpg':null
                 );
-        function fileError(k){
-            var arr=[//以下两个数组记录需要特殊处理的模型资源路径
-                33,24,//提前加载的部件
-                0,21,37
-            ]
-            var arrRange=[
-                41,84
-            ];
-            for(var i=0;i<arr.length;i++)
-                if(arr[i]===k)return true;
-            for(i=0;i<arrRange.length/2;i++)
-                if(arrRange[2*i]<=k&&k<=arrRange[2*i+1])return true;
-            return false;
-        }
     },
     create2:function(){
         this.room.scale.set(10,10,10);
@@ -41,30 +27,18 @@ RoomManager.prototype={
             1,1,1,1,1,0,0,1,1,1,1,1,0,1,1,0,1,0,1,1,0,0,0,1,0,1,1,1,0,0,0,0,1,0,1,0,0,0,0
         ];
         var roomFileName="ConferenceRoom";
-        for(var i=this.mid;i<mapsIndex.length;i++)
-            this.myLoad('myModel/room/'+roomFileName+i+'.gltf',
-                mapsIndex[i]===1?'myModel/room/'+roomFileName+i+'.jpg':null
-            );
+        for (var i = 0; i < mapsIndex.length; i++)
+            if (mapsIndex[i] === 1)
+                this.myLoad2(
+                    'myModel/room/' + roomFileName + i + '.jpg'
+                );
     },
-    myLoad:function(url,mapUrl){
+    myLoad1:function(url,mapUrl){
         var scope=this;
         this.loader.load(url, (gltf) => {
             var scene=gltf.scene;
             var mesh0=scene.children[0];
-            if(mapUrl){
-                setTimeout(function () {
-                    var texture=THREE.ImageUtils.loadTexture( mapUrl,null,function () {
-                        texture.wrapS = THREE.RepeatWrapping;
-                        texture.wrapT = THREE.RepeatWrapping;
-                        mesh0.material = new THREE.MeshBasicMaterial({
-                            map: texture,//设置颜色贴图属性值
-                        });
-                    });
-                },1000);
-
-                //mesh0.material.color=0xffffff;
-                //mesh0.material.map=texture;
-            }
+            mesh0.mapUrl=mapUrl;
             //console.log(url+":"+gltf.scene.children[0].name);
             for(var i=0;i<gltf.scene.children.length;i++){
                 if( gltf.scene.children[i].name==="室内-小显示器屏幕（非）"||
@@ -77,6 +51,21 @@ RoomManager.prototype={
             }
             scope.room.add(scene);
         })
+    },
+    myLoad2:function(mapUrl){
+        var scope=this;
+        var texture=THREE.ImageUtils.loadTexture( mapUrl,null,function () {
+            texture.wrapS = THREE.RepeatWrapping;
+            texture.wrapT = THREE.RepeatWrapping;
+            console.log(mapUrl);
+            scope.room.traverse(node => {
+                if (node.mapUrl===mapUrl) {
+                    node.material = new THREE.MeshBasicMaterial({
+                        map: texture,//设置颜色贴图属性值
+                    });
+                }
+            });
+        });
     },
     myLoad_door:function(url){
         var scope=this;
