@@ -1,7 +1,8 @@
-function InstancedGroup(instanceCount,originMesh,animationClip ){
+function InstancedGroup(instanceCount,originMesh,animationClip,crowdData_json){
     //若有骨骼，则需要源mesh是skinnedMesh
     this.obj=new THREE.Object3D();
     this.instanceCount=instanceCount;
+    this.crowdData_json=crowdData_json;
 
     //记录有无骨骼动画
     this.haveSkeleton = !(typeof (animationClip) == "undefined" || animationClip === false);
@@ -33,15 +34,15 @@ InstancedGroup.prototype={
     updateGeometry:function(mesh){//用于和PM技术相结合
         var position=mesh.geometry.attributes.position,//网格
             uv=mesh.geometry.attributes.uv,//贴图
-            skinIndex=mesh.geometry.attributes.skinIndex,//骨骼
-            skinWeight=mesh.geometry.attributes.skinWeight;
+            skinIndex=mesh.geometry.attributes.skinIndex;//骨骼
+            //skinWeight=mesh.geometry.attributes.skinWeight;
         //position.array[3*440]+=0.1;
         this.mesh.geometry.setAttribute('position', position);
         this.mesh.geometry.setAttribute('inUV',uv);
         this.mesh.geometry.setAttribute('skinIndex',skinIndex);
         //this.mesh.geometry.setAttribute('skinWeight',skinWeight);
     },
-    setGeometry:function(geometryNew){//更新网格//用于和PM技术相结合
+    initGeometry:function(geometryNew){
         var geometryTemp= new THREE.InstancedBufferGeometry();
         geometryTemp.instanceCount = this.instanceCount;
         geometryTemp.setAttribute('position', geometryNew.attributes.position);//Float32Array
@@ -67,7 +68,7 @@ InstancedGroup.prototype={
         if(this.mesh)this.mesh.geometry=geometryTemp;
         return geometryTemp;
     },
-    setMaterial:function(uniforms,texSrc,textNum,colors,texFlipY){
+    initMaterial:function(uniforms,texSrc,textNum,colors,texFlipY){
         var canvas=new CanvasControl(textNum,1,colors,texFlipY);//绘制合并纹理贴图的地方
         uniforms.text0={type: 't', value: canvas.getTex()};
 
@@ -97,6 +98,40 @@ InstancedGroup.prototype={
                         loadNextMap(tex_i);
                     },100)
             })
+        }
+    },
+    initAnimation:function(uniforms){
+        var scope=this;
+        updateAnimation();
+        function updateAnimation() {//每帧更新一次动画
+            requestAnimationFrame(updateAnimation);
+            scope.time=(scope.time+1.0)%60000;
+            uniforms.time={value: scope.time};
+        }
+
+        uniforms.time={value: 0.0};
+        uniforms.animationData={type: 't', value:[]};
+        uniforms.animationDataLength={value:0};
+        this.animationData=[];
+        this.animationConfig=[];
+        var animationDataLength=0;
+
+        this.animationConfig=this.crowdData_json.config;
+        for(i=0;i<scope.animationConfig.length;i++){
+            animationDataLength+=this.animationConfig[i];
+            this.animationData= this.animationData.concat(this.crowdData_json.animation[i]);
+        }
+        uniforms.animationDataLength={value:animationDataLength};
+        uniforms.animationData=getTex(this.animationData);
+
+
+        function getTex(arr) {//(str) {
+            //var data0=JSON.parse(str).data;//204
+            var data = new Float32Array( arr.length);//1944
+            var width = 1 , height = data.length/3 ;//648
+            for(var i=0;i<data.length;i++)data[i]=arr[i];//972
+            var tex=new THREE.DataTexture(data, width, height, THREE.RGBFormat,THREE.FloatType);
+            return {"value":tex};
         }
     },
     init:function (texSrc,textNum,colors,texFlipY){//纹理贴图资源路径，贴图中包含纹理的个数
@@ -136,46 +171,9 @@ InstancedGroup.prototype={
             textNum:{value: textNum},
             neckPosition:{value: (this.neckPosition===undefined)?0.59:this.neckPosition}
         };
-        if(this.haveSkeleton){
-            updateAnimation();
-            function updateAnimation() {//每帧更新一次动画
-                requestAnimationFrame(updateAnimation);
-                scope.time=(scope.time+1.0)%60000;
-                uniforms.time={value: scope.time};
-            }
+        if(this.haveSkeleton)this.initAnimation(uniforms);
 
-            uniforms.time={value: 0.0};
-            uniforms.animationData={type: 't', value:[]};
-            uniforms.animationDataLength={value:0};
-            this.animationData=[];
-            this.animationConfig=[];
-            var animationDataLength=0;
-            var loader = new THREE.XHRLoader(THREE.DefaultLoadingManager);
-            loader.load("json/animationConfig.json", function(str){
-                scope.animationConfig=JSON.parse(str).data;
-                updateAnimationData(0);
-            });
-
-            function updateAnimationData(index) {
-                loader.load("json/animationData"+index+".json", function(str){//dataTexture
-                    animationDataLength+=scope.animationConfig[index];
-                    uniforms.animationDataLength={value:animationDataLength};
-                    scope.animationData= scope.animationData.concat(JSON.parse(str).data);
-                    uniforms.animationData=getTex(scope.animationData);
-                    if(index+1<scope.animationConfig.length)updateAnimationData(index+1);
-                });
-            }
-            function getTex(arr) {//(str) {
-                //var data0=JSON.parse(str).data;//204
-                var data = new Float32Array( arr.length);//1944
-                var width = 1 , height = data.length/3 ;//648
-                for(var i=0;i<data.length;i++)data[i]=arr[i];//972
-                var tex=new THREE.DataTexture(data, width, height, THREE.RGBFormat,THREE.FloatType);
-                return {"value":tex};
-            }
-        }
-
-        var material=this.setMaterial(uniforms,texSrc,textNum,colors,texFlipY);
+        var material=this.initMaterial(uniforms,texSrc,textNum,colors,texFlipY);
         if(this.vertURL===undefined)this.vertURL=this.haveSkeleton?"shader/vertexBone.vert":"shader/vertex.vert";
         if(this.fragURL===undefined)this.fragURL="shader/fragment.frag";
         material.vertexShader=load(this.vertURL);
@@ -190,7 +188,7 @@ InstancedGroup.prototype={
         }
 
         this.mesh = new THREE.Mesh(
-            this.setGeometry(this.originMeshs[0].geometry),
+            this.initGeometry(this.originMeshs[0].geometry),
             material
         );
         this.mesh.frustumCulled=false;

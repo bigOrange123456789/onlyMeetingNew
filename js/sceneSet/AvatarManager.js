@@ -14,7 +14,8 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
 
     this.create1=function () {
         var loader = new THREE.XHRLoader(THREE.DefaultLoadingManager);
-        loader.load("json/textureSetData.json", function(str){//dataTexture
+        loader.load("json/crowdData.json", function(str){//dataTexture
+            var crowdData_json=JSON.parse(str);
             for(i=0;i<scope.positions.length;i++){//共有1677张椅子
                 scope.colors.push([
                     Math.random()/4 ,
@@ -24,7 +25,7 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
                 scope.animations[i]=Math.floor(Math.random()*3);
             }
 
-            var data=JSON.parse(str).data;//种类分布
+            var data=crowdData_json.textureSet;//种类分布
             for(i=0;i<data.length;i++){
                 if(data[i]%3===2){// 有1/3是女性
                     scope.sexs[i]=0;//女性
@@ -42,7 +43,7 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
             scope.obj.add(glbObj.scene.children[3].children[3]);
             console.log(glbObj.scene.children[3].children[3]);
             });*/
-            scope.createPeople_haveAnimation2();
+            scope.createPeople_haveAnimation2(crowdData_json);
             //this.analysis();
         });
     }
@@ -55,7 +56,7 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
         });
         scope.host();
     }
-    this.createPeople_haveAnimation2=function(){
+    this.createPeople_haveAnimation2=function(crowdData_json){
         //女性开始
         window.myClock_Female0=window.myClock;
         var pmLoader = new MyPMLoader(
@@ -71,7 +72,8 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
                 var peoples = new InstancedGroup(
                     scope.positions.length - scope.manNum,
                     [mesh],//这些mesh的网格应该一致
-                    true
+                    true,
+                    crowdData_json
                 );
                 peoples.init(
                     ["./img/texture/w/w0.jpg","./img/texture/w/w1.jpg","./img/texture/w/w2.jpg"],
@@ -121,7 +123,8 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
                 var peoples2 = new InstancedGroup(
                     scope.manNum,//908
                     [mesh2],//这些mesh的网格应该一致
-                    true
+                    true,
+                    crowdData_json
                 );
                 peoples2.neckPosition=0.68;
                 //peoples2.vertURL="shader/vertexBone2.vert";
@@ -151,7 +154,7 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
                 //console.log("男性模型加载时间"+(window.myClock-window.myClock_Male0));
                 var timeId2 = setInterval(function () {
                     mesh2 = pmLoader2.rootObject.children[0];
-                    peoples2.setGeometry(mesh2.geometry);
+                    peoples2.updateGeometry(mesh2);
                     console.log(pmLoader2.finished);
                     if (pmLoader2.finished) window.clearInterval(timeId2)
                 }, 1000);

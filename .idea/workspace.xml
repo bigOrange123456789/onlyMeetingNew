@@ -22,10 +22,17 @@
     <list default="true" id="b7b6123d-caec-4b82-a432-424a6b5be5dd" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/js/VideoManager.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/VideoManager.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/lib/instancedLib/InstancedGroup.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/lib/instancedLib/InstancedGroup.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/js/sceneSet/AvatarManager.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/sceneSet/AvatarManager.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/js/sceneSet/RoomManager.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/sceneSet/RoomManager.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/js/sceneSet/SeatManager.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/sceneSet/SeatManager.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/json/animationConfig.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/json/animationData0.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/json/animationData1.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/json/animationData2.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/json/animationData3.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/json/textureSetData.json" beforeDir="false" afterPath="$PROJECT_DIR$/json/textureSetData.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/json/新建文件夹/animationData2.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/json/新建文件夹/animationData3.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/json/新建文件夹/animationData4.json" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -231,7 +238,7 @@
       <workItem from="1616386916743" duration="408000" />
       <workItem from="1616427381952" duration="5128000" />
       <workItem from="1616463469501" duration="19853000" />
-      <workItem from="1616509284286" duration="3164000" />
+      <workItem from="1616509284286" duration="6306000" />
     </task>
     <servers />
   </component>

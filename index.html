@@ -41,8 +41,6 @@
 
 		var myRoomManager = new RoomManager(myVideoManager);
 
-		/**/
-
 		var myMain = new Main();
 		myMain.start();
 		myMain.scene.add(myRoomManager.room);
@@ -89,8 +87,8 @@
 		var myAvatarManager = new AvatarManager(mySeatManager, myMain.camera);
 		myMain.scene.add(myAvatarManager.obj);
 
-		myRoomManager.create1();//外壳
 		myAvatarManager.create1();//听众
+		myRoomManager.create1();//外壳
 		mySeatManager.create();//椅子
 		myRoomManager.create2();//内部细节
 		myAvatarManager.create2();//嘉宾
