@@ -27,11 +27,19 @@ RoomManager.prototype={
             1,1,1,1,1,0,0,1,1,1,1,1,0,1,1,0,1,0,1,1,0,0,0,1,0,1,1,1,0,0,0,0,1,0,1,0,0,0,0
         ];
         var roomFileName="ConferenceRoom";
-        for (var i = 0; i < mapsIndex.length; i++)
-            if (mapsIndex[i] === 1)
-                this.myLoad2(
-                    'myModel/room/' + roomFileName + i + '.jpg'
+        var scope=this;
+        function load(tex_url_index) {
+            if (tex_url_index >= mapsIndex.length) return;
+            else if (mapsIndex[tex_url_index] === 0) load(tex_url_index + 1);
+            else
+                scope.myLoad2(
+                    'myModel/room/' + roomFileName + tex_url_index + '.jpg',
+                    function () {
+                        load(tex_url_index + 1)
+                    }
                 );
+        }
+        load(0);
     },
     myLoad1:function(url,mapUrl){
         var scope=this;
@@ -52,7 +60,7 @@ RoomManager.prototype={
             scope.room.add(scene);
         })
     },
-    myLoad2:function(mapUrl){
+    myLoad2:function(mapUrl,finishFunction){
         var scope=this;
         var texture=THREE.ImageUtils.loadTexture( mapUrl,null,function () {
             texture.wrapS = THREE.RepeatWrapping;
@@ -64,6 +72,7 @@ RoomManager.prototype={
                     });
                 }
             });
+            if(finishFunction)finishFunction();
         });
     },
     myLoad_door:function(url){
