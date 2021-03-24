@@ -23,6 +23,7 @@ RoomManager.prototype={
                 //console.log(scope.resourceManager.getOneMapFileName())
             },1000)
         });
+        this.room.scale.set(10,10,10);
     },
     create1:function(){
         var scope=this;
@@ -30,7 +31,6 @@ RoomManager.prototype={
             requestAnimationFrame(function () {scope.create1();});
             return;
         }
-        this.room.scale.set(10,10,10);
         this.myLoad_door('myModel/room/door.gltf');
         this.myLoad1();
     },
@@ -40,7 +40,6 @@ RoomManager.prototype={
             requestAnimationFrame(function () {scope.create2();});
             return;
         }
-        this.room.scale.set(10,10,10);
         this.myLoad2();
     },
     myLoad1:function(){

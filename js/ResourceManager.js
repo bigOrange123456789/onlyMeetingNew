@@ -69,10 +69,15 @@ ResourceManager.prototype={
         return list;
     },
     getOneMapFileName:function(){
-
         var list=this.getMapList();
         if(list.length===0)return null;
-        var _map=this.getMapByName(list[0]);
+        var _map={interest:-1};//记录兴趣度最大的资源
+        for(i=0;i<list.length;i++){
+            var map=this.getMapByName(list[i]);
+            if(map.interest>_map.interest){
+                _map=map;
+            }
+        }
         _map.finishLoad=true;
         return _map.fileName;
     },
