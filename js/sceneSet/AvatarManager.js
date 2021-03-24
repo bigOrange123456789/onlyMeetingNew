@@ -12,7 +12,6 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
 
     this.camera=camera;
 
-
     this.create1=function (finishFunction0) {
         var loader = new THREE.XHRLoader(THREE.DefaultLoadingManager);
         loader.load("json/crowdData.json", function(str){//dataTexture

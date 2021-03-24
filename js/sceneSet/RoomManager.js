@@ -18,12 +18,7 @@ RoomManager.prototype={
         loader.load(this.url+"resourceInfo.json", function(str){//dataTexture
             var resourceInfo=JSON.parse(str);
             scope.resourceManager=new ResourceManager(resourceInfo,scope.camera);
-
-            scope.room.add(scope.resourceManager.testObj);
-            //console.log(scope.resourceManager);
-            setInterval(function () {
-                console.log(scope.resourceManager.getOneModelFileName());
-            },2000)
+            //scope.room.add(scope.resourceManager.testObj);
         });
     },
     create1:function(){
@@ -37,10 +32,7 @@ RoomManager.prototype={
 
         var mapsIndex=this.resourceManager.mapsIndex;
         var roomFileName="ConferenceRoom";
-        for(var i=0;i<mapsIndex.length;i++)
-                this.myLoad1('myModel/room/'+roomFileName+i+'.gltf',
-                    mapsIndex[i]===1?'myModel/room/'+roomFileName+i+'.jpg':null
-                );
+        this.myLoad1();
     },
     create2:function(){
         var scope=this;
@@ -67,6 +59,36 @@ RoomManager.prototype={
         load(0);
     },
     myLoad1:function(url,mapUrl){
+        var scope=this;
+        load(scope.resourceManager.getOneModelFileName());
+        function load(fileName) {
+            if(!fileName){
+                setTimeout(function () {
+                    load(scope.resourceManager.getOneModelFileName());
+                },100)
+                return;
+            }
+            scope.loader.load(scope.url+fileName, (gltf) => {
+                var scene=gltf.scene;
+                var mesh0=scene.children[0];
+                mesh0.mapUrl=mapUrl;
+                screenProcess(gltf);
+                scope.room.add(scene);
+                load(scope.resourceManager.getOneModelFileName());
+            });
+            function screenProcess(gltf) {
+                for(var i=0;i<gltf.scene.children.length;i++){
+                    if( gltf.scene.children[i].name==="室内-小显示器屏幕（非）"||
+                        gltf.scene.children[i].name==="室内-大显示器屏幕（非）"){//室内-大显示器屏幕（非）
+                        var screen=gltf.scene.children[i];
+                        if(scope.myVideoManager.video)scope.myVideoManager.init();
+                        scope.myVideoManager.setMaterial(screen);
+                    }
+                }
+            }
+        }
+    },
+    myLoad1_:function(url,mapUrl){
         var scope=this;
         this.loader.load(url, (gltf) => {
             var scene=gltf.scene;
