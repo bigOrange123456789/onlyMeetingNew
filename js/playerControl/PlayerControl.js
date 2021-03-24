@@ -48,6 +48,24 @@ PlayerControl.prototype={
         //console.log(center);
         return true;//相交
     },
+    cullingTest(scene){
+        var scope=this;
+        setInterval(function () {
+            scope.computeFrustumFromCamera();
+            scene.traverse(function (node) {
+                if(node  instanceof THREE.Mesh){
+                    node.geometry.computeBoundingSphere();
+                    node.frustumCulled=false;
+                    if(node.geometry.boundingSphere){
+                        node.visible=scope.intersectsSphere(node);
+                        //console.log(node)console.log(mesh.name+":"+node.visible)
+                    }else{
+                        node.geometry.computeBoundingSphere();
+                    }
+                }
+            })
+        },2000)
+    },
     showFrustum(scene){
 
         /*for(i=0;i<6;i++)

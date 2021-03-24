@@ -29,25 +29,25 @@
 	<script src="js/playerControl/PlayerControl.js"></script>
 	<script src="js/playerControl/PreviewManager.js"></script>
 
+	<script src="js/ResourceManager.js"></script>
 	<script src="js/ParamMeasure.js"></script>
 	<script src="js/Main.js"></script>
 
 	<script src="StereoEffect.js"></script>
 	<script  type="module">
 		//import { VRButton } from './js//lib/VRButton.js';//负责VR视觉
-		var myVideoManager = new VideoManager();
-		//myVideoManager.init();
-
-		var myRoomManager = new RoomManager(myVideoManager);
 
 		var myMain = new Main();
 		myMain.start();
-		myMain.scene.add(myRoomManager.room);
 		//document.body.appendChild( VRButton.createButton( myMain.renderer ) );
-		myMain.renderer.xr.enabled = true;
+		//myMain.renderer.xr.enabled = true;
 
 
-		new PlayerControl(myMain.camera);
+
+		var myVideoManager = new VideoManager();
+		var myRoomManager = new RoomManager(myVideoManager,myMain.camera);
+		myMain.scene.add(myRoomManager.room);
+
 		//var fru=pc0.computeFrustumFromCamera();
 		//console.log(fru)
 		//pc0.showFrustum(myMain.scene)
@@ -60,23 +60,8 @@
 					mesh.position.set(i*30,k*30,j*30);
 					myMain.scene.add(mesh);
 					console.log(mesh)
-				}
-		setInterval(function () {
-			pc0.computeFrustumFromCamera();
-			myMain.scene.traverse(function (node) {
-				if(node  instanceof THREE.Mesh){
-					node.geometry.computeBoundingSphere();
-					node.frustumCulled=false;
-					if(node.geometry.boundingSphere){
-						node.visible=pc0.intersectsSphere(node);
-						console.log(node)
-						console.log(mesh.name+":"+node.visible)
-					}else{
-						node.geometry.computeBoundingSphere();
-					}
-				}
-			})
-		},2000)*/
+				}*/
+		new PlayerControl(myMain.camera);//.cullingTest(myMain.scene)
 
 
 		var mySeatManager = new SeatManager();

@@ -84,8 +84,9 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
                     if (scope.sexs[i] === 1) {
                         peoples2.rotationSet(index, [Math.PI / 2, 0, 3 * Math.PI / 2]);
                         peoples2.positionSet(index, [scope.positions[i][0] + 1.8, scope.positions[i][1] + 1.5, scope.positions[i][2]]);
-                        peoples2.scaleSet(index, [0.04 + Math.random() * 0.01,  0.04 + Math.random() * 0.01,0.04 + Math.random() * 0.01]);//最后一个是高
-
+                        var symm=1;
+                        if(Math.random()<0.5)symm=-1;
+                        peoples2.scaleSet(index, [(0.04 + Math.random() * 0.01)*symm,  0.04 + Math.random() * 0.01,0.04 + Math.random() * 0.01]);//最后一个是高
                         peoples2.animationSet(index, scope.animations[i]);
                         peoples2.colorSet(index, scope.colors[i]);
                         peoples2.speedSet(index, 0.6 + Math.random() * 0.4);
@@ -139,7 +140,9 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
                     if (scope.sexs[i] === 0) {
                         peoples.rotationSet(index, [Math.PI / 2, 0, 3 * Math.PI / 2]);
                         peoples.positionSet(index, [scope.positions[i][0] + 1.8, scope.positions[i][1] + 1.5, scope.positions[i][2]]);
-                        peoples.scaleSet(index, [0.04 + Math.random() * 0.01, 0.04 + Math.random() * 0.01, 0.04 + Math.random() * 0.01]);
+                        var symm=1;
+                        if(Math.random()<0.5)symm=-1;
+                        peoples.scaleSet(index, [(0.04 + Math.random() * 0.01)*symm, 0.04 + Math.random() * 0.01, 0.04 + Math.random() * 0.01]);
 
                         peoples.animationSet(index, scope.animations[i]);//
                         peoples.colorSet(index, scope.colors[i]);

@@ -1,18 +1,41 @@
-function RoomManager(myVideoManager0){//myVideoManager_
+function RoomManager(myVideoManager0,camera){//myVideoManager_
     this.loader= new THREE.GLTFLoader();
     this.room=new THREE.Object3D();
     //this.room.visible=false;
     this.myVideoManager=myVideoManager0;
     this.mid=20;
+    this.url="./myModel/room/";
+    this.camera=camera;
+
+    this.resourceManager;
+
+    this.init();
 }
 RoomManager.prototype={
+    init:function(){
+        var scope=this;
+        var loader = new THREE.XHRLoader(THREE.DefaultLoadingManager);
+        loader.load(this.url+"resourceInfo.json", function(str){//dataTexture
+            var resourceInfo=JSON.parse(str);
+            scope.resourceManager=new ResourceManager(resourceInfo,scope.camera);
+
+            scope.room.add(scope.resourceManager.testObj);
+            //console.log(scope.resourceManager);
+            setInterval(function () {
+                //console.log(scope.resourceManager.getList());
+            },2000)
+        });
+    },
     create1:function(){
+        var scope=this;
+        if(!this.resourceManager){
+            requestAnimationFrame(function () {scope.create1();});
+            return;
+        }
         this.room.scale.set(10,10,10);
         this.myLoad_door('myModel/room/door.gltf');
 
-        var mapsIndex=[
-            1,1,1,1,1,0,0,1,1,1,1,1,0,1,1,0,1,0,1,1,0,0,0,1,0,1,1,1,0,0,0,0,1,0,1,0,0,0,0
-        ];
+        var mapsIndex=this.resourceManager.mapsIndex;
         var roomFileName="ConferenceRoom";
         for(var i=0;i<mapsIndex.length;i++)
                 this.myLoad1('myModel/room/'+roomFileName+i+'.gltf',
@@ -20,24 +43,26 @@ RoomManager.prototype={
                 );
     },
     create2:function(){
-        this.room.scale.set(10,10,10);
-        this.myLoad_door('myModel/room/door.gltf');
-
-        var mapsIndex=[
-            1,1,1,1,1,0,0,1,1,1,1,1,0,1,1,0,1,0,1,1,0,0,0,1,0,1,1,1,0,0,0,0,1,0,1,0,0,0,0
-        ];
-        var roomFileName="ConferenceRoom";
         var scope=this;
+        if(!this.resourceManager){
+            requestAnimationFrame(function () {scope.create2();});
+            return;
+        }
+        this.room.scale.set(10,10,10);
+
+        var mapsIndex=this.resourceManager.mapsIndex;
+        var roomFileName="ConferenceRoom";
         function load(tex_url_index) {
-            if (tex_url_index >= mapsIndex.length) return;
-            else if (mapsIndex[tex_url_index] === 0) load(tex_url_index + 1);
-            else
-                scope.myLoad2(
-                    'myModel/room/' + roomFileName + tex_url_index + '.jpg',
-                    function () {
-                        load(tex_url_index + 1)
-                    }
-                );
+            if (tex_url_index < mapsIndex.length) {
+                if (mapsIndex[tex_url_index] === 0) load(tex_url_index + 1);
+                else
+                    scope.myLoad2(
+                        'myModel/room/' + roomFileName + tex_url_index + '.jpg',
+                        function () {
+                            load(tex_url_index + 1)
+                        }
+                    );
+            }
         }
         load(0);
     },
@@ -46,6 +71,7 @@ RoomManager.prototype={
         this.loader.load(url, (gltf) => {
             var scene=gltf.scene;
             var mesh0=scene.children[0];
+            console.log(mesh0)
             mesh0.mapUrl=mapUrl;
             //console.log(url+":"+gltf.scene.children[0].name);
             for(var i=0;i<gltf.scene.children.length;i++){

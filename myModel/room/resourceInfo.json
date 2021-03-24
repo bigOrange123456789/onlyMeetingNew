@@ -1,0 +1,599 @@
+{
+  "maps": [
+    {
+      "fileName": "ConferenceRoom0.jpg",
+      "modelName": "ConferenceRoom0.gltf"
+    },
+    {
+      "fileName": "ConferenceRoom1.jpg",
+      "modelName": "ConferenceRoom1.gltf"
+    },
+    {
+      "fileName": "ConferenceRoom2.jpg",
+      "modelName": "ConferenceRoom2.gltf"
+    },
+    {
+      "fileName": "ConferenceRoom3.jpg",
+      "modelName": "ConferenceRoom3.gltf"
+    },
+    {
+      "fileName": "ConferenceRoom4.jpg",
+      "modelName": "ConferenceRoom4.gltf"
+    },
+    {
+      "fileName": "ConferenceRoom7.jpg",
+      "modelName": "ConferenceRoom7.gltf"
+    },
+    {
+      "fileName": "ConferenceRoom8.jpg",
+      "modelName": "ConferenceRoom8.gltf"
+    },
+    {
+      "fileName": "ConferenceRoom9.jpg",
+      "modelName": "ConferenceRoom9.gltf"
+    },
+    {
+      "fileName": "ConferenceRoom10.jpg",
+      "modelName": "ConferenceRoom10.gltf"
+    },
+    {
+      "fileName": "ConferenceRoom11.jpg",
+      "modelName": "ConferenceRoom11.gltf"
+    },
+    {
+      "fileName": "ConferenceRoom13.jpg",
+      "modelName": "ConferenceRoom13.gltf"
+    },
+    {
+      "fileName": "ConferenceRoom14.jpg",
+      "modelName": "ConferenceRoom14.gltf"
+    },
+    {
+      "fileName": "ConferenceRoom16.jpg",
+      "modelName": "ConferenceRoom16.gltf"
+    },
+    {
+      "fileName": "ConferenceRoom18.jpg",
+      "modelName": "ConferenceRoom18.gltf"
+    },
+    {
+      "fileName": "ConferenceRoom19.jpg",
+      "modelName": "ConferenceRoom19.gltf"
+    },
+    {
+      "fileName": "ConferenceRoom23.jpg",
+      "modelName": "ConferenceRoom23.gltf"
+    },
+    {
+      "fileName": "ConferenceRoom25.jpg",
+      "modelName": "ConferenceRoom25.gltf"
+    },
+    {
+      "fileName": "ConferenceRoom26.jpg",
+      "modelName": "ConferenceRoom26.gltf"
+    },
+    {
+      "fileName": "ConferenceRoom27.jpg",
+      "modelName": "ConferenceRoom27.gltf"
+    },
+    {
+      "fileName": "ConferenceRoom32.jpg",
+      "modelName": "ConferenceRoom32.gltf"
+    },
+    {
+      "fileName": "ConferenceRoom34.jpg",
+      "modelName": "ConferenceRoom34.gltf"
+    }
+  ],
+  "models": [
+    {
+      "fileName": "ConferenceRoom0.gltf",
+      "interest": 39547125362.31367,
+      "spaceVolume": 13722852500722.842,
+      "boundingSphere": {
+        "x": 9934.00048828125,
+        "y": 13729.75048828125,
+        "z": 1500.00048828125,
+        "r": 28359.913471114683
+      },
+      "MapName": "ConferenceRoom0.jpg"
+    },
+    {
+      "fileName": "ConferenceRoom1.gltf",
+      "interest": 29148047931.05864,
+      "spaceVolume": 20199597216223.637,
+      "boundingSphere": {
+        "x": -11092.14453125,
+        "y": 5629.74951171875,
+        "z": 7061.250244140625,
+        "r": 33955.076163258505
+      },
+      "MapName": "ConferenceRoom1.jpg"
+    },
+    {
+      "fileName": "ConferenceRoom2.gltf",
+      "interest": 17708785113.626125,
+      "spaceVolume": 9137733118631.08,
+      "boundingSphere": {
+        "x": 2076.86767578125,
+        "y": 12191.98193359375,
+        "z": -1472.349609375,
+        "r": 19660.540667722842
+      },
+      "MapName": "ConferenceRoom2.jpg"
+    },
+    {
+      "fileName": "ConferenceRoom3.gltf",
+      "interest": 16950861618.428644,
+      "spaceVolume": 10153566109438.758,
+      "boundingSphere": {
+        "x": 7922.00634765625,
+        "y": 4049.999133407837,
+        "z": 500.0087890625,
+        "r": 27358.437234524594
+      },
+      "MapName": "ConferenceRoom3.jpg"
+    },
+    {
+      "fileName": "ConferenceRoom4.gltf",
+      "interest": 16162717757.53538,
+      "spaceVolume": 25941162000844.285,
+      "boundingSphere": {
+        "x": 9784.2509765625,
+        "y": 49.25,
+        "z": -7729.750846862793,
+        "r": 31279.524212137745
+      },
+      "MapName": "ConferenceRoom4.jpg"
+    },
+    {
+      "fileName": "ConferenceRoom5.gltf",
+      "interest": 12978872862.498281,
+      "spaceVolume": 3114929486999.5874,
+      "boundingSphere": {
+        "x": -100.37060546875,
+        "y": 8035.052734375,
+        "z": 0,
+        "r": 13890.807236222154
+      },
+      "MapName": ""
+    },
+    {
+      "fileName": "ConferenceRoom6.gltf",
+      "interest": 12376008727.470465,
+      "spaceVolume": 18007092698469.527,
+      "boundingSphere": {
+        "x": 4958.9990234375,
+        "y": -1385.25,
+        "z": -4005.749771118164,
+        "r": 35522.07990227865
+      },
+      "MapName": ""
+    },
+    {
+      "fileName": "ConferenceRoom7.gltf",
+      "interest": 11351036070.94531,
+      "spaceVolume": 4767435149797.03,
+      "boundingSphere": {
+        "x": 1506.5556640625,
+        "y": -3546.619384765625,
+        "z": 5525.199035644531,
+        "r": 16293.015039656722
+      },
+      "MapName": "ConferenceRoom7.jpg"
+    },
+    {
+      "fileName": "ConferenceRoom8.gltf",
+      "interest": 10714681151.715088,
+      "spaceVolume": 428587246068.6035,
+      "boundingSphere": {
+        "x": 25353.5,
+        "y": 11075,
+        "z": 845.3767700195312,
+        "r": 15101.886243769412
+      },
+      "MapName": "ConferenceRoom8.jpg"
+    },
+    {
+      "fileName": "ConferenceRoom9.gltf",
+      "interest": 7799348796.157032,
+      "spaceVolume": 5599932435640.749,
+      "boundingSphere": {
+        "x": 27234.2490234375,
+        "y": 13729.7548828125,
+        "z": -1225.2451171875,
+        "r": 18053.59719782717
+      },
+      "MapName": "ConferenceRoom9.jpg"
+    },
+    {
+      "fileName": "ConferenceRoom10.gltf",
+      "interest": 4373121200.44085,
+      "spaceVolume": 2991214901101.5415,
+      "boundingSphere": {
+        "x": 758.9697265625,
+        "y": 15404.15087890625,
+        "z": -1499.99951171875,
+        "r": 19592.830472527567
+      },
+      "MapName": "ConferenceRoom10.jpg"
+    },
+    {
+      "fileName": "ConferenceRoom11.gltf",
+      "interest": 4186180583.2258754,
+      "spaceVolume": 2963815852923.92,
+      "boundingSphere": {
+        "x": 30847.01171875,
+        "y": 7581.76953125,
+        "z": -3088.01171875,
+        "r": 25005.59397461687
+      },
+      "MapName": "ConferenceRoom11.jpg"
+    },
+    {
+      "fileName": "ConferenceRoom12.gltf",
+      "interest": 3371892161.0766773,
+      "spaceVolume": 161850823731.6805,
+      "boundingSphere": {
+        "x": -39.825439453125,
+        "y": 1237.5,
+        "z": 11426.381042480469,
+        "r": 12857.062473947326
+      },
+      "MapName": ""
+    },
+    {
+      "fileName": "ConferenceRoom13.gltf",
+      "interest": 3167096373.780288,
+      "spaceVolume": 1950931366248.6575,
+      "boundingSphere": {
+        "x": 88.75390625,
+        "y": -1486.4765625,
+        "z": -1399.4984741210938,
+        "r": 19473.545350013374
+      },
+      "MapName": "ConferenceRoom13.jpg"
+    },
+    {
+      "fileName": "ConferenceRoom14.gltf",
+      "interest": 2537904145.6956015,
+      "spaceVolume": 18163779970743.418,
+      "boundingSphere": {
+        "x": 17141.49609375,
+        "y": 4049.998002056498,
+        "z": 7399.75634765625,
+        "r": 35867.36378060042
+      },
+      "MapName": "ConferenceRoom14.jpg"
+    },
+    {
+      "fileName": "ConferenceRoom15.gltf",
+      "interest": 2289031957.271109,
+      "spaceVolume": 2472154513852.798,
+      "boundingSphere": {
+        "x": -640.00146484375,
+        "y": 17059.00146484375,
+        "z": -1807.09130859375,
+        "r": 20901.107899035316
+      },
+      "MapName": ""
+    },
+    {
+      "fileName": "ConferenceRoom16.gltf",
+      "interest": 1659530677.0246782,
+      "spaceVolume": 149357760932.22104,
+      "boundingSphere": {
+        "x": -12136.333984375,
+        "y": -662.4994964599609,
+        "z": 800.0498046875,
+        "r": 11566.39666166351
+      },
+      "MapName": "ConferenceRoom16.jpg"
+    },
+    {
+      "fileName": "ConferenceRoom17.gltf",
+      "interest": 1551818622.673427,
+      "spaceVolume": 716940203675.1233,
+      "boundingSphere": {
+        "x": -2827.123046875,
+        "y": -16224.5,
+        "z": -1557.4975128173828,
+        "r": 22740.232682035952
+      },
+      "MapName": ""
+    },
+    {
+      "fileName": "ConferenceRoom18.gltf",
+      "interest": 884047140.4431951,
+      "spaceVolume": 2441738201904.105,
+      "boundingSphere": {
+        "x": -8428.4990234375,
+        "y": -1500.001953125,
+        "z": -11734.496337890625,
+        "r": 13981.979453950371
+      },
+      "MapName": "ConferenceRoom18.jpg"
+    },
+    {
+      "fileName": "ConferenceRoom19.gltf",
+      "interest": 740236773.1330249,
+      "spaceVolume": 259082870596.55872,
+      "boundingSphere": {
+        "x": -13386.33447265625,
+        "y": -662.4994964599609,
+        "z": 800.0498046875,
+        "r": 11815.150638788538
+      },
+      "MapName": "ConferenceRoom19.jpg"
+    },
+    {
+      "fileName": "ConferenceRoom20.gltf",
+      "interest": 600000000,
+      "spaceVolume": 14400000000,
+      "boundingSphere": {
+        "x": 0,
+        "y": 50,
+        "z": 0,
+        "r": 9178.916058010336
+      },
+      "MapName": ""
+    },
+    {
+      "fileName": "ConferenceRoom21.gltf",
+      "interest": 584117810.4412129,
+      "spaceVolume": 616828407825.9208,
+      "boundingSphere": {
+        "x": -19448.25,
+        "y": -14625.99609375,
+        "z": -5419.2471923828125,
+        "r": 8097.500760843764
+      },
+      "MapName": ""
+    },
+    {
+      "fileName": "ConferenceRoom22.gltf",
+      "interest": 584117728.6204273,
+      "spaceVolume": 616828321423.1711,
+      "boundingSphere": {
+        "x": -19448.248046875,
+        "y": 11624.498046875,
+        "z": -5419.250732421875,
+        "r": 8097.5000773132815
+      },
+      "MapName": ""
+    },
+    {
+      "fileName": "ConferenceRoom23.gltf",
+      "interest": 451121130.2345644,
+      "spaceVolume": 3247621016558.6294,
+      "boundingSphere": {
+        "x": 21383.12890625,
+        "y": 8400.650299072266,
+        "z": -1287.580078125,
+        "r": 14383.325101034327
+      },
+      "MapName": "ConferenceRoom23.jpg"
+    },
+    {
+      "fileName": "ConferenceRoom24.gltf",
+      "interest": 366728101.5417099,
+      "spaceVolume": 2200368609.2502594,
+      "boundingSphere": {
+        "x": -20465.75,
+        "y": -1500,
+        "z": -2744.4986572265625,
+        "r": 12379.138960863043
+      },
+      "MapName": ""
+    },
+    {
+      "fileName": "ConferenceRoom25.gltf",
+      "interest": 298532743.2061392,
+      "spaceVolume": 981575659661.7858,
+      "boundingSphere": {
+        "x": -6013.34033203125,
+        "y": -1510.7529296875,
+        "z": -1574.5144653320312,
+        "r": 14289.375633915404
+      },
+      "MapName": "ConferenceRoom25.jpg"
+    },
+    {
+      "fileName": "ConferenceRoom26.gltf",
+      "interest": 80046130.30784234,
+      "spaceVolume": 2401383909.2352705,
+      "boundingSphere": {
+        "x": 294.2568359375,
+        "y": 699.9999847412109,
+        "z": 0,
+        "r": 7916.171250130931
+      },
+      "MapName": "ConferenceRoom26.jpg"
+    },
+    {
+      "fileName": "ConferenceRoom27.gltf",
+      "interest": 57303879.02754074,
+      "spaceVolume": 43092517028.71064,
+      "boundingSphere": {
+        "x": 15196.47705078125,
+        "y": 1572.53369140625,
+        "z": 4664.542053222656,
+        "r": 8323.00292474868
+      },
+      "MapName": "ConferenceRoom27.jpg"
+    },
+    {
+      "fileName": "ConferenceRoom28.gltf",
+      "interest": 10996359.681233827,
+      "spaceVolume": 30613865352.554974,
+      "boundingSphere": {
+        "x": 23539.736328125,
+        "y": 13053.55859375,
+        "z": -1329.420654296875,
+        "r": 8654.54778226742
+      },
+      "MapName": ""
+    },
+    {
+      "fileName": "ConferenceRoom29.gltf",
+      "interest": 7558204.1005859375,
+      "spaceVolume": 151164082.01171875,
+      "boundingSphere": {
+        "x": 1499.9990234375,
+        "y": 405.5374755859375,
+        "z": -8051.439208984375,
+        "r": 8410.04929948253
+      },
+      "MapName": ""
+    },
+    {
+      "fileName": "ConferenceRoom30.gltf",
+      "interest": 4198363.586358636,
+      "spaceVolume": 244244000000,
+      "boundingSphere": {
+        "x": 22877.251953125,
+        "y": 11217.9189453125,
+        "z": -1499.9990234375,
+        "r": 10969.161317074337
+      },
+      "MapName": ""
+    },
+    {
+      "fileName": "ConferenceRoom31.gltf",
+      "interest": 3043670.789502096,
+      "spaceVolume": 1503573370.0140355,
+      "boundingSphere": {
+        "x": 15353.3037109375,
+        "y": 1572.229736328125,
+        "z": 4665.093322753906,
+        "r": 8242.945643824483
+      },
+      "MapName": ""
+    },
+    {
+      "fileName": "ConferenceRoom32.gltf",
+      "interest": 395695.3920040638,
+      "spaceVolume": 2501586268.2496915,
+      "boundingSphere": {
+        "x": -15012.46044921875,
+        "y": 8718.037841796875,
+        "z": -1187.2344055175781,
+        "r": 1250.0998285240528
+      },
+      "MapName": "ConferenceRoom32.jpg"
+    },
+    {
+      "fileName": "ConferenceRoom33.gltf",
+      "interest": 21780.916055810532,
+      "spaceVolume": 173506777.3005867,
+      "boundingSphere": {
+        "x": 1770.83154296875,
+        "y": 425.2599792480469,
+        "z": -8095.41943359375,
+        "r": 5848.301308768185
+      },
+      "MapName": ""
+    },
+    {
+      "fileName": "ConferenceRoom34.gltf",
+      "interest": 260.0507267474364,
+      "spaceVolume": 151869.62442050286,
+      "boundingSphere": {
+        "x": 119.6219596862793,
+        "y": 8.5,
+        "z": -53.3823356628418,
+        "r": 68.35414955462106
+      },
+      "MapName": "ConferenceRoom34.jpg"
+    },
+    {
+      "fileName": "ConferenceRoom35.gltf",
+      "interest": 0.00003117426125228564,
+      "spaceVolume": 0.38886773486101106,
+      "boundingSphere": {
+        "x": -0.37224042415618896,
+        "y": -2.432485342025757,
+        "z": 2.0092678666114807,
+        "r": 3.1565018717494087
+      },
+      "MapName": ""
+    },
+    {
+      "fileName": "ConferenceRoom36.gltf",
+      "interest": 1.6067105557064576e-8,
+      "spaceVolume": 0.000031620063736303086,
+      "boundingSphere": {
+        "x": 2.7029821556061506,
+        "y": 0.007751193828880787,
+        "z": 1.0699911657720804,
+        "r": 2.94836985584344
+      },
+      "MapName": ""
+    },
+    {
+      "fileName": "ConferenceRoom37.gltf",
+      "interest": 0,
+      "spaceVolume": 0,
+      "boundingSphere": {
+        "x": 15783.5732421875,
+        "y": 13156.498046875,
+        "z": -1499.9973754882812,
+        "r": 1075.7161716157768
+      },
+      "MapName": ""
+    },
+    {
+      "fileName": "ConferenceRoom38.gltf",
+      "interest": 0,
+      "spaceVolume": 0,
+      "boundingSphere": {
+        "x": 23545.525390625,
+        "y": 13247.119140625,
+        "z": -1325.71337890625,
+        "r": 8466.990573191542
+      },
+      "MapName": ""
+    }
+  ],
+  "mapsIndex": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    0,
+    0,
+    1,
+    1,
+    1,
+    1,
+    1,
+    0,
+    1,
+    1,
+    0,
+    1,
+    0,
+    1,
+    1,
+    0,
+    0,
+    0,
+    1,
+    0,
+    1,
+    1,
+    1,
+    0,
+    0,
+    0,
+    0,
+    1,
+    0,
+    1,
+    0,
+    0,
+    0,
+    0
+  ]
+}
