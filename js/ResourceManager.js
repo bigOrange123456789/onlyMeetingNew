@@ -7,6 +7,7 @@ function ResourceManager(resourceInfo,camera) {
     this.testObj=new THREE.Object3D();
     //
     this.init(resourceInfo,camera);
+    //每接收一次数据进行一次计算
 }
 ResourceManager.prototype={
     init:function (resourceInfo,camera) {
@@ -26,26 +27,43 @@ ResourceManager.prototype={
 
         this.mapsIndex=resourceInfo.mapsIndex;
         //开始测试
-        for(i=0;i<1;i++){
-        //for(i=0;i<this.models.length/10;i++){
+        //this.testObjMesh();
+        //完成测试
+    },
+    testObjMesh:function(){
+        for(i=0;i<this.models.length;i++){
             var r=this.models[i].boundingSphere.r;
-            var geometry= new THREE.SphereGeometry(0.001*28359, 60, 60);//(r,60,16);
+            var geometry= new THREE.SphereGeometry(r, 60, 60);//(r,60,16);
             var material = new THREE.MeshNormalMaterial();
             var mesh= new THREE.Mesh(geometry, material);
-            /*mesh.position.set(
+            mesh.position.set(
                 this.models[i].boundingSphere.x,
                 this.models[i].boundingSphere.y,
                 this.models[i].boundingSphere.z
-            );*/
+            );
             this.testObj.add(mesh);
         }
-        //完成测试
     },
-    getList:function(){
-        this.update();
+    getOneModelFileName:function(){
+        var list=this.getList();
+        if(list.length===0)return null;
+        var _model= {interest:-1};//记录兴趣度最大的资源
+
+
+        for(i=0;i<list.length;i++){
+            var model=this.getModelByName(list[i]);
+            if(model.interest>_model.interest){
+                _model=model;
+            }
+        }
+        _model.finishLoad=true;
+        return _model.fileName;
+    },
+    getList:function(){//返回在视锥内且未被加载的资源列表
+        this.update();//计算每个模型的inView
         var list=[];
         for(i=0;i<this.models.length;i++){
-            if(this.models[i].inView)
+            if(this.models[i].inView&&!this.models[i].finishLoad)
                 list.push(this.models[i].fileName);
         }
         return list;
@@ -91,7 +109,7 @@ ResourceManager.prototype={
                 return this.maps[i];
         }
     },
-    getModeByName:function (name) {
+    getModelByName:function (name) {
         for(i=0;i<this.models.length;i++){
             if(this.models[i].fileName===name)
                 return this.models[i];

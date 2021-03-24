@@ -22,7 +22,7 @@ RoomManager.prototype={
             scope.room.add(scope.resourceManager.testObj);
             //console.log(scope.resourceManager);
             setInterval(function () {
-                //console.log(scope.resourceManager.getList());
+                console.log(scope.resourceManager.getOneModelFileName());
             },2000)
         });
     },
@@ -71,7 +71,6 @@ RoomManager.prototype={
         this.loader.load(url, (gltf) => {
             var scene=gltf.scene;
             var mesh0=scene.children[0];
-            console.log(mesh0)
             mesh0.mapUrl=mapUrl;
             //console.log(url+":"+gltf.scene.children[0].name);
             for(var i=0;i<gltf.scene.children.length;i++){

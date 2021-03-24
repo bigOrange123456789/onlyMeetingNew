@@ -25,6 +25,20 @@ PlayerControl.prototype={
         return frustum;
     },
     intersectsSphere(mesh){
+        mesh.geometry.computeBoundingBox();
+
+        var box=mesh.geometry.boundingBox;
+        var sx=mesh.scale.x;
+        var sy=mesh.scale.y;
+        var sz=mesh.scale.z;
+
+        var r=Math.pow(
+            sx*Math.pow(box.max.x-box.min.x,2)+
+            sy*Math.pow(box.max.y-box.min.y,2)+
+            sz*Math.pow(box.max.z-box.min.z,2),
+            0.5
+        )/2;
+
         return this.intersectsSphere0([
             mesh.geometry.boundingSphere.center.x
             +mesh.matrixWorld.elements[12],
@@ -32,7 +46,7 @@ PlayerControl.prototype={
             +mesh.matrixWorld.elements[13],
             mesh.geometry.boundingSphere.center.z
             +mesh.matrixWorld.elements[14]
-        ],mesh.geometry.boundingSphere.radius );
+        ], r );
     },
     intersectsSphere0(pos,radius ) {
         var center=new THREE.Vector3(pos[0],pos[1],pos[2])
