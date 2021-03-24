@@ -45,7 +45,7 @@ ResourceManager.prototype={
         }
     },
     getOneModelFileName:function(){
-        var list=this.getList();
+        var list=this.getModelList();
         if(list.length===0)return null;
         var _model= {interest:-1};//记录兴趣度最大的资源
 
@@ -59,12 +59,35 @@ ResourceManager.prototype={
         _model.finishLoad=true;
         return _model.fileName;
     },
-    getList:function(){//返回在视锥内且未被加载的资源列表
+    getModelList:function(){//返回在视锥内且未被加载的资源列表
         this.update();//计算每个模型的inView
         var list=[];
         for(i=0;i<this.models.length;i++){
             if(this.models[i].inView&&!this.models[i].finishLoad)
                 list.push(this.models[i].fileName);
+        }
+        return list;
+    },
+    getOneMapFileName:function(){
+
+        var list=this.getMapList();
+        if(list.length===0)return null;
+        var _map=this.getMapByName(list[0]);
+        _map.finishLoad=true;
+        return _map.fileName;
+    },
+    getMapList:function(){
+        //对应模型已被加载
+        // 且对应模型现在视锥内
+        // 且贴图本身未被加载的贴图资源列表
+        this.update();//计算每个模型的inView
+        var list=[];
+        for(let i=0;i<this.maps.length;i++){
+            var model=this.getModelByName(this.maps[i].modelName);
+            if(model.finishLoad
+                &&model.inView
+                &&!this.maps[i].finishLoad)
+                list.push(this.maps[i].fileName);
         }
         return list;
     },

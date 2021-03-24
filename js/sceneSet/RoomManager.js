@@ -19,6 +19,9 @@ RoomManager.prototype={
             var resourceInfo=JSON.parse(str);
             scope.resourceManager=new ResourceManager(resourceInfo,scope.camera);
             //scope.room.add(scope.resourceManager.testObj);
+            setInterval(function () {
+                //console.log(scope.resourceManager.getOneMapFileName())
+            },1000)
         });
     },
     create1:function(){
@@ -29,9 +32,6 @@ RoomManager.prototype={
         }
         this.room.scale.set(10,10,10);
         this.myLoad_door('myModel/room/door.gltf');
-
-        var mapsIndex=this.resourceManager.mapsIndex;
-        var roomFileName="ConferenceRoom";
         this.myLoad1();
     },
     create2:function(){
@@ -41,24 +41,9 @@ RoomManager.prototype={
             return;
         }
         this.room.scale.set(10,10,10);
-
-        var mapsIndex=this.resourceManager.mapsIndex;
-        var roomFileName="ConferenceRoom";
-        function load(tex_url_index) {
-            if (tex_url_index < mapsIndex.length) {
-                if (mapsIndex[tex_url_index] === 0) load(tex_url_index + 1);
-                else
-                    scope.myLoad2(
-                        'myModel/room/' + roomFileName + tex_url_index + '.jpg',
-                        function () {
-                            load(tex_url_index + 1)
-                        }
-                    );
-            }
-        }
-        load(0);
+        this.myLoad2();
     },
-    myLoad1:function(url,mapUrl){
+    myLoad1:function(){
         var scope=this;
         load(scope.resourceManager.getOneModelFileName());
         function load(fileName) {
@@ -66,16 +51,16 @@ RoomManager.prototype={
                 setTimeout(function () {
                     load(scope.resourceManager.getOneModelFileName());
                 },100)
-                return;
+            }else{
+                scope.loader.load(scope.url+fileName, (gltf) => {
+                    var scene=gltf.scene;
+                    var mesh0=scene.children[0];
+                    mesh0.nameFlag=fileName;
+                    screenProcess(gltf);
+                    scope.room.add(scene);
+                    load(scope.resourceManager.getOneModelFileName());
+                });
             }
-            scope.loader.load(scope.url+fileName, (gltf) => {
-                var scene=gltf.scene;
-                var mesh0=scene.children[0];
-                mesh0.mapUrl=mapUrl;
-                screenProcess(gltf);
-                scope.room.add(scene);
-                load(scope.resourceManager.getOneModelFileName());
-            });
             function screenProcess(gltf) {
                 for(var i=0;i<gltf.scene.children.length;i++){
                     if( gltf.scene.children[i].name==="室内-小显示器屏幕（非）"||
@@ -107,7 +92,32 @@ RoomManager.prototype={
             scope.room.add(scene);
         })
     },
-    myLoad2:function(mapUrl,finishFunction){
+    myLoad2:function(){
+        var scope=this;
+        load();
+        function load() {
+            var fileName=scope.resourceManager.getOneMapFileName();
+            if(!fileName){
+                setTimeout(function () {load();},100)
+            }else{
+                var myMap=scope.resourceManager.getMapByName(fileName);
+                var texture=THREE.ImageUtils.loadTexture( scope.url+fileName,null,function () {
+                    texture.wrapS = THREE.RepeatWrapping;
+                    texture.wrapT = THREE.RepeatWrapping;
+                    scope.room.traverse(node => {
+                        if (node.nameFlag===myMap.modelName) {
+                            node.material = new THREE.MeshBasicMaterial({
+                                map: texture,//设置颜色贴图属性值
+                            });
+                        }
+                    });
+                    load();
+                });
+            }
+        }
+
+    },
+    myLoad2_:function(mapUrl,finishFunction){
         var scope=this;
         var texture=THREE.ImageUtils.loadTexture( mapUrl,null,function () {
             texture.wrapS = THREE.RepeatWrapping;
