@@ -1,11 +1,12 @@
 function ResourceLoader(url,camera,unitProcess) {
     this.url;//资源路径
     this.camera;
+    this.cameraPre;
     this.unitProcess;
 
     this.object;
     this.loader;
-    this.resourceManager;
+    this.resourceList;
 
     this.init(url,camera,unitProcess);
 }
@@ -15,25 +16,42 @@ ResourceLoader.prototype={
         this.camera=camera;
         this.unitProcess=unitProcess;
 
+        this.cameraPre={};
         this.object=new THREE.Object3D();
         this.loader= new THREE.GLTFLoader();
         var scope=this;
         var loader = new THREE.XHRLoader(THREE.DefaultLoadingManager);
         loader.load(this.url+"resourceInfo.json", function(str){//dataTexture
             var resourceInfo=JSON.parse(str);
-            scope.resourceManager=new ResourceManager(resourceInfo,scope.camera);
+            scope.resourceList=new ResourceList(resourceInfo,scope.camera);
             scope.loadGeometry();
             scope.loadMap();
         });
     },
+    updateCameraPre:function(){
+        this.cameraPre.position=this.camera.position.clone();
+        this.cameraPre.rotation=this.camera.rotation.clone();
+    },
+    cameraHasChanged:function(){
+        return this.camera.position.x !== this.cameraPre.position.x ||
+            this.camera.position.y !== this.cameraPre.position.y ||
+            this.camera.position.z !== this.cameraPre.position.z ||
+            this.camera.rotation.x !== this.cameraPre.rotation.x ||
+            this.camera.rotation.y !== this.cameraPre.rotation.y ||
+            this.camera.rotation.z !== this.cameraPre.rotation.z;
+    },
     loadGeometry:function(){
         var scope=this;
-        load(scope.resourceManager.getOneModelFileName());
+        load(scope.resourceList.getOneModelFileName());
         function load(fileName) {
-            if(!fileName){
-                setTimeout(function () {
-                    load(scope.resourceManager.getOneModelFileName());
-                },100)
+            if(!fileName){//如果当前没有需要加载的几何文件
+                scope.updateCameraPre();
+                var myInterval=setInterval(function () {
+                    if(scope.cameraHasChanged()){//如果相机位置和角度发生了变化
+                        load(scope.resourceList.getOneModelFileName());
+                        clearInterval(myInterval);
+                    }
+                },100);
             }else{
                 scope.loader.load(scope.url+fileName, (gltf) => {
                     var scene=gltf.scene;
@@ -41,7 +59,7 @@ ResourceLoader.prototype={
                     mesh0.nameFlag=fileName;
                     scope.unitProcess(gltf);
                     scope.object.add(scene);
-                    load(scope.resourceManager.getOneModelFileName());
+                    load(scope.resourceList.getOneModelFileName());
                 });
             }
         }
@@ -50,11 +68,17 @@ ResourceLoader.prototype={
         var scope=this;
         load();
         function load() {
-            var fileName=scope.resourceManager.getOneMapFileName();
-            if(!fileName){
-                setTimeout(function () {load();},100)
+            var fileName=scope.resourceList.getOneMapFileName();
+            if(!fileName){//如果当前没有需要加载的贴图文件
+                scope.updateCameraPre();
+                var myInterval=setInterval(function () {
+                    if(scope.cameraHasChanged()){//如果相机位置和角度发生了变化
+                        load(scope.resourceList.getOneMapFileName());
+                        clearInterval(myInterval);
+                    }
+                },100);
             }else{
-                var myMap=scope.resourceManager.getMapByName(fileName);
+                var myMap=scope.resourceList.getMapByName(fileName);
                 var texture=THREE.ImageUtils.loadTexture( scope.url+fileName,null,function () {
                     texture.wrapS = THREE.RepeatWrapping;
                     texture.wrapT = THREE.RepeatWrapping;
@@ -72,7 +96,8 @@ ResourceLoader.prototype={
 
     },
 }
-function ResourceManager(resourceInfo,camera) {
+//下面这个对象主要负责资源列表的生成和管理
+function ResourceList(resourceInfo,camera) {
     this.maps;//说明信息
     this.models;//说明信息
     this.mapsIndex;
@@ -83,7 +108,7 @@ function ResourceManager(resourceInfo,camera) {
     this.init(resourceInfo,camera);
     //每接收一次数据进行一次计算
 }
-ResourceManager.prototype={
+ResourceList.prototype={
     init:function (resourceInfo,camera) {
         this.camera=camera;
         this.maps=resourceInfo.maps;

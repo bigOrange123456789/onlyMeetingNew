@@ -22,8 +22,7 @@
     <list default="true" id="b7b6123d-caec-4b82-a432-424a6b5be5dd" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/js/ResourceManager.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/ResourceManager.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/js/sceneSet/RoomManager.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/sceneSet/RoomManager.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/ResourceManager.js" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -239,7 +238,7 @@
       <workItem from="1617019295977" duration="649000" />
       <workItem from="1617360490289" duration="592000" />
       <workItem from="1617370555054" duration="1980000" />
-      <workItem from="1617437801127" duration="4537000" />
+      <workItem from="1617437801127" duration="7304000" />
     </task>
     <servers />
   </component>
@@ -272,6 +271,10 @@
     </state>
     <state x="523" y="120" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1617438112555" />
     <state x="785" y="184" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1609483059436" />
+    <state width="506" height="446" key="SwitcherDM" timestamp="1617444369603">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state width="506" height="446" key="SwitcherDM/0.0.1280.680@0.0.1280.680" timestamp="1617444369603" />
     <state x="335" y="92" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1609487862309">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
