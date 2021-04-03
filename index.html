@@ -71,11 +71,11 @@
 		var myAvatarManager = new AvatarManager(mySeatManager, myMain.camera);
 		myMain.scene.add(myAvatarManager.obj);
 
-		myRoomManager.create1();//网格
+		//myRoomManager.create1();//网格
 		myAvatarManager.create1(function () {
-			mySeatManager.create();//椅子
-			myRoomManager.create2();//贴图
+			//myRoomManager.create2();//贴图
 			myAvatarManager.create2();//嘉宾
+			mySeatManager.create();//椅子
 		});//听众
 
 

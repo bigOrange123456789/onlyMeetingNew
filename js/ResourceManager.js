@@ -1,3 +1,77 @@
+function ResourceLoader(url,camera,unitProcess) {
+    this.url;//资源路径
+    this.camera;
+    this.unitProcess;
+
+    this.object;
+    this.loader;
+    this.resourceManager;
+
+    this.init(url,camera,unitProcess);
+}
+ResourceLoader.prototype={
+    init:function (url,camera,unitProcess) {
+        this.url=url;
+        this.camera=camera;
+        this.unitProcess=unitProcess;
+
+        this.object=new THREE.Object3D();
+        this.loader= new THREE.GLTFLoader();
+        var scope=this;
+        var loader = new THREE.XHRLoader(THREE.DefaultLoadingManager);
+        loader.load(this.url+"resourceInfo.json", function(str){//dataTexture
+            var resourceInfo=JSON.parse(str);
+            scope.resourceManager=new ResourceManager(resourceInfo,scope.camera);
+            scope.loadGeometry();
+            scope.loadMap();
+        });
+    },
+    loadGeometry:function(){
+        var scope=this;
+        load(scope.resourceManager.getOneModelFileName());
+        function load(fileName) {
+            if(!fileName){
+                setTimeout(function () {
+                    load(scope.resourceManager.getOneModelFileName());
+                },100)
+            }else{
+                scope.loader.load(scope.url+fileName, (gltf) => {
+                    var scene=gltf.scene;
+                    var mesh0=scene.children[0];
+                    mesh0.nameFlag=fileName;
+                    scope.unitProcess(gltf);
+                    scope.object.add(scene);
+                    load(scope.resourceManager.getOneModelFileName());
+                });
+            }
+        }
+    },
+    loadMap:function(){
+        var scope=this;
+        load();
+        function load() {
+            var fileName=scope.resourceManager.getOneMapFileName();
+            if(!fileName){
+                setTimeout(function () {load();},100)
+            }else{
+                var myMap=scope.resourceManager.getMapByName(fileName);
+                var texture=THREE.ImageUtils.loadTexture( scope.url+fileName,null,function () {
+                    texture.wrapS = THREE.RepeatWrapping;
+                    texture.wrapT = THREE.RepeatWrapping;
+                    scope.object.traverse(node => {
+                        if (node.nameFlag===myMap.modelName) {
+                            node.material = new THREE.MeshBasicMaterial({
+                                map: texture,//设置颜色贴图属性值
+                            });
+                        }
+                    });
+                    load();
+                });
+            }
+        }
+
+    },
+}
 function ResourceManager(resourceInfo,camera) {
     this.maps;//说明信息
     this.models;//说明信息
