@@ -4,6 +4,8 @@ function ResourceLoader(url,camera,unitProcess) {
     this.cameraPre;
     this.unitProcess;
 
+    this.NumberWaitMaps;//等待加载的贴图个数
+
     this.object;
     this.loader;
     this.resourceList;
@@ -13,6 +15,7 @@ function ResourceLoader(url,camera,unitProcess) {
 }
 ResourceLoader.prototype={
     init:function (url,camera,unitProcess) {
+        this.NumberWaitMaps=0;//等待加载的贴图个数
         this.url=url;
         this.camera=camera;
         this.unitProcess=unitProcess;
@@ -63,6 +66,8 @@ ResourceLoader.prototype={
                 },100);
             }else{
                 scope.loader.load(scope.url+fileName, (gltf) => {
+                    if(scope.resourceList.getModelByName(fileName)!=="")
+                        scope.NumberWaitMaps++;//如果这个几何数据需要加载对应的贴图资源
                     var mesh0=gltf.scene.children[0];
                     mesh0.nameFlag=fileName;
                     scope.unitProcess(gltf);
@@ -78,31 +83,34 @@ ResourceLoader.prototype={
         function load() {
             var fileName=scope.resourceList.getOneMapFileName();
             if(!fileName){//如果当前没有需要加载的贴图文件
-                scope.updateCameraPre();
                 var myInterval=setInterval(function () {
-                    if(scope.cameraHasChanged()){//如果相机位置和角度发生了变化
+                    if(scope.NumberWaitMaps){//如果相机位置和角度发生了变化
                         load();
                         clearInterval(myInterval);
                     }
                 },100);
             }else{
                 var myMap=scope.resourceList.getMapByName(fileName);
-                var texture=THREE.ImageUtils.loadTexture( scope.url+fileName,null,function () {
-                    texture.wrapS = THREE.RepeatWrapping;
-                    texture.wrapT = THREE.RepeatWrapping;
-                    var myInterval2=setInterval(function () {
-                        var mesh0;
-                        for(i=0;i<scope.object.children.length;i++){
-                            if (scope.object.children[i].nameFlag===myMap.modelName)
-                                mesh0=scope.object.children[i];
-                        }
-                        if(mesh0){
-                            mesh0.material = new THREE.MeshBasicMaterial({map: texture});
-                            clearInterval(myInterval2);
-                        }
-                    },100)
-                    load();
-                });
+                new THREE.TextureLoader().load(
+                    scope.url+fileName,// resource URL
+                    function ( texture ) {// onLoad callback
+                        scope.NumberWaitMaps--;//加载了一个贴图资源
+                        texture.wrapS = THREE.RepeatWrapping;
+                        texture.wrapT = THREE.RepeatWrapping;
+                        var myInterval2=setInterval(function () {
+                            var mesh0;
+                            for(i=0;i<scope.object.children.length;i++){
+                                if (scope.object.children[i].nameFlag===myMap.modelName)
+                                    mesh0=scope.object.children[i];
+                            }
+                            if(mesh0){
+                                mesh0.material = new THREE.MeshBasicMaterial({map: texture});
+                                clearInterval(myInterval2);
+                            }
+                        },100)
+                        load();
+                    }
+                );
             }
         }
 
@@ -257,3 +265,4 @@ ResourceList.prototype={
         }
     },
 }
+
