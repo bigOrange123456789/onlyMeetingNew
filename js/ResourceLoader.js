@@ -7,6 +7,7 @@ function ResourceLoader(url,camera,unitProcess) {
     this.object;
     this.loader;
     this.resourceList;
+    this.test=false;//true;//
 
     this.init(url,camera,unitProcess);
 }
@@ -23,7 +24,14 @@ ResourceLoader.prototype={
         var loader = new THREE.XHRLoader(THREE.DefaultLoadingManager);
         loader.load(this.url+"resourceInfo.json", function(str){//dataTexture
             var resourceInfo=JSON.parse(str);
-            scope.resourceList=new ResourceList(resourceInfo,scope.camera);
+
+            scope.resourceList=new ResourceList();
+            if(scope.test){
+                scope.resourceList.testObj=new THREE.Object3D();
+                scope.object.add(scope.resourceList.testObj);
+            }
+            scope.resourceList.init(resourceInfo,scope.camera);
+
             scope.loadGeometry();
             scope.loadMap();
         });
@@ -42,24 +50,24 @@ ResourceLoader.prototype={
     },
     loadGeometry:function(){
         var scope=this;
-        load(scope.resourceList.getOneModelFileName());
-        function load(fileName) {
+        load();
+        function load() {
+            var fileName=scope.resourceList.getOneModelFileName();
             if(!fileName){//如果当前没有需要加载的几何文件
                 scope.updateCameraPre();
                 var myInterval=setInterval(function () {
                     if(scope.cameraHasChanged()){//如果相机位置和角度发生了变化
-                        load(scope.resourceList.getOneModelFileName());
+                        load();
                         clearInterval(myInterval);
                     }
                 },100);
             }else{
                 scope.loader.load(scope.url+fileName, (gltf) => {
-                    var scene=gltf.scene;
-                    var mesh0=scene.children[0];
+                    var mesh0=gltf.scene.children[0];
                     mesh0.nameFlag=fileName;
                     scope.unitProcess(gltf);
-                    scope.object.add(scene);
-                    load(scope.resourceList.getOneModelFileName());
+                    scope.object.add(mesh0);
+                    load();
                 });
             }
         }
@@ -73,7 +81,7 @@ ResourceLoader.prototype={
                 scope.updateCameraPre();
                 var myInterval=setInterval(function () {
                     if(scope.cameraHasChanged()){//如果相机位置和角度发生了变化
-                        load(scope.resourceList.getOneMapFileName());
+                        load();
                         clearInterval(myInterval);
                     }
                 },100);
@@ -82,13 +90,17 @@ ResourceLoader.prototype={
                 var texture=THREE.ImageUtils.loadTexture( scope.url+fileName,null,function () {
                     texture.wrapS = THREE.RepeatWrapping;
                     texture.wrapT = THREE.RepeatWrapping;
-                    scope.object.traverse(node => {
-                        if (node.nameFlag===myMap.modelName) {
-                            node.material = new THREE.MeshBasicMaterial({
-                                map: texture,//设置颜色贴图属性值
-                            });
+                    var myInterval2=setInterval(function () {
+                        var mesh0;
+                        for(i=0;i<scope.object.children.length;i++){
+                            if (scope.object.children[i].nameFlag===myMap.modelName)
+                                mesh0=scope.object.children[i];
                         }
-                    });
+                        if(mesh0){
+                            mesh0.material = new THREE.MeshBasicMaterial({map: texture});
+                            clearInterval(myInterval2);
+                        }
+                    },100)
                     load();
                 });
             }
@@ -97,25 +109,26 @@ ResourceLoader.prototype={
     },
 }
 //下面这个对象主要负责资源列表的生成和管理
-function ResourceList(resourceInfo,camera) {
+function ResourceList() {
     this.maps;//说明信息
     this.models;//说明信息
     this.mapsIndex;
     this.camera;
     this.frustum;
-    this.testObj=new THREE.Object3D();
+
+    this.testObj;//=new THREE.Object3D();
     //
-    this.init(resourceInfo,camera);
+    //this.init(resourceInfo,camera);
     //每接收一次数据进行一次计算
 }
 ResourceList.prototype={
     init:function (resourceInfo,camera) {
+        window.l=this;
         this.camera=camera;
         this.maps=resourceInfo.maps;
         //fileName;modelName;
         for(i=0;i<this.maps.length;i++){
             this.maps[i].finishLoad=false;
-            this.maps[i].modelFinishLoad=false;
         }
         this.models=resourceInfo.models;
         //fileName;interest;boundingSphere{x,y,z,r};MapName;spaceVolume;
@@ -125,9 +138,11 @@ ResourceList.prototype={
         }
 
         this.mapsIndex=resourceInfo.mapsIndex;
-        //开始测试
-        //this.testObjMesh();
-        //完成测试
+
+        if(this.testObj){//开始测试
+            this.testObjMesh();
+
+        }//完成测试
     },
     testObjMesh:function(){
         for(i=0;i<this.models.length;i++){
@@ -227,7 +242,6 @@ ResourceList.prototype={
                 return false;//不相交
             }
         }
-        //console.log(center);
         return true;//相交
     },
     getMapByName:function (name) {
