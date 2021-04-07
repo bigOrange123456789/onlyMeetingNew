@@ -1,4 +1,5 @@
-function RoomManager(myVideoManager0,camera){//myVideoManager_
+//import { ResourceLoader } from '../lib/ResourceLoader.js';
+function RoomManager(myVideoManager0,camera,ResourceLoader){//myVideoManager_
     this.loader= new THREE.GLTFLoader();
     this.room=new THREE.Object3D();
     //this.room.visible=false;
@@ -11,10 +12,10 @@ function RoomManager(myVideoManager0,camera){//myVideoManager_
 
     this.myResourceLoader;
 
-    this.init();
+    this.init(ResourceLoader);
 }
 RoomManager.prototype={
-    init:function(){
+    init:function(ResourceLoader){
         var scope=this;
         this.myResourceLoader=new ResourceLoader(
             this.url,

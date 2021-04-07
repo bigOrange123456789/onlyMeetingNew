@@ -21,7 +21,9 @@
   <component name="ChangeListManager">
     <list default="true" id="b7b6123d-caec-4b82-a432-424a6b5be5dd" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/js/ResourceLoader.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/ResourceLoader.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/sceneSet/RoomManager.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/sceneSet/RoomManager.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,7 +44,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../InstanceRenderingTest" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -53,6 +55,10 @@
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\gitHubRepositorys\onlyMeetingNew\js\sceneSet" />
+      <recent name="D:\gitHubRepositorys\onlyMeetingNew\js" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\gitHubRepositorys\onlyMeetingNew\test" />
     </key>
@@ -240,7 +246,8 @@
       <workItem from="1617437801127" duration="10762000" />
       <workItem from="1617458983311" duration="4072000" />
       <workItem from="1617537381741" duration="4533000" />
-      <workItem from="1617559020752" duration="1806000" />
+      <workItem from="1617559020752" duration="4823000" />
+      <workItem from="1617770841434" duration="7920000" />
     </task>
     <servers />
   </component>
@@ -268,10 +275,10 @@
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="93" y="93" width="1095" height="495" key="DiffContextDialog/0.0.1280.680@0.0.1280.680" timestamp="1615548510399" />
-    <state x="523" y="120" key="FileChooserDialogImpl" timestamp="1617560762829">
+    <state x="523" y="120" key="FileChooserDialogImpl" timestamp="1617699073667">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state x="523" y="120" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1617560762829" />
+    <state x="523" y="120" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1617699073667" />
     <state x="785" y="184" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1609483059436" />
     <state width="506" height="446" key="SwitcherDM" timestamp="1617444369603">
       <screen x="0" y="0" width="1280" height="680" />

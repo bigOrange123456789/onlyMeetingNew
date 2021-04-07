@@ -29,13 +29,15 @@
 	<script src="js/playerControl/PlayerControl.js"></script>
 	<script src="js/playerControl/PreviewManager.js"></script>
 
-	<script src="js/ResourceLoader.js"></script>
+
 	<script src="js/ParamMeasure.js"></script>
 	<script src="js/Main.js"></script>
 
 	<script src="StereoEffect.js"></script>
 	<script  type="module">
 		//import { VRButton } from './js//lib/VRButton.js';//负责VR视觉
+
+		import {ResourceLoader} from './js/ResourceLoader.js';
 
 		var myMain = new Main();
 		myMain.start();
@@ -45,7 +47,7 @@
 
 
 		var myVideoManager = new VideoManager();
-		var myRoomManager = new RoomManager(myVideoManager,myMain.camera);
+		var myRoomManager = new RoomManager(myVideoManager,myMain.camera,ResourceLoader);
 		myMain.scene.add(myRoomManager.room);
 
 		//var fru=pc0.computeFrustumFromCamera();
@@ -126,6 +128,9 @@
 			window.myClock++;
 		},1)
 		//完成添加时钟
+
+
+
 	</script>
 	</body>
 </html>

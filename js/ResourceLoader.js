@@ -1,20 +1,16 @@
-function ResourceLoader(url,camera,unitProcess) {
-    this.url;//资源路径
-    this.camera;
-    this.cameraPre;
-    this.unitProcess;
+class ResourceLoader{
+    url;//资源路径
+    camera;
+    cameraPre;
+    unitProcess;
 
-    this.NumberWaitMaps;//等待加载的贴图个数
+    NumberWaitMaps;//等待加载的贴图个数
 
-    this.object;
-    this.loader;
-    this.resourceList;
-    this.test=false;//true;//
-
-    this.init(url,camera,unitProcess);
-}
-ResourceLoader.prototype={
-    init:function (url,camera,unitProcess) {
+    object;
+    loader;//模型加载器
+    resourceList;
+    test=false;//true;//
+    constructor(url,camera,unitProcess){
         this.NumberWaitMaps=0;//等待加载的贴图个数
         this.url=url;
         this.camera=camera;
@@ -35,31 +31,19 @@ ResourceLoader.prototype={
             }
             scope.resourceList.init(resourceInfo,scope.camera);
 
-            scope.loadGeometry();
-            scope.loadMap();
+            scope.#loadGeometry();
+            scope.#loadMap();
         });
-    },
-    updateCameraPre:function(){
-        this.cameraPre.position=this.camera.position.clone();
-        this.cameraPre.rotation=this.camera.rotation.clone();
-    },
-    cameraHasChanged:function(){
-        return this.camera.position.x !== this.cameraPre.position.x ||
-            this.camera.position.y !== this.cameraPre.position.y ||
-            this.camera.position.z !== this.cameraPre.position.z ||
-            this.camera.rotation.x !== this.cameraPre.rotation.x ||
-            this.camera.rotation.y !== this.cameraPre.rotation.y ||
-            this.camera.rotation.z !== this.cameraPre.rotation.z;
-    },
-    loadGeometry:function(){
+    }
+    #loadGeometry=function(){
         var scope=this;
         load();
         function load() {
             var fileName=scope.resourceList.getOneModelFileName();
             if(!fileName){//如果当前没有需要加载的几何文件
-                scope.updateCameraPre();
+                scope.#updateCameraPre();
                 var myInterval=setInterval(function () {
-                    if(scope.cameraHasChanged()){//如果相机位置和角度发生了变化
+                    if(scope.#cameraHasChanged()){//如果相机位置和角度发生了变化
                         load();
                         clearInterval(myInterval);
                     }
@@ -76,8 +60,8 @@ ResourceLoader.prototype={
                 });
             }
         }
-    },
-    loadMap:function(){
+    }
+    #loadMap=function(){
         var scope=this;
         load();
         function load() {
@@ -99,7 +83,7 @@ ResourceLoader.prototype={
                         texture.wrapT = THREE.RepeatWrapping;
                         var myInterval2=setInterval(function () {
                             var mesh0;
-                            for(i=0;i<scope.object.children.length;i++){
+                            for(var i=0;i<scope.object.children.length;i++){
                                 if (scope.object.children[i].nameFlag===myMap.modelName)
                                     mesh0=scope.object.children[i];
                             }
@@ -114,8 +98,22 @@ ResourceLoader.prototype={
             }
         }
 
-    },
+    }
+    #updateCameraPre=function(){
+        this.cameraPre.position=this.camera.position.clone();
+        this.cameraPre.rotation=this.camera.rotation.clone();
+    }
+    #cameraHasChanged=function(){
+        return this.camera.position.x !== this.cameraPre.position.x ||
+            this.camera.position.y !== this.cameraPre.position.y ||
+            this.camera.position.z !== this.cameraPre.position.z ||
+            this.camera.rotation.x !== this.cameraPre.rotation.x ||
+            this.camera.rotation.y !== this.cameraPre.rotation.y ||
+            this.camera.rotation.z !== this.cameraPre.rotation.z;
+    }
 }
+export { ResourceLoader };
+
 //下面这个对象主要负责资源列表的生成和管理
 function ResourceList() {
     this.maps;//说明信息
@@ -135,12 +133,12 @@ ResourceList.prototype={
         this.camera=camera;
         this.maps=resourceInfo.maps;
         //fileName;modelName;
-        for(i=0;i<this.maps.length;i++){
+        for(var i=0;i<this.maps.length;i++){
             this.maps[i].finishLoad=false;
         }
         this.models=resourceInfo.models;
         //fileName;interest;boundingSphere{x,y,z,r};MapName;spaceVolume;
-        for(i=0;i<this.models.length;i++){
+        for(var i=0;i<this.models.length;i++){
             this.models[i].finishLoad=false;
             this.models[i].inView=false;
         }
@@ -153,7 +151,7 @@ ResourceList.prototype={
         }//完成测试
     },
     testObjMesh:function(){
-        for(i=0;i<this.models.length;i++){
+        for(var i=0;i<this.models.length;i++){
             var r=this.models[i].boundingSphere.r;
             var geometry= new THREE.SphereGeometry(r, 60, 60);//(r,60,16);
             var material = new THREE.MeshNormalMaterial();
@@ -172,7 +170,7 @@ ResourceList.prototype={
         var _model= {interest:-1};//记录兴趣度最大的资源
 
 
-        for(i=0;i<list.length;i++){
+        for(var i=0;i<list.length;i++){
             var model=this.getModelByName(list[i]);
             if(model.interest>_model.interest){
                 _model=model;
@@ -184,7 +182,7 @@ ResourceList.prototype={
     getModelList:function(){//返回在视锥内且未被加载的资源列表
         this.update();//计算每个模型的inView
         var list=[];
-        for(i=0;i<this.models.length;i++){
+        for(var i=0;i<this.models.length;i++){
             if(this.models[i].inView&&!this.models[i].finishLoad)
                 list.push(this.models[i].fileName);
         }
@@ -194,7 +192,7 @@ ResourceList.prototype={
         var list=this.getMapList();
         if(list.length===0)return null;
         var _map={interest:-1};//记录兴趣度最大的资源
-        for(i=0;i<list.length;i++){
+        for(var i=0;i<list.length;i++){
             var map=this.getMapByName(list[i]);
             if(map.interest>_map.interest){
                 _map=map;
@@ -220,7 +218,7 @@ ResourceList.prototype={
     },
     update:function(){//判断哪些资源在视锥内
         this.computeFrustumFromCamera();
-        for(i=0;i<this.models.length;i++){
+        for(var i=0;i<this.models.length;i++){
             this.models[i].inView= this.intersectsSphere(
                 this.models[i].boundingSphere.x,
                 this.models[i].boundingSphere.y,
@@ -253,16 +251,15 @@ ResourceList.prototype={
         return true;//相交
     },
     getMapByName:function (name) {
-        for(i=0;i<this.maps.length;i++){
+        for(var i=0;i<this.maps.length;i++){
             if(this.maps[i].fileName===name)
                 return this.maps[i];
         }
     },
     getModelByName:function (name) {
-        for(i=0;i<this.models.length;i++){
+        for(var i=0;i<this.models.length;i++){
             if(this.models[i].fileName===name)
                 return this.models[i];
         }
     },
 }
-
