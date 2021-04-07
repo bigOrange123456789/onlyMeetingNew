@@ -1,3 +1,4 @@
+export { ResourceLoader };
 class ResourceLoader{
     url;//资源路径
     camera;
@@ -112,23 +113,20 @@ class ResourceLoader{
             this.camera.rotation.z !== this.cameraPre.rotation.z;
     }
 }
-export { ResourceLoader };
 
-//下面这个对象主要负责资源列表的生成和管理
-function ResourceList() {
-    this.maps;//说明信息
-    this.models;//说明信息
-    this.mapsIndex;
-    this.camera;
-    this.frustum;
+class ResourceList{//这个对象主要负责资源列表的生成和管理
+    maps;//所有贴图的说明信息
+    models;//所有模型几何的说明信息
+    mapsIndex;
+    camera;
+    frustum;
 
-    this.testObj;//=new THREE.Object3D();
-    //
+    testObj;//=new THREE.Object3D();
     //this.init(resourceInfo,camera);
     //每接收一次数据进行一次计算
 }
-ResourceList.prototype={
-    init:function (resourceInfo,camera) {
+
+ResourceList.prototype.init=function (resourceInfo,camera) {
         window.l=this;
         this.camera=camera;
         this.maps=resourceInfo.maps;
@@ -149,8 +147,8 @@ ResourceList.prototype={
             this.testObjMesh();
 
         }//完成测试
-    },
-    testObjMesh:function(){
+    }
+ResourceList.prototype.testObjMesh=function(){
         for(var i=0;i<this.models.length;i++){
             var r=this.models[i].boundingSphere.r;
             var geometry= new THREE.SphereGeometry(r, 60, 60);//(r,60,16);
@@ -163,8 +161,8 @@ ResourceList.prototype={
             );
             this.testObj.add(mesh);
         }
-    },
-    getOneModelFileName:function(){
+    }
+ResourceList.prototype.getOneModelFileName=function(){
         var list=this.getModelList();
         if(list.length===0)return null;
         var _model= {interest:-1};//记录兴趣度最大的资源
@@ -178,8 +176,8 @@ ResourceList.prototype={
         }
         _model.finishLoad=true;
         return _model.fileName;
-    },
-    getModelList:function(){//返回在视锥内且未被加载的资源列表
+    }
+ResourceList.prototype.getModelList=function(){//返回在视锥内且未被加载的资源列表
         this.update();//计算每个模型的inView
         var list=[];
         for(var i=0;i<this.models.length;i++){
@@ -187,8 +185,8 @@ ResourceList.prototype={
                 list.push(this.models[i].fileName);
         }
         return list;
-    },
-    getOneMapFileName:function(){
+    }
+ResourceList.prototype.getOneMapFileName=function(){
         var list=this.getMapList();
         if(list.length===0)return null;
         var _map={interest:-1};//记录兴趣度最大的资源
@@ -200,8 +198,8 @@ ResourceList.prototype={
         }
         _map.finishLoad=true;
         return _map.fileName;
-    },
-    getMapList:function(){
+    }
+ResourceList.prototype.getMapList=function(){
         //对应模型已被加载
         // 且对应模型现在视锥内
         // 且贴图本身未被加载的贴图资源列表
@@ -215,8 +213,8 @@ ResourceList.prototype={
                 list.push(this.maps[i].fileName);
         }
         return list;
-    },
-    update:function(){//判断哪些资源在视锥内
+    }
+ResourceList.prototype.update=function(){//判断哪些资源在视锥内
         this.computeFrustumFromCamera();
         for(var i=0;i<this.models.length;i++){
             this.models[i].inView= this.intersectsSphere(
@@ -226,8 +224,8 @@ ResourceList.prototype={
                 this.models[i].boundingSphere.r
             )
         }
-    },
-    computeFrustumFromCamera:function(){//求视锥体
+    }
+ResourceList.prototype.computeFrustumFromCamera=function(){//求视锥体
         var camera=this.camera;
         var frustum = new THREE.Frustum();
         //frustum.setFromMatrix( new THREE.Matrix4().multiplyMatrices( camera.projectionMatrix,camera.matrixWorldInverse ) );
@@ -236,8 +234,8 @@ ResourceList.prototype={
         projScreenMatrix.multiplyMatrices( camera.projectionMatrix, camera.matrixWorldInverse );
         frustum.setFromProjectionMatrix(projScreenMatrix);
         this.frustum=frustum;
-    },
-    intersectsSphere:function(x,y,z,radius ) {
+    }
+ResourceList.prototype.intersectsSphere=function(x,y,z,radius ) {
         var center=new THREE.Vector3(x,y,z)
         const planes = this.frustum.planes;
         //const center = sphere.center;
@@ -249,17 +247,16 @@ ResourceList.prototype={
             }
         }
         return true;//相交
-    },
-    getMapByName:function (name) {
+    }
+ResourceList.prototype.getMapByName=function (name) {
         for(var i=0;i<this.maps.length;i++){
             if(this.maps[i].fileName===name)
                 return this.maps[i];
         }
-    },
-    getModelByName:function (name) {
+    }
+ResourceList.prototype.getModelByName=function (name) {
         for(var i=0;i<this.models.length;i++){
             if(this.models[i].fileName===name)
                 return this.models[i];
         }
-    },
-}
+    }
