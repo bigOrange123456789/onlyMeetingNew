@@ -160,7 +160,7 @@ RoomManager.prototype.myLoad_door=function(url){
                 m.setMatrixAt(i, du.matrix.multiply(m1));
                 m.instanceMatrix.needsUpdate=true;
             }else
-                for(j=0;j<m.length;j++)
+                for(var j=0;j<m.length;j++)
                     set1(du,m[j],i);
         }
 
