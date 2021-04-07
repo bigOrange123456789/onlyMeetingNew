@@ -22,7 +22,6 @@
 
 	<script src="js/VideoManager.js"></script>
 
-	<script src="js/sceneSet/RoomManager.js"></script>
 	<script src="js/sceneSet/SeatManager.js"></script>
 	<script src="js/sceneSet/AvatarManager.js"></script>
 
@@ -36,15 +35,12 @@
 	<script src="StereoEffect.js"></script>
 	<script  type="module">
 		//import { VRButton } from './js//lib/VRButton.js';//负责VR视觉
-
-		import {ResourceLoader} from './js/ResourceLoader.js';
+		import {RoomManager} from './js/sceneSet/RoomManager.js';
 
 		var myMain = new Main();
 		myMain.start();
 		//document.body.appendChild( VRButton.createButton( myMain.renderer ) );
 		//myMain.renderer.xr.enabled = true;
-
-
 
 		var myVideoManager = new VideoManager();
 		var myRoomManager = new RoomManager(myVideoManager,myMain.camera,ResourceLoader);
