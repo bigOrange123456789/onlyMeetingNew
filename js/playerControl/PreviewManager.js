@@ -138,7 +138,7 @@ class MakeOneRoamStep{
 
     dx;dy;dz;//一步的位移
 
-    da;db;dc;//一步的旋转
+    q1;q2;qt;
 
     constructor(){
         var scope=this;
@@ -147,19 +147,22 @@ class MakeOneRoamStep{
     }
     #updateParam=function(x1,y1,z1,x2,y2,z2,a1,b1,c1,a2,b2,c2,time){
         var scope=this;
-        //console.log(x1,y1,z1,a1,b1,c1,x2,y2,z2,a2,b2,c2,);
-        //剩余多少时间
-        //console.log(time);
-        //scope.stepIndex_max=time;
 
         scope.dx=(x2-x1)/time;
         scope.dy=(y2-y1)/time;
         scope.dz=(z2-z1)/time;
 
-        scope.da=(a2-a1)/time;
-        scope.db=(b2-b1)/time;
-        scope.dc=(c2-c1)/time;
+        scope.q1=euler2quaternion(a1,b1,c1);
+        scope.q2=euler2quaternion(a2,b2,c2);
 
+        scope.qt=scope.stepIndex/scope.stepIndex_max;
+
+        function euler2quaternion(x,y,z) {
+            var euler=new THREE.Euler(x,y,z, 'XYZ');
+            var quaternion=new THREE.Quaternion();
+            quaternion.setFromEuler(euler);
+            return quaternion;
+        }
         scope.targetStatus=[x2,y2,z2,a2,b2,c2];
     }
     #initParam=function(x1,y1,z1,x2,y2,z2,a1,b1,c1,a2,b2,c2,time){
@@ -199,9 +202,13 @@ class MakeOneRoamStep{
                 camera.position.x+=scope.dx;
                 camera.position.y+=scope.dy;
                 camera.position.z+=scope.dz;
-                camera.rotation.x+=scope.da;
-                camera.rotation.y+=scope.db;
-                camera.rotation.z+=scope.dc;
+
+                camera.quaternion.x=scope.q1.x;
+                camera.quaternion.y=scope.q1.y;
+                camera.quaternion.z=scope.q1.z;
+                camera.quaternion.w=scope.q1.w;
+
+                camera.quaternion.slerp (scope.q2, scope.qt);
                 scope.stepIndex++;
                 return false;
             }else{
