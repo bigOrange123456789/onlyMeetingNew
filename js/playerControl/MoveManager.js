@@ -32,6 +32,29 @@ class MoveManager{
             requestAnimationFrame(autoRoam0);
         }
     }
+    static getArray=function(arr1){//通过平面位置获取输入数据
+        //arr1:  x,z
+        //arr2:  x,y,z,  a,b,c, time
+        var arr2=[];
+        var time=400;
+        arr2.push([
+            arr1[0][0],0,arr1[0][1],
+            0,0,0,
+            time
+        ]);
+        for(var i=1;i<arr1.length;i++){
+            arr2.push([
+                arr1[i][0],0,arr1[i][1],
+                0,Math.atan2(
+
+                    (arr1[i][0]-arr1[i-1][0]),
+                    (arr1[i][1]-arr1[i-1][1])
+                ),0,
+                time
+            ]);
+        }
+        return arr2;
+    }
 }
 class MakeOneRoamStep{
     pattern;
