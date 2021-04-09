@@ -125,41 +125,6 @@
 			window.myClock++;
 		},1)
 		//完成添加时钟
-
-
-		new THREE.GLTFLoader().load("male_run.glb", (glb) => {
-			console.log(glb);
-			createObj2(glb)
-			myMain.scene.add(glb.scene);
-			glb.scene.scale.set(5,5,5);
-			function createObj2(G) {
-				var meshMixer2 = new THREE.AnimationMixer(G.scene);
-				meshMixer2.clipAction(G.animations[0]).play();
-				setInterval(function () {
-					meshMixer2.update(0.01);
-				},20);
-			}
-			//AvatarManager
-
-			var myMoveManager=new MoveManager(
-					glb.scene,
-					MoveManager.getArray([
-						[0,0],
-						[0,20],
-						[20,20],
-						[0,20],
-						[0,0],
-						[-20,0],
-						[0,0],
-						[20,20],
-						[40,20],
-					])
-			);
-			//myMoveManager.stopFlag=false;
-
-			window.MM=myMoveManager;
-			/**/
-		});
 	</script>
 	</body>
 </html>

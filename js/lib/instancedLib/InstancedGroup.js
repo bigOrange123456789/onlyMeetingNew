@@ -183,6 +183,7 @@ InstancedGroup.prototype={
             this.initGeometry(this.originMeshs[0].geometry),
             material
         );
+        console.log(this.mesh);
         this.mesh.frustumCulled=false;
         this.obj.add(this.mesh);
     },
