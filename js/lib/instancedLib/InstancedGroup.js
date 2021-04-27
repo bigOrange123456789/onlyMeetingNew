@@ -36,12 +36,14 @@ InstancedGroup.prototype={
     updateGeometry:function(mesh){//用于和PM技术相结合
         var position=mesh.geometry.attributes.position,//网格
             uv=mesh.geometry.attributes.uv,//贴图
-            skinIndex=mesh.geometry.attributes.skinIndex;//骨骼
+            skinIndex=mesh.geometry.attributes.skinIndex,//骨骼
+            normal=mesh.geometry.attributes.normal;//法线
             //skinWeight=mesh.geometry.attributes.skinWeight;
         //position.array[3*440]+=0.1;
         this.mesh.geometry.setAttribute('position', position);
         this.mesh.geometry.setAttribute('inUV',uv);
         this.mesh.geometry.setAttribute('skinIndex',skinIndex);
+        this.mesh.geometry.setAttribute('normal',normal);
         //this.mesh.geometry.setAttribute('skinWeight',skinWeight);
     },
     initGeometry:function(geometryNew){
@@ -49,6 +51,7 @@ InstancedGroup.prototype={
         geometryTemp.instanceCount = this.instanceCount;
         geometryTemp.setAttribute('position', geometryNew.attributes.position);//Float32Array
         geometryTemp.setAttribute('inUV',geometryNew.attributes.uv);
+        geometryTemp.setAttribute('normal',geometryNew.attributes.normal);
         if(this.haveSkeleton){
             //console.log(geometryNew.attributes);//skinWeight
             geometryTemp.setAttribute('skinIndex',geometryNew.attributes.skinIndex);
@@ -70,11 +73,11 @@ InstancedGroup.prototype={
         if(this.mesh)this.mesh.geometry=geometryTemp;
         return geometryTemp;
     },
-    initMaterial:function(uniforms,texSrc,textNum,colors,texFlipY,finishFunction){
+    initMaterial:function(uniforms,texSrc,textNum,colors,texFlipY,finishFunction,camera){
         var canvas=new CanvasControl(textNum,1,colors,texFlipY);//绘制合并纹理贴图的地方
         uniforms.text0={type: 't', value: canvas.getTex()};
 
-        let material = new THREE.RawShaderMaterial();//原始着色器材质
+        let material = new THREE.RawShaderMaterial();//原始着色器材质//raw未经加工的
         material.side=THREE.DoubleSide;
         material.uniforms= uniforms;
 
@@ -93,17 +96,25 @@ InstancedGroup.prototype={
             });
         }
     },
-    initAnimation:function(uniforms){
+    initAnimation:function(uniforms,camera){
         var scope=this;
-        updateAnimation();
+
         function updateAnimation() {//每帧更新一次动画
             requestAnimationFrame(updateAnimation);
             scope.time=(scope.time+1.0)%60000;
+
             uniforms.time={value: scope.time};
+            console.log(scope.time,uniforms.cameraX.value)
+            uniforms.cameraX={value: camera.position.x};
+            uniforms.cameraY={value: camera.position.y};
+            uniforms.cameraZ={value: camera.position.z};
         }
 
         uniforms.time={value: 0.0};
-        uniforms.animationData={type: 't', value:[]};
+        uniforms.cameraX={value: camera.position.x};
+        uniforms.cameraY={value: camera.position.y};
+        uniforms.cameraZ={value: camera.position.z};
+        uniforms.animationData={type: 't', value:[]};updateAnimation();
         uniforms.animationDataLength={value:0};
         this.animationData=[];
         this.animationConfig=[];
@@ -127,7 +138,7 @@ InstancedGroup.prototype={
             return {"value":tex};
         }
     },
-    init:function (texSrc,textNum,colors,texFlipY,finishFunction){//纹理贴图资源路径，贴图中包含纹理的个数
+    init:function (texSrc,textNum,colors,texFlipY,finishFunction,camera){//纹理贴图资源路径，贴图中包含纹理的个数
         if(typeof(textNum)=="undefined")textNum=16;
         if(typeof(texFlipY)=="undefined")texFlipY=true;
         this.originMeshs[0].geometry=this.originMeshs[0].geometry.toNonIndexed();
@@ -163,9 +174,9 @@ InstancedGroup.prototype={
             textNum:{value: textNum},
             neckPosition:{value: (this.neckPosition===undefined)?0.59:this.neckPosition}
         };
-        if(this.haveSkeleton)this.initAnimation(uniforms);
+        if(this.haveSkeleton)this.initAnimation(uniforms,camera);
 
-        var material=this.initMaterial(uniforms,texSrc,textNum,colors,texFlipY,finishFunction);
+        var material=this.initMaterial(uniforms,texSrc,textNum,colors,texFlipY,finishFunction,camera);
         if(this.vertURL===undefined)this.vertURL=this.haveSkeleton?"shader/vertexBone.vert":"shader/vertex.vert";
         if(this.fragURL===undefined)this.fragURL="shader/fragment.frag";
         material.vertexShader=load(this.vertURL);

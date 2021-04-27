@@ -5,7 +5,7 @@ uniform sampler2D text0;
 uniform float textNum;//贴图个数
 
 in float type_part;//,texType;//身体的哪个部分，贴图类型
-in vec3 varyColor,varyType;
+in vec3 varyColor,varyType,outNormal,lightDirection;
 in vec2 outUV;
 out vec4 myOutputColor;
 
@@ -21,21 +21,22 @@ void main(){
 
     vec4 myTexture=TextureController_computeMyTexture();
 
+    vec3 color;
     if (type_part<0.5){ //下身
-        myOutputColor = vec4 (
+        color = vec3 (
             myTexture.r+varyColor[0],
             myTexture.g+varyColor[1],
-            myTexture.b+varyColor[2],
-            myTexture.a
+            myTexture.b+varyColor[2]
         );
     }else{//上身或头部
-        myOutputColor = vec4 (
+        color = vec3 (
             myTexture.r+varyColor[1]/2.0,
             myTexture.g+varyColor[2]/2.0,
-            myTexture.b+varyColor[0]/2.0,
-            myTexture[3]
+            myTexture.b+varyColor[0]/2.0
         );
     }
+    float diffuse = dot( outNormal, lightDirection );
+    myOutputColor = vec4 (diffuse *color,myTexture[3]);
 }
 
 struct TextureController{

@@ -63,7 +63,8 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
                     scope.manNum,//908
                     [mesh2],//这些mesh的网格应该一致
                     true,
-                    crowdData_json
+                    crowdData_json,
+                    scope.camera//添加光线效果
                 );
                 peoples2.neckPosition=0.68;
                 //peoples2.vertURL="shader/vertexBone2.vert";
@@ -76,7 +77,8 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
                         '#6e5b4c','#82756d','#8f7462','#8e6b5d','#5a4c40','#6c6f72','#8e7f78',
                         '#514d50','#423e3f','#644e40','#746255','#524946','#56453d','#60564d'],
                     true,
-                    finishFunction2
+                    finishFunction2,
+                    scope.camera
                 );
                 index = 0;
                 for (i = 0; i < scope.positions.length; i++)
@@ -84,7 +86,7 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
                         peoples2.rotationSet(index, [Math.PI / 2, 0, 3 * Math.PI / 2]);
                         peoples2.positionSet(index, [scope.positions[i][0] + 1.8, scope.positions[i][1] + 1.5, scope.positions[i][2]]);
                         var symm=1;
-                        if(Math.random()<0.5)symm=-1;
+                        //if(Math.random()<0.5)symm=-1;
                         peoples2.scaleSet(index, [(0.04 + Math.random() * 0.01)*symm,  0.04 + Math.random() * 0.01,0.04 + Math.random() * 0.01]);//最后一个是高
                         peoples2.animationSet(index, scope.animations[i]);
                         peoples2.colorSet(index, scope.colors[i]);
@@ -118,12 +120,14 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
             0,     //动画播放速度//可以通过调整pmLoader.animationSpeed来调整速度
             [],
             function() {
+                console.log(scope.camera)
                 var mesh = pmLoader.rootObject.children[0];
                 var peoples = new InstancedGroup(
                     scope.positions.length - scope.manNum,
                     [mesh],//这些mesh的网格应该一致
                     true,
-                    crowdData_json
+                    crowdData_json,
+                    scope.camera//添加光线效果
                 );
                 peoples.init(
                     ["./img/texture/w/w0.jpg","./img/texture/w/w1.jpg","./img/texture/w/w2.jpg"],
@@ -132,7 +136,8 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
                         '#647357','#8d7b66','#7f7e6b','#414544','#95835d','#856064',
                         '#5a544e','#a37d67','#a8816f','#b18175','#7b6764','#a3877b'],
                     true,
-                    finishFunction1
+                    finishFunction1,
+                    scope.camera
                 );
                 var index = 0;
                 for (var i = 0; i < scope.positions.length; i++)//1677
@@ -140,7 +145,7 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
                         peoples.rotationSet(index, [Math.PI / 2, 0, 3 * Math.PI / 2]);
                         peoples.positionSet(index, [scope.positions[i][0] + 1.8, scope.positions[i][1] + 1.5, scope.positions[i][2]]);
                         var symm=1;
-                        if(Math.random()<0.5)symm=-1;
+                        //if(Math.random()<0.5)symm=-1;
                         peoples.scaleSet(index, [(0.04 + Math.random() * 0.01)*symm, 0.04 + Math.random() * 0.01, 0.04 + Math.random() * 0.01]);
 
                         peoples.animationSet(index, scope.animations[i]);//

@@ -3,11 +3,12 @@ precision highp float;//highp
 uniform sampler2D animationData;
 uniform float animationDataLength;//动画数据的数据个数
 uniform mat4 modelViewMatrix,projectionMatrix;
-uniform float time;//0-10000
+uniform float time,cameraX,cameraY,cameraZ;//0-10000
 uniform float neckPosition;
 
 in vec3 position;
 in vec2 inUV;
+in vec3 normal;
 in vec4 skinIndex,skinWeight;
 in float speed;
 in vec3 mcol0,mcol1,mcol2,mcol3;
@@ -21,6 +22,8 @@ in vec4 bonesWidth;//选出4个部位
 //3腿部 15-19-20-24
 
 out vec2 outUV;
+out vec3 outNormal;
+out vec3 lightDirection;
 out vec3 varyColor,varyType;
 out float type_part;//,texType;
 out vec3 myTest01;
@@ -39,6 +42,7 @@ float SKELETON_SIZE6=3360.0;
 void main(){
     outUV = inUV;
     varyColor=color;
+    outNormal=normal;
     varyType=vec3(type[0], type[1], type[2]);
     if (position.y<0.15&&(position.z<0.35&&position.z>-0.35))type_part=0.0;//下身
     else if (position.y<neckPosition) type_part=1.0;//上身
@@ -65,7 +69,11 @@ void main(){
     else w=bonesWidth[2];//2手臂
     w=w+1.;
 
-    gl_Position = projectionMatrix * modelViewMatrix * matrix2 * matrix1  * vec4(position.x*w,position.y,position.z*w, 1.0);
+    vec4 position=modelViewMatrix * matrix2 * matrix1  * vec4(position.x*w,position.y,position.z*w, 1.0);
+    lightDirection=normalize(vec3(cameraX,cameraY,cameraZ)-mcol3);
+    //lightDirection=normalize(mcol3-vec3(cameraX,cameraY,cameraZ));
+    //lightDirection=normalize(vec3(position.x-cameraX,position.y-cameraY,position.z-cameraZ));
+    gl_Position = projectionMatrix * position;
 
     //Test_init();
     //if(!Test_meetExpectations())gl_Position =vec4(0.,0.,0.,0.);

@@ -36,7 +36,7 @@
 		//import { VRButton } from './js//lib/VRButton.js';//负责VR视觉
 		import {RoomManager} from './js/sceneSet/RoomManager.js';
 		import {PreviewManager} from './js/playerControl/PreviewManager.js';
-		import {MoveManager} from './js/playerControl/MoveManager.js';
+		//import {MoveManager} from './js/playerControl/MoveManager.js';
 
 		var myMain = new Main();
 		myMain.start();
@@ -47,21 +47,7 @@
 		var myRoomManager = new RoomManager(myVideoManager,myMain.camera);
 		myMain.scene.add(myRoomManager.room);
 
-		//var fru=pc0.computeFrustumFromCamera();
-		//console.log(fru)
-		//pc0.showFrustum(myMain.scene)
-		/*for(var i=0;i<6;i++)
-			for(var j=0;j<4;j++)
-				for(var k=0;k<2;k++){
-					var material = new THREE.MeshNormalMaterial();
-					var geometry= new THREE.CubeGeometry(4,4,4);
-					var mesh= new THREE.Mesh(geometry, material);
-					mesh.position.set(i*30,k*30,j*30);
-					myMain.scene.add(mesh);
-					console.log(mesh)
-				}*/
 		new PlayerControl(myMain.camera);//.cullingTest(myMain.scene)
-
 
 		var mySeatManager = new SeatManager();
 		mySeatManager.init();
