@@ -104,7 +104,7 @@ InstancedGroup.prototype={
             scope.time=(scope.time+1.0)%60000;
 
             uniforms.time={value: scope.time};
-            console.log(scope.time,uniforms.cameraX.value)
+            //console.log(scope.time,uniforms.cameraX.value)
             uniforms.cameraX={value: camera.position.x};
             uniforms.cameraY={value: camera.position.y};
             uniforms.cameraZ={value: camera.position.z};

@@ -3,8 +3,6 @@ function Main(){
     var scope=this;
     this.VR=false;
     this.scene=new THREE.Scene();
-    var width=window.innerWidth;
-    var height=window.innerHeight;
     this.camera=
         //new THREE.OrthographicCamera( width / - 2, width / 2, height / 2, height / - 2, 0.001, 100 );
         new THREE.PerspectiveCamera( 70,window.innerWidth /window.innerHeight, 0.1, 1000 );;

@@ -209,7 +209,7 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
     }
     this.loadGuest2=function (glbObj) {
         //开始创建PM对象
-        var LODArray=[50]//4个数字表示距离，可以将模型分为5级;
+        var LODArray=[30,60,90]//4个数字表示距离，可以将模型分为5级;
         var path='./myModel/dongshizhang5';
         var pmLoader = new MyPMLoader(
             glbObj,
@@ -223,7 +223,7 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
                 if(window.myClock_High0)
                     console.log("高模加载时间："+(window.myClock-window.myClock_High0));
             },
-            50
+            1
         );//pmLoader = new myPMLoader('myModel/dongshizhang', LODNumber);//pmLoader = new THREE.PMLoader();//加载PM文件
         var myModel=pmLoader.rootObject;
         myModel.scale.set(0.024,0.024,0.024);

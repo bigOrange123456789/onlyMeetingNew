@@ -21,6 +21,9 @@
   <component name="ChangeListManager">
     <list default="true" id="b7b6123d-caec-4b82-a432-424a6b5be5dd" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/lib/instancedLib/InstancedGroup.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/lib/instancedLib/InstancedGroup.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/lib/pmLib/MyPMLoader.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/lib/pmLib/MyPMLoader.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/sceneSet/AvatarManager.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/sceneSet/AvatarManager.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,7 +44,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../InstanceRenderingTest" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/.." />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -251,6 +254,9 @@
       <workItem from="1617845516128" duration="9505000" />
       <workItem from="1617885301185" duration="1262000" />
       <workItem from="1617958908609" duration="1680000" />
+      <workItem from="1619775983755" duration="123000" />
+      <workItem from="1620397324534" duration="9000" />
+      <workItem from="1620651647736" duration="5771000" />
     </task>
     <servers />
   </component>
@@ -278,23 +284,14 @@
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="93" y="93" width="1095" height="495" key="DiffContextDialog/0.0.1280.680@0.0.1280.680" timestamp="1615548510399" />
-    <state x="523" y="120" key="FileChooserDialogImpl" timestamp="1617975310939">
+    <state x="523" y="120" key="FileChooserDialogImpl" timestamp="1620699429408">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state x="523" y="120" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1617975310939" />
-    <state x="785" y="184" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1609483059436" />
+    <state x="523" y="120" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1620699429408" />
     <state width="506" height="446" key="SwitcherDM" timestamp="1617444369603">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state width="506" height="446" key="SwitcherDM/0.0.1280.680@0.0.1280.680" timestamp="1617444369603" />
-    <state x="335" y="92" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1609487862309">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="335" y="92" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1609487862309" />
-    <state x="438" y="254" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1610804167249">
-      <screen x="0" y="0" width="1280" height="680" />
-    </state>
-    <state x="438" y="254" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1280.680@0.0.1280.680" timestamp="1610804167249" />
     <state x="339" y="72" width="603" height="536" key="find.popup" timestamp="1616476794477">
       <screen x="0" y="0" width="1280" height="680" />
     </state>

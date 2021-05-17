@@ -587,14 +587,16 @@ MyPMLoader.prototype={
             + Math.pow(this.camera.position.y - this.rootObject.position.y,2)
             + Math.pow(this.camera.position.z - this.rootObject.position.z,2)
         );
-        var level=0;//位置处于(l-1)之后精度最低//分几段就有几个等级，级别编号从0开始,这是等级编号的最大值
+        var level=0;//距离在最后一个区间//位置处于(l-1)之后精度最低//分几段就有几个等级，级别编号从0开始,这是等级编号的最大值
+        //距离在0之前
         if(distance<this.LODArray[0])level=this.LODArray.length;//位置处于0之前精度最高
         for(var i=1;i<this.LODArray.length;i++)
-            if(distance>this.LODArray[i-1]&&distance<this.LODArray[i]){
-                level=this.LODArray.length-i-1;
+            if(distance>this.LODArray[i-1]&&distance<this.LODArray[i]){//判断距离在哪一个区间
+                level=this.LODArray.length-i;
                 break;
             }
         //return level;//越远等级越小
+        console.log(distance,this.LODArray,level);
         return level;
     },
     updateMesh:function(i){//这个函数的作用是协助实现LOD//0 - pmMeshHistory-1
