@@ -36,7 +36,8 @@ void main(){
         );
     }
     float diffuse = dot( outNormal, lightDirection );
-    myOutputColor = vec4 (diffuse *color,myTexture[3]);
+    //myOutputColor = vec4 (diffuse *color,myTexture[3]);
+    myOutputColor = vec4 (color,myTexture[3]);
 }
 
 struct TextureController{

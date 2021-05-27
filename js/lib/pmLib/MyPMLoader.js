@@ -293,21 +293,39 @@ MyPMLoader.prototype={
         }
 
         //pm的json文件内的每一段都需要这函数的处理
-        function restoreVertexSplit(si,vsData)//si是段号（数组下标）,vsData是一段（数组中的一个元素）
-        {
-            var Meshid=mapMaterial[vsData.FacesMaterial[0]];
+        function restoreVertexSplit(vsData)//si是段号（数组下标）,vsData是一段（数组中的一个元素）
+        {//vsData里面记录了恢复一条边所需要的数据
 
+            var Meshid=mapMaterial[vsData.FacesMaterial[0]];
+            console.log(vsData.Faces)
+        /* {//添加一个点所需的数据
+		"Faces": [0,0,..],//长度不固定,3个数一组
+		"FacesMaterial": [0],//恒为0//似乎是表示了所用的材质类型
+
+		"S": 6,     //要修改的点的序号
+		"SN": [0.,0.,0.],
+		"SPosition": [0.,0.,0.],//顶点改动后的
+
+		"TN": [0.,0.,0.],//要添加的点
+		"T": 187,//对应的骨骼索引和骨骼权重位置
+
+		"TPosition": [0.,0.,0.],
+		"UVs": [0.,0.,..]//添加UV//长度不固定，2个数一组
+	    }*/
             //段中的S是要修改的点，SPosition是改动后的位置
             meshData.vertices[vsData.S][0] = vsData.SPosition[0];
             meshData.vertices[vsData.S][1] = vsData.SPosition[1];
             meshData.vertices[vsData.S][2] = vsData.SPosition[2];
 
+            //添加UV
             for(var i=0;i<vsData.UVs.length/2;i++)
-                meshData.uvs.push([vsData.UVs[2*i+0],vsData.UVs[2*i+1]]);
+                meshData.uvs.push([vsData.UVs[2*i],vsData.UVs[2*i+1]]);
 
             //段中的TPosition是要添加的点
+            //添加顶点位置
             meshData.vertices.push([vsData.TPosition[0] , vsData.TPosition[1] , vsData.TPosition[2]]);
 
+            //添加骨骼索引和权重
             meshData.joints.push(skeletonData.joints[vsData.T]);
             meshData.weights.push(skeletonData.weights[vsData.T]);
 
@@ -326,40 +344,38 @@ MyPMLoader.prototype={
                 {
                     var faceIndexS=objectF.faceSIndex;
                     newFacesOfS.push(bufferIndex);
-                    var newfUVs=[
+                    meshData.Uvfaces[Meshid][bufferIndex]=[
                         vsData.Faces[faceIndexS*6+1],
                         vsData.Faces[faceIndexS*6+3],
                         vsData.Faces[faceIndexS*6+5]
                     ];
-                    meshData.Uvfaces[Meshid][bufferIndex]=newfUVs;
                     continue;
                 }
                 addnum++;
                 meshData.faces[Meshid][bufferIndex][c]=t;
                 incidentFaces[t].push(bufferIndex);
                 var faceIndex=objectF.faceIndex;
-                var newfUV=[
+                meshData.Uvfaces[Meshid][bufferIndex]=[
                     vsData.Faces[faceIndex*6+1],
                     vsData.Faces[faceIndex*6+3],
                     vsData.Faces[faceIndex*6+5]
                 ];
-                meshData.Uvfaces[Meshid][bufferIndex]=newfUV;
             }
             incidentFaces[vsData.S] = newFacesOfS;
 
             for (var sfi = 0 ; sfi < vsData.Faces.length ; sfi+=6)
             {
                 var hasST;
-                if(vsData.Faces[sfi+0] === vsData.S){hasST=(vsData.Faces[sfi+2] ===t ||vsData.Faces[sfi+4] === t)}
-                else if(vsData.Faces[sfi+2] === vsData.S){hasST=(vsData.Faces[sfi+0] ===t ||vsData.Faces[sfi+4] === t)}
-                else if(vsData.Faces[sfi+4] === vsData.S){hasST=(vsData.Faces[sfi+0] ===t ||vsData.Faces[sfi+2] === t)}
+                if(vsData.Faces[sfi] === vsData.S){hasST=(vsData.Faces[sfi+2] ===t ||vsData.Faces[sfi+4] === t)}
+                else if(vsData.Faces[sfi+2] === vsData.S){hasST=(vsData.Faces[sfi] ===t ||vsData.Faces[sfi+4] === t)}
+                else if(vsData.Faces[sfi+4] === vsData.S){hasST=(vsData.Faces[sfi] ===t ||vsData.Faces[sfi+2] === t)}
                 else{hasST=false;}
 
                 if (!hasST)continue;
 
-                var newFace=[vsData.Faces[sfi+0] , vsData.Faces[sfi+2] , vsData.Faces[sfi+4]];
-                var index=(sfi/6);
-                var iUV=[vsData.Faces[index*6+1],vsData.Faces[index*6+3],vsData.Faces[index*6+5]];
+                //(0,2,4)表示一个三角面？ (1,3,5)表示一个UV面？
+                var newFace=[vsData.Faces[sfi] , vsData.Faces[sfi+2] , vsData.Faces[sfi+4]];
+                var iUV=[vsData.Faces[sfi+1],vsData.Faces[sfi+3],vsData.Faces[sfi+5]];
                 var num=meshData.faces[Meshid].length;
                 meshData.Uvfaces[Meshid].push(iUV);
                 meshData.faces[Meshid].push(newFace);
@@ -372,13 +388,13 @@ MyPMLoader.prototype={
 
         //每加载一个PM的json文件执行一次，被调用总次数是PM的json文件个数//只被loadPmMesh函数调用
         function pmRestore(pmData,index,lengthindex,THIS)
-        {
+        {//pmData是加载的数据包内容，index表示加载的数据包序号
             var mapPM={};
             for (var si = 0 ; si < pmData.length ; ++si)
             {
                 var id=mapMaterial[pmData[si].FacesMaterial[0]];
-                mapPM[id]=true;
-                restoreVertexSplit(si,pmData[si]);//还原模型
+                mapPM[id]=true;//表示这个点现在对应那一张贴图
+                restoreVertexSplit(pmData[si]);//还原模型
             }
 
             for (var key in mapPM)
@@ -596,7 +612,7 @@ MyPMLoader.prototype={
                 break;
             }
         //return level;//越远等级越小
-        console.log(distance,this.LODArray,level);
+        //console.log(distance,this.LODArray,level);
         return level;
     },
     updateMesh:function(i){//这个函数的作用是协助实现LOD//0 - pmMeshHistory-1
