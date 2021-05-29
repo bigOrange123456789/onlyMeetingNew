@@ -14,6 +14,7 @@
 	<script src="js/lib/threeJS/three.js"></script>
 	<script src="js/lib/threeJS/OrbitControls.js"></script>
 	<script src="js/lib/threeJS/GLTFLoader.js"></script>
+	<script src="js/lib/threeJS/GLTFExporter.js"></script>
 
 	<script src="js/lib/pmLib/MyPMLoader.js"></script>
 
@@ -55,7 +56,27 @@
 					0,       //有多个动画时,表示第0个动画//可以通过pmLoader.updateAnimation(i)来切换动画
 					0.01,     //动画播放速度//可以通过调整pmLoader.animationSpeed来调整速度
 					["Texture_0_0.jpeg","Texture_0_1.jpeg"],
-					null,
+					function () {
+						var mesh=pmLoader.rootObject.children[0].clone();
+
+						var scene=new THREE.Scene();
+						scene.add(mesh)
+						console.log(scene)
+						const exporter = new THREE.GLTFExporter();
+						exporter.parse(scene, function ( gltf ) {
+							downloadJSON( gltf );
+							function downloadJSON(gltf) {
+								var str=JSON.stringify(gltf);
+								var name="test.gltf";
+
+								var myBlob=new Blob([str], { type: 'text/plain' })
+								let link = document.createElement('a');
+								link.href = URL.createObjectURL(myBlob);
+								link.download = name;
+								link.click();
+							}
+						} );
+					},
 					0
 			);//pmLoader = new myPMLoader('myModel/dongshizhang', LODNumber);//pmLoader = new THREE.PMLoader();//加载PM文件
 			var myModel=pmLoader.rootObject;

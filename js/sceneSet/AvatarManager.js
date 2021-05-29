@@ -163,7 +163,9 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
                     console.log(pmLoader.finished);
                     if (pmLoader.finished) window.clearInterval(timeId1)
                 }, 1000);
-            }
+            },
+            3000
+
         );
         //女性结束
     }

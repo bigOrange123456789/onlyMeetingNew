@@ -297,7 +297,7 @@ MyPMLoader.prototype={
         {//vsData里面记录了恢复一条边所需要的数据
 
             var Meshid=mapMaterial[vsData.FacesMaterial[0]];
-            console.log(vsData.Faces)
+            //console.log(vsData.Faces)
         /* {//添加一个点所需的数据
 		"Faces": [0,0,..],//长度不固定,3个数一组
 		"FacesMaterial": [0],//恒为0//似乎是表示了所用的材质类型
