@@ -25,6 +25,14 @@ class MoveManager{
             if(!scope.stopFlag)//是否停止自动漫游
                 if(scope.myMakeOneRoamStep.preview(scope.myPreviewflag,scope.avatar,scope.roamPath)) {
                     scope.myPreviewflag++;
+                    console.log(scope.myPreviewflag)
+                    if(scope.myPreviewflag===5){
+                        window.play();
+                        console.log("播放了面部动画！")
+                        window.play=function(){
+                            console.log("！多次播放面部动画")
+                        }
+                    }
                     if(scope.myPreviewflag=== scope.roamPath.length)
                         if(scope.isLoop)scope.myPreviewflag = 0;
                         else scope.stopFlag=true;
@@ -117,7 +125,7 @@ class MakeOneRoamStep{
         a2=mydata[mystate][3];
         b2=mydata[mystate][4];
         c2=mydata[mystate][5];
-        
+
         if(scope.stepIndex===1){//新的阶段
             scope.#initParam(x1,y1,z1,x2,y2,z2,a1,b1,c1,a2,b2,c2,time);
         }else if(scope.rectify){//如果有路径纠正功能
