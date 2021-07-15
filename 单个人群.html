@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>MEETING</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<style>
+			body {overflow:hidden;}
+		</style>
+	</head>
+
+	<body>
+
+	<script src="js/lib/threeJS/three.js"></script>
+	<script src="js/lib/threeJS/OrbitControls.js"></script>
+	<script src="js/lib/threeJS/GLTFLoader.js"></script>
+
+	<script src="js/lib/pmLib/MyPMLoader.js"></script>
+
+	<script src="js/lib/instancedLib/InstancedGroup.js"></script>
+	<script src="js/lib/instancedLib/SkinnedMeshController.js"></script>
+
+	<script src="js/VideoManager.js"></script>
+
+	<script src="js/sceneSet/SeatManager.js"></script>
+	<script src="js/sceneSet/AvatarManager.js"></script>
+
+	<script src="js/playerControl/PlayerControl.js"></script>
+
+
+	<script src="js/ParamMeasure.js"></script>
+	<script src="js/Main.js"></script>
+
+	<script src="StereoEffect.js"></script>
+	<script  type="module">
+		import {PreviewManager} from './js/playerControl/PreviewManager.js';
+
+		var myMain = new Main();
+		myMain.start();
+		window.camera=myMain.camera;
+
+		new PlayerControl(myMain.camera);//.cullingTest(myMain.scene)
+
+
+
+		//男性开始
+		var positions=[]
+		for(var i=0;i<10;i++)
+			for(var j=0;j<10;j++)
+				positions.push([i,0,j])
+		var mySeatManager = new SeatManager();
+		mySeatManager.init(positions);
+		myMain.scene.add(mySeatManager.chairs);
+
+
+		var loader = new THREE.XHRLoader(THREE.DefaultLoadingManager);
+		loader.load("json/crowdData.json", function(str){//dataTexture
+
+			var crowdData_json=JSON.parse(str);
+			for(i=0;i<scope.positions.length;i++){//共有1677张椅子
+				colors.push([
+					Math.random()/4 ,
+					Math.random()/4 ,
+					Math.random()/4
+				]);
+				scope.animations[i]=Math.floor(Math.random()*3);
+			}
+
+			var data=crowdData_json.textureSet;//种类分布
+			for(i=0;i<data.length;i++){
+				if(data[i]%3===2){// 有1/3是女性
+					scope.sexs[i]=0;//女性
+					scope.types[i]=Math.floor(data[i]/3);
+					scope.animations[i]=0;
+				}else{
+					scope.sexs[i]=1;//男性
+					scope.types[i]=Math.floor(data[i]/3)+(data[i]%3)*16;
+					//if(scope.animations[i]===1)scope.animations[i]=0;
+					scope.manNum++;
+				}
+			}
+			scope.createWoman(crowdData_json,function () {
+				scope.createMan(crowdData_json,function () {
+					if(finishFunction0)finishFunction0();
+				});
+			});
+
+		});
+		//听众
+
+		//男性结束
+
+
+
+
+
+
+		//开始帧数统计
+		var tag = document.createElement('h1');
+		window.tag=tag;
+		tag.style.cssText =
+				'color:green;' +//文字颜色
+				'font-size:' + 20 + 'px;' +//文字大小
+				'font-weight:normal;' +
+				'position:fixed;' +//到窗体的位置
+				'left:' + 0 + 'px;' +//到部件左边距离
+				'top:' + 0 + 'px;'; //到部件右边 距离
+		document.body.appendChild(tag);
+		var frameIndex = 0, frameIndexPre = 0;
+		frameIndexUpdate();
+		setInterval(computeFPS, 1000);
+		function frameIndexUpdate() {
+			frameIndex++;
+			requestAnimationFrame(frameIndexUpdate);
+		}
+		function computeFPS() {
+			tag.innerHTML =(frameIndex - frameIndexPre);
+			//tag.innerHTML = "FPS:" + (frameIndex - frameIndexPre);
+			frameIndexPre = frameIndex;
+		}
+		//完成帧数统计
+	</script>
+	</body>
+</html>
