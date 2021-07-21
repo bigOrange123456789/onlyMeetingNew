@@ -36,6 +36,7 @@
 		//import { VRButton } from './js//lib/VRButton.js';//负责VR视觉
 		import {RoomManager} from './js/sceneSet/RoomManager.js';
 		import {PreviewManager} from './js/playerControl/PreviewManager.js';
+		import {Net} from './js/simulate/Net.js';
 		//import {MoveManager} from './js/playerControl/MoveManager.js';
 
 		var myMain = new Main();
@@ -64,8 +65,27 @@
 			mySeatManager.create();//椅子
 		});//听众
 
+		var net=new Net().object;
+		net.position.set(175.25,81.64,-84.68)
+		net.scale.set(0.01,0.02,0.1)
+		net.rotation.set(0,Math.PI/2,0)
+		myMain.scene.add(net);
+		net=new Net().object;
+		net.position.set(175.22,80.97,46.12)
+		net.scale.set(0.01,0.02,0.1)
+		net.rotation.set(0,Math.PI/2,0)
+		myMain.scene.add(net);
+		new ParamMeasure(net,0)
 
-
+		const light = new THREE.DirectionalLight( 0xffff00, 1 );
+		light.position.set(10,0,0)
+		light.rotation.set(Math.PI/2,0,0);
+		net.add(light)
+		//const geometry = new THREE.BoxGeometry( 5, 40, 5 );
+		//const material = new THREE.MeshBasicMaterial( {color: 0x00ff00} );
+		//const cube = new THREE.Mesh( geometry, material );
+		//cube.position.set(10,0,0)
+		//light.add( cube );
 
 		//开始自动漫游路径
 		var mydata = [//自动漫游路径
@@ -86,6 +106,7 @@
 		var myPreviewManager = new PreviewManager(myMain.camera, mydata, myVideoManager);
 		myPreviewManager.createCameraButton('./img/1.png', './img/2.png');
 		//结束自动漫游路径
+
 		//开始帧数统计
 		var tag = document.createElement('h1');
 		window.tag=tag;
@@ -110,6 +131,7 @@
 			frameIndexPre = frameIndex;
 		}
 		//完成帧数统计
+
 		//开始添加时钟
 		window.myClock=0;
 		setInterval(function () {

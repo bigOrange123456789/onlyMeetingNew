@@ -4,10 +4,10 @@ function ParamMeasure(obj,type,myData0){
     this.beforeKey=-1;//type记录是THREEJS对象(0)还是引擎对象（1）
     this.stepPosition=1;//
     this.stepRotation=1;
-    this.stepScale=1;
+    this.stepScale=0.01;
     this.boneIndex=7;
     this.ControlTJSObj=function (obj) {
-        var step=1,stepScale=1;
+        var step=1,stepScale=0.01;
         //开始测试
         var This=this;//beforeKey = -1;
         document.onkeydown = function (e) {
@@ -18,6 +18,7 @@ function ParamMeasure(obj,type,myData0){
             else if (e.key === "f") obj.position.z += step;
             else if (e.key === "h") obj.position.z -= step;
             else if (e.key === "v")
+                console.log(obj)
                 console.log(
                     Math.round(obj.position.x*100)/100+','
                     +Math.round(obj.position.y*100)/100+','
