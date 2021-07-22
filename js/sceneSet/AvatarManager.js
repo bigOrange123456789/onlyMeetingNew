@@ -179,9 +179,6 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
         });
         scope.host();
     }
-    this.host_speak=function(){
-        console.log("尚未完成准备")
-    }
     this.host=function () {
         var scope=this;
         let order_list=[
@@ -190,7 +187,7 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
         let time_list=[2736];
 
         //var model_url = "./voice.gltf";
-        var model_url = "../_DATA_/voice.gltf";
+        var model_url = "../_DATA_/voice.glb";
         var mp3_url = "../_DATA_/voice.mp3";
         var mp3 = new Audio(mp3_url);
 

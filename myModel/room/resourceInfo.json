@@ -1,29 +1,14 @@
 {
 	"maps": [
 		{
-			"fileName": "ConferenceRoom1.jpg",
-			"modelName": "ConferenceRoom1.gltf",
-			"interest": 38653967.78687009
-		},
-		{
 			"fileName": "ConferenceRoom3.jpg",
 			"modelName": "ConferenceRoom3.gltf",
 			"interest": 4928592.596814654
 		},
 		{
-			"fileName": "ConferenceRoom7.jpg",
-			"modelName": "ConferenceRoom7.gltf",
-			"interest": 6398666.361276275
-		},
-		{
 			"fileName": "ConferenceRoom9.jpg",
 			"modelName": "ConferenceRoom9.gltf",
 			"interest": 20031308.008830868
-		},
-		{
-			"fileName": "ConferenceRoom11.jpg",
-			"modelName": "ConferenceRoom11.gltf",
-			"interest": 14601588.602387045
 		},
 		{
 			"fileName": "ConferenceRoom14.jpg",
@@ -41,29 +26,12 @@
 			"interest": 2909691.3850183515
 		},
 		{
-			"fileName": "ConferenceRoom27.jpg",
-			"modelName": "ConferenceRoom27.gltf",
-			"interest": 222306.2840995581
-		},
-		{
 			"fileName": "ConferenceRoom32.jpg",
 			"modelName": "ConferenceRoom32.gltf",
 			"interest": 3620.9165940525677
 		}
 	],
 	"models": [
-		{
-			"fileName": "ConferenceRoom1.gltf",
-			"interest": 29148047931.05864,
-			"spaceVolume": 20199597216223.637,
-			"boundingSphere": {
-				"x": 110.92145058098595,
-				"y": -56.29749779117503,
-				"z": -70.61250579532015,
-				"r": 339.5507777603808
-			},
-			"MapName": "ConferenceRoom1.jpg"
-		},
 		{
 			"fileName": "ConferenceRoom3.gltf",
 			"interest": 16950861618.428644,
@@ -75,18 +43,6 @@
 				"r": 273.5843853398063
 			},
 			"MapName": "ConferenceRoom3.jpg"
-		},
-		{
-			"fileName": "ConferenceRoom5.gltf",
-			"interest": 12978872862.498281,
-			"spaceVolume": 3114929486999.5874,
-			"boundingSphere": {
-				"x": -1.0037061023609795,
-				"y": 80.35053116019526,
-				"z": 0,
-				"r": 138.90807896000095
-			},
-			"MapName": ""
 		},
 		{
 			"fileName": "ConferenceRoom7.gltf",
@@ -101,18 +57,6 @@
 			"MapName": "ConferenceRoom7.jpg"
 		},
 		{
-			"fileName": "ConferenceRoom9.gltf",
-			"interest": 7799348796.157032,
-			"spaceVolume": 5599932435640.749,
-			"boundingSphere": {
-				"x": -272.34250316994917,
-				"y": -137.29755534940864,
-				"z": 12.252451753835203,
-				"r": 180.53598055327024
-			},
-			"MapName": "ConferenceRoom9.jpg"
-		},
-		{
 			"fileName": "ConferenceRoom11.gltf",
 			"interest": 4186180583.2258754,
 			"spaceVolume": 2963815852923.92,
@@ -123,18 +67,6 @@
 				"r": 120.36942583651033
 			},
 			"MapName": "ConferenceRoom11.jpg"
-		},
-		{
-			"fileName": "ConferenceRoom13.gltf",
-			"interest": 3167096373.780288,
-			"spaceVolume": 1950931366248.6575,
-			"boundingSphere": {
-				"x": 0.8875391046558434,
-				"y": -14.864766331038481,
-				"z": -13.994985405937044,
-				"r": 194.73546274957147
-			},
-			"MapName": "ConferenceRoom13.jpg"
 		},
 		{
 			"fileName": "ConferenceRoom15.gltf",
@@ -149,18 +81,6 @@
 			"MapName": ""
 		},
 		{
-			"fileName": "ConferenceRoom17.gltf",
-			"interest": 1551818622.673427,
-			"spaceVolume": 716940203675.1233,
-			"boundingSphere": {
-				"x": -28271.23046875,
-				"y": -162245,
-				"z": -15574.975128173828,
-				"r": 227402.32682035954
-			},
-			"MapName": ""
-		},
-		{
 			"fileName": "ConferenceRoom18.gltf",
 			"interest": 884047140.4431951,
 			"spaceVolume": 2441738201904.105,
@@ -171,18 +91,6 @@
 				"r": 139.8198011805876
 			},
 			"MapName": "ConferenceRoom18.jpg"
-		},
-		{
-			"fileName": "ConferenceRoom20.gltf",
-			"interest": 600000000,
-			"spaceVolume": 14400000000,
-			"boundingSphere": {
-				"x": 0,
-				"y": 0.5000000237487257,
-				"z": 0,
-				"r": 91.78916493985454
-			},
-			"MapName": ""
 		},
 		{
 			"fileName": "ConferenceRoom22.gltf",
@@ -207,18 +115,6 @@
 				"r": 142.89376312624327
 			},
 			"MapName": "ConferenceRoom25.jpg"
-		},
-		{
-			"fileName": "ConferenceRoom27.gltf",
-			"interest": 57303879.02754074,
-			"spaceVolume": 43092517028.71064,
-			"boundingSphere": {
-				"x": 153.25038470616903,
-				"y": 11.06104456233993,
-				"z": 32.80992456008011,
-				"r": 58.55396588352418
-			},
-			"MapName": "ConferenceRoom27.jpg"
 		},
 		{
 			"fileName": "ConferenceRoom28.gltf",
@@ -289,18 +185,6 @@
 				"y": -0.2660212063893752,
 				"z": -36.722083217262195,
 				"r": 101.18810066921137
-			},
-			"MapName": ""
-		},
-		{
-			"fileName": "ConferenceRoom38.gltf",
-			"interest": 0,
-			"spaceVolume": 0,
-			"boundingSphere": {
-				"x": 157.83573991867001,
-				"y": 131.56498671775125,
-				"z": -14.999974467343336,
-				"r": 10.757162227095533
 			},
 			"MapName": ""
 		}
