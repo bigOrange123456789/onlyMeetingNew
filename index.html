@@ -77,15 +77,18 @@
 		myMain.scene.add(net);
 		new ParamMeasure(net,0)
 
-		const light = new THREE.DirectionalLight( 0xffff00, 1 );
-		light.position.set(10,0,0)
-		light.rotation.set(Math.PI/2,0,0);
-		net.add(light)
-		//const geometry = new THREE.BoxGeometry( 5, 40, 5 );
-		//const material = new THREE.MeshBasicMaterial( {color: 0x00ff00} );
-		//const cube = new THREE.Mesh( geometry, material );
-		//cube.position.set(10,0,0)
-		//light.add( cube );
+		const light = new THREE.PointLight( 0xffff00, 1 );
+		light.position.set(0,40.97,0)
+		light.rotation.set(0,Math.PI/2,0)
+		//light.rotation.set(Math.PI/2,0,0);
+		myMain.scene.add(light)
+
+		/*
+		const geometry = new THREE.BoxGeometry( 5, 40, 5 );
+		const material = new THREE.MeshBasicMaterial( {color: 0x00ff00} );
+		const cube = new THREE.Mesh( geometry, material );
+		light.add( cube );
+		*/
 
 		//开始自动漫游路径
 		var mydata = [//自动漫游路径
