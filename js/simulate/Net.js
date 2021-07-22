@@ -3,18 +3,18 @@ export {Net};
 class Net{
     object;
     constructor(){
-        const DAMPING = 0.06;
-        const DRAG = 1 - DAMPING;
-        const MASS = 0.5;//质量
-        const restDistance = 25;//面片块大小
-        const xSegs = 100;//水平方向的面片块数
-        const ySegs = 85;//垂直方向的面片块数
+        const DAMPING = 0.03;//阻尼damping//坚硬程度
+        const DRAG = 1 - DAMPING;//阻力drag//
+        const MASS = 0.3;//质量
+        const restDistance = 28;//面片块大小
+        const xSegs = 110;//水平方向的面片块数
+        const ySegs = 68;//垂直方向的面片块数
         const clothFunction = plane( restDistance * xSegs, restDistance * ySegs );
         function plane( width, height ) {//布面的宽、高
             return function ( u, v, target ) {
                 const x = ( u - 0.5 ) * width;
                 const y = ( v + 0.5 ) * height;
-                const z = 120*Math.sin( Math.PI*10*u );
+                const z = 10*Math.sin( Math.PI*20*u );
                 target.set( x, y, z );
             };
         }
@@ -23,7 +23,10 @@ class Net{
         const TIMESTEP = 18 / 1000;//时间步长
         const TIMESTEP_SQ = Math.pow(TIMESTEP ,2);//时间步长的平方
         let pins = [];//模拟钉子
-        for(var i=0;i<=xSegs;i++)pins.push(i)
+        //钉子的行数：ySegs+1     钉子的列数：xSegs+1 //钉子是从下往上排列的
+        //for(var i=0;i<=xSegs;i++)pins.push(i)
+        for(var i=(xSegs+1)*ySegs;i<=(xSegs+1)*(ySegs+1)-1;i++)pins.push(i)//在最上面一行钉上钉子
+
 
         const windForce = new THREE.Vector3(  );//风力
         const tmpForce = new THREE.Vector3();
@@ -140,13 +143,12 @@ class Net{
 
         // cloth material
         const loader = new THREE.TextureLoader();
-        const clothTexture = loader.load( './img/cloth.webp' );
-        clothTexture.anisotropy = 16;
+        const clothTexture = loader.load( './img/cloth.jpg' );
+        //clothTexture.anisotropy = 16;
 
         const clothMaterial = new THREE.MeshLambertMaterial( {
             map: clothTexture,
-            side: THREE.DoubleSide,
-            alphaTest: 0.5
+            side: THREE.DoubleSide
         } );
 
         // cloth geometry
@@ -155,6 +157,14 @@ class Net{
         this.object = new THREE.Mesh( clothGeometry, clothMaterial );
         //scene.add( object );
 
+        //记录各个钉子的初始位置
+        for ( let i = 0; i < pins.length; i ++ ) {
+            const xy = pins[ i ];//粒子编号
+            const p = cloth.particles[ xy ];//获取粒子
+            p.original_x=p.original.x;
+            p.h=120;
+            //console.log(xy,p.original.x,p.original.y,p.original.z)
+        }
         animate( 0 );
         function animate( time0 ) {
             requestAnimationFrame( animate );
@@ -185,7 +195,7 @@ class Net{
             }
 
             //生成风
-            const windStrength = Math.cos( now / 7000 ) * 20 + 40;//风力大小
+            const windStrength = Math.cos( now / 7000 ) * 5 + 20;//风力大小
             windForce.set( Math.sin( now / 2000 ), Math.cos( now / 3000 ), Math.sin( now / 1000 ) );//风力方向
             windForce.normalize();//单位化
             windForce.multiplyScalar( windStrength );//方向*大小
@@ -209,6 +219,11 @@ class Net{
             for ( let i = 0; i < pins.length; i ++ ) {
                 const xy = pins[ i ];//粒子编号
                 const p = particles[ xy ];//获取粒子
+
+                if(window.start&&p.original.x>p.original_x-i*20){
+                    p.original.x=p.original.x-i*0.15;
+                }
+
                 p.position.copy( p.original );//这些粒子的位置是固定的
             }
         }//完成模拟

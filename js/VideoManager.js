@@ -35,6 +35,7 @@ VideoManager.prototype={
         mesh.material.map=this.videoTexture;
     },
     setPlay:function () {
+        window.start=true;
         if(this.div===undefined)this.init();
         this.video.volume=0.7;
         this.video.play();
