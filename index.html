@@ -9,8 +9,7 @@
 		</style>
 	</head>
 
-	<body>
-
+	<body style="margin: 0">
 	<script src="js/lib/threeJS/three.js"></script>
 	<script src="js/lib/threeJS/OrbitControls.js"></script>
 	<script src="js/lib/threeJS/GLTFLoader.js"></script>
@@ -32,6 +31,53 @@
 	<script src="js/Main.js"></script>
 
 	<script src="StereoEffect.js"></script>
+
+	<div id="cheat" style="position:absolute;left:0;right:0;">
+		<img id="bg" src="bg.png" style="background-size:100%;position:absolute;left:0;right:0;" />
+	</div>
+	<script>
+		document.getElementById("bg").width=window.innerWidth;
+		document.getElementById("bg").height=window.innerHeight;
+		var html="进入会议",
+				color="white",
+				background="#2ECC71",
+				size=20,
+				width=120,
+				height=50;
+		var oButton=document.createElement('p');//按钮
+		oButton.innerHTML=html;
+		oButton.style.cssText='font-size:'+size+'px;'//字体大小
+				+'width:'+width+'px;height:'+height+'px;'//按钮大小
+				+'color:'+color+';'//字体颜色
+				+'background:'+background+';'//按钮颜色
+				+'vertical-align:middle;'
+				+'text-align:center;'
+				+'line-height:50px;'
+				+'border-radius: 6px;'
+				+'position:fixed;'//到窗体的位置
+				+'left:'+(window.innerWidth/2-width/2)+'px;'//到部件左边距离
+				+'top:'+(window.innerHeight/2-height/2)+'px;'; //到部件右边 距离
+		oButton.style.cursor='hand';
+		oButton.onmouseover=function(){
+			oButton.style.cursor='hand';
+			oButton.style.borderRadius='70px';
+			oButton.style.backgroundColor = '#81F79F';
+		}
+		oButton.onmouseout=function(){
+			oButton.style.cursor='normal';
+			oButton.style.borderRadius='6px';
+			oButton.style.backgroundColor = '#2ECC71';
+		}
+		oButton.onmousedown = function() {
+			document.getElementById("cheat").style.visibility='hidden';
+		}
+		oButton.onmouseup = function() {
+			oButton.style.backgroundColor = '#81F79F';
+			oButton.style.color = 'white';
+		}
+		document.getElementById("cheat").appendChild(oButton);
+	</script>
+
 	<script  type="module">
 		//import { VRButton } from './js//lib/VRButton.js';//负责VR视觉
 		import {RoomManager} from './js/sceneSet/RoomManager.js';
@@ -46,6 +92,7 @@
 		//myMain.renderer.xr.enabled = true;
 
 		var myVideoManager = new VideoManager();
+
 		var myRoomManager = new RoomManager(myVideoManager,myMain.camera);
 		myMain.scene.add(myRoomManager.room);
 
@@ -113,8 +160,15 @@
 				/**/
 		];
 		var myPreviewManager = new PreviewManager(myMain.camera, mydata, myVideoManager);
-		myPreviewManager.createCameraButton('./img/1.png', './img/2.png');
+		//myPreviewManager.createCameraButton('./img/1.png', './img/2.png');
 		//结束自动漫游路径
+		function f00() {
+			requestAnimationFrame(f00);
+			if(!myVideoManager.finish&&document.getElementById("cheat").style.visibility==='hidden'){
+				myVideoManager.setPlay()
+				myPreviewManager.myMoveManager.stopFlag = false;
+			}
+		}f00()
 
 		//开始帧数统计
 		var tag = document.createElement('h1');

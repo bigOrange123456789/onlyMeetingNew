@@ -2,9 +2,11 @@ function VideoManager() {
     this.div;
     this.video;
     this.videoTexture;
+    this.finish;
 }
 VideoManager.prototype={
     init:function () {
+        this.finish=false;
         if(this.div!==undefined)return;
         this.div=getDiv();
         this.video=getVideo();
