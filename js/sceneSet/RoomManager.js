@@ -21,25 +21,53 @@ class RoomManager{
         scope.mid=20;
         scope.url="./myModel/room/";
         scope.camera=camera;
+
+        scope.firstLoad(scope.url)
         scope.init();
     }
+    firstLoad(url) {//scope.url+"first.glb"
+        var scope=this;
+        scope.loader.load(url+"first.glb", (glb) => {
+            //每个材质一个mesh
+            scope.room.add(glb.scene)
+            new THREE.XHRLoader(THREE.DefaultLoadingManager).load(url+"test.json", function (data) {
+                var json=JSON.parse(data);
+                var list=json.list;
+                var mapsIndex=json.mapsIndex;
 
+                glb.scene.traverse(function (node) {
+                    if(node instanceof THREE.Mesh){
+                        if( node.name==="室内-小显示器屏幕（非）"||
+                            node.name==="室内-大显示器屏幕（非）"){//室内-大显示器屏幕（非）
+                            var screen=node;
+                            if(scope.myVideoManager.video)scope.myVideoManager.init();
+                            scope.myVideoManager.setMaterial(screen);
+                        }
+                        var index=parseInt(list[node.name])
+                        if(mapsIndex[index]){
+                            new THREE.TextureLoader().load(
+                                url+"ConferenceRoom"+index+".jpg",// resource URL
+                                function ( texture ) {// onLoad callback
+                                    texture.wrapS = THREE.RepeatWrapping;
+                                    texture.wrapT = THREE.RepeatWrapping;
+                                    node.material=new THREE.MeshBasicMaterial({map: texture});
+                                }
+                            );
+                        }
+                    }
+                })
+
+            });
+        });
+    }
 }
 RoomManager.prototype.init=function(){
     var scope=this;
     this.myResourceLoader=new ResourceLoader(
         this.url,
         this.camera,
-        function (gltf) {
-            for(var i=0;i<gltf.scene.children.length;i++){
-                if( gltf.scene.children[i].name==="室内-小显示器屏幕（非）"||
-                    gltf.scene.children[i].name==="室内-大显示器屏幕（非）"){//室内-大显示器屏幕（非）
-                    var screen=gltf.scene.children[i];
-                    if(scope.myVideoManager.video)scope.myVideoManager.init();
-                    scope.myVideoManager.setMaterial(screen);
-                }
-            }
-        });
+        function (gltf) {}
+        );
     this.room.add(this.myResourceLoader.object);
     this.room.scale.set(10,10,10);//这里在预处理计算包围球时，可以通过设置scene来处理
     this.myLoad_door('myModel/room/door.gltf');

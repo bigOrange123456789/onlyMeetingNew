@@ -206,7 +206,7 @@ class ResourceList{//这个对象主要负责资源列表的生成和管理
             var list=[];
             for(let i=0;i<scope.maps.length;i++){
                 var model=scope.getModelByName(scope.maps[i].modelName);
-                if(model.finishLoad
+                if(model&&model.finishLoad
                     &&model.inView
                     &&!scope.maps[i].finishLoad)
                     list.push(scope.maps[i].fileName);
