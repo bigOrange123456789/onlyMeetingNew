@@ -19,14 +19,7 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b7b6123d-caec-4b82-a432-424a6b5be5dd" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/bg0.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PMtest.html" beforeDir="false" afterPath="$PROJECT_DIR$/PMtest.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/js/lib/pmLib/MyPMLoader.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/lib/pmLib/MyPMLoader.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/myModel/Female/skeletonindex.json" beforeDir="false" afterPath="$PROJECT_DIR$/myModel/Female/skeletonindex.json" afterDir="false" />
-    </list>
+    <list default="true" id="b7b6123d-caec-4b82-a432-424a6b5be5dd" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -46,7 +39,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../InstancedMesh" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -259,7 +252,7 @@
       <workItem from="1619775983755" duration="123000" />
       <workItem from="1620397324534" duration="9000" />
       <workItem from="1620651647736" duration="5771000" />
-      <workItem from="1627367022769" duration="2827000" />
+      <workItem from="1627367022769" duration="2961000" />
     </task>
     <servers />
   </component>
@@ -279,33 +272,9 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="379" y="141" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1613703509326">
+    <state x="523" y="120" key="FileChooserDialogImpl" timestamp="1627370004257">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state x="379" y="141" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1280.680@0.0.1280.680" timestamp="1613703509326" />
-    <state x="93" y="93" width="1095" height="495" key="DiffContextDialog" timestamp="1615548510399">
-      <screen x="0" y="0" width="1280" height="680" />
-    </state>
-    <state x="93" y="93" width="1095" height="495" key="DiffContextDialog/0.0.1280.680@0.0.1280.680" timestamp="1615548510399" />
-    <state x="523" y="120" key="FileChooserDialogImpl" timestamp="1620699429408">
-      <screen x="0" y="0" width="1280" height="680" />
-    </state>
-    <state x="523" y="120" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1620699429408" />
-    <state width="506" height="446" key="SwitcherDM" timestamp="1617444369603">
-      <screen x="0" y="0" width="1280" height="680" />
-    </state>
-    <state width="506" height="446" key="SwitcherDM/0.0.1280.680@0.0.1280.680" timestamp="1617444369603" />
-    <state x="339" y="72" width="603" height="536" key="find.popup" timestamp="1616476794477">
-      <screen x="0" y="0" width="1280" height="680" />
-    </state>
-    <state x="339" y="72" width="603" height="536" key="find.popup/0.0.1280.680@0.0.1280.680" timestamp="1616476794477" />
-    <state x="297" y="151" width="672" height="677" key="run.anything.popup" timestamp="1616575609763">
-      <screen x="0" y="0" width="1280" height="680" />
-    </state>
-    <state x="297" y="151" width="672" height="677" key="run.anything.popup/0.0.1280.680@0.0.1280.680" timestamp="1616575609763" />
-    <state x="303" y="1" width="672" height="678" key="search.everywhere.popup" timestamp="1616511707050">
-      <screen x="0" y="0" width="1280" height="680" />
-    </state>
-    <state x="303" y="1" width="672" height="678" key="search.everywhere.popup/0.0.1280.680@0.0.1280.680" timestamp="1616511707050" />
+    <state x="523" y="120" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1627370004257" />
   </component>
 </project>
