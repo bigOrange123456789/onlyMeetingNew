@@ -32,24 +32,21 @@
 
 	<script src="StereoEffect.js"></script>
 
-	<div id="cheat" style="position:absolute;left:0;right:0;">
+	<div id="cheat" style="position:absolute;left:0;right:0;background-size:100%;background:#01f;">
 		<img id="bg" src="bg.png" style="background-size:100%;position:absolute;left:0;right:0;" />
 	</div>
 	<script>
+		document.getElementById("cheat").width=window.innerWidth;
+		document.getElementById("cheat").height=window.innerHeight;
 		document.getElementById("bg").width=window.innerWidth;
 		document.getElementById("bg").height=window.innerHeight;
-		var html="进入会议",
-				color="white",
-				background="#2ECC71",
-				size=20,
-				width=120,
-				height=50;
+		var width=120, height=50;
 		var oButton=document.createElement('p');//按钮
-		oButton.innerHTML=html;
-		oButton.style.cssText='font-size:'+size+'px;'//字体大小
-				+'width:'+width+'px;height:'+height+'px;'//按钮大小
-				+'color:'+color+';'//字体颜色
-				+'background:'+background+';'//按钮颜色
+		oButton.innerHTML="进入会议";
+		oButton.style.cssText='font-size:20px;'//字体大小
+				+'width:120px;height:50px;'//按钮大小
+				+'color:white;'//字体颜色
+				+'background:#2ECC71;'//按钮颜色
 				+'vertical-align:middle;'
 				+'text-align:center;'
 				+'line-height:50px;'

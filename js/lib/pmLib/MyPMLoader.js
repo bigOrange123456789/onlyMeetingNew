@@ -58,21 +58,29 @@ MyPMLoader.prototype={
         var THIS=this;
 
         //处理骨骼动画
-        var animationClips=THIS.glbObj.animations;//获取动画
-        if(animationClips.length>0)this.ainmationInit();
+        if(THIS.glbObj){
+            var animationClips=THIS.glbObj.animations;//获取动画
+            if(animationClips.length>0)this.ainmationInit();
+        }
+
 
         //加载基模的三个JSON文件,然后进行解析、执行parse函数
+        var loader = new THREE.XHRLoader(THREE.DefaultLoadingManager);
         var baseMeshUrl = this.url + '/basemesh.json';
         var skeletonUrl = this.url + '/skeleton.json';
         var skeletonIndexUrl = this.url + '/skeletonindex.json';
-        var loader = new THREE.XHRLoader(THREE.DefaultLoadingManager);
         loader.load(baseMeshUrl, function(baseMesh){
-            loader.load(skeletonUrl, function(skeleton){
-                loader.load(skeletonIndexUrl, function(skeletonIndex){
-                    THIS.handlePMJson_i( baseMesh, skeleton, skeletonIndex, animationClips);
+            if(THIS.glbObj){
+                loader.load(skeletonUrl, function(skeleton){
+                    loader.load(skeletonIndexUrl, function(skeletonIndex){
+                        THIS.handlePMJson_i( baseMesh, skeleton, skeletonIndex, animationClips);
+                    });
                 });
-            });
+            }else{
+                THIS.handlePMJson_i( baseMesh, null, null, null);
+            }
         });
+
     },
     handlePMJson_i:function(baseMesh, skeleton, skeletonIndex, animationClips) {
         var THIS=this;
@@ -101,8 +109,10 @@ MyPMLoader.prototype={
 
         //基网格信息
         var jsonData = JSON.parse(baseMesh);
-        var skeletonData = JSON.parse(skeleton);
-        var skeletonIndexData = JSON.parse(skeletonIndex);
+        if(THIS.glbObj){
+            var skeletonData = JSON.parse(skeleton);
+            var skeletonIndexData = JSON.parse(skeletonIndex);
+        }
 
         ////用于图片LOD
         var imageLodLevel = 0;
@@ -121,6 +131,7 @@ MyPMLoader.prototype={
                 jsonData.geometries[0].data.vertices[i * 3 + 2]
             ]);
         //joints、weights
+        if(THIS.glbObj)//如果有骨骼动画
         for (var i = 0 ; i < jsonData.geometries[0].data.vertices.length / 3 ; ++i)
         {
             var skeletonId = skeletonIndexData[i];
@@ -180,7 +191,7 @@ MyPMLoader.prototype={
                 startLogImageLoading(meshMat[i], meshData.materials[i]);
         }
 
-        restoreMesh(0);//应该是处理基模时使用的，只被执行一次
+        restoreMesh(0,THIS);//应该是处理基模时使用的，只被执行一次
         if(THIS.finishFunction!==null)THIS.finishFunction();
 
         loadLocalFile(pmFilesUrl + 'desc.json',function (data) {
@@ -190,6 +201,7 @@ MyPMLoader.prototype={
         });
 
 
+        if(THIS.glbObj)
         if(animationClips.length>0)this.aimationMixerInit(animationClips);
 
 
@@ -326,8 +338,10 @@ MyPMLoader.prototype={
             meshData.vertices.push([vsData.TPosition[0] , vsData.TPosition[1] , vsData.TPosition[2]]);
 
             //添加骨骼索引和权重
-            meshData.joints.push(skeletonData.joints[vsData.T]);
-            meshData.weights.push(skeletonData.weights[vsData.T]);
+            if(typeof(skeletonData)!=="undefined"){//如果有骨骼动画
+                meshData.joints.push(skeletonData.joints[vsData.T]);
+                meshData.weights.push(skeletonData.weights[vsData.T]);
+            }
 
             var t = meshData.vertices.length - 1;
             incidentFaces[t] = [];
@@ -398,22 +412,21 @@ MyPMLoader.prototype={
             }
 
             for (var key in mapPM)
-                restoreMesh(key, index, lengthindex, THIS);//从第二个JSON文件开始执行这个语句
+                restoreMesh(key, THIS, index, lengthindex);//从第二个JSON文件开始执行这个语句
 
         }
 
         //创建新的模型，将还原后的结果渲染到场景中
 
-        function restoreMesh(Meshid,index,lengthindex)//Meshid始终为0
+        function restoreMesh(Meshid,THIS,index,lengthindex)//Meshid始终为0
         {//index:0-330   lengthindex:331
-            var useSkinning = true;
             rootObject.remove(THIS.mesh[0]);//将mesh从对象中移除//this is a tag 0000
 
             var geometry=new THREE.BufferGeometry();
-            updateGeometry(geometry,meshData,Meshid);//相关运算
+            updateGeometry(geometry,meshData,Meshid,THIS);//相关运算
 
             //console.log(mesh)
-            if(!useSkinning){//没有骨骼动画
+            if(!THIS.glbObj){//没有骨骼动画
                 THIS.mesh[0]=new THREE.Mesh(geometry,meshMat[Meshid]);
             }else{//有骨骼动画
                 THIS.mesh[0]=new THREE.SkinnedMesh(geometry,meshMat[Meshid]);
@@ -423,6 +436,7 @@ MyPMLoader.prototype={
             rootObject.add(THIS.mesh[0]);//将更新后的mesh添加到对象中//
 
 
+            if(THIS.glbObj)
             if(animationClips.length>0)setupPmSkinnedMesh(rootObject, skeletonBones, skeletonMatrix);//重要
 
             if(typeof(index)!='undefined')
@@ -430,13 +444,15 @@ MyPMLoader.prototype={
                     pmMeshHistory.push(THIS.mesh[0]);//记录mesh
         }
 
-        function updateGeometry(geometry, meshData, Meshid)
+        function updateGeometry(geometry, meshData, Meshid,THIS)
         {
             var verticesArray = new Float32Array(meshData.faces[Meshid].length * 3 * 3);
             var indicesArray = new Uint32Array(meshData.faces[Meshid].length * 3);
             var uvsArray = new Float32Array(meshData.faces[Meshid].length * 3*2);
-            var jointArray = new Uint16Array(meshData.faces[Meshid].length * 3 * 4);
-            var weightArray = new Float32Array(meshData.faces[Meshid].length * 3 * 4);
+            if(THIS.glbObj){
+                var jointArray = new Uint16Array(meshData.faces[Meshid].length * 3 * 4);
+                var weightArray = new Float32Array(meshData.faces[Meshid].length * 3 * 4);
+            }
 
             //var f1=0;
             for (var key=0;key<meshData.faces[Meshid].length;key++)
@@ -459,33 +475,35 @@ MyPMLoader.prototype={
                 verticesArray[key*9+7]=meshData.vertices[fz][1];
                 verticesArray[key*9+8]=meshData.vertices[fz][2];
 
-                // joint
-                jointArray[key * 12 ] = meshData.joints[fx][0];
-                jointArray[key * 12 + 1] = meshData.joints[fx][1];
-                jointArray[key * 12 + 2] = meshData.joints[fx][2];
-                jointArray[key * 12 + 3] = meshData.joints[fx][3];
-                jointArray[key * 12 + 4] = meshData.joints[fy][0];
-                jointArray[key * 12 + 5] = meshData.joints[fy][1];
-                jointArray[key * 12 + 6] = meshData.joints[fy][2];
-                jointArray[key * 12 + 7] = meshData.joints[fy][3];
-                jointArray[key * 12 + 8] = meshData.joints[fz][0];
-                jointArray[key * 12 + 9] = meshData.joints[fz][1];
-                jointArray[key * 12 + 10] = meshData.joints[fz][2];
-                jointArray[key * 12 + 11] = meshData.joints[fz][3];
+                if(THIS.glbObj){
+                    // joint
+                    jointArray[key * 12 ] = meshData.joints[fx][0];
+                    jointArray[key * 12 + 1] = meshData.joints[fx][1];
+                    jointArray[key * 12 + 2] = meshData.joints[fx][2];
+                    jointArray[key * 12 + 3] = meshData.joints[fx][3];
+                    jointArray[key * 12 + 4] = meshData.joints[fy][0];
+                    jointArray[key * 12 + 5] = meshData.joints[fy][1];
+                    jointArray[key * 12 + 6] = meshData.joints[fy][2];
+                    jointArray[key * 12 + 7] = meshData.joints[fy][3];
+                    jointArray[key * 12 + 8] = meshData.joints[fz][0];
+                    jointArray[key * 12 + 9] = meshData.joints[fz][1];
+                    jointArray[key * 12 + 10] = meshData.joints[fz][2];
+                    jointArray[key * 12 + 11] = meshData.joints[fz][3];
 
-                // weight
-                weightArray[key * 12 ] = meshData.weights[fx][0];
-                weightArray[key * 12 + 1] = meshData.weights[fx][1];
-                weightArray[key * 12 + 2] = meshData.weights[fx][2];
-                weightArray[key * 12 + 3] = meshData.weights[fx][3];
-                weightArray[key * 12 + 4] = meshData.weights[fy][0];
-                weightArray[key * 12 + 5] = meshData.weights[fy][1];
-                weightArray[key * 12 + 6] = meshData.weights[fy][2];
-                weightArray[key * 12 + 7] = meshData.weights[fy][3];
-                weightArray[key * 12 + 8] = meshData.weights[fz][0];
-                weightArray[key * 12 + 9] = meshData.weights[fz][1];
-                weightArray[key * 12 + 10] = meshData.weights[fz][2];
-                weightArray[key * 12 + 11] = meshData.weights[fz][3];
+                    // weight
+                    weightArray[key * 12 ] = meshData.weights[fx][0];
+                    weightArray[key * 12 + 1] = meshData.weights[fx][1];
+                    weightArray[key * 12 + 2] = meshData.weights[fx][2];
+                    weightArray[key * 12 + 3] = meshData.weights[fx][3];
+                    weightArray[key * 12 + 4] = meshData.weights[fy][0];
+                    weightArray[key * 12 + 5] = meshData.weights[fy][1];
+                    weightArray[key * 12 + 6] = meshData.weights[fy][2];
+                    weightArray[key * 12 + 7] = meshData.weights[fy][3];
+                    weightArray[key * 12 + 8] = meshData.weights[fz][0];
+                    weightArray[key * 12 + 9] = meshData.weights[fz][1];
+                    weightArray[key * 12 + 10] = meshData.weights[fz][2];
+                    weightArray[key * 12 + 11] = meshData.weights[fz][3];
+                }
 
                 //uv
                 uvsArray[key*6]=meshData.uvs[meshData.Uvfaces[Meshid][key][0]][0];
@@ -498,8 +516,10 @@ MyPMLoader.prototype={
             geometry.setIndex( new THREE.BufferAttribute(indicesArray, 1));
             geometry.addAttribute( 'position', new THREE.BufferAttribute(verticesArray , 3));
             geometry.addAttribute('uv', new THREE.BufferAttribute(uvsArray,2));
-            geometry.addAttribute('skinIndex' , new THREE.BufferAttribute(jointArray , 4));
-            geometry.addAttribute('skinWeight' , new THREE.BufferAttribute(weightArray , 4));
+            if(THIS.glbObj){
+                geometry.addAttribute('skinIndex' , new THREE.BufferAttribute(jointArray , 4));
+                geometry.addAttribute('skinWeight' , new THREE.BufferAttribute(weightArray , 4));
+            }
 
             geometry.computeVertexNormals();
             verticesArray=null;

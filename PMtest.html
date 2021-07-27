@@ -49,7 +49,7 @@
 			var LODArray=[30,60,90]//4个数字表示距离，可以将模型分为5级;
 			var path='./myModel/dongshizhang5';
 			var pmLoader = new MyPMLoader(
-					glbObj,
+					null,
 					path,    //模型路径
 					LODArray,//LOD等级的数组
 					myMain.camera,  //LOD需要判断到相机的距离
@@ -57,34 +57,17 @@
 					0.01,     //动画播放速度//可以通过调整pmLoader.animationSpeed来调整速度
 					["Texture_0_0.jpeg","Texture_0_1.jpeg"],
 					function () {
-						var mesh=pmLoader.rootObject.children[0].clone();
-
-						var scene=new THREE.Scene();
-						scene.add(mesh)
-						console.log(scene)
-						const exporter = new THREE.GLTFExporter();
-						exporter.parse(scene, function ( gltf ) {
-							downloadJSON( gltf );
-							function downloadJSON(gltf) {
-								var str=JSON.stringify(gltf);
-								var name="test.gltf";
-
-								var myBlob=new Blob([str], { type: 'text/plain' })
-								let link = document.createElement('a');
-								link.href = URL.createObjectURL(myBlob);
-								link.download = name;
-								link.click();
-							}
-						} );
 					},
 					0
 			);//pmLoader = new myPMLoader('myModel/dongshizhang', LODNumber);//pmLoader = new THREE.PMLoader();//加载PM文件
 			var myModel=pmLoader.rootObject;
-			myModel.scale.set(0.05,0.05,0.05);
+			//myModel.scale.set(0.05,0.05,0.05);
+
 			//myModel.position.set(191,18.1,-11);//191,9,-11
 			myModel.rotation.set(0,Math.PI,0);
 			//new ParamMeasure(myModel,0);
 			myMain.scene.add(myModel);
+			console.log(myModel)
 			//完成创建PM对象
 
 
