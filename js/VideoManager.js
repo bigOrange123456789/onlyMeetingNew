@@ -13,7 +13,7 @@ VideoManager.prototype={
         this.div.append(this.video);
         this.videoTexture=getVideoTexture(this.video);
         window.videoMaterial.map1=this.videoTexture;
-        window.videoMaterial.map=this.videoTexture;
+        //window.videoMaterial.map=this.videoTexture;
         function getDiv(){
             return document.createElement('div');
         }

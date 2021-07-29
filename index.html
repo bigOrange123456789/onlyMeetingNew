@@ -82,7 +82,17 @@
 		import {Net} from './js/simulate/Net.js';
 		//import {MoveManager} from './js/playerControl/MoveManager.js';
 
-		window.videoMaterial=new THREE.MeshStandardMaterial();
+		window.videoMaterial=new THREE.MeshBasicMaterial();
+
+		var texture = new THREE.Texture();
+		texture.image =document.getElementById("bg");
+		texture.needsUpdate = true;
+		texture.flipY=false;
+		texture.wrapS=texture.wrapT=THREE.ClampToEdgeWrapping;
+		texture.minFilter=THREE.LinearFilter;
+		texture.magFilter=THREE.LinearFilter;
+		texture.format=THREE.RGBFormat;
+		window.videoMaterial.map=texture;
 
 		var myMain = new Main();
 		myMain.start();
