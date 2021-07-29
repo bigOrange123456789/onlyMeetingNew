@@ -57,7 +57,7 @@
 		loader.load("json/crowdData.json", function(str){//dataTexture
 			var crowdData_json=JSON.parse(str);
 			var pmLoader2 = new MyPMLoader(
-					{animations: []},
+					{animations: []},//需要骨骼索引，但是没有动画数据的时候这样设置
 					'./myModel/Male',    //模型路径
 					[],//没有LOD分级//LOD等级的数组
 					myMain.camera,  //LOD需要判断到相机的距离

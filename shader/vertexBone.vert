@@ -104,7 +104,7 @@ struct Animation{
         int frameIndex;
         float frameIndex_f;
 }oAnimation;
-float Animation_getNumByAnim(sampler2D smp,float n){
+float Animation_getNumByAnim(sampler2D smp,float n){//通过矩阵序号获取动画矩阵
     vec3 tttt=texture(smp, vec2(
     (0.5+0.0)/1.0, //宽width
     (0.5+floor(n/3.0))/(animationDataLength/3.0)//除3是指每个像素点可存储3个数据

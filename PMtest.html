@@ -45,11 +45,12 @@
 
 		//开始创建PM对象
 		var animLoader = new THREE.GLTFLoader();//= new PMAnimLoader();//估计是通过gltf文件加载的动画
-		animLoader.load('./myModel/skeleton/scene.gltf', function (glbObj){
+		animLoader.load('./myModel/skeleton/scene.glb', function (glbObj){
+			console.log(glbObj)
 			var LODArray=[30,60,90]//4个数字表示距离，可以将模型分为5级;
 			var path='./myModel/dongshizhang5';
 			var pmLoader = new MyPMLoader(
-					null,
+					glbObj,
 					path,    //模型路径
 					LODArray,//LOD等级的数组
 					myMain.camera,  //LOD需要判断到相机的距离

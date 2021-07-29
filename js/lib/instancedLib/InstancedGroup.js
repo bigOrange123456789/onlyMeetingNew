@@ -133,7 +133,7 @@ InstancedGroup.prototype={
             //var data0=JSON.parse(str).data;//204
             var data = new Float32Array( arr.length);//1944
             var width = 1 , height = data.length/3 ;//648
-            for(var i=0;i<data.length;i++)data[i]=arr[i];//972
+            data.set(arr)//for(var i=0;i<data.length;i++)data[i]=arr[i];//972
             var tex=new THREE.DataTexture(data, width, height, THREE.RGBFormat,THREE.FloatType);
             return {"value":tex};
         }
