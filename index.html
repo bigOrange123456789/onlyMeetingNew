@@ -82,6 +82,8 @@
 		import {Net} from './js/simulate/Net.js';
 		//import {MoveManager} from './js/playerControl/MoveManager.js';
 
+		window.videoMaterial=new THREE.MeshStandardMaterial();
+
 		var myMain = new Main();
 		myMain.start();
 		window.camera=myMain.camera;
@@ -97,6 +99,7 @@
 
 		var mySeatManager = new SeatManager();
 		mySeatManager.init();
+		mySeatManager.create();//椅子
 		myMain.scene.add(mySeatManager.chairs);
 
 		var myAvatarManager = new AvatarManager(mySeatManager, myMain.camera);
@@ -106,7 +109,6 @@
 		myAvatarManager.create1(function () {
 			//myRoomManager.create2();//贴图
 			myAvatarManager.create2();//嘉宾
-			mySeatManager.create();//椅子
 		});//听众
 
 		var net=new Net().object;
@@ -115,13 +117,11 @@
 		net.rotation.set(0,Math.PI/2,0)
 		myMain.scene.add(net);
 
-
 		net=new Net().object;
 		net.position.set(170,17,29)
 		net.scale.set(0.03,0.03,0.04)
 		net.rotation.set(0,Math.PI/2,0)
 		myMain.scene.add(net);
-		/**/
 		//new ParamMeasure(net,0)
 
 		const light = new THREE.PointLight( 0xffffff, 1 );
@@ -153,7 +153,6 @@
 			, [129, 37, -27, -1.25, -1.52, -1.24, 50]
 			, [229, 29, -19, -1.21, 1.46, 1.19, 80]
 			, [183, 63, -19, -1.67, 1.35, 1.66, 80]
-				/**/
 
 		];
 		var myPreviewManager = new PreviewManager(myMain.camera, mydata, myVideoManager);

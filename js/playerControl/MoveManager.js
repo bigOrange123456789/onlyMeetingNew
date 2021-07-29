@@ -29,13 +29,15 @@ class MoveManager{
                     if(scope.myPreviewflag===5){
                         window.play();
                         console.log("播放了面部动画！")
-                        window.play=function(){
-                            console.log("！多次播放面部动画")
-                        }
+                        //window.play=function(){console.log("！多次播放面部动画")}
                     }
-                    if(scope.myPreviewflag=== scope.roamPath.length)
+                    if(scope.myPreviewflag=== scope.roamPath.length){
                         if(scope.isLoop)scope.myPreviewflag = 0;
                         else scope.stopFlag=true;
+                        window.videoMaterial.map=window.videoMaterial.map1;
+                        console.log("开始播放视频！")
+                        window.video.play();
+                    }
                 }
             requestAnimationFrame(autoRoam0);
         }
@@ -110,6 +112,7 @@ class MakeOneRoamStep{
         var x1,y1,z1,x2,y2,z2,//位置
             a1,b1,c1,a2,b2,c2;//角度//a=c
 
+        if(mystate>=mydata.length)return;
         var time=mydata[mystate][6];
         //当前状态
         x1=avatar.position.x;

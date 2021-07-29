@@ -187,7 +187,7 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
         let time_list=[2736];
 
         //var model_url = "./voice.gltf";
-        var model_url = "./myModel/host/voice.glb";//"../_DATA_/voice.glb";
+        var model_url = "./myModel/host/voice2.glb";//"../_DATA_/voice.glb";
         var mp3_url = "./myModel/host/voice.mp3";//"../_DATA_/voice.mp3";
         var mp3 = new Audio(mp3_url);
 
@@ -254,20 +254,18 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
 
         //scope.host_speak=play();
         function play() {
-            console.log("按下了play按钮");
-
+            console.log("开始播放动画");
             if(past_time < 0){
                 past_time = -1000;
             } else past_time = 0;
             //console.log(order_list.length)
-            mp3.play();
+            //mp3.play();
             animate0();//开始播放动画
         }
         function animate0() {
             requestAnimationFrame( animate0 );
             var time = clock.getDelta() * 1000;
             past_time += time;
-
             if(past_time > 0) {
                 upda = getUpda();
                 //console.log("past_time:" + past_time + "  upda:" + upda);

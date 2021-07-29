@@ -39,9 +39,10 @@ class RoomManager{
                     if(node instanceof THREE.Mesh){
                         if( node.name==="室内-小显示器屏幕（非）"||
                             node.name==="室内-大显示器屏幕（非）"){//室内-大显示器屏幕（非）
-                            var screen=node;
-                            if(scope.myVideoManager.video)scope.myVideoManager.init();
-                            scope.myVideoManager.setMaterial(screen);
+                            //var screen=node;
+                            //if(scope.myVideoManager.video)scope.myVideoManager.init();
+                            //scope.myVideoManager.setMaterial(screen);
+                            node.material=window.videoMaterial;
                         }
                         var index=parseInt(list[node.name])
                         if(mapsIndex[index]){
@@ -62,7 +63,6 @@ class RoomManager{
     }
 }
 RoomManager.prototype.init=function(){
-    var scope=this;
     this.myResourceLoader=new ResourceLoader(
         this.url,
         this.camera,

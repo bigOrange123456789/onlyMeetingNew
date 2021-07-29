@@ -12,6 +12,8 @@ VideoManager.prototype={
         this.video=getVideo();
         this.div.append(this.video);
         this.videoTexture=getVideoTexture(this.video);
+        window.videoMaterial.map1=this.videoTexture;
+        window.videoMaterial.map=this.videoTexture;
         function getDiv(){
             return document.createElement('div');
         }
@@ -31,15 +33,18 @@ VideoManager.prototype={
             return texture;
         }
     },
-    setMaterial:function (mesh) {
+    setMaterial0:function (mesh) {
         if(this.div===undefined)this.init();
         mesh.material=new THREE.MeshStandardMaterial();
         mesh.material.map=this.videoTexture;
+        window.videoMaterial=mesh.material;
     },
     setPlay:function () {
         window.start=true;
         if(this.div===undefined)this.init();
         this.video.volume=0.7;
-        this.video.play();
+        //this.video.play();
+        //this.video.pause();
+        window.video=this.video;
     },
 }
