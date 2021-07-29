@@ -172,7 +172,7 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
 
     this.create2=function () {
         var animLoader = new THREE.GLTFLoader();//= new PMAnimLoader();//估计是通过gltf文件加载的动画
-        animLoader.load('./myModel/skeleton/scene.gltf', function (glbObj){
+        animLoader.load('./myModel/skeleton/scene.glb', function (glbObj){
             glbObj.scene.visible=false;
             //scope.loadGuest1(glbObj);
             scope.loadGuest2(glbObj);
