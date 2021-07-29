@@ -13,6 +13,16 @@
     <img id="bg" src="bg.png" style="background-size:100%" />
 </div>
 <script>
+    //开始blur加载
+    // 为了看到效果加个延时
+    var imgUrl = './bg.png';
+    var imgObject = new Image();
+    imgObject.src = imgUrl;
+    imgObject.onload = function(){
+        document.getElementById("bg").src = imgUrl;
+        //document.getElementById("bg").setAttribute('class', 'thumbnails complete');
+    }
+    //完成blur加载
     document.getElementById("bg").width=window.innerWidth;
     document.getElementById("bg").height=window.innerHeight;
     var html="进入会议",
