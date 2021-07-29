@@ -22,7 +22,6 @@
     <list default="true" id="b7b6123d-caec-4b82-a432-424a6b5be5dd" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/新建文件夹/cheat.html" beforeDir="false" afterPath="$PROJECT_DIR$/新建文件夹/cheat.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -267,7 +266,7 @@
       <workItem from="1627537224686" duration="203000" />
       <workItem from="1627537439389" duration="9206000" />
       <workItem from="1627548287307" duration="2709000" />
-      <workItem from="1627552981224" duration="8574000" />
+      <workItem from="1627552981224" duration="9613000" />
     </task>
     <servers />
   </component>

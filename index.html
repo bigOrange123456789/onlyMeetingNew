@@ -46,6 +46,10 @@
 			imgObject.onload = function(){
 				bg.src = imgUrl;
 				bg.setAttribute('class', 'thumbnails complete');
+				if(window.videoMaterial&&window.videoMaterial.map!==window.videoMaterial.map1){
+					window.videoMaterial.map.image =bg;
+					window.videoMaterial.map.needsUpdate = true;
+				}
 			}
 		},500)
 		//完成blur加载
@@ -175,6 +179,9 @@
 			, [129, 37, -27, -1.25, -1.52, -1.24, 50]
 			, [229, 29, -19, -1.21, 1.46, 1.19, 80]
 			, [183, 63, -19, -1.67, 1.35, 1.66, 80]
+
+			, [77.68, 109.13, -17.50,-1.67, 1.35, 1.66,50]
+			, [-30.440306021267492,125.36564291071822,-18.58769506,-1.5921799912480827,  -1.0399661678502943,  -1.5955909248070625,50]
 
 		];
 		var myPreviewManager = new PreviewManager(myMain.camera, mydata, myVideoManager);
