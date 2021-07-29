@@ -187,8 +187,8 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
         let time_list=[2736];
 
         //var model_url = "./voice.gltf";
-        var model_url = "../_DATA_/voice.glb";
-        var mp3_url = "../_DATA_/voice.mp3";
+        var model_url = "./myModel/host/voice.glb";//"../_DATA_/voice.glb";
+        var mp3_url = "./myModel/host/voice.mp3";//"../_DATA_/voice.mp3";
         var mp3 = new Audio(mp3_url);
 
         var mixer = { };
@@ -213,9 +213,18 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
             var loader=new THREE.GLTFLoader();
             loader.load(model_url, function (obj){
                 var model = obj.scene;
+                //console.log(model);
                 model.position.set(198,9,-65);
                 model.rotation.set(0,-Math.PI/2,0);
                 model.scale.set(10,10,10);
+                model.traverse(function (node) {
+                    if(node instanceof THREE.SkinnedMesh){
+                        node.material.side=THREE.DoubleSide;
+                        //alert(node.frustumCulled)
+                        node.frustumCulled=false;
+                    }
+                })
+                console.log(model)
                 scope.obj.add(model);
                 //将模型绑定到动画混合器里面
                 var anima = obj.animations;
