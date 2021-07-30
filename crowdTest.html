@@ -78,7 +78,7 @@
 						//peoples2.fragURL="shader/fragment2.frag";
 						peoples2.init(["./img/texture/m/m0.jpg","./img/texture/m/m1.jpg","./img/texture/m/m2.jpg"],
 								32,
-								['#a9a541','#726050','#836557','#5a4c40','#716365',
+								[   '#a9a541','#726050','#836557','#5a4c40','#716365',
 									'#483530','#695148','#917a6e','#786861','#4d453f','#553531','#8b7a73',
 									'#5d5146','#6c5b58','#656261','#646058','#5c5653','#5f5042','#6b6665',
 									'#6e5b4c','#82756d','#8f7462','#8e6b5d','#5a4c40','#6c6f72','#8e7f78',
@@ -91,11 +91,9 @@
 
 
                         for (var index = 0; index < peoples2.instanceCount; index++){
-
                                 peoples2.rotationSet(index, [Math.PI / 2, 0, 3 * Math.PI / 2]);
                                 peoples2.positionSet(index, [200*index,0,0]);
                                 console.log(index, [2*index,0,0])
-
                                 //var symm=1;if(Math.random()<0.5)symm=-1;
                                 //peoples2.scaleSet(index, [(0.04 + Math.random() * 0.01)*symm,  0.04 + Math.random() * 0.01,0.04 + Math.random() * 0.01]);//最后一个是高
                                 //peoples2.animationSet(index, scope.animations[i]);

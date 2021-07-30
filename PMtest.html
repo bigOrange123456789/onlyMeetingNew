@@ -38,10 +38,7 @@
 		myMain.start();
 
 		var myVideoManager = new VideoManager();
-
-
 		new PlayerControl(myMain.camera);//.cullingTest(myMain.scene)
-
 
 		//开始创建PM对象
 		var animLoader = new THREE.GLTFLoader();//= new PMAnimLoader();//估计是通过gltf文件加载的动画
@@ -70,9 +67,6 @@
 			myMain.scene.add(myModel);
 			console.log(myModel)
 			//完成创建PM对象
-
-
-
 		});
 	</script>
 	</body>

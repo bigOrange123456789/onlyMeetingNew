@@ -13,6 +13,7 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
     this.camera=camera;
 
     this.create1=function (finishFunction0) {
+        scope.host();
         var loader = new THREE.XHRLoader(THREE.DefaultLoadingManager);
         loader.load("json/crowdData.json", function(str){//dataTexture
             var crowdData_json=JSON.parse(str);
@@ -105,7 +106,6 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
                 }, 1000);
             }
         );
-
         //男性结束
     };
     this.createWoman=function (crowdData_json,finishFunction1) {
@@ -165,7 +165,6 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
                 }, 1000);
             },
             3000
-
         );
         //女性结束
     }
@@ -177,7 +176,7 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
             //scope.loadGuest1(glbObj);
             scope.loadGuest2(glbObj);
         });
-        scope.host();
+
     }
     this.host=function () {
         var scope=this;
@@ -185,13 +184,12 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
             [1, 2, 3, 3, 1, 2, 1, 2, 1, 2, 1, 2, 1, 3, 1, 3, 1, 4, 3, 3]
         ];
         let time_list=[2736];
-
         //var model_url = "./voice.gltf";
         var model_url = "./myModel/host/voice2.glb";//"../_DATA_/voice.glb";
         var mp3_url = "./myModel/host/voice.mp3";//"../_DATA_/voice.mp3";
         var mp3 = new Audio(mp3_url);
 
-        var mixer = { };
+        var mixer = {};
         var clock = new THREE.Clock();
         var upda = 0;
         var past_time = -1000;//第一次播放时，音频会相对动画延迟。
@@ -206,7 +204,6 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
         }
         var time_line = timeLine();
         console.log("time_line",time_line)
-
 
         initModel()
         function initModel(){//ResourceLoader.js中加载人物模型（function initModel）
@@ -244,23 +241,22 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
                 static_animate();
             })
         }
-
         var static_animate = function (){//播放口型动画（function animate）
             requestAnimationFrame( static_animate );
             mixer[5].update(100)
         }
-
         window.play=play;
-
-        //scope.host_speak=play();
         function play() {
             console.log("开始播放动画");
             if(past_time < 0){
                 past_time = -1000;
             } else past_time = 0;
-            //console.log(order_list.length)
-            //mp3.play();
             animate0();//开始播放动画
+            mp3.play();
+
+            mp3.addEventListener('ended', function () {//监听到播放结束后，在此处可调用自己的接口
+                console.log("完成语音播放！")
+            }, false);
         }
         function animate0() {
             requestAnimationFrame( animate0 );
@@ -268,13 +264,12 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
             past_time += time;
             if(past_time > 0) {
                 upda = getUpda();
-                //console.log("past_time:" + past_time + "  upda:" + upda);
                 mixer[upda].update(time/1000);
             }
         }
         function getUpda(){
             var upda = 5;
-            var num = order_list.length;
+            var num = order_list.length;//order_list是动画播放序列
             let i;
             for(i = 0; i < num; i++){
                 if(past_time <time_line[i]) break;

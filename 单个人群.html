@@ -41,8 +41,6 @@
 
 		new PlayerControl(myMain.camera);//.cullingTest(myMain.scene)
 
-
-
 		//男性开始
 		var positions=[]
 		for(var i=0;i<10;i++)
@@ -52,10 +50,8 @@
 		mySeatManager.init(positions);
 		myMain.scene.add(mySeatManager.chairs);
 
-
 		var loader = new THREE.XHRLoader(THREE.DefaultLoadingManager);
 		loader.load("json/crowdData.json", function(str){//dataTexture
-
 			var crowdData_json=JSON.parse(str);
 			for(i=0;i<scope.positions.length;i++){//共有1677张椅子
 				colors.push([
@@ -65,7 +61,6 @@
 				]);
 				scope.animations[i]=Math.floor(Math.random()*3);
 			}
-
 			var data=crowdData_json.textureSet;//种类分布
 			for(i=0;i<data.length;i++){
 				if(data[i]%3===2){// 有1/3是女性
@@ -84,16 +79,10 @@
 					if(finishFunction0)finishFunction0();
 				});
 			});
-
 		});
 		//听众
 
 		//男性结束
-
-
-
-
-
 
 		//开始帧数统计
 		var tag = document.createElement('h1');

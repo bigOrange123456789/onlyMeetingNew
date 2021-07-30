@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>MEETING</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<style>
+			body {overflow:hidden;}
+		</style>
+	</head>
+
+	<body style="margin: 0">
+	<script src="js/lib/threeJS/three.js"></script>
+	<script src="js/lib/threeJS/OrbitControls.js"></script>
+	<script src="js/lib/threeJS/GLTFLoader.js"></script>
+
+	<script src="js/lib/pmLib/MyPMLoader.js"></script>
+
+	<script src="js/lib/instancedLib/InstancedGroup.js"></script>
+	<script src="js/lib/instancedLib/SkinnedMeshController.js"></script>
+
+	<script src="js/VideoManager.js"></script>
+
+	<script src="js/sceneSet/SeatManager.js"></script>
+	<script src="js/sceneSet/AvatarManager.js"></script>
+
+	<script src="js/playerControl/PlayerControl.js"></script>
+
+	<script src="js/ParamMeasure.js"></script>
+	<script src="js/Main.js"></script>
+
+	<script src="StereoEffect.js"></script>
+
+	<script  type="module">
+		var myMain = new Main();
+		myMain.start();
+		myMain.camera.position.set(179.06806436456029,27.59048452110487 ,-66.47781354);
+		myMain.camera.rotation.set(-1.6077622925828625, -1.2147140297209982,-1.6102338928219913)
+		window.camera=myMain.camera;
+		new PlayerControl(myMain.camera);
+		var myAvatarManager = new AvatarManager({}, myMain.camera);
+		myAvatarManager.host();
+		myMain.scene.add(myAvatarManager.obj);
+		console.log()
+	</script>
+	</body>
+</html>
