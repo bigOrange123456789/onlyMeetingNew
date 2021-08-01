@@ -21,17 +21,10 @@
   <component name="ChangeListManager">
     <list default="true" id="b7b6123d-caec-4b82-a432-424a6b5be5dd" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PMtest.html" beforeDir="false" afterPath="$PROJECT_DIR$/PMtest.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/crowdTest.html" beforeDir="false" afterPath="$PROJECT_DIR$/crowdTest.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/cloth.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/img/cloth.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/js/sceneSet/AvatarManager.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/sceneSet/AvatarManager.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/meeting.html" beforeDir="false" afterPath="$PROJECT_DIR$/meeting.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/myModel/room/ConferenceRoom18.gltf" beforeDir="false" afterPath="$PROJECT_DIR$/myModel/room/ConferenceRoom18.gltf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/myModel/room/ConferenceRoom18.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/myModel/room/ConferenceRoom18.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/myModel/room/ConferenceRoom32.gltf" beforeDir="false" afterPath="$PROJECT_DIR$/myModel/room/ConferenceRoom32.gltf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/myModel/room/ConferenceRoom32.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/myModel/room/ConferenceRoom32.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/myModel/room/ConferenceRoom34.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/myModel/room/ConferenceRoom34.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/单个人群.html" beforeDir="false" afterPath="$PROJECT_DIR$/单个人群.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/myModel/host/voice2.glb" beforeDir="false" afterPath="$PROJECT_DIR$/myModel/host/voice2.glb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/语音与口型.html" beforeDir="false" afterPath="$PROJECT_DIR$/语音与口型.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -52,7 +45,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../meshlabjs-gh-pages" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -280,7 +273,7 @@
       <workItem from="1627568140794" duration="113000" />
       <workItem from="1627570110278" duration="15000" />
       <workItem from="1627571921234" duration="5506000" />
-      <workItem from="1627632796314" duration="5905000" />
+      <workItem from="1627632796314" duration="19828000" />
     </task>
     <servers />
   </component>
@@ -304,9 +297,9 @@
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="379" y="141" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1280.680@0.0.1280.680" timestamp="1627633272815" />
-    <state x="320" y="101" key="FileChooserDialogImpl" timestamp="1627621234382">
+    <state x="320" y="101" key="FileChooserDialogImpl" timestamp="1627721815305">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state x="320" y="101" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1627621234382" />
+    <state x="320" y="101" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1627721815305" />
   </component>
 </project>
