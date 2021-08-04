@@ -59,7 +59,7 @@ void main(){
     else if(3.5<skinIndex[0]&&skinIndex[0]<6.5)w=bonesWidth[1];//1头部
     else if(skinIndex[0]>14.5)w=bonesWidth[3];//3腿部
     else w=bonesWidth[2];//2手臂
-    w=w+1.;//w=100000.;
+    w=w+1.;w=1.;
 
     //vec4 position=modelViewMatrix * matrix2  * vec4(position.x*w,position.y,position.z*w, 1.0);
     vec4 position=modelViewMatrix * matrix2 * matrix1  * vec4(position.x*w,position.y,position.z*w, 1.0);
@@ -137,10 +137,10 @@ void Animation_frameIndexSet(float frameNum){ //求帧序号//int frame_index;
     else frameIndex_f=frameNum*2.-1.-round(t);
     frame_index=int(frameIndex_f);
 
-    //oAnimation.frameIndex=frame_index;
-    //oAnimation.frameIndex_f=frameIndex_f;
-    oAnimation.frameIndex=1;
-    oAnimation.frameIndex_f=1.;
+    oAnimation.frameIndex=frame_index;
+    oAnimation.frameIndex_f=frameIndex_f;
+    //oAnimation.frameIndex=1;
+    //oAnimation.frameIndex_f=1.;
 }
 mat4 Animation_computeMatrix(){
     //计算动画的变换矩阵：matrix1=skinWeight[0]*matrixs[mySkinIndex[0]]+...
