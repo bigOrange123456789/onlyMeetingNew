@@ -10,11 +10,9 @@ in vec2 outUV;
 out vec4 myOutputColor;
 
 float texType;
-//varying vec3 myTest01;//用于测试
+in vec3 myTest01;//用于测试
 vec4 TextureController_computeMyTexture();
 void main(){
-    //gl_FragColor = vec4 (myTest01,1.0);return;//用于测试
-
     if (type_part<0.5)texType=varyType[0];//下身//0
     else if (type_part<1.5)texType=varyType[1];//1
     else texType=varyType[2];//2
@@ -38,6 +36,7 @@ void main(){
     float diffuse = dot( outNormal, lightDirection );
     //myOutputColor = vec4 (diffuse *color,myTexture[3]);
     myOutputColor = vec4 (color,myTexture[3]);
+    //myOutputColor =vec4 (myTest01,1.0);//用于测试
 }
 
 struct TextureController{

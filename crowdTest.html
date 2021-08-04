@@ -17,8 +17,7 @@
 
 	<script src="js/lib/pmLib/MyPMLoader.js"></script>
 
-	<script src="js/lib/instancedLib/InstancedGroup.js"></script>
-	<script src="js/lib/instancedLib/SkinnedMeshController.js"></script>
+	<script src="js/lib/instancedLib/InstancedGroup3.js"></script>
 
 	<script src="js/VideoManager.js"></script>
 
@@ -41,20 +40,12 @@
 		var myMain = new Main();
 		myMain.start();
 		window.camera=myMain.camera;
-		//document.body.appendChild( VRButton.createButton( myMain.renderer ) );
-		//myMain.renderer.xr.enabled = true;
 
-		//var myVideoManager = new VideoManager();
-		//var myRoomManager = new RoomManager(myVideoManager,myMain.camera);
-		//myMain.scene.add(myRoomManager.room);
-
-		new PlayerControl(myMain.camera);//.cullingTest(myMain.scene)
-
+		new PlayerControl(myMain.camera);
 
 		//开始加载人群
-		//myMain.scene
 		var loader = new THREE.XHRLoader(THREE.DefaultLoadingManager);
-		loader.load("json/crowdData.json", function(str){//dataTexture
+		loader.load("json/crowdData3.json", function(str){//dataTexture
 			var crowdData_json=JSON.parse(str);
 			var pmLoader2 = new MyPMLoader(
 					{animations: []},//需要骨骼索引，但是没有动画数据的时候这样设置
@@ -74,8 +65,6 @@
 								myMain.camera//添加光线效果
 						);
 						peoples2.neckPosition=0.68;
-						//peoples2.vertURL="shader/vertexBone2.vert";
-						//peoples2.fragURL="shader/fragment2.frag";
 						peoples2.init(["./img/texture/m/m0.jpg","./img/texture/m/m1.jpg","./img/texture/m/m2.jpg"],
 								32,
 								[   '#a9a541','#726050','#836557','#5a4c40','#716365',
@@ -88,20 +77,12 @@
 								myMain.camera
 						);
 						//人群中每个化身参数的初始化
-
-
                         for (var index = 0; index < peoples2.instanceCount; index++){
                                 peoples2.rotationSet(index, [Math.PI / 2, 0, 3 * Math.PI / 2]);
                                 peoples2.positionSet(index, [200*index,0,0]);
-                                console.log(index, [2*index,0,0])
-                                //var symm=1;if(Math.random()<0.5)symm=-1;
-                                //peoples2.scaleSet(index, [(0.04 + Math.random() * 0.01)*symm,  0.04 + Math.random() * 0.01,0.04 + Math.random() * 0.01]);//最后一个是高
-                                //peoples2.animationSet(index, scope.animations[i]);
-                                //peoples2.colorSet(index, scope.colors[i]);
+							    peoples2.scaleSet(index, [100,100,100]);
                                 peoples2.speedSet(index, 0.6 + Math.random() * 0.4);
-                                //peoples2.textureSet0(index, scope.types[i]);
-                                //peoples2.textureSet1(index, scope.types[i]);
-                            }/**/
+                            }
                         //添加到场景中
 						myMain.scene.add(peoples2.obj);
 						//渐进式加载
@@ -114,12 +95,7 @@
 					}
 			);
 		});
-
 		//完成加载人群
-
-
-
-
 
 		//开始帧数统计
 		var tag = document.createElement('h1');

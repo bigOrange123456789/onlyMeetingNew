@@ -28,7 +28,8 @@ function computeArmData(myData,callback){
                         for(var Time=0;Time<1;Time++){//只输出一帧
                                 var time=Time/2;
                                 //console.log(time);
-                                matrixs0=[];matrixs=[];
+                                matrixs0=[];//bone.matrix
+                                matrixs=[];//skeleton.boneInverses
                                 for(i=0;i<25;i++){
                                         if(time===Math.floor(time)){
                                                 //console.log(Time);
@@ -143,11 +144,11 @@ function computeArmData(myData,callback){
                                             mesh.skeleton.boneInverses[i].clone()
                                         );
                                 }
-
-
+                                console.log("bone.matrix(matrixs0):",matrixs0)
+                                console.log("skeleton.boneInverses(matrixs):",matrixs)
                                 /////矩阵3没有乘以逆矩阵
                                 var tool=matrixs0[0];
-                                matrixs[0]=tool.clone().multiply(matrixs[0]);tool=tool.clone().multiply(matrixs0[1]);
+                                matrixs[0]=tool.clone().multiply(matrixs[0]);tool=tool.clone().multiply(matrixs0[1]);console.log("m0*m1",tool);
                                 matrixs[1]=tool.clone().multiply(matrixs[1]);tool=tool.clone().multiply(matrixs0[2]);
                                 matrixs[2]=tool.clone().multiply(matrixs[2]);tool=tool.clone().multiply(matrixs0[3]);  var  _tool3=tool;
                                 matrixs[3]=tool.clone().multiply(matrixs[3]);tool=tool.clone().multiply(matrixs0[4]);
@@ -183,6 +184,7 @@ function computeArmData(myData,callback){
                                 matrixs[23]=tool.clone().multiply(matrixs[23]);tool=tool.clone().multiply(matrixs0[24]);
                                 matrixs[24]=tool.clone().multiply(matrixs[24]);
                                 //完成计算matrix
+                                console.log("matrixs",matrixs)
 
                                 for (i of [7, 8, 9, 10, 11, 12, 13, 14]) {
                                         var temp = matrixs[i].toArray();
