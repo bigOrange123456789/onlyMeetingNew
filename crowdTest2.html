@@ -40,6 +40,8 @@
 		var myMain = new Main();
 		myMain.start();
 		window.camera=myMain.camera;
+		window.camera.position.set(-6.62,168.37,45.7)
+		window.camera.rotation.set(-0.19936283715953232,0.04946088113269676,0.009989005227081868)
 
 		new PlayerControl(myMain.camera);
 
@@ -54,7 +56,7 @@
 						mesh2=node;
 				})
 				var peoples2 = new InstancedGroup(
-						100,//908
+						1,//908
 						[mesh2],//这些mesh的网格应该一致
 						true,
 						crowdData_json,
@@ -78,8 +80,10 @@
 					var x=index%100;
 					var y=Math.floor(index/100);
 					peoples2.positionSet(index, [10*x,0,10*y]);
-					peoples2.scaleSet(index, [10,10,10]);
-					peoples2.speedSet(index, 0.06 + Math.random() * 0.04);
+					peoples2.scaleSet(index, [100,100,100]);
+					peoples2.speedSet(index,0);
+					peoples2.textureSet(index, [0,0,0])
+					//peoples2.speedSet(index, 0.06 + Math.random() * 0.04);
 				}
 				//添加到场景中
 				myMain.scene.add(peoples2.obj);
