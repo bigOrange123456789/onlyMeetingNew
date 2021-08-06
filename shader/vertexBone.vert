@@ -201,4 +201,3 @@ void Animation_init(){
     if(round(type[3])==0.)Animation_frameIndexSet(8.);//设置全局变量frame_index的值
     else Animation_frameIndexSet(35.);
 }
-
