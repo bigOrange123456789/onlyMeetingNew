@@ -71,6 +71,7 @@ void main(){
     //Test_init();
     //if(!Test_meetExpectations())gl_Position =vec4(0.,0.,0.,0.);
     myTest01=vec3(Animation_getElem2(0.),Animation_getElem2(1.),Animation_getElem2(2.));
+
 }
 //尽可能按照面向对象的编程思想来编写下面的代码
 struct Tool{

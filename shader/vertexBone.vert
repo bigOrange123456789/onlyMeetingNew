@@ -28,6 +28,7 @@ out vec3 varyColor,varyType;
 out float type_part;//,texType;
 out vec3 myTest01;
 
+
 //void Test_init();
 //bool Test_meetExpectations();float Animation_getNumByTexture(float n);
 void Animation_init();

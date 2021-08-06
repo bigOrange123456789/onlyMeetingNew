@@ -5,6 +5,7 @@ uniform sampler2D text0;
 uniform float textNum;//贴图个数
 
 in float type_part;//,texType;//身体的哪个部分，贴图类型
+//in float face;//面部参数
 in vec3 varyColor,varyType,outNormal,lightDirection;
 in vec2 outUV;
 out vec4 myOutputColor;
@@ -99,12 +100,11 @@ vec4 TextureController_computeMyTexture(){
     //uv=scaling(outUV,x1,x2,y1,y2,k1,k2,xx1,xx2,yy1,yy2);
 
     //调整嘴巴大小
-    xx1=0.474,  yy1=1.-0.936,
-    x1 =0.483,  y1 =1.-0.921,
-    x2 =0.517,  y2 =1.-0.887,
-    xx2=0.536,  yy2=1.-0.878,
+    xx1=0.474,  yy1=0.878,
+    x1 =0.483,  y1 =0.887,
+    x2 =0.517,  y2 =0.921,
+    xx2=0.536,  yy2=0.936,
     k1=3., k2=1.0;
-
     //k1:0.1-3.5
     uv=scaling(outUV,x1,x2,y1,y2,k1,k2,xx1,xx2,yy1,yy2);
 

@@ -45,7 +45,7 @@
 
 		//开始加载人群
 		var loader = new THREE.XHRLoader(THREE.DefaultLoadingManager);
-		loader.load("json/crowdData3.json", function(str){//dataTexture
+		loader.load("json/crowdData_Female.json", function(str){//dataTexture
 			var crowdData_json=JSON.parse(str);
 			var pmLoader2 = new MyPMLoader(
 					{animations: []},//需要骨骼索引，但是没有动画数据的时候这样设置
@@ -80,8 +80,8 @@
                         for (var index = 0; index < peoples2.instanceCount; index++){
                                 peoples2.rotationSet(index, [Math.PI / 2, 0, 3 * Math.PI / 2]);
                                 peoples2.positionSet(index, [200*index,0,0]);
-							    peoples2.scaleSet(index, [100,100,100]);
-                                peoples2.speedSet(index, 0.6 + Math.random() * 0.4);
+							    peoples2.scaleSet(index, [100,-100,100]);
+                                peoples2.speedSet(index, 0.06 + Math.random() * 0.04);
                             }
                         //添加到场景中
 						myMain.scene.add(peoples2.obj);
