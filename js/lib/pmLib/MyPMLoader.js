@@ -296,8 +296,7 @@ MyPMLoader.prototype={
                     }
                 }
 
-                if (isFace)
-                {
+                if (isFace) {
                     return index;
                 }
             }
@@ -307,23 +306,23 @@ MyPMLoader.prototype={
         //pm的json文件内的每一段都需要这函数的处理
         function restoreVertexSplit(vsData)//si是段号（数组下标）,vsData是一段（数组中的一个元素）
         {//vsData里面记录了恢复一条边所需要的数据
-
             var Meshid=mapMaterial[vsData.FacesMaterial[0]];
-            //console.log(vsData.Faces)
-        /* {//添加一个点所需的数据
-		"Faces": [0,0,..],//长度不固定,3个数一组
-		"FacesMaterial": [0],//恒为0//似乎是表示了所用的材质类型
+            console.log(Meshid)
+            /*
+            {//添加一个点所需的数据
+		        "Faces": [0,0,..],//长度不固定,3个数一组
+		        "FacesMaterial": [0],//恒为0//似乎是表示了所用的材质类型
 
-		"S": 6,     //要修改的点的序号
-		"SN": [0.,0.,0.],
-		"SPosition": [0.,0.,0.],//顶点改动后的
+		        "S": 6,     //要修改的点的序号
+		        "SN": [0.,0.,0.],
+		        "SPosition": [0.,0.,0.],//顶点改动后的
 
-		"TN": [0.,0.,0.],//要添加的点
-		"T": 187,//对应的骨骼索引和骨骼权重位置
+		        "TN": [0.,0.,0.],//要添加的点
+		        "T": 187,//对应的骨骼索引和骨骼权重位置
 
-		"TPosition": [0.,0.,0.],
-		"UVs": [0.,0.,..]//添加UV//长度不固定，2个数一组
-	    }*/
+		        "TPosition": [0.,0.,0.],
+		        "UVs": [0.,0.,..]//添加UV//长度不固定，2个数一组
+	        }*/
             //段中的S是要修改的点，SPosition是改动后的位置
             meshData.vertices[vsData.S][0] = vsData.SPosition[0];
             meshData.vertices[vsData.S][1] = vsData.SPosition[1];
@@ -352,10 +351,12 @@ MyPMLoader.prototype={
             {
                 var bufferIndex=incidentFaces[vsData.S][fosi];
                 var objectF={faceIndex:0,faceSIndex:0};
+                //console.log(t,objectF,Meshid,bufferIndex,vsData)
+                //Meshid始终为0
+                //vsData里面记录了恢复一条边所需要的数据
                 var c = isOriginalFaceOfT(t,objectF,Meshid,bufferIndex,vsData);
 
-                if (c < 0)
-                {
+                if (c < 0) {
                     var faceIndexS=objectF.faceSIndex;
                     newFacesOfS.push(bufferIndex);
                     meshData.Uvfaces[Meshid][bufferIndex]=[

@@ -15,6 +15,7 @@ in vec3 mcol0,mcol1,mcol2,mcol3;
 in vec4 type;//设置贴图0-2,type[3]用处不明
 in vec3 color;
 in vec4 bonesWidth;//选出4个部位
+in float faceShape;
 //4个部位
 //0躯干 0-3
 //1头部 4-6
@@ -27,12 +28,14 @@ out vec3 lightDirection;
 out vec3 varyColor,varyType;
 out float type_part;//,texType;
 out vec3 myTest01;
+out float outfaceShape;
 
 void Animation_init();
 mat4 Animation_computeMatrix();
 float Animation_getElem2(float n);
 void main(){
     outUV = inUV;
+    outfaceShape=faceShape;
     varyColor=color;
     outNormal=normal;
     varyType=vec3(type[0], type[1], type[2]);

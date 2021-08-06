@@ -15,6 +15,7 @@ in vec3 mcol0,mcol1,mcol2,mcol3;
 in vec4 type;//设置贴图0-2,type[3]用处不明
 in vec3 color;
 in vec4 bonesWidth;//选出4个部位
+in float faceShape;
 //4个部位
 //0躯干 0-3
 //1头部 4-6
@@ -27,7 +28,7 @@ out vec3 lightDirection;
 out vec3 varyColor,varyType;
 out float type_part;//,texType;
 out vec3 myTest01;
-
+out float outfaceShape;
 
 //void Test_init();
 //bool Test_meetExpectations();float Animation_getNumByTexture(float n);
@@ -44,6 +45,7 @@ void main(){
     outUV = inUV;
     varyColor=color;
     outNormal=normal;
+    outfaceShape=faceShape;
     varyType=vec3(type[0], type[1], type[2]);
     if (position.y<0.15&&(position.z<0.35&&position.z>-0.35))type_part=0.0;//下身
     else if (position.y<neckPosition) type_part=1.0;//上身

@@ -93,6 +93,7 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
                         peoples2.colorSet(index, scope.colors[i]);
                         peoples2.speedSet(index, 0.6 + Math.random() * 0.4);
                         peoples2.textureSet0(index, scope.types[i]);
+                        peoples2.faceShapeSet(index,Math.random()*3.5)
                         //peoples2.textureSet1(index, scope.types[i]);
                         index++;
                     }
@@ -152,6 +153,7 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
                         peoples.colorSet(index, scope.colors[i]);
                         peoples.speedSet(index, 0.6 + Math.random() * 0.4);
                         peoples.textureSet0(index, scope.types[i]);
+                        peoples.faceShapeSet(index,Math.random()*3.5)
                         //peoples.textureSet1(index, scope.types[i]);
                         index++;
                     }
@@ -415,6 +417,7 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
                 peoples.scaleSet(index,[0.045,0.045,0.04+Math.random()*0.01]);
 
                 peoples.textureSet(index,Math.floor(Math.random()*16));
+                peoples.faceShapeSet(index,Math.random()*3.5)
             }
             //完成
             scope.obj.add(peoples.obj);
@@ -449,6 +452,7 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
                         peoples.scaleSet(index,[0.045,0.045,0.04+Math.random()*0.01]);
 
                         peoples.textureSet(index,Math.floor(Math.random()*16));
+                        peoples.faceShapeSet(index,Math.random()*3.5)
                     }
                     scope.obj.remove(obj0);
                     scope.obj.add(peoples.obj);

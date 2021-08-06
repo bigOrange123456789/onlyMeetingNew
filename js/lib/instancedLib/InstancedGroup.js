@@ -20,6 +20,7 @@ function InstancedGroup(instanceCount,originMesh,animationClip,crowdData_json){
     this.type;
     this.colors;
     this.bonesWidth;
+    this.faceShape;
 
     this.time=0;//每帧自动加1，加到一定值之后自动归0
 
@@ -68,6 +69,7 @@ InstancedGroup.prototype={
         geometryTemp.setAttribute('type', this.type);
         geometryTemp.setAttribute('color', this.colors);
         geometryTemp.setAttribute('bonesWidth', this.bonesWidth);
+        geometryTemp.setAttribute('faceShape', this.faceShape);
 
 
         if(this.mesh)this.mesh.geometry=geometryTemp;
@@ -152,6 +154,7 @@ InstancedGroup.prototype={
         this.type=new THREE.InstancedBufferAttribute(new Uint16Array(this.instanceCount*4), 4);//头部、上衣、裤子、动作
         this.colors=new THREE.InstancedBufferAttribute(new Float32Array(this.instanceCount*3), 3);
         this.bonesWidth=new THREE.InstancedBufferAttribute(new Float32Array(this.instanceCount*4), 4);
+        this.faceShape =new THREE.InstancedBufferAttribute(new Float32Array(this.instanceCount), 1);
 
         for(i=0;i<this.instanceCount;i++){
             this.mcol0.setXYZ(i, 1,0,0);//随机长宽高
@@ -315,6 +318,9 @@ InstancedGroup.prototype={
     },
     boneWidthSet:function (avatarIndex,regionIndex,width) {
         this.bonesWidth.array[4*avatarIndex+regionIndex]=width;
+    },
+    faceShapeSet:function (avatarIndex,width) {
+        this.faceShape.array[avatarIndex]=width;
     },
     speedSet:function (i,speed) {//设置动画速度
         this.speed.array[i]=speed;
