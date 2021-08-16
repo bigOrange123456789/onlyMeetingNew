@@ -31,6 +31,9 @@
 	<script src="js/Main.js"></script>
 
 	<script src="StereoEffect.js"></script>
+	<div style="left:150px;right:350px;">
+		<input type="range" min="0" max="100" step="5"/>
+	</div>
 	<script  type="module">
 		//import { VRButton } from './js//lib/VRButton.js';//负责VR视觉
 		import {RoomManager} from './js/sceneSet/RoomManager.js';
@@ -83,9 +86,22 @@
 					peoples2.scaleSet(index, [100,100,100]);
 					peoples2.speedSet(index,0);
 					peoples2.textureSet(index, [0,0,0])
-					peoples2.faceShapeSet(index,Math.random()*3.5)
+					peoples2.faceShapeSet(index,0)
 					//peoples2.speedSet(index, 0.06 + Math.random() * 0.04);
 				}
+				function test(n){
+					peoples2.faceShapeSet(0,n)
+					console.log(peoples2.faceShape.array[0])
+				}
+				var t=0.01;
+				setInterval(function () {
+					if(t<3.6)
+					peoples2.faceShapeSet(0,t)
+					console.log(t)
+					t=t+0.025;
+				},100)
+
+				window.t=test;
 				//添加到场景中
 				myMain.scene.add(peoples2.obj);
 			})

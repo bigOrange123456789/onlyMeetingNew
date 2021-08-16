@@ -307,7 +307,7 @@ MyPMLoader.prototype={
         function restoreVertexSplit(vsData)//si是段号（数组下标）,vsData是一段（数组中的一个元素）
         {//vsData里面记录了恢复一条边所需要的数据
             var Meshid=mapMaterial[vsData.FacesMaterial[0]];
-            console.log(Meshid)
+            //Meshid似乎没有任何意义，值始终为0
             /*
             {//添加一个点所需的数据
 		        "Faces": [0,0,..],//长度不固定,3个数一组

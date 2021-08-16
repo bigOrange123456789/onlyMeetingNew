@@ -322,6 +322,8 @@ InstancedGroup.prototype={
         this.bonesWidth.array[4*avatarIndex+regionIndex]=width;
     },
     faceShapeSet:function (avatarIndex,width) {
+        console.log("!!!!",avatarIndex,width)
+        this.faceShape.needsUpdate=true;
         this.faceShape.array[avatarIndex]=width;
     },
     speedSet:function (i,speed) {//设置动画速度

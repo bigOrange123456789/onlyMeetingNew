@@ -26,8 +26,9 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
                 scope.animations[i]=Math.floor(Math.random()*3);
             }
 
-            var data=crowdData_json.textureSet;//种类分布
-            for(i=0;i<data.length;i++){
+            //var data=crowdData_json.textureSet;//种类分布
+            //for(i=0;i<data.length;i++){
+            /*for(i=0;i<scope.positions.length;i++)
                 if(data[i]%3===2){// 有1/3是女性
                     scope.sexs[i]=0;//女性
                     scope.types[i]=Math.floor(data[i]/3);
@@ -37,8 +38,19 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
                     scope.types[i]=Math.floor(data[i]/3)+(data[i]%3)*16;
                     //if(scope.animations[i]===1)scope.animations[i]=0;
                     scope.manNum++;
+                }*/
+            //}
+            for(i=0;i<scope.positions.length;i++)
+                if(Math.random()<0.33){// 有1/3是女性
+                    scope.sexs[i]=0;//女性
+                    scope.types[i]=Math.floor(Math.random()*16);
+                    scope.animations[i]=0;
+                }else{
+                    scope.sexs[i]=1;//男性
+                    scope.types[i]=Math.floor(Math.random()*32);
+                    //if(scope.animations[i]===1)scope.animations[i]=0;
+                    scope.manNum++;
                 }
-            }
             scope.createWoman(crowdData_json,function () {
                 scope.createMan(crowdData_json,function () {
                     if(finishFunction0)finishFunction0();
@@ -86,9 +98,9 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
                     if (scope.sexs[i] === 1) {
                         peoples2.rotationSet(index, [Math.PI / 2, 0, 3 * Math.PI / 2]);
                         peoples2.positionSet(index, [scope.positions[i][0] + 1.8, scope.positions[i][1] + 1.5, scope.positions[i][2]]);
-                        var symm=1;
+                        var symm=1,k=0.5;
                         //if(Math.random()<0.5)symm=-1;
-                        peoples2.scaleSet(index, [(0.04 + Math.random() * 0.01)*symm,  0.04 + Math.random() * 0.01,0.04 + Math.random() * 0.01]);//最后一个是高
+                        peoples2.scaleSet(index, [(0.04 + Math.random() * 0.01)*symm*k, (0.04 + Math.random() * 0.01) *k,(0.04 + Math.random() * 0.01)*k]);//最后一个是高
                         peoples2.animationSet(index, scope.animations[i]);
                         peoples2.colorSet(index, scope.colors[i]);
                         peoples2.speedSet(index, 0.6 + Math.random() * 0.4);
@@ -145,9 +157,9 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
                     if (scope.sexs[i] === 0) {
                         peoples.rotationSet(index, [Math.PI / 2, 0, 3 * Math.PI / 2]);
                         peoples.positionSet(index, [scope.positions[i][0] + 1.8, scope.positions[i][1] + 1.5, scope.positions[i][2]]);
-                        var symm=1;
+                        var symm=1,k=0.5;
                         //if(Math.random()<0.5)symm=-1;
-                        peoples.scaleSet(index, [(0.04 + Math.random() * 0.01)*symm, 0.04 + Math.random() * 0.01, 0.04 + Math.random() * 0.01]);
+                        peoples.scaleSet(index, [(0.04 + Math.random() * 0.01)*symm*k, (0.04 + Math.random() * 0.01)*k, (0.04 + Math.random() * 0.01)*k]);
 
                         peoples.animationSet(index, scope.animations[i]);//
                         peoples.colorSet(index, scope.colors[i]);
@@ -411,10 +423,11 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
                 srcs.push("performanceAnalysis/texture/m/m"+i+".jpg");
             }
             peoples.init(srcs,16);
+            var k=0.5;
             for(var index=0;index<peoples.instanceCount;index++){
                 peoples.rotationSet(index,[Math.PI/2,0,3*Math.PI/2]);
                 peoples.positionSet(index,[scope.positions[index][0]+1.8,scope.positions[index][1]+1.5,scope.positions[index][2]]);
-                peoples.scaleSet(index,[0.045,0.045,0.04+Math.random()*0.01]);
+                peoples.scaleSet(index,[0.045*k,0.045*k,(0.04+Math.random()*0.01)*k]);
 
                 peoples.textureSet(index,Math.floor(Math.random()*16));
                 peoples.faceShapeSet(index,Math.random()*3.5)
