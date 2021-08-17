@@ -31,9 +31,6 @@
 	<script src="js/Main.js"></script>
 
 	<script src="StereoEffect.js"></script>
-	<div style="left:150px;right:350px;">
-		<input type="range" min="0" max="100" step="5"/>
-	</div>
 	<script  type="module">
 		//import { VRButton } from './js//lib/VRButton.js';//负责VR视觉
 		import {RoomManager} from './js/sceneSet/RoomManager.js';
@@ -50,16 +47,16 @@
 
 		//开始加载人群
 		var loader = new THREE.XHRLoader(THREE.DefaultLoadingManager);
-		loader.load("json/crowdData_male.json", function(str){//dataTexture
+		loader.load("json/crowdData_new.json", function(str){//dataTexture
 			var crowdData_json=JSON.parse(str);
-			new THREE.GLTFLoader().load("myModel/avatar/male_run.glb",function (glb) {
+			new THREE.GLTFLoader().load("myModel/avatar/new.glb",function (glb) {
 				var mesh2;
 				glb.scene.traverse(function (node) {
 					if(node instanceof THREE.SkinnedMesh)
 						mesh2=node;
 				})
 				var peoples2 = new InstancedGroup(
-						1,//908
+						3,//908
 						[mesh2],//这些mesh的网格应该一致
 						true,
 						crowdData_json,
@@ -82,26 +79,12 @@
 					//peoples2.rotationSet(index, [Math.PI / 2, 0, 3 * Math.PI / 2]);
 					var x=index%100;
 					var y=Math.floor(index/100);
-					peoples2.positionSet(index, [10*x,0,10*y]);
-					peoples2.scaleSet(index, [100,100,100]);
-					peoples2.speedSet(index,0);
+					peoples2.positionSet(index, [50*x,0,20*y]);
+					peoples2.scaleSet(index, [50,50,50]);
 					peoples2.textureSet(index, [0,0,0])
 					peoples2.faceShapeSet(index,0)
-					//peoples2.speedSet(index, 0.06 + Math.random() * 0.04);
+					peoples2.speedSet(index, (0.06 + Math.random() * 0.04)*4);
 				}
-				function test(n){
-					peoples2.faceShapeSet(0,n)
-					console.log(peoples2.faceShape.array[0])
-				}
-				var t=0.01;
-				setInterval(function () {
-					if(t<3.6)
-					peoples2.faceShapeSet(0,t)
-					console.log(t)
-					t=t+0.025;
-				},100)
-
-				window.t=test;
 				//添加到场景中
 				myMain.scene.add(peoples2.obj);
 			})

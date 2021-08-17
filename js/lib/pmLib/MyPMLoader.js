@@ -262,45 +262,47 @@ MyPMLoader.prototype={
         }
 
         function computeIncidentFaces()
-        {
+        {//这个函数只被调用了一次
             for (var i = 0 ; i < meshData.vertices.length ; ++i)
                 incidentFaces[i] = [];
-            for (var fi=0;fi<meshData.faces.length;fi++)
-                for (var vi = 0 ; vi < meshData.faces[fi].length ; ++vi)
+            for (var fi=0;fi<meshData.faces.length;fi++)//遍历所有三角面
+                for (var vi = 0 ; vi < meshData.faces[fi].length ; ++vi)//遍历所有三角面的顶点
                     for(var faceIndex=0;faceIndex<3;faceIndex++)
                         incidentFaces[meshData.faces[fi][vi][faceIndex]].push(vi);
         }
 
         function isOriginalFaceOfT(tIndex ,objectF,Meshid, face , vsData)
         {
+            //tIndex：缓存中最后一个点的索引？
+            //objectF：始终为{faceIndex: 0, faceSIndex: 0}
+            //Meshid:网格序号(通常只用一张网格，所以测试时始终为0)
+            //face:三角面的索引号
+            //vsData里面记录了恢复一条边所需要的数据
+
+            //vsData.Faces的长度是6的整数倍
+            //加一条边增2个三角形，对应6个点？
             for (var vsfi = 0 ; vsfi < vsData.Faces.length ; vsfi+=6)
-            {
+            {//vsData.Faces是需要修改的三角面的索引？
                 var index = -1;
                 var isFace = true;
-
-
-                for (var i = 0 ; i < 3 ; ++i)
-                {
-                    if(vsData.Faces[vsfi+2*i] === meshData.faces[Meshid][face][i])
-                    {
+                for (var i = 0 ; i < 3 ; ++i) {//遍历三角面的三个点？
+                    if(vsData.Faces[vsfi+2*i] === meshData.faces[Meshid][face][i]) {
                         objectF.faceSIndex=(vsfi/6);
                     }
-                    if (vsData.Faces[vsfi+2*i] === tIndex && meshData.faces[Meshid][face][i]== vsData.S)
+                    if (vsData.Faces[vsfi+2*i] === tIndex && meshData.faces[Meshid][face][i]=== vsData.S)
                     {
                         index = i;
                         objectF.faceIndex=(vsfi/6);
-                    }
-                    else if (vsData.Faces[vsfi+2*i] !== meshData.faces[Meshid][face][i])
-                    {
+                    } else if (vsData.Faces[vsfi+2*i] !== meshData.faces[Meshid][face][i]) {
                         isFace = false;
                     }
                 }
 
-                if (isFace) {
+                if (isFace) {//如果是三角面？
                     return index;
                 }
             }
-            return -1;
+            return -1;//如果不是三角面？
         }
 
         //pm的json文件内的每一段都需要这函数的处理
@@ -342,21 +344,24 @@ MyPMLoader.prototype={
                 meshData.weights.push(skeletonData.weights[vsData.T]);
             }
 
-            var t = meshData.vertices.length - 1;
-            incidentFaces[t] = [];
+            var t = meshData.vertices.length - 1;//缓存中最后一个点的索引
+            incidentFaces[t] = [];//incidentFaces记录了每个顶点占用的三角面索引
 
             var newFacesOfS = [];
             var addnum=0;
+            //解析每个数据包下面这个循环要被调用7~8次左右
+            console.log("数据包")
             for (var fosi = 0 ; fosi < incidentFaces[vsData.S].length ; ++fosi)
-            {
-                var bufferIndex=incidentFaces[vsData.S][fosi];
-                var objectF={faceIndex:0,faceSIndex:0};
-                //console.log(t,objectF,Meshid,bufferIndex,vsData)
-                //Meshid始终为0
+            {//每次遍历对应一个三角面 //遍历要修改的点对应的三角面
+                var bufferIndex=incidentFaces[vsData.S][fosi];//三角面索引
+                var objectF={faceIndex:0,faceSIndex:0};//三角面信息？
+                //t：缓存中最后一个点的索引？
+                //objectF：始终为{faceIndex: 0, faceSIndex: 0}
+                //Meshid:网格序号(通常只用一张网格，所以测试时始终为0)
+                //bufferIndex:三角面的索引号
                 //vsData里面记录了恢复一条边所需要的数据
                 var c = isOriginalFaceOfT(t,objectF,Meshid,bufferIndex,vsData);
-
-                if (c < 0) {
+                if (c < 0) {//如果不是三角面？
                     var faceIndexS=objectF.faceSIndex;
                     newFacesOfS.push(bufferIndex);
                     meshData.Uvfaces[Meshid][bufferIndex]=[
@@ -367,7 +372,8 @@ MyPMLoader.prototype={
                     continue;
                 }
                 addnum++;
-                meshData.faces[Meshid][bufferIndex][c]=t;
+                meshData.faces[Meshid][bufferIndex][c]=t;//c必须属于{0，1，2}
+                //meshData.faces[网格号][三角面][顶点]
                 incidentFaces[t].push(bufferIndex);
                 var faceIndex=objectF.faceIndex;
                 meshData.Uvfaces[Meshid][bufferIndex]=[
@@ -446,7 +452,7 @@ MyPMLoader.prototype={
         }
 
         function updateGeometry(geometry, meshData, Meshid,THIS)
-        {
+        {//新建一个几何网格
             var verticesArray = new Float32Array(meshData.faces[Meshid].length * 3 * 3);
             var indicesArray = new Uint32Array(meshData.faces[Meshid].length * 3);
             var uvsArray = new Float32Array(meshData.faces[Meshid].length * 3*2);
@@ -458,14 +464,17 @@ MyPMLoader.prototype={
             //var f1=0;
             for (var key=0;key<meshData.faces[Meshid].length;key++)
             {
-                indicesArray[key * 3 ]=key * 3 ;
+                //meshData.faces是一个数组，数组的每一行对应一个三角面
+                //三角面的三个顶点
+                indicesArray[key * 3 ]=key * 3 ;//verticesArray数组的索引
                 indicesArray[key * 3 + 1]=key * 3 + 1;
                 indicesArray[key * 3 + 2]=key * 3 + 2;
 
-                //position
-                var fx=meshData.faces[Meshid][key][0];
+                //每个三角面有三个顶点
+                var fx=meshData.faces[Meshid][key][0];//faces[网格号][三角面][顶点]
                 var fy=meshData.faces[Meshid][key][1];
                 var fz=meshData.faces[Meshid][key][2];
+                //每个三角面有9个位置信息
                 verticesArray[key*9]=meshData.vertices[fx][0];
                 verticesArray[key*9+1]=meshData.vertices[fx][1];
                 verticesArray[key*9+2]=meshData.vertices[fx][2];
@@ -476,9 +485,8 @@ MyPMLoader.prototype={
                 verticesArray[key*9+7]=meshData.vertices[fz][1];
                 verticesArray[key*9+8]=meshData.vertices[fz][2];
 
-                if(THIS.glbObj){
-                    // joint
-                    jointArray[key * 12 ] = meshData.joints[fx][0];
+                if(THIS.glbObj){//每个点对应4个骨骼索引 3个点对应12个骨骼
+                    jointArray[key * 12 ] = meshData.joints[fx][0];// joint
                     jointArray[key * 12 + 1] = meshData.joints[fx][1];
                     jointArray[key * 12 + 2] = meshData.joints[fx][2];
                     jointArray[key * 12 + 3] = meshData.joints[fx][3];
@@ -506,7 +514,7 @@ MyPMLoader.prototype={
                     weightArray[key * 12 + 11] = meshData.weights[fz][3];
                 }
 
-                //uv
+                //uv 一个点对应一个UV坐标 3个点对应6个UV值
                 uvsArray[key*6]=meshData.uvs[meshData.Uvfaces[Meshid][key][0]][0];
                 uvsArray[key*6+1]=meshData.uvs[meshData.Uvfaces[Meshid][key][0]][1];
                 uvsArray[key*6+2]=meshData.uvs[meshData.Uvfaces[Meshid][key][1]][0];

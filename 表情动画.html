@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>MEETING</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<style>
+			body {overflow:hidden;}
+		</style>
+	</head>
+
+	<body>
+
+	<script src="js/lib/threeJS/three.js"></script>
+	<script src="js/lib/threeJS/OrbitControls.js"></script>
+	<script src="js/lib/threeJS/GLTFLoader.js"></script>
+
+	<script src="js/lib/pmLib/MyPMLoader.js"></script>
+
+	<script src="js/lib/instancedLib/InstancedGroup3.js"></script>
+
+	<script src="js/VideoManager.js"></script>
+
+	<script src="js/sceneSet/SeatManager.js"></script>
+	<script src="js/sceneSet/AvatarManager.js"></script>
+
+	<script src="js/playerControl/PlayerControl.js"></script>
+
+
+	<script src="js/ParamMeasure.js"></script>
+	<script src="js/Main.js"></script>
+
+	<script src="StereoEffect.js"></script>
+	<div style="left:150px;right:350px;">
+		<input type="range" min="0" max="100" step="5"/>
+	</div>
+	<script  type="module">
+		//import { VRButton } from './js//lib/VRButton.js';//负责VR视觉
+		import {RoomManager} from './js/sceneSet/RoomManager.js';
+		import {PreviewManager} from './js/playerControl/PreviewManager.js';
+		//import {MoveManager} from './js/playerControl/MoveManager.js';
+
+		var myMain = new Main();
+		myMain.start();
+		window.camera=myMain.camera;
+		window.camera.position.set(-6.62,168.37,45.7)
+		window.camera.rotation.set(-0.19936283715953232,0.04946088113269676,0.009989005227081868)
+
+		new PlayerControl(myMain.camera);
+
+		//开始加载人群
+		var loader = new THREE.XHRLoader(THREE.DefaultLoadingManager);
+		loader.load("json/crowdData_male.json", function(str){//dataTexture
+			var crowdData_json=JSON.parse(str);
+			new THREE.GLTFLoader().load("myModel/avatar/male_run.glb",function (glb) {
+				var mesh2;
+				glb.scene.traverse(function (node) {
+					if(node instanceof THREE.SkinnedMesh)
+						mesh2=node;
+				})
+				var peoples2 = new InstancedGroup(
+						1,//908
+						[mesh2],//这些mesh的网格应该一致
+						true,
+						crowdData_json,
+						myMain.camera//添加光线效果
+				);
+				peoples2.neckPosition=0.68;
+				peoples2.init(["./img/texture/m/m0.jpg","./img/texture/m/m1.jpg","./img/texture/m/m2.jpg"],
+						32,
+						[   '#a9a541','#726050','#836557','#5a4c40','#716365',
+							'#483530','#695148','#917a6e','#786861','#4d453f','#553531','#8b7a73',
+							'#5d5146','#6c5b58','#656261','#646058','#5c5653','#5f5042','#6b6665',
+							'#6e5b4c','#82756d','#8f7462','#8e6b5d','#5a4c40','#6c6f72','#8e7f78',
+							'#514d50','#423e3f','#644e40','#746255','#524946','#56453d','#60564d'],
+						false,
+						function(){console.log("PM finish!")},
+						myMain.camera
+				);
+				//人群中每个化身参数的初始化
+				for (var index = 0; index < peoples2.instanceCount; index++){
+					//peoples2.rotationSet(index, [Math.PI / 2, 0, 3 * Math.PI / 2]);
+					var x=index%100;
+					var y=Math.floor(index/100);
+					peoples2.positionSet(index, [10*x,0,10*y]);
+					peoples2.scaleSet(index, [100,100,100]);
+					peoples2.speedSet(index,0);
+					peoples2.textureSet(index, [0,0,0])
+					peoples2.faceShapeSet(index,0)
+					//peoples2.speedSet(index, 0.06 + Math.random() * 0.04);
+				}
+				function test(n){
+					peoples2.faceShapeSet(0,n)
+					console.log(peoples2.faceShape.array[0])
+				}
+				var t=0.01;
+				setInterval(function () {
+					if(t<3.6)
+					peoples2.faceShapeSet(0,t)
+					console.log(t)
+					t=t+0.25;
+				},100)
+
+				window.t=test;
+				//添加到场景中
+				myMain.scene.add(peoples2.obj);
+			})
+		});
+		//完成加载人群
+
+		//开始帧数统计
+		var tag = document.createElement('h1');
+		window.tag=tag;
+		tag.style.cssText =
+				'color:green;' +//文字颜色
+				'font-size:' + 20 + 'px;' +//文字大小
+				'font-weight:normal;' +
+				'position:fixed;' +//到窗体的位置
+				'left:' + 0 + 'px;' +//到部件左边距离
+				'top:' + 0 + 'px;'; //到部件右边 距离
+		document.body.appendChild(tag);
+		var frameIndex = 0, frameIndexPre = 0;
+		frameIndexUpdate();
+		setInterval(computeFPS, 1000);
+		function frameIndexUpdate() {
+			frameIndex++;
+			requestAnimationFrame(frameIndexUpdate);
+		}
+		function computeFPS() {
+			tag.innerHTML =(frameIndex - frameIndexPre);
+			//tag.innerHTML = "FPS:" + (frameIndex - frameIndexPre);
+			frameIndexPre = frameIndex;
+		}
+		//完成帧数统计
+		//开始添加时钟
+		window.myClock=0;
+		setInterval(function () {
+			window.myClock++;
+		},1)
+		//完成添加时钟
+	</script>
+	</body>
+</html>

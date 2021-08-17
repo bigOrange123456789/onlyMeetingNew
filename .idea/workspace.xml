@@ -21,11 +21,11 @@
   <component name="ChangeListManager">
     <list default="true" id="b7b6123d-caec-4b82-a432-424a6b5be5dd" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crowdTest.html" beforeDir="false" afterPath="$PROJECT_DIR$/crowdTest.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/crowdTest2.html" beforeDir="false" afterPath="$PROJECT_DIR$/crowdTest2.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/js/lib/instancedLib/InstancedGroup3.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/lib/instancedLib/InstancedGroup3.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/js/lib/pmLib/MyPMLoader.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/lib/pmLib/MyPMLoader.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/js/sceneSet/AvatarManager.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/sceneSet/AvatarManager.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/js/sceneSet/SeatManager.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/sceneSet/SeatManager.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shader/vertexBone3.vert" beforeDir="false" afterPath="$PROJECT_DIR$/shader/vertexBone3.vert" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,7 +46,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../SmallProjects2/getAnimation" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -287,6 +287,8 @@
       <workItem from="1628484999838" duration="1116000" />
       <workItem from="1628649018343" duration="1128000" />
       <workItem from="1628937825877" duration="868000" />
+      <workItem from="1629123483646" duration="20031000" />
+      <workItem from="1629203313089" duration="2015000" />
     </task>
     <servers />
   </component>
@@ -314,9 +316,9 @@
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="371" y="87" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1280.680@0.0.1280.680" timestamp="1628239296143" />
-    <state x="320" y="101" key="FileChooserDialogImpl" timestamp="1628650154210">
+    <state x="320" y="101" key="FileChooserDialogImpl" timestamp="1629204072733">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state x="320" y="101" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1628650154210" />
+    <state x="320" y="101" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1629204072733" />
   </component>
 </project>

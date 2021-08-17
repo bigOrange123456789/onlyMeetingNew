@@ -393,3 +393,65 @@ CanvasControl.prototype={
         a.dispatchEvent(event); // 触发a的单击事件
     },
 }
+class Octree{
+    tree;
+    step;
+    constructor(x1,x2,y1,y2,z1,z2,height){
+        this.tree=Octree.createTree(x1,x2,y1,y2,z1,z2,height);
+        var sx=(x2-x1)/(Math.pow(2,height))
+        var sy=(y2-y1)/(Math.pow(2,height))
+        var sz=(z2-z1)/(Math.pow(2,height))
+        this.step={x:sx,y:sy,z:sz}
+    }
+    push(x,y,z,data){
+        var arr=Octree.find(this.tree,x,y,z)
+        arr.push(data)
+    }
+    pop(x,y,z){
+        var arr=[]
+        var t=this.step;
+        var a=[-t.x,0,t.x]
+        var b=[-t.y,0,t.y]
+        var c=[-t.z,0,t.z]
+        for(var i=0;i<2;i++)
+            for(var j=0;j<2;j++)
+                for(var k=0;k<2;k++)
+                    arr.push(
+                        Octree.find(this.tree,x+a[i],y+b[j],z+c[k])
+                    )
+        var result=[];
+        for(var l=0;l<arr.length;l++)
+            for(var m=0;m<arr[l].length;m++)
+                result.push(arr[l][m])
+        return result;
+    }
+
+    static find(tree,x,y,z){
+        if(tree.length===11&&tree[0] instanceof Array){
+            var k=0;
+            if(z>tree[10])k+=1
+            if(y>tree[9])k+=2;
+            if(x>tree[8])k+=4;
+            return Octree.find(tree[k],x,y,z)
+        }else return tree;
+    }
+    static createTree(x1,x2,y1,y2,z1,z2,height){
+        var x0=(x1+x2)/2
+        var y0=(y1+y2)/2
+        var z0=(z1+z2)/2
+        if(height===1){
+            return [[],[],[],[],[],[],[],[],x0,y0,z0]
+        }else{
+            var l0=Octree.createTree(x1,x0,y1,y0,z1,z0,height-1)//---
+            var l1=Octree.createTree(x1,x0,y1,y0,z0,z2,height-1)//--+
+            var l2=Octree.createTree(x1,x0,y0,y2,z1,z0,height-1)//-+-
+            var l3=Octree.createTree(x1,x0,y0,y2,z0,z2,height-1)//-++
+            var l4=Octree.createTree(x0,x2,y1,y0,z1,z0,height-1)//+--
+            var l5=Octree.createTree(x0,x2,y1,y0,z0,z2,height-1)//+-+
+            var l6=Octree.createTree(x0,x2,y0,y2,z1,z0,height-1)//++-
+            var l7=Octree.createTree(x0,x2,y0,y2,z0,z2,height-1)//+++
+            return [l0,l1,l2,l3,l4,l5,l6,l7,x0,y0,z0]
+        }
+
+    }
+}

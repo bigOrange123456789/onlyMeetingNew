@@ -108,10 +108,10 @@ float Animation_getNumByAnim(sampler2D smp,float n){//通过矩阵序号获取�
 float Animation_getElem2(float n){ //取手臂骨骼数据
     return Animation_getNumByAnim(animationData,n);
 }
-mat4 Animation_getMatrix(float i){ //求手臂骨骼
+mat4 Animation_getMatrix(float i){ //求骨骼
     float frame_index=oAnimation.frameIndex_f;
-    float startPos=i*12.+frame_index*12.*25.;//动画编号{帧序号{骨骼序号}}
-    //1个动画，8帧，25根骨头
+    float startPos=i*12.+frame_index*12.*33.;//动画编号{帧序号{骨骼序号}}
+    //1个动画，8帧，33根骨头
     /*if (type[3]<0.5){
         startPos+=oAnimation.skeletonPos0;
     }
@@ -156,5 +156,5 @@ mat4 Animation_computeMatrix(){
 void Animation_init(){
     oAnimation.skeletonPos0=0.0;
 
-    Animation_frameIndexSet(8.);//设置全局变量frame_index的值
+    Animation_frameIndexSet(12.);//设置全局变量frame_index的值
 }

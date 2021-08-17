@@ -58,7 +58,7 @@
 					function () {
 						var mesh2 = pmLoader2.rootObject.children[0];
 						var peoples2 = new InstancedGroup(
-								2,//908
+								100,//908
 								[mesh2],//这些mesh的网格应该一致
 								true,
 								crowdData_json,
@@ -77,12 +77,20 @@
 								myMain.camera
 						);
 						//人群中每个化身参数的初始化
+						//var t=new Octree(0,10000*200,-10,10,-10,10, 1);
+						//console.log(t)
                         for (var index = 0; index < peoples2.instanceCount; index++){
                                 peoples2.rotationSet(index, [Math.PI / 2, 0, 3 * Math.PI / 2]);
                                 peoples2.positionSet(index, [200*index,0,0]);
+								//t.push(200*index,0,0,index)
 							    peoples2.scaleSet(index, [100,-100,100]);
                                 peoples2.speedSet(index, 0.06 + Math.random() * 0.04);
                             }
+						setInterval(()=>{
+							console.log(
+									//t.pop(myMain.camera.x,myMain.camera.y,myMain.camera.z).length
+							)
+						},3000)
                         //添加到场景中
 						myMain.scene.add(peoples2.obj);
 						//渐进式加载
