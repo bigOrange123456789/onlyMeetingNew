@@ -21,7 +21,8 @@
   <component name="ChangeListManager">
     <list default="true" id="b7b6123d-caec-4b82-a432-424a6b5be5dd" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shader/vertexBone2.vert" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/lib/instancedLib/InstancedGroup4.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/lib/instancedLib/InstancedGroup4.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shader/vertexBone4.vert" beforeDir="false" afterPath="$PROJECT_DIR$/shader/vertexBone4.vert" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -284,7 +285,8 @@
       <workItem from="1628649018343" duration="1128000" />
       <workItem from="1628937825877" duration="868000" />
       <workItem from="1629123483646" duration="20031000" />
-      <workItem from="1629203313089" duration="2798000" />
+      <workItem from="1629203313089" duration="9556000" />
+      <workItem from="1629259905430" duration="370000" />
     </task>
     <servers />
   </component>

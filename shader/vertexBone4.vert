@@ -65,7 +65,10 @@ void main(){
     w=w+1.;w=1.;
 
     //vec4 position=modelViewMatrix * matrix2  * vec4(position.x*w,position.y,position.z*w, 1.0);
-    vec4 position=modelViewMatrix * matrix2 * matrix1  * vec4(position.x*w,position.y,position.z*w, 1.0);
+
+    //去除局部变换，预处理动画
+    vec4 position=modelViewMatrix * matrix2 *  vec4(position.x,position.y,position.z, 1.0);
+    //vec4 position=modelViewMatrix * matrix2 * matrix1  * vec4(position.x*w,position.y,position.z*w, 1.0);
     lightDirection=normalize(vec3(cameraX,cameraY,cameraZ)-mcol3);
     //lightDirection=normalize(mcol3-vec3(cameraX,cameraY,cameraZ));
     //lightDirection=normalize(vec3(position.x-cameraX,position.y-cameraY,position.z-cameraZ));

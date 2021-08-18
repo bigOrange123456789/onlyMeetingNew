@@ -50,6 +50,21 @@ InstancedGroup.prototype={
     initGeometry:function(geometryNew){
         var geometryTemp= new THREE.InstancedBufferGeometry();
         geometryTemp.instanceCount = this.instanceCount;
+
+        var position=geometryNew.attributes.position
+        var index=geometryNew.attributes.skinIndex
+        for(var l=0;l<position.count;l++){
+            var x=position.array[3*l]
+            var y=position.array[3*l+1]
+            var z=position.array[3*l+2]
+
+            var a=this.animationData
+            var b=index.array[l*4]
+            position.array[3*l]  =x*a[12*b  ]+y*a[12*b+3]+z*a[12*b+6]+a[12*b+9]
+            position.array[3*l+1]=x*a[12*b+1]+y*a[12*b+4]+z*a[12*b+7]+a[12*b+10]
+            position.array[3*l+2]=x*a[12*b+2]+y*a[12*b+5]+z*a[12*b+8]+a[12*b+11]
+        }
+
         geometryTemp.setAttribute('position', geometryNew.attributes.position);//Float32Array
         geometryTemp.setAttribute('inUV',geometryNew.attributes.uv);
         geometryTemp.setAttribute('normal',geometryNew.attributes.normal);
@@ -58,6 +73,7 @@ InstancedGroup.prototype={
             geometryTemp.setAttribute('skinIndex',geometryNew.attributes.skinIndex);
             geometryTemp.setAttribute('skinWeight',geometryNew.attributes.skinWeight);
         }
+
 
         geometryTemp.setAttribute('speed', this.speed);
 
@@ -70,7 +86,6 @@ InstancedGroup.prototype={
         geometryTemp.setAttribute('color', this.colors);
         geometryTemp.setAttribute('bonesWidth', this.bonesWidth);
         geometryTemp.setAttribute('faceShape', this.faceShape);
-
 
         if(this.mesh)this.mesh.geometry=geometryTemp;
         return geometryTemp;
@@ -127,7 +142,7 @@ InstancedGroup.prototype={
             animationDataLength+=this.animationConfig[i];
             this.animationData= this.animationData.concat(this.crowdData_json.animation[i]);
         }
-        console.log(this.animationData)
+        //console.log(this.animationData)
         uniforms.animationDataLength={value:animationDataLength};
         uniforms.animationData=getTex(this.animationData);
 
