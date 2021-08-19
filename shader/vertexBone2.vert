@@ -1,4 +1,4 @@
-//使用骨骼矩阵
+//使用sampler2D存储模型矩阵      使用骨骼矩阵
 #version 300 es
 precision highp float;//highp
 uniform sampler2D animationData;

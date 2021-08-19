@@ -1,16 +1,18 @@
+//使用骨骼坐标
 #version 300 es
 precision highp float;//highp
 uniform sampler2D animationData;
 uniform float animationDataLength;//动画数据的数据个数
 uniform mat4 modelViewMatrix,projectionMatrix;
-uniform float time,cameraX,cameraY,cameraZ;//0-10000
+uniform float time;//,cameraX,cameraY,cameraZ;//0-10000
 uniform float neckPosition;
 
 in vec3 position;
 in float index;
 in vec2 inUV;
 //in vec3 normal;
-in vec4 skinIndex,skinWeight;
+//in vec4 skinIndex,skinWeight;
+
 in float speed;
 in vec3 mcol0,mcol1,mcol2,mcol3;
 in vec4 type;//设置贴图0-2,type[3]用处不明

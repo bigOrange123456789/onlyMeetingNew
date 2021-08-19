@@ -23,8 +23,7 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/crowdTest2.html" beforeDir="false" afterPath="$PROJECT_DIR$/crowdTest2.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/crowdTest4.html" beforeDir="false" afterPath="$PROJECT_DIR$/crowdTest4.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/js/lib/instancedLib/InstancedGroup4.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/lib/instancedLib/InstancedGroup4.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shader/fragment.frag" beforeDir="false" afterPath="$PROJECT_DIR$/shader/fragment.frag" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shader/vertexBone3.vert" beforeDir="false" afterPath="$PROJECT_DIR$/shader/vertexBone3.vert" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/shader/vertexBone4.vert" beforeDir="false" afterPath="$PROJECT_DIR$/shader/vertexBone4.vert" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -291,7 +290,7 @@
       <workItem from="1629203313089" duration="9556000" />
       <workItem from="1629259905430" duration="16664000" />
       <workItem from="1629303182804" duration="6000" />
-      <workItem from="1629333465296" duration="17408000" />
+      <workItem from="1629333465296" duration="18256000" />
     </task>
     <servers />
   </component>
