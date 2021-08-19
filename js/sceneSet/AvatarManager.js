@@ -112,10 +112,12 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
                 scope.obj.add(peoples2.obj);
                 //console.log("男性模型加载时间"+(window.myClock-window.myClock_Male0));
                 var timeId2 = setInterval(function () {
-                    mesh2 = pmLoader2.rootObject.children[0];
-                    peoples2.updateGeometry(mesh2);
-                    console.log(pmLoader2.finished);
-                    if (pmLoader2.finished) window.clearInterval(timeId2)
+                    if(window.roamFinish){
+                        mesh2 = pmLoader2.rootObject.children[0];
+                        peoples2.updateGeometry(mesh2);
+                        console.log(pmLoader2.finished);
+                        if (pmLoader2.finished) window.clearInterval(timeId2)
+                    }
                 }, 1000);
             }
         );
@@ -172,10 +174,12 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
                 scope.obj.add(peoples.obj);
                 console.log("女性模型加载时间"+(window.myClock-window.myClock_Female0));
                 var timeId1 = setInterval(function () {
-                    mesh = pmLoader.rootObject.children[0];
-                    peoples.updateGeometry(mesh);
-                    console.log(pmLoader.finished);
-                    if (pmLoader.finished) window.clearInterval(timeId1)
+                    if(window.roamFinish){
+                        mesh = pmLoader.rootObject.children[0];
+                        peoples.updateGeometry(mesh);
+                        console.log(pmLoader.finished);
+                        if (pmLoader.finished) window.clearInterval(timeId1)
+                    }
                 }, 1000);
             },
             3000
