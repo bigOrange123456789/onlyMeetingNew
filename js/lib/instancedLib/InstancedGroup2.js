@@ -59,6 +59,10 @@ InstancedGroup.prototype={
             geometryTemp.setAttribute('skinWeight',geometryNew.attributes.skinWeight);
         }
 
+        for(var i=0;i<this.index.count;i++)
+            this.index.array[i]=i;
+        this.index.needsUpdate=true;
+        geometryTemp.setAttribute('index', this.index);
         geometryTemp.setAttribute('speed', this.speed);
 
         geometryTemp.setAttribute('mcol0', this.mcol0);//四元数、齐次坐标
@@ -87,7 +91,6 @@ InstancedGroup.prototype={
         else material.uniforms.text0={value:texSrc[0]};//传入map类型
 
         return material;
-
         function setText0(tex_i){
             var myText0= THREE.ImageUtils.loadTexture(texSrc[tex_i],null,function () {
                 myText0.flipY=texFlipY;
@@ -97,6 +100,59 @@ InstancedGroup.prototype={
                 else if(finishFunction)finishFunction();
             });
         }
+    },
+    initAnimation2:function(uniforms,camera,geometryNew){
+        var scope=this;
+
+
+        uniforms.time={value: 0.0};
+        uniforms.cameraX={value: camera.position.x};
+        uniforms.cameraY={value: camera.position.y};
+        uniforms.cameraZ={value: camera.position.z};
+        updateAnimation();
+
+        this.animationData=[];
+        this.animationConfig=[];
+        var animationDataLength=0;
+
+        this.animationConfig=this.crowdData_json.config;
+        for(i=0;i<scope.animationConfig.length;i++){
+            animationDataLength+=this.animationConfig[i];
+            this.animationData= this.animationData.concat(this.crowdData_json.animation[i]);
+        }
+        function getTex(arr) {
+            var addLength=(1000-arr.length%1000)%1000
+            for(var i=0;i<addLength;i++){
+                arr.push(0)
+            }
+            var data = new Float32Array( arr.length);
+            var width = 1000, height = (data.length/3)/width;
+            data.set(arr)
+            var tex=new THREE.DataTexture(data, width, height, THREE.RGBFormat,THREE.FloatType);
+            return {"value":tex};
+        }
+
+        var index=geometryNew.attributes.skinIndex
+        var ps=[]
+        for(var fi=0;fi<12;fi++){//for(var fi=0;fi<this.fn;fi++){//fi 帧序号
+            var position=geometryNew.attributes.position.clone()
+            for(var l=0;l<position.count;l++){
+                var x=position.array[3*l]
+                var y=position.array[3*l+1]
+                var z=position.array[3*l+2]
+
+                var a=this.animationData
+                var b=index.array[l*4]
+                var bn=33//骨骼数
+                var p=12*bn*fi+12*b
+                ps.push(x*a[p  ]+y*a[p+3]+z*a[p+6]+a[p+9 ])//position.array[3*l]  =x*a[p  ]+y*a[p+3]+z*a[p+6]+a[p+9]
+                ps.push(x*a[p+1]+y*a[p+4]+z*a[p+7]+a[p+10])//position.array[3*l+1]=x*a[p+1]+y*a[p+4]+z*a[p+7]+a[p+10]
+                ps.push(x*a[p+2]+y*a[p+5]+z*a[p+8]+a[p+11])//position.array[3*l+2]=x*a[p+2]+y*a[p+5]+z*a[p+8]+a[p+11]
+            }
+        }
+
+        uniforms.animationDataLength={value:ps.length};
+        uniforms.animationData=getTex(ps);
     },
     initAnimation:function(uniforms,camera){
         var scope=this;
@@ -127,9 +183,15 @@ InstancedGroup.prototype={
             animationDataLength+=this.animationConfig[i];
             this.animationData= this.animationData.concat(this.crowdData_json.animation[i]);
         }
-        console.log(this.animationData)
-        uniforms.animationDataLength={value:animationDataLength};
+        uniforms.animationDataLength={value:this.animationData.length};
         uniforms.animationData=getTex(this.animationData);
+
+        console.log(this.mcol0)
+        console.log(this.mcol0.length)
+        uniforms.matrixData0=getTex(this.mcol0.array);
+        uniforms.matrixData1=getTex(this.mcol1.array);
+        uniforms.matrixData2=getTex(this.mcol2.array);
+        uniforms.matrixData3=getTex(this.mcol3.array);
 
 
         function getTex(arr) {//(str) {
@@ -147,6 +209,7 @@ InstancedGroup.prototype={
         this.originMeshs[0].geometry=this.originMeshs[0].geometry.toNonIndexed();
 
         //InstancedBufferAttribute为每个对象一组数据：先生成空间，再设置数据
+        this.index=new THREE.BufferAttribute(new Float32Array(this.originMeshs[0].geometry.attributes.position.count), 1);
         this.speed=new THREE.InstancedBufferAttribute(new Float32Array(this.instanceCount * 1), 1);
         this.mcol0=new THREE.InstancedBufferAttribute(new Float32Array(this.instanceCount * 3), 3);
         this.mcol1=new THREE.InstancedBufferAttribute(new Float32Array(this.instanceCount * 3), 3);
@@ -179,29 +242,32 @@ InstancedGroup.prototype={
             textNum:{value: textNum},
             neckPosition:{value: (this.neckPosition===undefined)?0.59:this.neckPosition}
         };
-        if(this.haveSkeleton)this.initAnimation(uniforms,camera);
+        setTimeout(()=>{
+            if(this.haveSkeleton)this.initAnimation(uniforms,camera);
 
-        var material=this.initMaterial(uniforms,texSrc,textNum,colors,texFlipY,finishFunction,camera);
-        if(this.vertURL===undefined)this.vertURL=this.haveSkeleton?"shader/vertexBone2.vert":"shader/vertex.vert";
-        if(this.fragURL===undefined)this.fragURL="shader/fragment.frag";
-        material.vertexShader=load(this.vertURL);
-        material.fragmentShader=load(this.fragURL);
-        function load(name) {
-            let xhr = new XMLHttpRequest(),
-                okStatus = document.location.protocol === "file:" ? 0 : 200;
-            xhr.open('GET', name, false);
-            xhr.overrideMimeType("text/html;charset=utf-8");//默认为utf-8
-            xhr.send(null);
-            return xhr.status === okStatus ? xhr.responseText : null;
-        }
+            var material=this.initMaterial(uniforms,texSrc,textNum,colors,texFlipY,finishFunction,camera);
+            if(this.vertURL===undefined)this.vertURL=this.haveSkeleton?"shader/vertexBone2.vert":"shader/vertex.vert";
+            if(this.fragURL===undefined)this.fragURL="shader/fragment.frag";
+            material.vertexShader=load(this.vertURL);
+            material.fragmentShader=load(this.fragURL);
+            function load(name) {
+                let xhr = new XMLHttpRequest(),
+                    okStatus = document.location.protocol === "file:" ? 0 : 200;
+                xhr.open('GET', name, false);
+                xhr.overrideMimeType("text/html;charset=utf-8");//默认为utf-8
+                xhr.send(null);
+                return xhr.status === okStatus ? xhr.responseText : null;
+            }
 
-        this.mesh = new THREE.Mesh(
-            this.initGeometry(this.originMeshs[0].geometry),
-            material
-        );
-        console.log(this.mesh);
-        this.mesh.frustumCulled=false;
-        this.obj.add(this.mesh);
+            this.mesh = new THREE.Mesh(
+                this.initGeometry(this.originMeshs[0].geometry),
+                material
+            );
+            console.log(this.mesh);
+            this.mesh.frustumCulled=false;
+            this.obj.add(this.mesh);
+        },1000)
+
     },
 
     setMatrix:function (i,matrix){//获取实例化对象第i个成员的变换矩阵
@@ -322,7 +388,6 @@ InstancedGroup.prototype={
         this.bonesWidth.array[4*avatarIndex+regionIndex]=width;
     },
     faceShapeSet:function (avatarIndex,width) {
-        console.log("!!!!",avatarIndex,width)
         this.faceShape.needsUpdate=true;
         this.faceShape.array[avatarIndex]=width;
     },

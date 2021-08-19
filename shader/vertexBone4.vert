@@ -1,5 +1,5 @@
-//使用骨骼坐标
 #version 300 es
+//使用骨骼坐标
 precision highp float;//highp
 uniform sampler2D animationData;
 uniform float animationDataLength;//动画数据的数据个数
@@ -49,14 +49,14 @@ void main(){
     Animation_init();
     vec4 p=Animation_compute();//计算动画的变换矩阵
 
-    /*mat4 matrix = mat4(//确定位置//最后一列是 0 0 0 1
+    mat4 matrix = mat4(//确定位置//最后一列是 0 0 0 1
         vec4(mcol0, 0),
         vec4(mcol1, 0),
         vec4(mcol2, 0),
         vec4(mcol3, 1)//实例化物体对象世界矩阵
     );
     gl_Position=projectionMatrix * modelViewMatrix * matrix *  p;
-    */
+    /**/
 
 
     /*gl_Position=projectionMatrix * modelViewMatrix *vec4(
@@ -67,7 +67,7 @@ void main(){
     );*/
     //减少6次乘法
 
-    gl_Position=projectionMatrix * modelViewMatrix *vec4(5.*p.x+mcol3.x, 5.*p.y+mcol3.y, 5.*p.z+mcol3.z, 1.);
+    //gl_Position=projectionMatrix * modelViewMatrix *vec4(5.*p.x+mcol3.x, 5.*p.y+mcol3.y, 5.*p.z+mcol3.z, 1.);
     //gl_Position=projectionMatrix * modelViewMatrix *   vec4(5.*animationPos.x,5.*animationPos.y,5.*animationPos.z,1.);
     //lightDirection=normalize(vec3(cameraX,cameraY,cameraZ)-mcol3);
 

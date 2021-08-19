@@ -1,5 +1,5 @@
-//使用骨骼矩阵
 #version 300 es
+//使用骨骼矩阵
 precision highp float;//highp
 uniform sampler2D animationData;
 uniform float animationDataLength;//动画数据的数据个数
