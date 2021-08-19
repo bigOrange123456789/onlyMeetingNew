@@ -150,49 +150,6 @@ InstancedGroup.prototype={
             });
         }
     },
-    initAnimation0:function(uniforms,camera){
-        var scope=this;
-
-        function updateAnimation() {//每帧更新一次动画
-            requestAnimationFrame(updateAnimation);
-            scope.time=(scope.time+1.0)%60000;
-
-            uniforms.time={value: scope.time};
-            //console.log(scope.time,uniforms.cameraX.value)
-            uniforms.cameraX={value: camera.position.x};
-            uniforms.cameraY={value: camera.position.y};
-            uniforms.cameraZ={value: camera.position.z};
-        }
-
-        uniforms.time={value: 0.0};
-        uniforms.cameraX={value: camera.position.x};
-        uniforms.cameraY={value: camera.position.y};
-        uniforms.cameraZ={value: camera.position.z};
-        uniforms.animationData={type: 't', value:[]};updateAnimation();
-        uniforms.animationDataLength={value:0};
-        this.animationData=[];
-        this.animationConfig=[];
-        var animationDataLength=0;
-
-        this.animationConfig=this.crowdData_json.config;
-        for(i=0;i<scope.animationConfig.length;i++){
-            animationDataLength+=this.animationConfig[i];
-            this.animationData= this.animationData.concat(this.crowdData_json.animation[i]);
-        }
-        console.log(this.animationData)
-        uniforms.animationDataLength={value:animationDataLength};
-        uniforms.animationData=getTex(this.animationData);
-
-
-        function getTex(arr) {//(str) {
-            //var data0=JSON.parse(str).data;//204
-            var data = new Float32Array( arr.length);//1944
-            var width = 1 , height = data.length/3 ;//648
-            data.set(arr)//for(var i=0;i<data.length;i++)data[i]=arr[i];//972
-            var tex=new THREE.DataTexture(data, width, height, THREE.RGBFormat,THREE.FloatType);
-            return {"value":tex};
-        }
-    },
     initAnimation:function(uniforms,camera,geometryNew){
         var scope=this;
 
@@ -211,10 +168,8 @@ InstancedGroup.prototype={
         uniforms.cameraX={value: camera.position.x};
         uniforms.cameraY={value: camera.position.y};
         uniforms.cameraZ={value: camera.position.z};
-        uniforms.animationData={type: 't', value:[]};
         updateAnimation();
 
-        uniforms.animationDataLength={value:0};
         this.animationData=[];
         this.animationConfig=[];
         var animationDataLength=0;
@@ -224,23 +179,21 @@ InstancedGroup.prototype={
             animationDataLength+=this.animationConfig[i];
             this.animationData= this.animationData.concat(this.crowdData_json.animation[i]);
         }
-        //console.log(animationDataLength,this.animationData)
-        //console.log(this.animationData)
-        //uniforms.animationDataLength={value:animationDataLength};
-        //uniforms.animationData=getTex(this.animationData);
-
-        function getTex(arr) {//(str) {
-            //var data0=JSON.parse(str).data;//204
-            var data = new Float32Array( arr.length);//1944
-            var width = 1 , height = data.length/3 ;//648
-            data.set(arr)//for(var i=0;i<data.length;i++)data[i]=arr[i];//972
+        function getTex(arr) {
+            var addLength=(1000-arr.length%1000)%1000
+            for(var i=0;i<addLength;i++){
+                arr.push(0)
+            }
+            var data = new Float32Array( arr.length);
+            var width = 1000, height = (data.length/3)/width;
+            data.set(arr)
             var tex=new THREE.DataTexture(data, width, height, THREE.RGBFormat,THREE.FloatType);
             return {"value":tex};
         }
 
         var index=geometryNew.attributes.skinIndex
         var ps=[]
-        for(var fi=0;fi<2;fi++){//for(var fi=0;fi<this.fn;fi++){//fi 帧序号
+        for(var fi=0;fi<12;fi++){//for(var fi=0;fi<this.fn;fi++){//fi 帧序号
             var position=geometryNew.attributes.position.clone()
             for(var l=0;l<position.count;l++){
                 var x=position.array[3*l]
@@ -258,7 +211,6 @@ InstancedGroup.prototype={
         }
 
         uniforms.animationDataLength={value:ps.length};
-        console.log(ps)
         uniforms.animationData=getTex(ps);
     },
     init:function (texSrc,textNum,colors,texFlipY,finishFunction,camera){//纹理贴图资源路径，贴图中包含纹理的个数

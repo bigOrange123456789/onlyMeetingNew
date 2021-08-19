@@ -5,7 +5,7 @@ uniform sampler2D text0;
 uniform float textNum;//贴图个数
 
 in float type_part;//,texType;//身体的哪个部分，贴图类型
-in vec3 varyColor,varyType,outNormal,lightDirection;
+in vec3 varyColor,varyType;//,outNormal,lightDirection;
 in vec2 outUV;
 in float outfaceShape;
 out vec4 myOutputColor;
@@ -37,7 +37,7 @@ void main(){
     //float diffuse = dot( outNormal, lightDirection );
     //myOutputColor = vec4 (diffuse *color,myTexture[3]);
     myOutputColor = vec4 (color,myTexture[3]);
-    myOutputColor =vec4 (myTest01,1.0);//用于测试
+    //myOutputColor =vec4 (myTest01,1.0);//用于测试
 }
 
 struct TextureController{

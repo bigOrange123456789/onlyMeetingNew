@@ -40,8 +40,8 @@
 		var myMain = new Main();
 		myMain.start();
 		window.camera=myMain.camera;
-		window.camera.position.set(-6.62,168.37,45.7)
-		window.camera.rotation.set(-0.19936283715953232,0.04946088113269676,0.009989005227081868)
+		window.camera.position.set( 100.815904,33.3076071,-54.3744449854)
+		window.camera.rotation.set(-2.6876890,0.6410843,2.8576912635300595)
 
 		new PlayerControl(myMain.camera);
 
@@ -56,7 +56,7 @@
 						mesh2=node;
 				})
 				var peoples2 = new InstancedGroup(
-						3,//908
+						2000,//908
 						[mesh2],//这些mesh的网格应该一致
 						true,
 						crowdData_json,
@@ -77,10 +77,10 @@
 				//人群中每个化身参数的初始化
 				for (var index = 0; index < peoples2.instanceCount; index++){
 					//peoples2.rotationSet(index, [Math.PI / 2, 0, 3 * Math.PI / 2]);
-					var x=index%100;
-					var y=Math.floor(index/100);
-					peoples2.positionSet(index, [50*x,0,20*y]);
-					peoples2.scaleSet(index, [50,50,50]);
+					var x=index%50;
+					var y=Math.floor(index/50);
+					peoples2.positionSet(index, [2*x,0,y]);
+					peoples2.scaleSet(index, [5,5,5]);
 					peoples2.textureSet(index, [0,0,0])
 					peoples2.faceShapeSet(index,0)
 					peoples2.speedSet(index, (0.06 + Math.random() * 0.04)*4);

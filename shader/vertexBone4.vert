@@ -9,7 +9,7 @@ uniform float neckPosition;
 in vec3 position;
 in float index;
 in vec2 inUV;
-in vec3 normal;
+//in vec3 normal;
 in vec4 skinIndex,skinWeight;
 in float speed;
 in vec3 mcol0,mcol1,mcol2,mcol3;
@@ -24,70 +24,54 @@ in float faceShape;
 //3腿部 15-19-20-24
 
 out vec2 outUV;
-out vec3 outNormal;
-out vec3 lightDirection;
+//out vec3 outNormal;
+//out vec3 lightDirection;
 out vec3 varyColor,varyType;
 out float type_part;//,texType;
 out vec3 myTest01;
 out float outfaceShape;
 
 void Animation_init();
-mat4 Animation_computeMatrix();
-float Animation_getElem2(float n);
+vec4 Animation_compute();
 float Animation_getNumByAnim(sampler2D smp,float n);//通过矩阵序号获取动画矩阵
 void main(){
     outUV = inUV;
     outfaceShape=faceShape;
     varyColor=color;
-    outNormal=normal;
+    //outNormal=normal;
     varyType=vec3(type[0], type[1], type[2]);
     if (position.y<0.15&&(position.z<0.35&&position.z>-0.35))type_part=0.0;//下身
     else if (position.y<neckPosition) type_part=1.0;//上身
     else type_part=2.0;//头部
 
     Animation_init();
-    mat4 matrix1=Animation_computeMatrix();//计算动画的变换矩阵
+    vec4 p=Animation_compute();//计算动画的变换矩阵
 
-    mat4 matrix2 = mat4(//确定位置//最后一列是 0 0 0 1
+    /*mat4 matrix = mat4(//确定位置//最后一列是 0 0 0 1
         vec4(mcol0, 0),
         vec4(mcol1, 0),
         vec4(mcol2, 0),
         vec4(mcol3, 1)//实例化物体对象世界矩阵
     );
+    gl_Position=projectionMatrix * modelViewMatrix * matrix *  p;
+    */
 
-    float w;
-    //0躯干 0-3
-    //1头部 4-6
-    //2手臂 7-10，11-14
-    //3腿部 15-19-20-24
-    if(skinIndex[0]<3.5)w=bonesWidth[0];//0躯干
-    else if(3.5<skinIndex[0]&&skinIndex[0]<6.5)w=bonesWidth[1];//1头部
-    else if(skinIndex[0]>14.5)w=bonesWidth[3];//3腿部
-    else w=bonesWidth[2];//2手臂
-    w=w+1.;w=1.;
 
-    //vec4 position=modelViewMatrix * matrix2  * vec4(position.x*w,position.y,position.z*w, 1.0);
+    /*gl_Position=projectionMatrix * modelViewMatrix *vec4(
+        p.x*mcol0.x+p.y*mcol1.x+p.z*mcol2.x+mcol3.x,
+        p.x*mcol0.y+p.y*mcol1.y+p.z*mcol2.y+mcol3.y,
+        p.x*mcol0.z+p.y*mcol1.z+p.z*mcol2.z+mcol3.z,
+        1.
+    );*/
+    //减少6次乘法
 
-    //去除局部变换，预处理动画
-    float vi=index;
-    float fi=0.;
-    float bn=33.;
-    float vn=6606.;
-    float x=Animation_getNumByAnim(animationData,fi*vn*3.+vi*3.);
-    float y=Animation_getNumByAnim(animationData,fi*vn*3.+vi*3.+1.);
-    float z=Animation_getNumByAnim(animationData,fi*vn*3.+vi*3.+2.);
-    gl_Position=projectionMatrix * modelViewMatrix * matrix2 *  vec4(x,y,z,1.);
-    //gl_Position=projectionMatrix * modelViewMatrix * matrix2 *  vec4(position.x,position.y,position.z,1.);
-        //Animation_getNumByAnim(animationData,n),position.y,position.z, 1.0);
-    //vec4 position=modelViewMatrix * matrix2 * matrix1  * vec4(position.x*w,position.y,position.z*w, 1.0);
-    lightDirection=normalize(vec3(cameraX,cameraY,cameraZ)-mcol3);
-    //lightDirection=normalize(mcol3-vec3(cameraX,cameraY,cameraZ));
-    //lightDirection=normalize(vec3(position.x-cameraX,position.y-cameraY,position.z-cameraZ));
-    //gl_Position = projectionMatrix * position;
+    gl_Position=projectionMatrix * modelViewMatrix *vec4(5.*p.x+mcol3.x, 5.*p.y+mcol3.y, 5.*p.z+mcol3.z, 1.);
+    //gl_Position=projectionMatrix * modelViewMatrix *   vec4(5.*animationPos.x,5.*animationPos.y,5.*animationPos.z,1.);
+    //lightDirection=normalize(vec3(cameraX,cameraY,cameraZ)-mcol3);
 
     //Test_init();
     //if(!Test_meetExpectations())gl_Position =vec4(0.,0.,0.,0.);
-    myTest01=vec3(index/1000.,Animation_getElem2(1.)*10.,Animation_getElem2(2.)*10.);
+    //myTest01=vec3(index/6000.,Animation_getElem2(1.),Animation_getElem2(2.)*10.);
 
 }
 //尽可能按照面向对象的编程思想来编写下面的代码
@@ -105,47 +89,27 @@ void Tool_init(){}
 
 struct Animation{
         float skeletonPos0;
-
-        int frameIndex;
         float frameIndex_f;
 }oAnimation;
 float Animation_getNumByAnim(sampler2D smp,float n){//通过矩阵序号获取动画矩阵
-    vec3 tttt=texture(smp, vec2(
-        (0.5+0.0)/1.0, //宽width
-        (0.5+floor(n/3.0))/(animationDataLength/3.0)//除3是指每个像素点可存储3个数据
-    )).xyz;
-    float m=modFloor(n, 3.0);
+    float k=floor(n/3.);
+
+    float w=1000.;
+    float h=(animationDataLength/3.)/w;//除3是指每个像素点可存储3个数据
+    //按列存储数据
+    float x = mod(k,w);
+    float y = floor(k/w);
+
+    //float dx=1./w;//横向像素个数
+    //float dy=1./h;//height纵向像素个数
+    float px=(x+0.5)/w;
+    float py=(y+0.5)/h;
+    vec3 tttt=texture(smp, vec2(px,py)).xyz;
+    float m=mod(n, 3.0);
     if (m<0.5)return tttt.x;
     else if (m<1.5)return tttt.y;
     else return tttt.z;
 }
-float Animation_getElem2(float n){ //取手臂骨骼数据
-    return Animation_getNumByAnim(animationData,n);
-}
-mat4 Animation_getMatrix(float i){ //求骨骼
-    float frame_index=oAnimation.frameIndex_f;
-    float startPos=i*12.+frame_index*12.*33.;//动画编号{帧序号{骨骼序号}}
-    //1个动画，8帧，33根骨头
-    /*if (type[3]<0.5){
-        startPos+=oAnimation.skeletonPos0;
-    }
-    return mat4(//最后一列是：0 0 0 1
-        Animation_getElem2(startPos+0.), Animation_getElem2(startPos+4.), Animation_getElem2(startPos+8.), 0,
-        Animation_getElem2(startPos+1.), Animation_getElem2(startPos+5.), Animation_getElem2(startPos+9.), 0,
-        Animation_getElem2(startPos+2.), Animation_getElem2(startPos+6.), Animation_getElem2(startPos+10.), 0,
-        Animation_getElem2(startPos+3.), Animation_getElem2(startPos+7.), Animation_getElem2(startPos+11.), 1
-    );
-}
-    */
-    return mat4(//最后一列是：0 0 0 1
-        Animation_getElem2(startPos+0.), Animation_getElem2(startPos+1.), Animation_getElem2(startPos+2.), 0,
-        Animation_getElem2(startPos+3.), Animation_getElem2(startPos+4.), Animation_getElem2(startPos+5.), 0,
-        Animation_getElem2(startPos+6.), Animation_getElem2(startPos+7.), Animation_getElem2(startPos+8.), 0,
-        Animation_getElem2(startPos+9.), Animation_getElem2(startPos+10.), Animation_getElem2(startPos+11.), 1
-    );
-}
-
-
 void Animation_frameIndexSet(float frameNum){ //求帧序号//int frame_index;
     float t=modFloor(time*speed, frameNum*2.);//((time*speed)/16.0-floor((time*speed)/16.0))*16.0;//将time*speed对8取余结果：[0，7)
     int frame_index;//0-15
@@ -153,22 +117,20 @@ void Animation_frameIndexSet(float frameNum){ //求帧序号//int frame_index;
 
     if(t<frameNum-0.5)frameIndex_f=round(t);
     else frameIndex_f=frameNum*2.-1.-round(t);
-    frame_index=int(frameIndex_f);
-
-    oAnimation.frameIndex=frame_index;
     oAnimation.frameIndex_f=frameIndex_f;
-    //oAnimation.frameIndex=1;
-    //oAnimation.frameIndex_f=1.;
 }
-mat4 Animation_computeMatrix(){
-    //计算动画的变换矩阵：matrix1=skinWeight[0]*matrixs[mySkinIndex[0]]+...
-    mat4 matrix1;//每个点只与一个骨骼相关
-    matrix1=Animation_getMatrix(skinIndex[0]);
-
-    return matrix1;
+vec4 Animation_compute(){
+    float vi=index;
+    float fi=oAnimation.frameIndex_f;;
+    float bn=33.;
+    float vn=6606.;
+    float x=Animation_getNumByAnim(animationData,fi*vn*3.+vi*3.);
+    float y=Animation_getNumByAnim(animationData,fi*vn*3.+vi*3.+1.);
+    float z=Animation_getNumByAnim(animationData,fi*vn*3.+vi*3.+2.);
+    return  vec4(x,y,z,1.);
 }
 void Animation_init(){
-    oAnimation.skeletonPos0=0.0;
-
-    Animation_frameIndexSet(12.);//设置全局变量frame_index的值
+    oAnimation.skeletonPos0=0.;
+    oAnimation.frameIndex_f=0.;
+    Animation_frameIndexSet(12.);//计算帧序号frame_index
 }
