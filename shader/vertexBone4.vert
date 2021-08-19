@@ -7,6 +7,7 @@ uniform float time,cameraX,cameraY,cameraZ;//0-10000
 uniform float neckPosition;
 
 in vec3 position;
+in float index;
 in vec2 inUV;
 in vec3 normal;
 in vec4 skinIndex,skinWeight;
@@ -33,6 +34,7 @@ out float outfaceShape;
 void Animation_init();
 mat4 Animation_computeMatrix();
 float Animation_getElem2(float n);
+float Animation_getNumByAnim(sampler2D smp,float n);//通过矩阵序号获取动画矩阵
 void main(){
     outUV = inUV;
     outfaceShape=faceShape;
@@ -67,16 +69,25 @@ void main(){
     //vec4 position=modelViewMatrix * matrix2  * vec4(position.x*w,position.y,position.z*w, 1.0);
 
     //去除局部变换，预处理动画
-    vec4 position=modelViewMatrix * matrix2 *  vec4(position.x,position.y,position.z, 1.0);
+    float vi=index;
+    float fi=0.;
+    float bn=33.;
+    float vn=6606.;
+    float x=Animation_getNumByAnim(animationData,fi*vn*3.+vi*3.);
+    float y=Animation_getNumByAnim(animationData,fi*vn*3.+vi*3.+1.);
+    float z=Animation_getNumByAnim(animationData,fi*vn*3.+vi*3.+2.);
+    gl_Position=projectionMatrix * modelViewMatrix * matrix2 *  vec4(x,y,z,1.);
+    //gl_Position=projectionMatrix * modelViewMatrix * matrix2 *  vec4(position.x,position.y,position.z,1.);
+        //Animation_getNumByAnim(animationData,n),position.y,position.z, 1.0);
     //vec4 position=modelViewMatrix * matrix2 * matrix1  * vec4(position.x*w,position.y,position.z*w, 1.0);
     lightDirection=normalize(vec3(cameraX,cameraY,cameraZ)-mcol3);
     //lightDirection=normalize(mcol3-vec3(cameraX,cameraY,cameraZ));
     //lightDirection=normalize(vec3(position.x-cameraX,position.y-cameraY,position.z-cameraZ));
-    gl_Position = projectionMatrix * position;
+    //gl_Position = projectionMatrix * position;
 
     //Test_init();
     //if(!Test_meetExpectations())gl_Position =vec4(0.,0.,0.,0.);
-    myTest01=vec3(Animation_getElem2(0.),Animation_getElem2(1.),Animation_getElem2(2.));
+    myTest01=vec3(index/1000.,Animation_getElem2(1.)*10.,Animation_getElem2(2.)*10.);
 
 }
 //尽可能按照面向对象的编程思想来编写下面的代码

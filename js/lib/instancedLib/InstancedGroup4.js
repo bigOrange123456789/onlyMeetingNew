@@ -32,6 +32,9 @@ function InstancedGroup(instanceCount,originMesh,animationClip,crowdData_json){
 
     //以下参数用于将模型划分为头、上身、下身三部分
     this.neckPosition;
+
+    this.bn=33//骨骼数
+    this.fn=12//帧数
 }
 InstancedGroup.prototype={
     updateGeometry:function(mesh){//用于和PM技术相结合
@@ -51,8 +54,26 @@ InstancedGroup.prototype={
         var geometryTemp= new THREE.InstancedBufferGeometry();
         geometryTemp.instanceCount = this.instanceCount;
 
-        var position=geometryNew.attributes.position
+        //
         var index=geometryNew.attributes.skinIndex
+        var ps=[]
+        for(var fi=0;fi<this.fn;fi++){//fi 帧序号
+            var position=geometryNew.attributes.position.clone()
+            for(var l=0;l<position.count;l++){
+                var x=position.array[3*l]
+                var y=position.array[3*l+1]
+                var z=position.array[3*l+2]
+
+                var a=this.animationData
+                var b=index.array[l*4]
+                var bn=33//骨骼数
+                var p=12*bn*fi+12*b
+                ps.push(x*a[p  ]+y*a[p+3]+z*a[p+6]+a[p+9 ])//position.array[3*l]  =x*a[p  ]+y*a[p+3]+z*a[p+6]+a[p+9]
+                ps.push(x*a[p+1]+y*a[p+4]+z*a[p+7]+a[p+10])//position.array[3*l+1]=x*a[p+1]+y*a[p+4]+z*a[p+7]+a[p+10]
+                ps.push(x*a[p+2]+y*a[p+5]+z*a[p+8]+a[p+11])//position.array[3*l+2]=x*a[p+2]+y*a[p+5]+z*a[p+8]+a[p+11]
+            }
+        }
+        /*var position=geometryNew.attributes.position
         for(var l=0;l<position.count;l++){
             var x=position.array[3*l]
             var y=position.array[3*l+1]
@@ -60,12 +81,28 @@ InstancedGroup.prototype={
 
             var a=this.animationData
             var b=index.array[l*4]
-            position.array[3*l]  =x*a[12*b  ]+y*a[12*b+3]+z*a[12*b+6]+a[12*b+9]
-            position.array[3*l+1]=x*a[12*b+1]+y*a[12*b+4]+z*a[12*b+7]+a[12*b+10]
-            position.array[3*l+2]=x*a[12*b+2]+y*a[12*b+5]+z*a[12*b+8]+a[12*b+11]
+            var fi=3//帧序号
+            var bn=33//骨骼数
+            var p=12*bn*fi+12*b
+            position.array[3*l]  =x*a[p  ]+y*a[p+3]+z*a[p+6]+a[p+9]
+            position.array[3*l+1]=x*a[p+1]+y*a[p+4]+z*a[p+7]+a[p+10]
+            position.array[3*l+2]=x*a[p+2]+y*a[p+5]+z*a[p+8]+a[p+11]
+        }*/
+        var position2=geometryNew.attributes.position.clone();
+        for(l=0;l<position.count;l++){
+            position2.array[3*l  ]=ps[3*l  ];
+            position2.array[3*l+1]=ps[3*l+1];
+            position2.array[3*l+2]=ps[3*l+2];/**/
         }
 
-        geometryTemp.setAttribute('position', geometryNew.attributes.position);//Float32Array
+        position2.needsUpdate=true;
+
+        for(var i=0;i<this.index.count;i++)
+            this.index.array[i]=i;
+        this.index.needsUpdate=true;
+        geometryTemp.setAttribute('position', position2);//Float32Array
+        geometryTemp.setAttribute('index', this.index);
+        console.log(geometryNew)
         geometryTemp.setAttribute('inUV',geometryNew.attributes.uv);
         geometryTemp.setAttribute('normal',geometryNew.attributes.normal);
         if(this.haveSkeleton){
@@ -113,7 +150,7 @@ InstancedGroup.prototype={
             });
         }
     },
-    initAnimation:function(uniforms,camera){
+    initAnimation0:function(uniforms,camera){
         var scope=this;
 
         function updateAnimation() {//每帧更新一次动画
@@ -142,7 +179,7 @@ InstancedGroup.prototype={
             animationDataLength+=this.animationConfig[i];
             this.animationData= this.animationData.concat(this.crowdData_json.animation[i]);
         }
-        //console.log(this.animationData)
+        console.log(this.animationData)
         uniforms.animationDataLength={value:animationDataLength};
         uniforms.animationData=getTex(this.animationData);
 
@@ -156,12 +193,81 @@ InstancedGroup.prototype={
             return {"value":tex};
         }
     },
+    initAnimation:function(uniforms,camera,geometryNew){
+        var scope=this;
+
+        function updateAnimation() {//每帧更新一次动画
+            requestAnimationFrame(updateAnimation);
+            scope.time=(scope.time+1.0)%60000;
+
+            uniforms.time={value: scope.time};
+            //console.log(scope.time,uniforms.cameraX.value)
+            uniforms.cameraX={value: camera.position.x};
+            uniforms.cameraY={value: camera.position.y};
+            uniforms.cameraZ={value: camera.position.z};
+        }
+
+        uniforms.time={value: 0.0};
+        uniforms.cameraX={value: camera.position.x};
+        uniforms.cameraY={value: camera.position.y};
+        uniforms.cameraZ={value: camera.position.z};
+        uniforms.animationData={type: 't', value:[]};
+        updateAnimation();
+
+        uniforms.animationDataLength={value:0};
+        this.animationData=[];
+        this.animationConfig=[];
+        var animationDataLength=0;
+
+        this.animationConfig=this.crowdData_json.config;
+        for(i=0;i<scope.animationConfig.length;i++){
+            animationDataLength+=this.animationConfig[i];
+            this.animationData= this.animationData.concat(this.crowdData_json.animation[i]);
+        }
+        //console.log(animationDataLength,this.animationData)
+        //console.log(this.animationData)
+        //uniforms.animationDataLength={value:animationDataLength};
+        //uniforms.animationData=getTex(this.animationData);
+
+        function getTex(arr) {//(str) {
+            //var data0=JSON.parse(str).data;//204
+            var data = new Float32Array( arr.length);//1944
+            var width = 1 , height = data.length/3 ;//648
+            data.set(arr)//for(var i=0;i<data.length;i++)data[i]=arr[i];//972
+            var tex=new THREE.DataTexture(data, width, height, THREE.RGBFormat,THREE.FloatType);
+            return {"value":tex};
+        }
+
+        var index=geometryNew.attributes.skinIndex
+        var ps=[]
+        for(var fi=0;fi<2;fi++){//for(var fi=0;fi<this.fn;fi++){//fi 帧序号
+            var position=geometryNew.attributes.position.clone()
+            for(var l=0;l<position.count;l++){
+                var x=position.array[3*l]
+                var y=position.array[3*l+1]
+                var z=position.array[3*l+2]
+
+                var a=this.animationData
+                var b=index.array[l*4]
+                var bn=33//骨骼数
+                var p=12*bn*fi+12*b
+                ps.push(x*a[p  ]+y*a[p+3]+z*a[p+6]+a[p+9 ])//position.array[3*l]  =x*a[p  ]+y*a[p+3]+z*a[p+6]+a[p+9]
+                ps.push(x*a[p+1]+y*a[p+4]+z*a[p+7]+a[p+10])//position.array[3*l+1]=x*a[p+1]+y*a[p+4]+z*a[p+7]+a[p+10]
+                ps.push(x*a[p+2]+y*a[p+5]+z*a[p+8]+a[p+11])//position.array[3*l+2]=x*a[p+2]+y*a[p+5]+z*a[p+8]+a[p+11]
+            }
+        }
+
+        uniforms.animationDataLength={value:ps.length};
+        console.log(ps)
+        uniforms.animationData=getTex(ps);
+    },
     init:function (texSrc,textNum,colors,texFlipY,finishFunction,camera){//纹理贴图资源路径，贴图中包含纹理的个数
         if(typeof(textNum)=="undefined")textNum=16;
         if(typeof(texFlipY)=="undefined")texFlipY=true;
         this.originMeshs[0].geometry=this.originMeshs[0].geometry.toNonIndexed();
 
         //InstancedBufferAttribute为每个对象一组数据：先生成空间，再设置数据
+        this.index=new THREE.BufferAttribute(new Float32Array(this.originMeshs[0].geometry.attributes.position.count), 1);
         this.speed=new THREE.InstancedBufferAttribute(new Float32Array(this.instanceCount * 1), 1);
         this.mcol0=new THREE.InstancedBufferAttribute(new Float32Array(this.instanceCount * 3), 3);
         this.mcol1=new THREE.InstancedBufferAttribute(new Float32Array(this.instanceCount * 3), 3);
@@ -194,7 +300,7 @@ InstancedGroup.prototype={
             textNum:{value: textNum},
             neckPosition:{value: (this.neckPosition===undefined)?0.59:this.neckPosition}
         };
-        if(this.haveSkeleton)this.initAnimation(uniforms,camera);
+        if(this.haveSkeleton)this.initAnimation(uniforms,camera,this.originMeshs[0].geometry);
 
         var material=this.initMaterial(uniforms,texSrc,textNum,colors,texFlipY,finishFunction,camera);
         if(this.vertURL===undefined)this.vertURL=this.haveSkeleton?"shader/vertexBone4.vert":"shader/vertex.vert";
