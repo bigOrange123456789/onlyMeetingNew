@@ -16,12 +16,21 @@ in float index;
 in vec2 inUV;
 //in vec3 normal;
 in vec4 skinIndex;
-in float speed;
 in vec3 mcol0,mcol1,mcol2,mcol3;
+
+in float speed;
 in vec4 type;//设置贴图0-2,type[3]用处不明
 in vec3 color;
 in vec4 bonesWidth;//选出4个部位
 in float faceShape;
+/*
+float speed=0.;
+vec4 type=vec4(0.,0.,0.,0.);
+vec3 color=vec3(0.,0.,0.);
+vec4 bonesWidth=vec4(0.,0.,0.,0.);
+float faceShape=0.;
+*/
+
 //4个部位
 //0躯干 0-3
 //1头部 4-6
