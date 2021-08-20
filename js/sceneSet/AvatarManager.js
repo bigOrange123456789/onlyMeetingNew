@@ -199,14 +199,14 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
     this.host=function () {
         var scope=this;
         let order_list=[
-            [1, 2, 3, 3, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 0, 3, 1, 2, 1, 4]
+            [1, 2, 3, 3, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 0, 3, 1, 2, 1, 4, 0, 3, 1, 2, 1, 4, 0, 3, 1, 2, 1, 4]
         ];
         let time_list=[3845];
         var move_num = order_list[0].length;//面部动作数量
         var move_time = time_list[0]/move_num;//每个动作的时间
         //var model_url = "./voice.gltf";
         var model_url = "./myModel/host/voice2.glb";//"../_DATA_/voice.glb";
-        var mp3_url = "./myModel/host/vioce.m4a";//"../_DATA_/voice.mp3";
+        var mp3_url = "./myModel/host/vioce2.m4a";//"../_DATA_/voice.mp3";
         var mp3 = new Audio(mp3_url);
 
         var mixer = {};
@@ -349,6 +349,7 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
         myModel.position.set(191,18.1,-11);//191,9,-11
         myModel.rotation.set(0,Math.PI,0);
         //new ParamMeasure(myModel,0);
+        window.guest=myModel
         this.obj.add(myModel);
         //完成创建PM对象
     }

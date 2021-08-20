@@ -37,6 +37,8 @@ class MoveManager{
                         window.videoMaterial.map=window.videoMaterial.map1;
                         console.log("开始播放视频！")
                         window.video.play();
+                        window.guest.visible=false;
+                        console.log("隐藏演讲者")
                         window.roamFinish=true;
                         console.log("将模型切换为高模")
                     }
