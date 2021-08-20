@@ -216,8 +216,7 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
 
         initModel()
         function initModel(){//ResourceLoader.js中加载人物模型（function initModel）
-            var loader=new THREE.GLTFLoader();
-            loader.load(model_url, function (obj){
+            getGlb(model_url, function (obj){
                 console.log(obj)
                 var model = obj.scene;
                 //console.log(model);

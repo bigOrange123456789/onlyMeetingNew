@@ -350,7 +350,7 @@ MyPMLoader.prototype={
             var newFacesOfS = [];
             var addnum=0;
             //解析每个数据包下面这个循环要被调用7~8次左右
-            console.log("数据包")
+            //console.log("数据包")
             for (var fosi = 0 ; fosi < incidentFaces[vsData.S].length ; ++fosi)
             {//每次遍历对应一个三角面 //遍历要修改的点对应的三角面
                 var bufferIndex=incidentFaces[vsData.S][fosi];//三角面索引

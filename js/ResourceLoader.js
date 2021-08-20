@@ -49,7 +49,7 @@ class ResourceLoader{
                     }
                 },100);
             }else{
-                scope.loader.load(scope.url+fileName, (gltf) => {
+                getGlb(scope.url+fileName, (gltf) => {
                     if(scope.resourceList.getModelByName(fileName)!=="")
                         scope.NumberWaitMaps++;//如果这个几何数据需要加载对应的贴图资源
                     var mesh0=gltf.scene.children[0];
@@ -87,26 +87,23 @@ class ResourceLoader{
                 },100);
             }else{
                 var myMap=scope.resourceList.getMapByName(fileName);
-                new THREE.TextureLoader().load(
-                    scope.url+fileName,// resource URL
-                    function ( texture ) {// onLoad callback
-                        scope.NumberWaitMaps--;//加载了一个贴图资源
-                        texture.wrapS = THREE.RepeatWrapping;
-                        texture.wrapT = THREE.RepeatWrapping;
-                        var myInterval2=setInterval(function () {
-                            var mesh0;
-                            for(var i=0;i<scope.object.children.length;i++){
-                                if (scope.object.children[i].nameFlag===myMap.modelName)
-                                    mesh0=scope.object.children[i];
-                            }
-                            if(mesh0){
-                                mesh0.material = new THREE.MeshBasicMaterial({map: texture});
-                                clearInterval(myInterval2);
-                            }
-                        },100)
-                        load();
-                    }
-                );
+                getTexture(scope.url+fileName,texture => {// onLoad callback
+                    scope.NumberWaitMaps--;//加载了一个贴图资源
+                    texture.wrapS = THREE.RepeatWrapping;
+                    texture.wrapT = THREE.RepeatWrapping;
+                    var myInterval2=setInterval(function () {
+                        var mesh0;
+                        for(var i=0;i<scope.object.children.length;i++){
+                            if (scope.object.children[i].nameFlag===myMap.modelName)
+                                mesh0=scope.object.children[i];
+                        }
+                        if(mesh0){
+                            mesh0.material = new THREE.MeshBasicMaterial({map: texture});
+                            clearInterval(myInterval2);
+                        }
+                    },100)
+                    load();
+                })
             }
         }
 

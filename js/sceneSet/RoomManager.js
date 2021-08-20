@@ -27,7 +27,7 @@ class RoomManager{
     }
     firstLoad(url) {//scope.url+"first.glb"
         var scope=this;
-        scope.loader.load(url+"first.glb", (glb) => {
+        getGlb(url+"first.glb", (glb) => {
             //每个材质一个mesh
             scope.room.add(glb.scene)
             new THREE.XHRLoader(THREE.DefaultLoadingManager).load(url+"test.json", function (data) {
@@ -46,14 +46,11 @@ class RoomManager{
                         }
                         var index=parseInt(list[node.name])
                         if(mapsIndex[index]){
-                            new THREE.TextureLoader().load(
-                                url+"ConferenceRoom"+index+".jpg",// resource URL
-                                function ( texture ) {// onLoad callback
-                                    texture.wrapS = THREE.RepeatWrapping;
-                                    texture.wrapT = THREE.RepeatWrapping;
-                                    node.material=new THREE.MeshBasicMaterial({map: texture});
-                                }
-                            );
+                            getTexture(url+"ConferenceRoom"+index+".jpg",texture => {
+                                texture.wrapS = THREE.RepeatWrapping;
+                                texture.wrapT = THREE.RepeatWrapping;
+                                node.material=new THREE.MeshBasicMaterial({map: texture});
+                            })
                         }
                     }
                 })

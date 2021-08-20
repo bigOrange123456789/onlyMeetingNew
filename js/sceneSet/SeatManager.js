@@ -23,8 +23,7 @@ function SeatManager(){
     }
     this.create=function(){
         var scope=this;
-        var loader= new THREE.GLTFLoader();
-        loader.load(this.url, (gltf) => {
+        getGlb(this.url, (gltf) => {
             var obj=gltf.scene.children[0];
 
             var geometry1=obj.children[0].geometry;

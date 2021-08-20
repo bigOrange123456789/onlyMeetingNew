@@ -89,13 +89,21 @@ InstancedGroup.prototype={
         return material;
 
         function setText0(tex_i){
-            var myText0= THREE.ImageUtils.loadTexture(texSrc[tex_i],null,function () {
+            /*var myText0= THREE.ImageUtils.loadTexture(texSrc[tex_i],null,function () {
                 myText0.flipY=texFlipY;
                 myText0.wrapS = myText0.wrapT = THREE.ClampToEdgeWrapping;
                 material.uniforms.text0={value: myText0};
                 if(tex_i<texSrc.length-1) setText0(tex_i+1);
                 else if(finishFunction)finishFunction();
-            });
+            });*/
+            getTexture(texSrc[tex_i],texture => {
+                myText0=texture;
+                myText0.flipY=texFlipY;
+                myText0.wrapS = myText0.wrapT = THREE.ClampToEdgeWrapping;
+                material.uniforms.text0={value: myText0};
+                if(tex_i<texSrc.length-1) setText0(tex_i+1);
+                else if(finishFunction)finishFunction();
+            })
         }
     },
     initAnimation:function(uniforms,camera){
