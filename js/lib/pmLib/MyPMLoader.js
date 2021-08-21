@@ -104,7 +104,6 @@ MyPMLoader.prototype={
 
         var material_id=0;
         //var mesh=this.mesh;
-
         var meshMaterialMap = {};
 
         //基网格信息
@@ -121,7 +120,6 @@ MyPMLoader.prototype={
         //用于模型网格LOD
         var pmMeshHistory=this.pmMeshHistory;//[];
         var numberLOD=this.LODNumber;
-
 
         //设置新网格//复制vertices
         for (i = 0 ; i < jsonData.geometries[0].data.vertices.length / 3 ; ++i)
@@ -219,12 +217,14 @@ MyPMLoader.prototype={
         }
 
         function loadLodImage(imageFileNameWithoutEx, imageFileExtension, isSrcImage)
-        {
+        {//分级加载纹理贴图
             var loader = new THREE.TextureLoader();
+            console.log(texFilesUrl + '/' +THIS.texNames[imageLodLevel])
             loader.load(texFilesUrl + '/' +THIS.texNames[imageLodLevel], function ( texture )
                 {//贴图加载成功
                     var lodImgName = texture.image.src.substring(texture.image.src.lastIndexOf('/') + 1, texture.image.src.length);
                     var srcImgName = isSrcImage ? lodImgName.substring(0, lodImgName.lastIndexOf('.')) : lodImgName.substring(0, lodImgName.lastIndexOf('_'));
+                    console.log(lodImgName,srcImgName)
                     if(meshMaterialMap[srcImgName])
                     {
                         meshMaterialMap[srcImgName].map = texture;
@@ -271,26 +271,29 @@ MyPMLoader.prototype={
                         incidentFaces[meshData.faces[fi][vi][faceIndex]].push(vi);
         }
 
+
         function isOriginalFaceOfT(tIndex ,objectF,Meshid, face , vsData)
         {
-            //tIndex：缓存中最后一个点的索引？
+            //判断哪些点需要分裂
+            //tIndex：缓存中最后一个点的索引 新增的点
             //objectF：始终为{faceIndex: 0, faceSIndex: 0}
             //Meshid:网格序号(通常只用一张网格，所以测试时始终为0)
-            //face:三角面的索引号
+            //face:与修改点相邻的三角面
             //vsData里面记录了恢复一条边所需要的数据
 
             //vsData.Faces的长度是6的整数倍
             //加一条边增2个三角形，对应6个点？
             for (var vsfi = 0 ; vsfi < vsData.Faces.length ; vsfi+=6)
-            {//vsData.Faces是需要修改的三角面的索引？
+            {//vsData.Faces是输入的三角面
                 var index = -1;
                 var isFace = true;
-                for (var i = 0 ; i < 3 ; ++i) {//遍历三角面的三个点？
-                    if(vsData.Faces[vsfi+2*i] === meshData.faces[Meshid][face][i]) {
+                for (var i = 0 ; i < 3 ; ++i) {//遍历三角面的三个点
+                    if(vsData.Faces[vsfi+2*i] === meshData.faces[Meshid][face][i])
+                    {// 输入的三角面与要修改的点相邻
                         objectF.faceSIndex=(vsfi/6);
                     }
                     if (vsData.Faces[vsfi+2*i] === tIndex && meshData.faces[Meshid][face][i]=== vsData.S)
-                    {
+                    {//      三角面中有一个点是新增的点    &&
                         index = i;
                         objectF.faceIndex=(vsfi/6);
                     } else if (vsData.Faces[vsfi+2*i] !== meshData.faces[Meshid][face][i]) {
@@ -303,27 +306,43 @@ MyPMLoader.prototype={
                 }
             }
             return -1;//如果不是三角面？
+            //vsData.Faces:修改索引
+            //如何哪些三角面修改索引，添加哪些三角面新创建
         }
 
         //pm的json文件内的每一段都需要这函数的处理
         function restoreVertexSplit(vsData)//si是段号（数组下标）,vsData是一段（数组中的一个元素）
         {//vsData里面记录了恢复一条边所需要的数据
+            //vsData.Faces里面6个数字一组，对应2个三个面？
+
             var Meshid=mapMaterial[vsData.FacesMaterial[0]];
+            //console.log(vsData.T)
             //Meshid似乎没有任何意义，值始终为0
             /*
             {//添加一个点所需的数据
-		        "Faces": [0,0,..],//长度不固定,3个数一组
-		        "FacesMaterial": [0],//恒为0//似乎是表示了所用的材质类型
+            vsData
+		        Faces: [0,0,..],      //一组三角面,每个三角面6个数,点索引和UV索引
+		        FacesMaterial: [0],   //贴图材质
 
-		        "S": 6,     //要修改的点的序号
-		        "SN": [0.,0.,0.],
-		        "SPosition": [0.,0.,0.],//顶点改动后的
+		        S: 6,                 //要修改的点的索引
+		        SN: [0.,0.,0.],       //未被使用的法线
+		        SPosition: [0.,0.,0.],//修改后的坐标
 
-		        "TN": [0.,0.,0.],//要添加的点
-		        "T": 187,//对应的骨骼索引和骨骼权重位置
+		        T: 187,               //用于骨骼动画
+		        TN: [0.,0.,0.],       //未被使用的法线
+		        TPosition: [0.,0.,0.],//添加点的坐标
 
-		        "TPosition": [0.,0.,0.],
-		        "UVs": [0.,0.,..]//添加UV//长度不固定，2个数一组
+		        UVs: [0.,0.,..]       //一组UV，2个数一组
+
+		    meshData
+                vertices    93*3  所有顶点的坐标
+                faces       180*3 每个三角面三个顶点的坐标
+                uvs         234*2 所有顶点的UV
+                Uvfaces     180*3 每个三角面三个顶点的UV
+
+                joints      骨骼索引
+                weights     骨骼权重
+                materials   贴图材质
 	        }*/
             //段中的S是要修改的点，SPosition是改动后的位置
             meshData.vertices[vsData.S][0] = vsData.SPosition[0];
@@ -348,12 +367,13 @@ MyPMLoader.prototype={
             incidentFaces[t] = [];//incidentFaces记录了每个顶点占用的三角面索引
 
             var newFacesOfS = [];
-            var addnum=0;
             //解析每个数据包下面这个循环要被调用7~8次左右
-            //console.log("数据包")
+            console.log("增加一个点")
             for (var fosi = 0 ; fosi < incidentFaces[vsData.S].length ; ++fosi)
-            {//每次遍历对应一个三角面 //遍历要修改的点对应的三角面
-                var bufferIndex=incidentFaces[vsData.S][fosi];//三角面索引
+            //每次遍历对应一个三角面 //遍历要修改的点对应的三角面
+            {//在需要修改的点中，有一个索引需要变为新增的点
+
+                var bufferIndex=incidentFaces[vsData.S][fosi];//与修改点相邻的三角面索引
                 var objectF={faceIndex:0,faceSIndex:0};//三角面信息？
                 //t：缓存中最后一个点的索引？
                 //objectF：始终为{faceIndex: 0, faceSIndex: 0}
@@ -361,6 +381,9 @@ MyPMLoader.prototype={
                 //bufferIndex:三角面的索引号
                 //vsData里面记录了恢复一条边所需要的数据
                 var c = isOriginalFaceOfT(t,objectF,Meshid,bufferIndex,vsData);
+                //isOriginalFaceOfT计算修改索引的点位于哪个三角面的哪个点中
+                //objectF 表示位于哪个三角面
+                //c 表示三角面中哪个点
                 if (c < 0) {//如果不是三角面？
                     var faceIndexS=objectF.faceSIndex;
                     newFacesOfS.push(bufferIndex);
@@ -371,8 +394,11 @@ MyPMLoader.prototype={
                     ];
                     continue;
                 }
-                addnum++;
+                console.log(c)
+                console.log(objectF)
                 meshData.faces[Meshid][bufferIndex][c]=t;//c必须属于{0，1，2}
+                //某些点的索引被修改
+
                 //meshData.faces[网格号][三角面][顶点]
                 incidentFaces[t].push(bufferIndex);
                 var faceIndex=objectF.faceIndex;
@@ -386,6 +412,8 @@ MyPMLoader.prototype={
 
             for (var sfi = 0 ; sfi < vsData.Faces.length ; sfi+=6)
             {
+                //vsData.Faces:新创建
+                //如何哪些三角面修改索引，添加哪些三角面新创建
                 var hasST;
                 if(vsData.Faces[sfi] === vsData.S){hasST=(vsData.Faces[sfi+2] ===t ||vsData.Faces[sfi+4] === t)}
                 else if(vsData.Faces[sfi+2] === vsData.S){hasST=(vsData.Faces[sfi] ===t ||vsData.Faces[sfi+4] === t)}
@@ -401,7 +429,7 @@ MyPMLoader.prototype={
                 meshData.Uvfaces[Meshid].push(iUV);
                 meshData.faces[Meshid].push(newFace);
 
-                // Update incident faces
+                //Update incident faces //更新三角面的索引 //增加一个三角面
                 for (i = 0 ; i < newFace.length ; ++i)
                     incidentFaces[newFace[i]].push(num);
             }
@@ -417,8 +445,7 @@ MyPMLoader.prototype={
                 mapPM[id]=true;//表示这个点现在对应那一张贴图
                 restoreVertexSplit(pmData[si]);//还原模型
             }
-
-            for (var key in mapPM)
+            for (var key in mapPM)//考虑了一个网格对应多张贴图的问题
                 restoreMesh(key, THIS, index, lengthindex);//从第二个JSON文件开始执行这个语句
 
         }
@@ -452,9 +479,30 @@ MyPMLoader.prototype={
         }
 
         function updateGeometry(geometry, meshData, Meshid,THIS)
-        {//新建一个几何网格
+        {//geometry是新建的一个几何网格
+            console.log(meshData)
+            /*
+            meshData
+                vertices    93*3  所有顶点的坐标
+                faces       180*3 每个三角面三个顶点的坐标
+                uvs         234*2 所有顶点的UV
+                Uvfaces     180*3 每个三角面三个顶点的UV
+
+                joints
+                weights
+                materials
+
+            geometry
+                position    180*3*3 顶点坐标
+                uv          180*3*2 三角面的顶点UV
+                index       180*3*1 三角面的顶点索引
+                normal      180*3*3 三角面的顶点法线
+            * */
+            //三角面顶点的坐标
             var verticesArray = new Float32Array(meshData.faces[Meshid].length * 3 * 3);
+            //顶点索引
             var indicesArray = new Uint32Array(meshData.faces[Meshid].length * 3);
+            //UV
             var uvsArray = new Float32Array(meshData.faces[Meshid].length * 3*2);
             if(THIS.glbObj){
                 var jointArray = new Uint16Array(meshData.faces[Meshid].length * 3 * 4);
@@ -537,6 +585,7 @@ MyPMLoader.prototype={
             jointArray=null;
             weightArray=null;
             geometry.needsUpdate = true;
+            console.log(geometry)
         }
 
         function startPmLoading(THIS){
