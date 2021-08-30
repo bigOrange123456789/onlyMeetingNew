@@ -1,4 +1,5 @@
 import { ResourceLoader } from '../ResourceLoader.js';
+import{Network}from'../Network.js'
 class RoomManager{
     loader;
     room;
@@ -11,11 +12,13 @@ class RoomManager{
     resourceManager;
 
     myResourceLoader;
+    myNetwork;
 
     constructor(myVideoManager0,camera){
         var scope=this;
         scope.loader= new THREE.GLTFLoader();
         scope.room=new THREE.Object3D();
+        scope.myNetwork=new Network()
         //this.room.visible=false;
         scope.myVideoManager=myVideoManager0;
         scope.mid=20;
@@ -27,7 +30,7 @@ class RoomManager{
     }
     firstLoad(url) {//scope.url+"first.glb"
         var scope=this;
-        getGlb(url+"first.glb", (glb) => {
+        scope.myNetwork.getGlb(url+"first.glb", (glb) => {
             //每个材质一个mesh
             scope.room.add(glb.scene)
             new THREE.XHRLoader(THREE.DefaultLoadingManager).load(url+"test.json", function (data) {
@@ -46,7 +49,7 @@ class RoomManager{
                         }
                         var index=parseInt(list[node.name])
                         if(mapsIndex[index]){
-                            getTexture(url+"ConferenceRoom"+index+".jpg",texture => {
+                            scope.myNetwork.getTexture(url+"ConferenceRoom"+index+".jpg",texture => {
                                 texture.wrapS = THREE.RepeatWrapping;
                                 texture.wrapT = THREE.RepeatWrapping;
                                 node.material=new THREE.MeshBasicMaterial({map: texture});

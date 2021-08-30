@@ -21,10 +21,25 @@
   <component name="ChangeListManager">
     <list default="true" id="b7b6123d-caec-4b82-a432-424a6b5be5dd" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PMtest.html" beforeDir="false" afterPath="$PROJECT_DIR$/PMtest.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PMtest2无动画.html" beforeDir="false" afterPath="$PROJECT_DIR$/PMtest2无动画.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crowdTest.html" beforeDir="false" afterPath="$PROJECT_DIR$/crowdTest.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crowdTest1融合加载.html" beforeDir="false" afterPath="$PROJECT_DIR$/crowdTest1融合加载.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crowdTest2.html" beforeDir="false" afterPath="$PROJECT_DIR$/crowdTest2.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crowdTest3.html" beforeDir="false" afterPath="$PROJECT_DIR$/crowdTest3.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crowdTest4.html" beforeDir="false" afterPath="$PROJECT_DIR$/crowdTest4.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/ResourceLoader.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/ResourceLoader.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/lib/instancedLib/InstancedGroup.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/lib/instancedLib/InstancedGroup.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/js/lib/pmLib/MyPMLoader.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/lib/pmLib/MyPMLoader.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/sceneSet/AvatarManager.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/sceneSet/AvatarManager.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/sceneSet/RoomManager.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/sceneSet/RoomManager.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/sceneSet/SeatManager.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/sceneSet/SeatManager.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/meeting.html" beforeDir="false" afterPath="$PROJECT_DIR$/meeting.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test.html" beforeDir="false" afterPath="$PROJECT_DIR$/test.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/单个人群.html" beforeDir="false" afterPath="$PROJECT_DIR$/单个人群.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/表情动画.html" beforeDir="false" afterPath="$PROJECT_DIR$/表情动画.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/语音与口型.html" beforeDir="false" afterPath="$PROJECT_DIR$/语音与口型.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,7 +60,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../SmallProjects1/Loader" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -299,7 +314,8 @@
       <workItem from="1630034221501" duration="546000" />
       <workItem from="1630035178001" duration="85000" />
       <workItem from="1630048484013" duration="6380000" />
-      <workItem from="1630284635789" duration="7089000" />
+      <workItem from="1630284635789" duration="8596000" />
+      <workItem from="1630315562504" duration="5421000" />
     </task>
     <servers />
   </component>
@@ -327,9 +343,9 @@
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="371" y="87" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1280.680@0.0.1280.680" timestamp="1628239296143" />
-    <state x="320" y="101" key="FileChooserDialogImpl" timestamp="1630309957058">
+    <state x="320" y="101" key="FileChooserDialogImpl" timestamp="1630314724708">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state x="320" y="101" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1630309957058" />
+    <state x="320" y="101" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1630314724708" />
   </component>
 </project>

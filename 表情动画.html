@@ -19,11 +19,6 @@
 
 	<script src="js/lib/instancedLib/InstancedGroup3.js"></script>
 
-	<script src="js/VideoManager.js"></script>
-
-	<script src="js/sceneSet/SeatManager.js"></script>
-	<script src="js/sceneSet/AvatarManager.js"></script>
-
 	<script src="js/playerControl/PlayerControl.js"></script>
 
 
@@ -52,7 +47,7 @@
 		var loader = new THREE.XHRLoader(THREE.DefaultLoadingManager);
 		loader.load("json/crowdData_male.json", function(str){//dataTexture
 			var crowdData_json=JSON.parse(str);
-			new THREE.GLTFLoader().load("myModel/avatar/male.glb",function (glb) {
+			new THREE.GLTFLoader().load("myModel/avatar/male_run.glb",function (glb) {
 				var mesh2;
 				glb.scene.traverse(function (node) {
 					if(node instanceof THREE.SkinnedMesh)

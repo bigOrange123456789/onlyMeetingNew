@@ -1,23 +1,29 @@
-function AvatarManager(mySeatManager,camera){//camera用于LOD
-    var scope=this;
-    this.obj=new THREE.Object3D();
-    //this.obj.visible=false;
+import{Network}from'../Network.js'
+import {InstancedGroup}from "../lib/instancedLib/InstancedGroup.js"
+class AvatarManager{//camera用于LOD
+    constructor(mySeatManager,camera){
+        this.obj=new THREE.Object3D();
+        //this.obj.visible=false;
+        this.myNetwork=new Network();
 
-    this.positions=mySeatManager.positions;
-    this.types=[];//贴图类型
-    this.animations=[];//动画类型
-    this.colors=[];
-    this.sexs=[];//0表示女性，1表示男性
-    this.manNum=0;
+        this.positions=mySeatManager.positions;
+        this.types=[];//贴图类型
+        this.animations=[];//动画类型
+        this.colors=[];
+        this.sexs=[];//0表示女性，1表示男性
+        this.manNum=0;
 
-    this.camera=camera;
+        this.camera=camera;
+    }
 
-    this.create1=function (finishFunction0) {
-        scope.host();
+
+    create1(finishFunction0) {
+        var scope=this;
+        this.host();
         var loader = new THREE.XHRLoader(THREE.DefaultLoadingManager);
         loader.load("json/crowdData.json", function(str){//dataTexture
             var crowdData_json=JSON.parse(str);
-            for(i=0;i<scope.positions.length;i++){//共有1677张椅子
+            for(var i=0;i<scope.positions.length;i++){//共有1677张椅子
                 scope.colors.push([
                     Math.random()/4 ,
                     Math.random()/4 ,
@@ -59,14 +65,15 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
 
         });
     }
-    this.createMan=function (crowdData_json,finishFunction2) {
+    createMan(crowdData_json,finishFunction2) {
+        var scope=this;
         //男性开始
         window.myClock_Male0=window.myClock;
         var pmLoader2 = new MyPMLoader(
             {animations: []},
             './myModel/Male',    //模型路径
             [],//没有LOD分级//LOD等级的数组
-            scope.camera,  //LOD需要判断到相机的距离
+            this.camera,  //LOD需要判断到相机的距离
             0,       //有多个动画时,表示第0个动画//可以通过pmLoader.updateAnimation(i)来切换动画
             0,     //动画播放速度//可以通过调整pmLoader.animationSpeed来调整速度
             [],
@@ -93,8 +100,8 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
                     finishFunction2,
                     scope.camera
                 );
-                index = 0;
-                for (i = 0; i < scope.positions.length; i++)
+                var index = 0;
+                for (var i = 0; i < scope.positions.length; i++)
                     if (scope.sexs[i] === 1) {
                         peoples2.rotationSet(index, [Math.PI / 2, 0, 3 * Math.PI / 2]);
                         peoples2.positionSet(index, [scope.positions[i][0] + 1.8, scope.positions[i][1] + 1.5, scope.positions[i][2]]);
@@ -122,20 +129,20 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
             }
         );
         //男性结束
-    };
-    this.createWoman=function (crowdData_json,finishFunction1) {
+    }
+    createWoman(crowdData_json,finishFunction1) {
+        var scope=this;
         //女性开始
         window.myClock_Female0=window.myClock;
         var pmLoader = new MyPMLoader(
             {animations: []},
             './myModel/Female',    //模型路径
             [],//没有LOD分级//LOD等级的数组
-            scope.camera,  //LOD需要判断到相机的距离
+            this.camera,  //LOD需要判断到相机的距离
             0,       //有多个动画时,表示第0个动画//可以通过pmLoader.updateAnimation(i)来切换动画
             0,     //动画播放速度//可以通过调整pmLoader.animationSpeed来调整速度
             [],
             function() {
-                console.log(scope.camera)
                 var mesh = pmLoader.rootObject.children[0];
                 var peoples = new InstancedGroup(
                     scope.positions.length - scope.manNum,
@@ -187,7 +194,8 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
         //女性结束
     }
 
-    this.create2=function () {
+    create2=function () {
+        var scope=this;
         var animLoader = new THREE.GLTFLoader();//= new PMAnimLoader();//估计是通过gltf文件加载的动画
         animLoader.load('./myModel/skeleton/scene.glb', function (glbObj){
             glbObj.scene.visible=false;
@@ -196,7 +204,7 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
         });
 
     }
-    this.host=function () {
+    host=function () {
         var scope=this;
         let order_list=[
             [1, 2, 3, 3, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 0, 3, 1, 2, 1, 4, 0, 3, 1, 2, 1, 4, 0, 3, 1, 2, 1, 4]
@@ -216,7 +224,7 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
 
         initModel()
         function initModel(){//ResourceLoader.js中加载人物模型（function initModel）
-            getGlb(model_url, function (obj){
+            scope.myNetwork.getGlb(model_url, function (obj){
                 console.log(obj)
                 var model = obj.scene;
                 //console.log(model);
@@ -253,7 +261,7 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
         function play() {
             var boneArm=[]
             var boneFace=[]
-            for(i=70;i<120;i++){//216
+            for(var i=70;i<120;i++){//216
                 boneFace.push(i);
             }
             for(i=0;i<216;i++){//216
@@ -295,7 +303,7 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
 
 
     }
-    this.host0=function () {
+    host0=function () {
         var loader= new THREE.GLTFLoader();
         loader.load("myModel/avatar/host.glb", (glb) => {
             glb.scenes[0].position.set(198,9,-65);
@@ -305,7 +313,7 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
         });
         //new ParamMeasure(this.obj,0);
     }
-    this.loadGuest1=function (glbObj) {
+    loadGuest1=function (glbObj) {
         //开始创建PM对象
         var LODArray=[150]//4个数字表示距离，可以将模型分为5级;
         var path='./myModel/zhao1';
@@ -325,7 +333,7 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
         this.obj.add(myModel);
         //完成创建PM对象
     }
-    this.loadGuest2=function (glbObj) {
+    loadGuest2=function (glbObj) {
         //开始创建PM对象
         var LODArray=[30,60,90]//4个数字表示距离，可以将模型分为5级;
         var path='./myModel/dongshizhang5';
@@ -352,7 +360,7 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
         this.obj.add(myModel);
         //完成创建PM对象
     }
-    this.analysis=function () {
+    analysis=function () {
         var loader= new THREE.GLTFLoader();
         loader.load('myModel/avatar/Female.glb', (glb) => {
             //console.log(glb.scene.children[0].children[1])
@@ -412,7 +420,7 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
 
         });
     }
-    this.analysis2=function () {
+    analysis2=function () {
         var loader= new THREE.GLTFLoader();
         loader.load('myModel/avatar/Female.glb', (glb) => {
             //console.log(glb.scene.children[0].children[1])
@@ -481,3 +489,4 @@ function AvatarManager(mySeatManager,camera){//camera用于LOD
         });
     }
 }
+export{AvatarManager}

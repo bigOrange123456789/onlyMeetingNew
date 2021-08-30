@@ -1,10 +1,11 @@
-function SeatManager(){
-    this.positions=[];//1677
-    this.chairs=new THREE.Object3D();
-    //this.chairs.visible=false;
-
-    this.url="myModel/chair.glb";
-    this.init=function () {
+import{Network}from'../Network.js'
+class SeatManager{
+    constructor() {
+        this.positions=[];//1677
+        this.chairs=new THREE.Object3D();
+        //this.chairs.visible=false;
+        this.url="myModel/chair.glb";
+        this.myNetwork=new Network()
         //一楼前部分
         var k,i,j;
         for(k=0;k<3;k++)//3部分
@@ -21,9 +22,9 @@ function SeatManager(){
                     this.positions.push([-15-9*i/2,88.55+i*5.0/2,85-4.1*j/2-k*75]);//前后、上下、左右
 
     }
-    this.create=function(){
+    create(){
         var scope=this;
-        getGlb(this.url, (gltf) => {
+        scope.myNetwork.getGlb(this.url, (gltf) => {
             var obj=gltf.scene.children[0];
 
             var geometry1=obj.children[0].geometry;
@@ -52,7 +53,7 @@ function SeatManager(){
             scope.chairs.add(mesh2);
         })
     }
-    this.myLoad0=function(url){
+    myLoad0(url){
         var scope=this;
         var loader= new THREE.GLTFLoader();
         loader.load(url, (gltf) => {
@@ -84,3 +85,4 @@ function SeatManager(){
         })
     }
 }
+export {SeatManager}

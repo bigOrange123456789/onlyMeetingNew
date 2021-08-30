@@ -1,3 +1,4 @@
+import{Network}from'./Network.js'
 export {ResourceLoader};
 class ResourceLoader{
     url;//资源路径
@@ -11,6 +12,7 @@ class ResourceLoader{
     loader;//模型加载器
     resourceList;
     test=false;//true;//
+    myNetwork;
     constructor(url,camera,unitProcess){
         this.NumberWaitMaps=0;//等待加载的贴图个数
         this.url=url;
@@ -20,6 +22,7 @@ class ResourceLoader{
         this.cameraPre={};
         this.object=new THREE.Object3D();
         this.loader= new THREE.GLTFLoader();
+        this.myNetwork=new Network()
         var scope=this;
         var loader = new THREE.XHRLoader(THREE.DefaultLoadingManager);
         loader.load(this.url+"resourceInfo.json", function(str){//dataTexture
@@ -49,7 +52,7 @@ class ResourceLoader{
                     }
                 },100);
             }else{
-                getGlb(scope.url+fileName, (gltf) => {
+                scope.myNetwork.getGlb(scope.url+fileName, (gltf) => {
                     if(scope.resourceList.getModelByName(fileName)!=="")
                         scope.NumberWaitMaps++;//如果这个几何数据需要加载对应的贴图资源
                     var mesh0=gltf.scene.children[0];
@@ -87,7 +90,7 @@ class ResourceLoader{
                 },100);
             }else{
                 var myMap=scope.resourceList.getMapByName(fileName);
-                getTexture(scope.url+fileName,texture => {// onLoad callback
+                scope.myNetwork.getTexture(scope.url+fileName,texture => {// onLoad callback
                     scope.NumberWaitMaps--;//加载了一个贴图资源
                     texture.wrapS = THREE.RepeatWrapping;
                     texture.wrapT = THREE.RepeatWrapping;

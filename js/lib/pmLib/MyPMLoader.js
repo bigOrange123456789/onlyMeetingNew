@@ -480,7 +480,7 @@ MyPMLoader.prototype={
 
         function updateGeometry(geometry, meshData, Meshid,THIS)
         {//geometry是新建的一个几何网格
-            console.log(meshData)
+            //console.log(meshData)
             /*
             meshData
                 vertices    93*3  所有顶点的坐标
@@ -585,7 +585,7 @@ MyPMLoader.prototype={
             jointArray=null;
             weightArray=null;
             geometry.needsUpdate = true;
-            console.log(geometry)
+            //console.log(geometry)
         }
 
         function startPmLoading(THIS){

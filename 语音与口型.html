@@ -16,14 +16,6 @@
 
 	<script src="js/lib/pmLib/MyPMLoader.js"></script>
 
-	<script src="js/lib/instancedLib/InstancedGroup.js"></script>
-	<script src="js/lib/instancedLib/SkinnedMeshController.js"></script>
-
-	<script src="js/VideoManager.js"></script>
-
-	<script src="js/sceneSet/SeatManager.js"></script>
-	<script src="js/sceneSet/AvatarManager.js"></script>
-
 	<script src="js/playerControl/PlayerControl.js"></script>
 
 	<script src="js/ParamMeasure.js"></script>
@@ -32,6 +24,7 @@
 	<script src="StereoEffect.js"></script>
 
 	<script  type="module">
+		import {AvatarManager} from './js/sceneSet/AvatarManager.js';
 		var myMain = new Main();
 		myMain.start();
 		myMain.camera.position.set(183.566,25.91832 ,-66.47781354);

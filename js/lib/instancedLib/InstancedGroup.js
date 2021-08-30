@@ -1,53 +1,55 @@
-function InstancedGroup(instanceCount,originMesh,animationClip,crowdData_json){
-    //若有骨骼，则需要源mesh是skinnedMesh
-    this.obj=new THREE.Object3D();
-    this.instanceCount=instanceCount;
-    this.crowdData_json=crowdData_json;
+import{Network}from'../../Network.js'
+class InstancedGroup{
+    constructor(instanceCount,originMesh,animationClip,crowdData_json){
+        this.myNetwork=new Network();
+        //若有骨骼，则需要源mesh是skinnedMesh
+        this.obj=new THREE.Object3D();
+        this.instanceCount=instanceCount;
+        this.crowdData_json=crowdData_json;
 
-    //记录有无骨骼动画
-    this.haveSkeleton = !(typeof (animationClip) == "undefined" || animationClip === false);
-    this.originMeshs=originMesh;//这是一个数组，每个元素播放一种动画
-    //this.animationClip=animationClip;
-    this.mesh=null;//实例化渲染对象的网格
+        //记录有无骨骼动画
+        this.haveSkeleton = !(typeof (animationClip) == "undefined" || animationClip === false);
+        this.originMeshs=originMesh;//这是一个数组，每个元素播放一种动画
+        //this.animationClip=animationClip;
+        this.mesh=null;//实例化渲染对象的网格
 
-    this.finishFunction;
+        this.finishFunction;
 
-    this.speed;
-    this.mcol0;//变换矩阵的一部分
-    this.mcol1;
-    this.mcol2;
-    this.mcol3;
-    this.type;
-    this.colors;
-    this.bonesWidth;
-    this.faceShape;
+        this.speed;
+        this.mcol0;//变换矩阵的一部分
+        this.mcol1;
+        this.mcol2;
+        this.mcol3;
+        this.type;
+        this.colors;
+        this.bonesWidth;
+        this.faceShape;
 
-    this.time=0;//每帧自动加1，加到一定值之后自动归0
+        this.time=0;//每帧自动加1，加到一定值之后自动归0
 
-    this.dummy=new THREE.Object3D();//dummy仿制品//工具对象
+        this.dummy=new THREE.Object3D();//dummy仿制品//工具对象
 
-    //shader地址
-    this.vertURL;
-    this.fragURL;
+        //shader地址
+        this.vertURL;
+        this.fragURL;
 
-    //以下参数用于将模型划分为头、上身、下身三部分
-    this.neckPosition;
-}
-InstancedGroup.prototype={
-    updateGeometry:function(mesh){//用于和PM技术相结合
+        //以下参数用于将模型划分为头、上身、下身三部分
+        this.neckPosition;
+    }
+    updateGeometry(mesh){//用于和PM技术相结合
         var position=mesh.geometry.attributes.position,//网格
             uv=mesh.geometry.attributes.uv,//贴图
             skinIndex=mesh.geometry.attributes.skinIndex,//骨骼
             normal=mesh.geometry.attributes.normal;//法线
-            //skinWeight=mesh.geometry.attributes.skinWeight;
+        //skinWeight=mesh.geometry.attributes.skinWeight;
         //position.array[3*440]+=0.1;
         this.mesh.geometry.setAttribute('position', position);
         this.mesh.geometry.setAttribute('inUV',uv);
         this.mesh.geometry.setAttribute('skinIndex',skinIndex);
         this.mesh.geometry.setAttribute('normal',normal);
         //this.mesh.geometry.setAttribute('skinWeight',skinWeight);
-    },
-    initGeometry:function(geometryNew){
+    }
+    initGeometry(geometryNew){
         var geometryTemp= new THREE.InstancedBufferGeometry();
         geometryTemp.instanceCount = this.instanceCount;
         geometryTemp.setAttribute('position', geometryNew.attributes.position);//Float32Array
@@ -74,8 +76,9 @@ InstancedGroup.prototype={
 
         if(this.mesh)this.mesh.geometry=geometryTemp;
         return geometryTemp;
-    },
-    initMaterial:function(uniforms,texSrc,textNum,colors,texFlipY,finishFunction,camera){
+    }
+    initMaterial(uniforms,texSrc,textNum,colors,texFlipY,finishFunction,camera){
+        var scope=this;
         var canvas=new CanvasControl(textNum,1,colors,texFlipY);//绘制合并纹理贴图的地方
         uniforms.text0={type: 't', value: canvas.getTex()};
 
@@ -96,8 +99,8 @@ InstancedGroup.prototype={
                 if(tex_i<texSrc.length-1) setText0(tex_i+1);
                 else if(finishFunction)finishFunction();
             });*/
-            getTexture(texSrc[tex_i],texture => {
-                myText0=texture;
+            scope.myNetwork.getTexture(texSrc[tex_i],texture => {
+                var myText0=texture;
                 myText0.flipY=texFlipY;
                 myText0.wrapS = myText0.wrapT = THREE.ClampToEdgeWrapping;
                 material.uniforms.text0={value: myText0};
@@ -105,8 +108,8 @@ InstancedGroup.prototype={
                 else if(finishFunction)finishFunction();
             })
         }
-    },
-    initAnimation:function(uniforms,camera){
+    }
+    initAnimation(uniforms,camera){
         var scope=this;
 
         function updateAnimation() {//每帧更新一次动画
@@ -131,7 +134,7 @@ InstancedGroup.prototype={
         var animationDataLength=0;
 
         this.animationConfig=this.crowdData_json.config;
-        for(i=0;i<scope.animationConfig.length;i++){
+        for(var i=0;i<scope.animationConfig.length;i++){
             animationDataLength+=this.animationConfig[i];
             this.animationData= this.animationData.concat(this.crowdData_json.animation[i]);
         }
@@ -147,8 +150,8 @@ InstancedGroup.prototype={
             var tex=new THREE.DataTexture(data, width, height, THREE.RGBFormat,THREE.FloatType);
             return {"value":tex};
         }
-    },
-    init:function (texSrc,textNum,colors,texFlipY,finishFunction,camera){//纹理贴图资源路径，贴图中包含纹理的个数
+    }
+    init(texSrc,textNum,colors,texFlipY,finishFunction,camera){//纹理贴图资源路径，贴图中包含纹理的个数
         if(typeof(textNum)=="undefined")textNum=16;
         if(typeof(texFlipY)=="undefined")texFlipY=true;
         this.originMeshs[0].geometry=this.originMeshs[0].geometry.toNonIndexed();
@@ -164,7 +167,7 @@ InstancedGroup.prototype={
         this.bonesWidth=new THREE.InstancedBufferAttribute(new Float32Array(this.instanceCount*4), 4);
         this.faceShape =new THREE.InstancedBufferAttribute(new Float32Array(this.instanceCount), 1);
 
-        for(i=0;i<this.instanceCount;i++){
+        for(var i=0;i<this.instanceCount;i++){
             this.mcol0.setXYZ(i, 1,0,0);//随机长宽高
             this.mcol1.setXYZ(i, 0,1,0);//四元数、齐次坐标
             this.mcol2.setXYZ(i, 0,0,1);//mcol3.setXYZ(i, 0,0,0);
@@ -208,9 +211,9 @@ InstancedGroup.prototype={
         console.log(this.mesh);
         this.mesh.frustumCulled=false;
         this.obj.add(this.mesh);
-    },
+    }
 
-    setMatrix:function (i,matrix){//获取实例化对象第i个成员的变换矩阵
+    setMatrix(i,matrix){//获取实例化对象第i个成员的变换矩阵
         this.mcol0.array[3*i  ]=matrix.elements[0];
         this.mcol0.array[3*i+1]=matrix.elements[1];
         this.mcol0.array[3*i+2]=matrix.elements[2];
@@ -226,8 +229,8 @@ InstancedGroup.prototype={
         this.mcol3.array[3*i  ]=matrix.elements[12];
         this.mcol3.array[3*i+1]=matrix.elements[13];
         this.mcol3.array[3*i+2]=matrix.elements[14];
-    },
-    getMatrix:function (i){//获取实例化对象第i个成员的变换矩阵
+    }
+    getMatrix(i){//获取实例化对象第i个成员的变换矩阵
         var matrix=new THREE.Matrix4();
         matrix.set(
             this.mcol0.array[3*i  ],this.mcol1.array[3*i  ],this.mcol2.array[3*i  ],this.mcol3.array[3*i  ],
@@ -236,12 +239,12 @@ InstancedGroup.prototype={
             0                      ,0                      ,0                      ,1
         );
         return matrix;
-    },
+    }
 
-    positionGet:function(i){
+    positionGet(i){
         return [this.mcol3.array[3*i],this.mcol3.array[3*i+1],this.mcol3.array[3*i+2]];
-    },
-    rotationGet:function(i){
+    }
+    rotationGet(i){
         var mat4=this.getMatrix(i);
         var position=new THREE.Vector3();
         var quaternion=new THREE.Quaternion();
@@ -250,23 +253,23 @@ InstancedGroup.prototype={
         var euler=new THREE.Euler(0,0,0, 'XYZ');
         euler.setFromQuaternion(quaternion);
         return [euler.x,euler.y,euler.z];
-    },
-    scaleGet:function(i){
+    }
+    scaleGet(i){
         var mat4=this.getMatrix(i);
         var position=new THREE.Vector3();
         var quaternion=new THREE.Quaternion();
         var scale=new THREE.Vector3();
         mat4.decompose(position,quaternion,scale);
         return [scale.x,scale.y,scale.z];
-    },
+    }
 
-    positionSet:function (i,pos){//.instanceMatrix.needsUpdate=true;
+    positionSet(i,pos){//.instanceMatrix.needsUpdate=true;
         this.mcol3.needsUpdate=true;
         this.mcol3.array[3*i  ]=pos[0];
         this.mcol3.array[3*i+1]=pos[1];
         this.mcol3.array[3*i+2]=pos[2];
-    },
-    rotationSet:function (i,rot){
+    }
+    rotationSet(i,rot){
         this.mcol0.needsUpdate=true;
         this.mcol1.needsUpdate=true;
         this.mcol2.needsUpdate=true;
@@ -282,8 +285,8 @@ InstancedGroup.prototype={
         this.dummy.updateMatrix();
 
         this.setMatrix(i,this.dummy.matrix);
-    },
-    scaleSet:function(i,size){
+    }
+    scaleSet(i,size){
         var mat4=this.getMatrix(i);
         var position=new THREE.Vector3();
         var quaternion=new THREE.Quaternion();
@@ -298,51 +301,52 @@ InstancedGroup.prototype={
         this.dummy.updateMatrix();
 
         this.setMatrix(i,this.dummy.matrix);
-    },
-    typeSet:function (i,type) {//设置贴图和动画类型
+    }
+    typeSet(i,type) {//设置贴图和动画类型
         this.type.array[4*i  ]=type[0];
         this.type.array[4*i+1]=type[1];
         this.type.array[4*i+2]=type[2];
         this.type.array[4*i+3]=type[3];//动画类型 0,1
-    },
-    textureSet: function (i, type) {//设置贴图和动画类型
+    }
+    textureSet(i, type) {//设置贴图和动画类型
         this.type.array[4 * i] = type[0];
         this.type.array[4 * i + 1] = type[1];
         this.type.array[4 * i + 2] = type[2];
-    },
-    textureSet0: function (i, type) {//头部贴图
+    }
+    textureSet0(i, type) {//头部贴图
         this.type.array[4 * i] = type;//设置贴图
-    },
-    textureSet1: function (i, type) {//设置上身贴图
+    }
+    textureSet1(i, type) {//设置上身贴图
         this.type.array[4 * i+ 1] = type;//设置贴图
-    },
-    animationSet:function(i,animationType){
+    }
+    animationSet(i,animationType){
         this.type.array[4*i+3]=animationType;//动画类型 0,1
-    },
-    colorSet:function (i,color) {
+    }
+    colorSet(i,color) {
         this.colors.array[3*i  ]=color[0];
         this.colors.array[3*i+1]=color[1];
         this.colors.array[3*i+2]=color[2];
-    },
-    boneWidthSet:function (avatarIndex,regionIndex,width) {
+    }
+    boneWidthSet(avatarIndex,regionIndex,width) {
         this.bonesWidth.array[4*avatarIndex+regionIndex]=width;
-    },
-    faceShapeSet:function (avatarIndex,width) {
+    }
+    faceShapeSet(avatarIndex,width) {
         this.faceShape.array[avatarIndex]=width;
-    },
-    speedSet:function (i,speed) {//设置动画速度
+    }
+    speedSet(i,speed) {//设置动画速度
         this.speed.array[i]=speed;
-    },
+    }
 
-    move:function (i,dPos){
+    move(i,dPos){
         var pos=this.positionGet(i);
         this.positionSet(i,[pos[0]+dPos[0],pos[1]+dPos[1],pos[2]+dPos[2]]);
-    },
-    rotation:function (i,dRot){
+    }
+    rotation(i,dRot){
         var rot=this.rotationGet(i);
         this.rotationSet(i,[rot[0]+dRot[0],rot[1]+dRot[1],rot[2]+dRot[2]]);
-    },
+    }
 }
+export{InstancedGroup}
 function CanvasControl(n,h,colors,flipY) {
     this.canvas;
     this.context;

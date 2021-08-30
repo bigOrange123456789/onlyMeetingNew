@@ -16,13 +16,9 @@
 
 	<script src="js/lib/pmLib/MyPMLoader.js"></script>
 
-	<script src="js/lib/instancedLib/InstancedGroup.js"></script>
 	<script src="js/lib/instancedLib/SkinnedMeshController.js"></script>
 
 	<script src="js/VideoManager.js"></script>
-
-	<script src="js/sceneSet/SeatManager.js"></script>
-	<script src="js/sceneSet/AvatarManager.js"></script>
 
 	<script src="js/playerControl/PlayerControl.js"></script>
 
@@ -36,65 +32,6 @@
 	</div>
 	<script>
 		window.flagNumber=0
-		function myRequest(path,callback) {
-			window.flagNumber++
-			var ips=[
-					"localhost",
-					//"101.34.166.68",
-					//"110.40.255.87",
-					//"101.34.161.225",
-					//"81.71.38.168"
-			]
-			var ip=ips[Math.floor(Math.random()*ips.length)]
-			var oReq = new XMLHttpRequest();
-			oReq.open("POST", "http://"+ip+":8081", true);
-			oReq.responseType = "arraybuffer";
-			oReq.onload = ()=>{
-				var data=oReq.response;//ArrayBuffer
-				var imageType = oReq.getResponseHeader("Content-Type");
-				var blob = new Blob([data], { type: imageType });//用于图片解析
-				var unityArray=new Uint8Array(data)//用于glb文件解析
-				callback(unityArray,blob)
-			}//接收数据
-			oReq.send(path);//发送请求
-			console.log(ip,path)
-		}
-		function getGlb(path,cb) {
-			myRequest(path,unitArray=>{
-				new THREE.GLTFLoader().parse(unitArray.buffer, './',glb=>{
-					cb(glb)
-				});
-			})
-		}
-		function getTexture(path,cb) {
-			myRequest(path,(unityArray,blob)=>{
-				var image = document.createElement('img')
-				image.src =(window.URL || window.webkitURL).createObjectURL(blob);
-
-				console.log(THREE.ImageUtils.loadTexture)
-				//console.log(typeof ( THREE.ImageUtils.getDataURL(image) ))
-				//console.log(THREE.ImageUtils.getDataURL(image))
-				//console.log(THREE.ImageUtils)
-				//THREE.ImageUtils.loadTexture('img/fly.png');
-
-				var texture = new THREE.Texture();
-				texture.image =image;
-				texture.needsUpdate = true;
-				//console.log(texture.needsUpdate)
-				/*var time=1;
-				function nextFrame(){
-					if(time<=100){
-						if(time===100){
-							cb(texture,image)
-						}
-						time++;
-						requestAnimationFrame(nextFrame);
-					}
-				}nextFrame()*/
-				cb(texture)
-				//setTimeout(()=>cb(texture),10000)
-			})
-		}
 		//开始blur加载
 		var bg = document.getElementById("bg");
 		setTimeout(function () {
@@ -151,8 +88,9 @@
 	</script>
 	<script  type="module">
 		import {RoomManager} from './js/sceneSet/RoomManager.js';
-		import {PreviewManager} from './js/playerControl/PreviewManager.js';
+		import {AvatarManager} from './js/sceneSet/AvatarManager.js';
 		import {Net} from './js/simulate/Net.js';
+		import {SeatManager}from'./js/sceneSet/SeatManager.js'
 
 		window.videoMaterial=new THREE.MeshBasicMaterial();
 
@@ -180,7 +118,6 @@
 		new PlayerControl(myMain.camera);//.cullingTest(myMain.scene)
 
 		var mySeatManager = new SeatManager();
-		mySeatManager.init();
 		mySeatManager.create();//椅子
 		myMain.scene.add(mySeatManager.chairs);
 
