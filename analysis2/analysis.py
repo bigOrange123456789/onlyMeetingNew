@@ -1,0 +1,55 @@
+#每条线段表示请求一个资源的响应时间
+#横轴表示时间
+#纵轴表示数据量
+#颜色表示服务器
+
+#读取json文件
+f1=open("./data.json","r")
+import json
+j=json.load(f1)
+
+#设置曲线颜色
+colors={
+    "localhost":'#00FFD3',
+    "101.34.166.68":'#FF0000',
+    "110.40.255.87":'#FF00D3',
+    "101.34.161.225":'#FFFF00',
+    "81.71.38.168":'#F00F0D',
+    }
+for i in j:
+    i["color"]=colors[ i["ip"] ]
+#9400D3
+
+#读取文件大小
+import os
+for i in j:
+    path="../"+i["path"]
+    i["fileSize"]=os.stat(path).st_size
+
+#按照请求的发起时间进行排序
+def sort0(obj,key):
+    for i1 in range(len(obj)):
+        i1=len(obj)-i1-1
+        max=i1
+        for i2 in range(i1):
+            if obj[i2][key]>obj[max][key]:
+                max=i2
+        temp=obj[max]
+        obj[max]=obj[i1]
+        obj[i1]=temp
+    return obj
+j=sort0(j,"time0")
+
+#分析
+import matplotlib.pyplot as plt
+k=0
+for i in j:
+    x=[]
+    y=[]
+    k=k+(5+i["fileSize"]/200000)
+    x.append(i["time0"])
+    y.append(k)
+    x.append(i["time1"])
+    y.append(k)
+    plt.plot(x, y, color=i["color"])
+plt.show()
