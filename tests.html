@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>MEETING--softwareTest</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<style>
+			body {overflow:hidden;}
+		</style>
+	</head>
+
+	<body>
+	<script>
+		//for(var i=0;i<255;i++){console.log(i/255);}
+	</script>
+	<!--有骨骼动画的着色器-->
+	<!--矩阵插值代码-->
+	<!--
+					    //求下一个矩阵
+					        	            frame_index++;
+        	            if(frame_index==36)frame_index=0;
+						px=skeletonData[80*frame_index+10*iii+0];
+						py=skeletonData[80*frame_index+10*iii+1];
+						pz=skeletonData[80*frame_index+10*iii+2];
+						x=skeletonData[80*frame_index+10*iii+3];
+						y=skeletonData[80*frame_index+10*iii+4];
+						z=skeletonData[80*frame_index+10*iii+5];
+						w=skeletonData[80*frame_index+10*iii+6];
+
+
+						x2 = x + x;	y2 = y + y; z2 = z + z;
+    	                xx = x * x2;xy = x * y2;xz = x * z2;
+        	            yy = y * y2;yz = y * z2;zz = z * z2;
+            	        wx = w * x2;wy = w * y2;wz = w * z2;
+                	    m2=mat4(
+                    		( 1.0-( yy + zz ) ),( xy + wz )         ,( xz - wy )         ,0.0,
+                    		( xy - wz )        ,( 1.0-( xx + zz ) ) ,( yz + wx )         ,0.0,
+	                    	( xz + wy )        ,( yz - wx )         ,( 1.0-( xx + yy ) ) ,0.0,
+    	                	px                 ,py                  ,pz                  ,1.0
+        	            );
+
+					//将两个矩阵结合
+					//float b=t-floor(t);   if(b==0.0)b=1.0;
+					//b=1.0-b;
+					//float b=1.0-k;
+					return m1;
+                    /*return mat4(
+                    	m1[0][0]+b*(m2[0][0]-m1[0][0]),	m1[0][1]+b*(m2[0][1]-m1[0][1]),	m1[0][2]+b*(m2[0][2]-m1[0][2]),	m1[0][3]+b*(m2[0][3]-m1[0][3]),
+                    	m1[1][0]+b*(m2[1][0]-m1[1][0]),	m1[1][1]+b*(m2[1][1]-m1[1][1]),	m1[1][2]+b*(m2[1][2]-m1[1][2]),	m1[1][3]+b*(m2[1][3]-m1[1][3]),
+                    	m1[2][0]+b*(m2[2][0]-m1[2][0]),	m1[2][1]+b*(m2[2][1]-m1[2][1]),	m1[2][2]+b*(m2[2][2]-m1[2][2]),	m1[2][3]+b*(m2[2][3]-m1[2][3]),
+                    	m1[3][0]+b*(m2[3][0]-m1[3][0]),	m1[3][1]+b*(m2[3][1]-m1[3][1]),	m1[3][2]+b*(m2[3][2]-m1[3][2]),	m1[3][3]+b*(m2[3][3]-m1[3][3])
+                    );*/
+	-->
+	<!--计算手臂部分的骨骼数据-->
+	<!--
+	//开始计算matrix
+            /*var data=[];
+            for(var time=0;time<8;time++){//0-7
+                matrixs0=[];matrixs=[];
+                for(i=0;i<25;i++){
+                    matrixs0.push(
+                        compose(
+                            animation.tracks[3*i+1].values[4*time],
+                            animation.tracks[3*i+1].values[4*time+1],
+                            animation.tracks[3*i+1].values[4*time+2],
+                            animation.tracks[3*i+1].values[4*time+3],
+
+                            animation.tracks[3*i+2].values[3*time],
+                            animation.tracks[3*i+2].values[3*time+1],
+                            animation.tracks[3*i+2].values[3*time+2],
+
+                            animation.tracks[3*i].values[3*time],
+                            animation.tracks[3*i].values[3*time+1],
+                            animation.tracks[3*i].values[3*time+2]
+                        )
+                        //scope.originMeshs[0].skeleton.bones[i].matrix.clone()
+                    );
+                    matrixs.push(
+                        scope.originMeshs[0].skeleton.boneInverses[i].clone()
+                    );
+                }
+
+                //矩阵3没有乘以逆矩阵
+                var tool=matrixs0[0];
+                matrixs[0]=tool.clone().multiply(matrixs[0]);tool=tool.clone().multiply(matrixs0[1]);
+                matrixs[1]=tool.clone().multiply(matrixs[1]);tool=tool.clone().multiply(matrixs0[2]);
+                matrixs[2]=tool.clone().multiply(matrixs[2]);tool=tool.clone().multiply(matrixs0[3]);  var  _tool3=tool;
+
+
+
+                tool=_tool3;
+                tool=tool.clone().multiply(matrixs0[7]);
+                matrixs[7]=tool.clone().multiply(matrixs[7]);tool=tool.clone().multiply(matrixs0[8]);
+                matrixs[8]=tool.clone().multiply(matrixs[8]);tool=tool.clone().multiply(matrixs0[9]);
+                matrixs[9]=tool.clone().multiply(matrixs[9]);tool=tool.clone().multiply(matrixs0[10]);
+                matrixs[10]=tool.clone().multiply(matrixs[10]);
+
+                tool=_tool3;
+                tool=tool.clone().multiply(matrixs0[11]);
+                matrixs[11]=tool.clone().multiply(matrixs[11]);tool=tool.clone().multiply(matrixs0[12]);
+                matrixs[12]=tool.clone().multiply(matrixs[12]);tool=tool.clone().multiply(matrixs0[13]);
+                matrixs[13]=tool.clone().multiply(matrixs[13]);tool=tool.clone().multiply(matrixs0[14]);
+                matrixs[14]=tool.clone().multiply(matrixs[14]);
+
+                var temp=[];
+                temp.push(matrixs[7].toArray());
+                temp.push(matrixs[8].toArray());
+                temp.push(matrixs[9].toArray());
+                temp.push(matrixs[10].toArray());
+                temp.push(matrixs[11].toArray());
+                temp.push(matrixs[12].toArray());
+                temp.push(matrixs[13].toArray());
+                temp.push(matrixs[14].toArray());
+                for(var i=0;i<8;i++){
+                    data.push(temp[i][0]);
+                    data.push(temp[i][1]);
+                    data.push(temp[i][2]);
+                    data.push(temp[i][4]);
+                    data.push(temp[i][5]);
+                    data.push(temp[i][6]);
+                    data.push(temp[i][8]);
+                    data.push(temp[i][9]);
+                    data.push(temp[i][10]);
+                    data.push(temp[i][12]);
+                    data.push(temp[i][13]);
+                    data.push(temp[i][14]);
+                }
+            }//iii
+            let link = document.createElement('a');
+            link.style.display = 'none';
+            document.body.appendChild(link);
+            link.href = URL.createObjectURL(new Blob([JSON.stringify({data:data})], { type: 'text/plain' }));
+            link.download ="skeletonData.json";
+            link.click();*/
+	-->
+	<!--计算手臂部分的骨骼矩阵/压缩成12个数-->
+	<!--
+	var data=[];
+            for(var time=0;time<8;time++){//0-7
+            //var time=0;
+                matrixs0=[];matrixs=[];
+                for(i=0;i<25;i++){
+                    matrixs0.push(
+                        compose(
+                            animation.tracks[3*i+1].values[4*time],
+                            animation.tracks[3*i+1].values[4*time+1],
+                            animation.tracks[3*i+1].values[4*time+2],
+                            animation.tracks[3*i+1].values[4*time+3],
+
+                            animation.tracks[3*i+2].values[3*time],
+                            animation.tracks[3*i+2].values[3*time+1],
+                            animation.tracks[3*i+2].values[3*time+2],
+
+                            animation.tracks[3*i].values[3*time],
+                            animation.tracks[3*i].values[3*time+1],
+                            animation.tracks[3*i].values[3*time+2]
+                        )
+                        //scope.originMeshs[0].skeleton.bones[i].matrix.clone()
+                    );
+                    matrixs.push(
+                        scope.originMeshs[0].skeleton.boneInverses[i].clone()
+                    );
+                }
+
+                /////矩阵3没有乘以逆矩阵
+                var tool=matrixs0[0];
+                matrixs[0]=tool.clone().multiply(matrixs[0]);tool=tool.clone().multiply(matrixs0[1]);
+                matrixs[1]=tool.clone().multiply(matrixs[1]);tool=tool.clone().multiply(matrixs0[2]);
+                matrixs[2]=tool.clone().multiply(matrixs[2]);tool=tool.clone().multiply(matrixs0[3]);  var  _tool3=tool;
+                matrixs[3]=tool.clone().multiply(matrixs[3]);tool=tool.clone().multiply(matrixs0[4]);
+                matrixs[4]=tool.clone().multiply(matrixs[4]);tool=tool.clone().multiply(matrixs0[5]);
+                matrixs[5]=tool.clone().multiply(matrixs[5]);tool=tool.clone().multiply(matrixs0[6]);
+                matrixs[6]=tool.clone().multiply(matrixs[6]);
+
+                tool=_tool3;
+                tool=tool.clone().multiply(matrixs0[7]);
+                matrixs[7]=tool.clone().multiply(matrixs[7]);tool=tool.clone().multiply(matrixs0[8]);
+                matrixs[8]=tool.clone().multiply(matrixs[8]);tool=tool.clone().multiply(matrixs0[9]);
+                matrixs[9]=tool.clone().multiply(matrixs[9]);tool=tool.clone().multiply(matrixs0[10]);
+                matrixs[10]=tool.clone().multiply(matrixs[10]);
+
+                tool=_tool3;
+                tool=tool.clone().multiply(matrixs0[11]);
+                matrixs[11]=tool.clone().multiply(matrixs[11]);tool=tool.clone().multiply(matrixs0[12]);
+                matrixs[12]=tool.clone().multiply(matrixs[12]);tool=tool.clone().multiply(matrixs0[13]);
+                matrixs[13]=tool.clone().multiply(matrixs[13]);tool=tool.clone().multiply(matrixs0[14]);
+                matrixs[14]=tool.clone().multiply(matrixs[14]);
+
+                tool=matrixs0[0].clone().multiply(matrixs0[15]);
+                matrixs[15]=tool.clone().multiply(matrixs[15]);tool=tool.clone().multiply(matrixs0[16]);
+                matrixs[16]=tool.clone().multiply(matrixs[16]);tool=tool.clone().multiply(matrixs0[17]);
+                matrixs[17]=tool.clone().multiply(matrixs[17]);tool=tool.clone().multiply(matrixs0[18]);
+                matrixs[18]=tool.clone().multiply(matrixs[18]);tool=tool.clone().multiply(matrixs0[19]);
+                matrixs[19]=tool.clone().multiply(matrixs[19]);
+
+                tool=matrixs0[0].clone().multiply(matrixs0[20]);
+                matrixs[20]=tool.clone().multiply(matrixs[20]);tool=tool.clone().multiply(matrixs0[21]);
+                matrixs[21]=tool.clone().multiply(matrixs[21]);tool=tool.clone().multiply(matrixs0[22]);
+                matrixs[22]=tool.clone().multiply(matrixs[22]);tool=tool.clone().multiply(matrixs0[23]);
+                matrixs[23]=tool.clone().multiply(matrixs[23]);tool=tool.clone().multiply(matrixs0[24]);
+                matrixs[24]=tool.clone().multiply(matrixs[24]);/**/
+                //完成计算matrix
+
+            /*for(i=0;i<25;i++){
+                var arr=matrixs[i].toArray();
+                for(j=0;j<16;j++){
+                    data.push(arr[j]);
+                }
+            }*/
+
+            for(i of [7,8,9,10,11,12,13,14]){
+                var temp=matrixs[i].toArray();
+                for(j=0;j<16;j++){
+                    //data.push(arr[j]);
+                }
+                data.push(temp[0]);
+                data.push(temp[1]);
+                data.push(temp[2]);
+                data.push(temp[4]);
+                data.push(temp[5]);
+                data.push(temp[6]);
+                data.push(temp[8]);
+                data.push(temp[9]);
+                data.push(temp[10]);
+                data.push(temp[12]);
+                data.push(temp[13]);
+                data.push(temp[14]);
+            }/**/
+
+                /*var temp=[];
+                temp.push(matrixs[7].toArray());
+                temp.push(matrixs[8].toArray());
+                temp.push(matrixs[9].toArray());
+                temp.push(matrixs[10].toArray());
+                temp.push(matrixs[11].toArray());
+                temp.push(matrixs[12].toArray());
+                temp.push(matrixs[13].toArray());
+                temp.push(matrixs[14].toArray());
+                for(var i=0;i<8;i++){
+                    data.push(temp[i][0]);
+                    data.push(temp[i][1]);
+                    data.push(temp[i][2]);
+                    data.push(temp[i][4]);
+                    data.push(temp[i][5]);
+                    data.push(temp[i][6]);
+                    data.push(temp[i][8]);
+                    data.push(temp[i][9]);
+                    data.push(temp[i][10]);
+                    data.push(temp[i][12]);
+                    data.push(temp[i][13]);
+                    data.push(temp[i][14]);
+                }*/
+            }//iii
+            let link = document.createElement('a');
+            link.style.display = 'none';
+            document.body.appendChild(link);
+            link.href = URL.createObjectURL(new Blob([JSON.stringify({data:data})], { type: 'text/plain' }));
+            link.download ="skeletonData.json";
+            //console.log(data);
+            //link.click();/**/
+	-->
+	<!--shader中计算骨骼矩阵-->
+	<!--
+	float x,y,z,w,px,py,pz;
+					float x2,y2,z2 ,
+					      xx,xy,xz,
+					      yy,yz,zz,
+					      wx,wy,wz;
+
+
+						px=skeletonData[80*frame_index+10*iii+0];
+						py=skeletonData[80*frame_index+10*iii+1];
+						pz=skeletonData[80*frame_index+10*iii+2];
+						x=skeletonData[80*frame_index+10*iii+3];
+						y=skeletonData[80*frame_index+10*iii+4];
+						z=skeletonData[80*frame_index+10*iii+5];
+						w=skeletonData[80*frame_index+10*iii+6];
+
+						x2 = x + x;	y2 = y + y; z2 = z + z;
+    	                xx = x * x2;xy = x * y2;xz = x * z2;
+        	            yy = y * y2;yz = y * z2;zz = z * z2;
+            	        wx = w * x2;wy = w * y2;wz = w * z2;
+                	    mat4 m=mat4(
+                    		( 1.0-( yy + zz ) ),( xy + wz )         ,( xz - wy )         ,0.0,
+                    		( xy - wz )        ,( 1.0-( xx + zz ) ) ,( yz + wx )         ,0.0,
+	                    	( xz + wy )        ,( yz - wx )         ,( 1.0-( xx + yy ) ) ,0.0,
+    	                	px                 ,py                  ,pz                  ,1.0
+        	            );
+
+					return m;
+	-->
+
+		<script src="js/lib/threeJS/three.js"></script>
+		<script src="js/lib/threeJS/OrbitControls.js"></script>
+		<script src="js/lib/threeJS/GLTFLoader.js"></script>
+
+		<script src="js/lib/pmLib/MyPMLoader.js"></script>
+
+		<script src="js/lib/instancedLib/InstancedGroup.js"></script>
+		<script src="js/lib/instancedLib/InstancedGroup2.js"></script>
+		<script src="js/lib/instancedLib/SkinnedMeshController.js"></script>
+
+		<script src="js/sceneSet/RoomManager.js"></script>
+		<script src="js/sceneSet/SeatManager.js"></script>
+		<script src="js/sceneSet/AvatarManager.js"></script>
+
+		<script src="js/playerControl/PlayerControl.js"></script>
+		<script src="js/playerControl/PreviewManager.js"></script>
+
+		<script src="js/ParamMeasure.js"></script>
+		<script src="js/Main.js"></script>
+
+
+
+	<script src='test/tool/OrbitControls.js'></script>
+	<script src='test/tool/UI.js'></script>
+	<script src='test/tool/Referee.js'></script>
+
+	<script src="test/testLaunch.js"></script>
+
+
+
+
+	</body>
+</html>

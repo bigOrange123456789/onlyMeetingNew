@@ -368,7 +368,7 @@ MyPMLoader.prototype={
 
             var newFacesOfS = [];
             //解析每个数据包下面这个循环要被调用7~8次左右
-            console.log("增加一个点")
+            //console.log("增加一个点")
             for (var fosi = 0 ; fosi < incidentFaces[vsData.S].length ; ++fosi)
             //每次遍历对应一个三角面 //遍历要修改的点对应的三角面
             {//在需要修改的点中，有一个索引需要变为新增的点
@@ -394,8 +394,8 @@ MyPMLoader.prototype={
                     ];
                     continue;
                 }
-                console.log(c)
-                console.log(objectF)
+                //console.log(c)
+                //console.log(objectF)
                 meshData.faces[Meshid][bufferIndex][c]=t;//c必须属于{0，1，2}
                 //某些点的索引被修改
 

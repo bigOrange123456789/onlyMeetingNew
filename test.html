@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<title>MEETING--softwareTest</title>
+		<title>MEETING</title>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
 		<style>
@@ -9,317 +9,245 @@
 		</style>
 	</head>
 
-	<body>
+	<body style="margin: 0">
+	<script src="js/lib/threeJS/three.js"></script>
+	<script src="js/lib/threeJS/OrbitControls.js"></script>
+	<script src="js/lib/threeJS/GLTFLoader.js"></script>
+
+	<script src="js/lib/pmLib/MyPMLoader.js"></script>
+
+	<script src="js/lib/instancedLib/InstancedGroup.js"></script>
+	<script src="js/lib/instancedLib/SkinnedMeshController.js"></script>
+
+	<script src="js/VideoManager.js"></script>
+
+	<script src="js/sceneSet/SeatManager.js"></script>
+	<script src="js/sceneSet/AvatarManager.js"></script>
+
+	<script src="js/playerControl/PlayerControl.js"></script>
+
+	<script src="js/ParamMeasure.js"></script>
+	<script src="js/Main.js"></script>
+	<script src="js/Pack.js"></script>
+	<script src="StereoEffect.js"></script>
+
+	<div id="cheat" style="position:absolute;left:0;right:0;background-size:100%;background:#01f;">
+		<img id="bg" src="data:image/jpeg;base64,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" style="background-size:100%;position:absolute;left:0;right:0;" />
+	</div>
 	<script>
-		//for(var i=0;i<255;i++){console.log(i/255);}
+		window.flagNumber=0
+		function myRequest(path,callback) {
+			window.flagNumber++
+			var ips=[
+					"localhost",
+					//"101.34.166.68",
+					//"110.40.255.87",
+					//"101.34.161.225",
+					//"81.71.38.168"
+			]
+			var ip=ips[Math.floor(Math.random()*ips.length)]
+			var oReq = new XMLHttpRequest();
+			oReq.open("POST", "http://"+ip+":8081", true);
+			oReq.responseType = "arraybuffer";
+			oReq.onload = ()=>{
+				var data=oReq.response;//ArrayBuffer
+				var imageType = oReq.getResponseHeader("Content-Type");
+				var blob = new Blob([data], { type: imageType });//用于图片解析
+				var unityArray=new Uint8Array(data)//用于glb文件解析
+				callback(unityArray,blob)
+			}//接收数据
+			oReq.send(path);//发送请求
+			console.log(ip,path)
+		}
+		function getGlb(path,cb) {
+			myRequest(path,unitArray=>{
+				new THREE.GLTFLoader().parse(unitArray.buffer, './',glb=>{
+					cb(glb)
+				});
+			})
+		}
+		function getTexture(path,cb) {
+			myRequest(path,(unityArray,blob)=>{
+				var image = document.createElement('img')
+				image.src =(window.URL || window.webkitURL).createObjectURL(blob);
+
+				console.log(THREE.ImageUtils.loadTexture)
+				//console.log(typeof ( THREE.ImageUtils.getDataURL(image) ))
+				//console.log(THREE.ImageUtils.getDataURL(image))
+				//console.log(THREE.ImageUtils)
+				//THREE.ImageUtils.loadTexture('img/fly.png');
+
+				var texture = new THREE.Texture();
+				texture.image =image;
+				texture.needsUpdate = true;
+				//console.log(texture.needsUpdate)
+				/*var time=1;
+				function nextFrame(){
+					if(time<=100){
+						if(time===100){
+							cb(texture,image)
+						}
+						time++;
+						requestAnimationFrame(nextFrame);
+					}
+				}nextFrame()*/
+				cb(texture)
+				//setTimeout(()=>cb(texture),10000)
+			})
+		}
+		//开始blur加载
+		var bg = document.getElementById("bg");
+		setTimeout(function () {
+			var imgUrl = './bg.png';
+			var imgObject = new Image();
+			imgObject.src = imgUrl;
+			imgObject.onload = function(){
+				bg.src = imgUrl;
+				bg.setAttribute('class', 'thumbnails complete');
+				if(window.videoMaterial&&window.videoMaterial.map!==window.videoMaterial.map1){
+					window.videoMaterial.map.image =bg;
+					window.videoMaterial.map.needsUpdate = true;
+				}
+			}
+		},500)
+		//完成blur加载
+		bg.width=window.innerWidth;
+		bg.height=window.innerHeight;
+
+		var width=120, height=50;
+		var oButton=document.createElement('p');//按钮
+		oButton.innerHTML="进入会议";
+		oButton.style.cssText='font-size:20px;'//字体大小
+				+'width:120px;height:50px;'//按钮大小
+				+'color:white;'//字体颜色
+				+'background:#2ECC71;'//按钮颜色
+				+'vertical-align:middle;'
+				+'text-align:center;'
+				+'line-height:50px;'
+				+'border-radius: 6px;'
+				+'position:fixed;'//到窗体的位置
+				+'left:'+(window.innerWidth/2-width/2)+'px;'//到部件左边距离
+				+'top:'+(window.innerHeight/2-height/2)+'px;'; //到部件右边 距离
+		oButton.style.cursor='hand';
+		oButton.onmouseover=function(){
+			oButton.style.cursor='hand';
+			oButton.style.borderRadius='70px';
+			oButton.style.backgroundColor = '#81F79F';
+		}
+		oButton.onmouseout=function(){
+			oButton.style.cursor='normal';
+			oButton.style.borderRadius='6px';
+			oButton.style.backgroundColor = '#2ECC71';
+		}
+		oButton.onmousedown = function() {
+			document.getElementById("cheat").style.visibility='hidden';
+		}
+		oButton.onmouseup = function() {
+			oButton.style.backgroundColor = '#81F79F';
+			oButton.style.color = 'white';
+		}
+		document.getElementById("cheat").appendChild(oButton);
+		document.getElementById("cheat").style.visibility='hidden';//隐藏遮挡
 	</script>
-	<!--有骨骼动画的着色器-->
-	<!--矩阵插值代码-->
-	<!--
-					    //求下一个矩阵
-					        	            frame_index++;
-        	            if(frame_index==36)frame_index=0;
-						px=skeletonData[80*frame_index+10*iii+0];
-						py=skeletonData[80*frame_index+10*iii+1];
-						pz=skeletonData[80*frame_index+10*iii+2];
-						x=skeletonData[80*frame_index+10*iii+3];
-						y=skeletonData[80*frame_index+10*iii+4];
-						z=skeletonData[80*frame_index+10*iii+5];
-						w=skeletonData[80*frame_index+10*iii+6];
+	<script  type="module">
+		import {RoomManager} from './js/sceneSet/RoomManager.js';
+		import {PreviewManager} from './js/playerControl/PreviewManager.js';
+		import {Net} from './js/simulate/Net.js';
 
+		window.videoMaterial=new THREE.MeshBasicMaterial();
 
-						x2 = x + x;	y2 = y + y; z2 = z + z;
-    	                xx = x * x2;xy = x * y2;xz = x * z2;
-        	            yy = y * y2;yz = y * z2;zz = z * z2;
-            	        wx = w * x2;wy = w * y2;wz = w * z2;
-                	    m2=mat4(
-                    		( 1.0-( yy + zz ) ),( xy + wz )         ,( xz - wy )         ,0.0,
-                    		( xy - wz )        ,( 1.0-( xx + zz ) ) ,( yz + wx )         ,0.0,
-	                    	( xz + wy )        ,( yz - wx )         ,( 1.0-( xx + yy ) ) ,0.0,
-    	                	px                 ,py                  ,pz                  ,1.0
-        	            );
+		var texture = new THREE.Texture();
+		texture.image =document.getElementById("bg");
+		texture.needsUpdate = true;
+		texture.flipY=false;
+		texture.wrapS=texture.wrapT=THREE.ClampToEdgeWrapping;
+		texture.minFilter=THREE.LinearFilter;
+		texture.magFilter=THREE.LinearFilter;
+		texture.format=THREE.RGBFormat;
+		window.videoMaterial.map=texture;
 
-					//将两个矩阵结合
-					//float b=t-floor(t);   if(b==0.0)b=1.0;
-					//b=1.0-b;
-					//float b=1.0-k;
-					return m1;
-                    /*return mat4(
-                    	m1[0][0]+b*(m2[0][0]-m1[0][0]),	m1[0][1]+b*(m2[0][1]-m1[0][1]),	m1[0][2]+b*(m2[0][2]-m1[0][2]),	m1[0][3]+b*(m2[0][3]-m1[0][3]),
-                    	m1[1][0]+b*(m2[1][0]-m1[1][0]),	m1[1][1]+b*(m2[1][1]-m1[1][1]),	m1[1][2]+b*(m2[1][2]-m1[1][2]),	m1[1][3]+b*(m2[1][3]-m1[1][3]),
-                    	m1[2][0]+b*(m2[2][0]-m1[2][0]),	m1[2][1]+b*(m2[2][1]-m1[2][1]),	m1[2][2]+b*(m2[2][2]-m1[2][2]),	m1[2][3]+b*(m2[2][3]-m1[2][3]),
-                    	m1[3][0]+b*(m2[3][0]-m1[3][0]),	m1[3][1]+b*(m2[3][1]-m1[3][1]),	m1[3][2]+b*(m2[3][2]-m1[3][2]),	m1[3][3]+b*(m2[3][3]-m1[3][3])
-                    );*/
-	-->
-	<!--计算手臂部分的骨骼数据-->
-	<!--
-	//开始计算matrix
-            /*var data=[];
-            for(var time=0;time<8;time++){//0-7
-                matrixs0=[];matrixs=[];
-                for(i=0;i<25;i++){
-                    matrixs0.push(
-                        compose(
-                            animation.tracks[3*i+1].values[4*time],
-                            animation.tracks[3*i+1].values[4*time+1],
-                            animation.tracks[3*i+1].values[4*time+2],
-                            animation.tracks[3*i+1].values[4*time+3],
+		var myMain = new Main();
+		myMain.start();
+		window.camera=myMain.camera;
+		//document.body.appendChild( VRButton.createButton( myMain.renderer ) );
+		//myMain.renderer.xr.enabled = true;
 
-                            animation.tracks[3*i+2].values[3*time],
-                            animation.tracks[3*i+2].values[3*time+1],
-                            animation.tracks[3*i+2].values[3*time+2],
+		var myVideoManager = new VideoManager();
 
-                            animation.tracks[3*i].values[3*time],
-                            animation.tracks[3*i].values[3*time+1],
-                            animation.tracks[3*i].values[3*time+2]
-                        )
-                        //scope.originMeshs[0].skeleton.bones[i].matrix.clone()
-                    );
-                    matrixs.push(
-                        scope.originMeshs[0].skeleton.boneInverses[i].clone()
-                    );
-                }
+		var myRoomManager = new RoomManager(myVideoManager,myMain.camera);
+		myMain.scene.add(myRoomManager.room);
 
-                //矩阵3没有乘以逆矩阵
-                var tool=matrixs0[0];
-                matrixs[0]=tool.clone().multiply(matrixs[0]);tool=tool.clone().multiply(matrixs0[1]);
-                matrixs[1]=tool.clone().multiply(matrixs[1]);tool=tool.clone().multiply(matrixs0[2]);
-                matrixs[2]=tool.clone().multiply(matrixs[2]);tool=tool.clone().multiply(matrixs0[3]);  var  _tool3=tool;
+		new PlayerControl(myMain.camera);//.cullingTest(myMain.scene)
 
+		var mySeatManager = new SeatManager();
+		mySeatManager.init();
+		mySeatManager.create();//椅子
+		myMain.scene.add(mySeatManager.chairs);
 
+		var myAvatarManager = new AvatarManager(mySeatManager, myMain.camera);
+		myMain.scene.add(myAvatarManager.obj);
 
-                tool=_tool3;
-                tool=tool.clone().multiply(matrixs0[7]);
-                matrixs[7]=tool.clone().multiply(matrixs[7]);tool=tool.clone().multiply(matrixs0[8]);
-                matrixs[8]=tool.clone().multiply(matrixs[8]);tool=tool.clone().multiply(matrixs0[9]);
-                matrixs[9]=tool.clone().multiply(matrixs[9]);tool=tool.clone().multiply(matrixs0[10]);
-                matrixs[10]=tool.clone().multiply(matrixs[10]);
+		myAvatarManager.create1(function () {
+			myAvatarManager.create2();//嘉宾
+		});//听众
 
-                tool=_tool3;
-                tool=tool.clone().multiply(matrixs0[11]);
-                matrixs[11]=tool.clone().multiply(matrixs[11]);tool=tool.clone().multiply(matrixs0[12]);
-                matrixs[12]=tool.clone().multiply(matrixs[12]);tool=tool.clone().multiply(matrixs0[13]);
-                matrixs[13]=tool.clone().multiply(matrixs[13]);tool=tool.clone().multiply(matrixs0[14]);
-                matrixs[14]=tool.clone().multiply(matrixs[14]);
+		var net=new Net().object;
+		net.position.set(170,17,-59)
+		net.scale.set(-0.03,0.03,0.04)
+		net.rotation.set(0,Math.PI/2,0)
+		myMain.scene.add(net);
 
-                var temp=[];
-                temp.push(matrixs[7].toArray());
-                temp.push(matrixs[8].toArray());
-                temp.push(matrixs[9].toArray());
-                temp.push(matrixs[10].toArray());
-                temp.push(matrixs[11].toArray());
-                temp.push(matrixs[12].toArray());
-                temp.push(matrixs[13].toArray());
-                temp.push(matrixs[14].toArray());
-                for(var i=0;i<8;i++){
-                    data.push(temp[i][0]);
-                    data.push(temp[i][1]);
-                    data.push(temp[i][2]);
-                    data.push(temp[i][4]);
-                    data.push(temp[i][5]);
-                    data.push(temp[i][6]);
-                    data.push(temp[i][8]);
-                    data.push(temp[i][9]);
-                    data.push(temp[i][10]);
-                    data.push(temp[i][12]);
-                    data.push(temp[i][13]);
-                    data.push(temp[i][14]);
-                }
-            }//iii
-            let link = document.createElement('a');
-            link.style.display = 'none';
-            document.body.appendChild(link);
-            link.href = URL.createObjectURL(new Blob([JSON.stringify({data:data})], { type: 'text/plain' }));
-            link.download ="skeletonData.json";
-            link.click();*/
-	-->
-	<!--计算手臂部分的骨骼矩阵/压缩成12个数-->
-	<!--
-	var data=[];
-            for(var time=0;time<8;time++){//0-7
-            //var time=0;
-                matrixs0=[];matrixs=[];
-                for(i=0;i<25;i++){
-                    matrixs0.push(
-                        compose(
-                            animation.tracks[3*i+1].values[4*time],
-                            animation.tracks[3*i+1].values[4*time+1],
-                            animation.tracks[3*i+1].values[4*time+2],
-                            animation.tracks[3*i+1].values[4*time+3],
+		net=new Net().object;
+		net.position.set(170,17,29)
+		net.scale.set(0.03,0.03,0.04)
+		net.rotation.set(0,Math.PI/2,0)
+		myMain.scene.add(net);
+		//new ParamMeasure(net,0)
 
-                            animation.tracks[3*i+2].values[3*time],
-                            animation.tracks[3*i+2].values[3*time+1],
-                            animation.tracks[3*i+2].values[3*time+2],
+		const light = new THREE.PointLight( 0xffffff, 1 );
+		light.position.set(0,40.97,0)
+		light.rotation.set(0,Math.PI/2,0)
+		myMain.scene.add(light)
 
-                            animation.tracks[3*i].values[3*time],
-                            animation.tracks[3*i].values[3*time+1],
-                            animation.tracks[3*i].values[3*time+2]
-                        )
-                        //scope.originMeshs[0].skeleton.bones[i].matrix.clone()
-                    );
-                    matrixs.push(
-                        scope.originMeshs[0].skeleton.boneInverses[i].clone()
-                    );
-                }
+		function f00() {
+			requestAnimationFrame(f00);
+			if(!myVideoManager.finish&&document.getElementById("cheat").style.visibility==='hidden'){
+				myVideoManager.setPlay()
+				//myPreviewManager.myMoveManager.stopFlag = false;
+			}
+		}f00()
 
-                /////矩阵3没有乘以逆矩阵
-                var tool=matrixs0[0];
-                matrixs[0]=tool.clone().multiply(matrixs[0]);tool=tool.clone().multiply(matrixs0[1]);
-                matrixs[1]=tool.clone().multiply(matrixs[1]);tool=tool.clone().multiply(matrixs0[2]);
-                matrixs[2]=tool.clone().multiply(matrixs[2]);tool=tool.clone().multiply(matrixs0[3]);  var  _tool3=tool;
-                matrixs[3]=tool.clone().multiply(matrixs[3]);tool=tool.clone().multiply(matrixs0[4]);
-                matrixs[4]=tool.clone().multiply(matrixs[4]);tool=tool.clone().multiply(matrixs0[5]);
-                matrixs[5]=tool.clone().multiply(matrixs[5]);tool=tool.clone().multiply(matrixs0[6]);
-                matrixs[6]=tool.clone().multiply(matrixs[6]);
+		//开始帧数统计
+		var tag = document.createElement('h1');
+		window.tag=tag;
+		tag.style.cssText =
+				'color:green;' +//文字颜色
+				'font-size:' + 20 + 'px;' +//文字大小
+				'font-weight:normal;' +
+				'position:fixed;' +//到窗体的位置
+				'left:' + 0 + 'px;' +//到部件左边距离
+				'top:' + 0 + 'px;'; //到部件右边 距离
+		document.body.appendChild(tag);
+		var frameIndex = 0, frameIndexPre = 0;
+		frameIndexUpdate();
+		setInterval(computeFPS, 1000);
+		function frameIndexUpdate() {
+			frameIndex++;
+			requestAnimationFrame(frameIndexUpdate);
+		}
+		function computeFPS() {
+			tag.innerHTML =(frameIndex - frameIndexPre);
+			//tag.innerHTML = "FPS:" + (frameIndex - frameIndexPre);
+			frameIndexPre = frameIndex;
+		}
+		//完成帧数统计
 
-                tool=_tool3;
-                tool=tool.clone().multiply(matrixs0[7]);
-                matrixs[7]=tool.clone().multiply(matrixs[7]);tool=tool.clone().multiply(matrixs0[8]);
-                matrixs[8]=tool.clone().multiply(matrixs[8]);tool=tool.clone().multiply(matrixs0[9]);
-                matrixs[9]=tool.clone().multiply(matrixs[9]);tool=tool.clone().multiply(matrixs0[10]);
-                matrixs[10]=tool.clone().multiply(matrixs[10]);
-
-                tool=_tool3;
-                tool=tool.clone().multiply(matrixs0[11]);
-                matrixs[11]=tool.clone().multiply(matrixs[11]);tool=tool.clone().multiply(matrixs0[12]);
-                matrixs[12]=tool.clone().multiply(matrixs[12]);tool=tool.clone().multiply(matrixs0[13]);
-                matrixs[13]=tool.clone().multiply(matrixs[13]);tool=tool.clone().multiply(matrixs0[14]);
-                matrixs[14]=tool.clone().multiply(matrixs[14]);
-
-                tool=matrixs0[0].clone().multiply(matrixs0[15]);
-                matrixs[15]=tool.clone().multiply(matrixs[15]);tool=tool.clone().multiply(matrixs0[16]);
-                matrixs[16]=tool.clone().multiply(matrixs[16]);tool=tool.clone().multiply(matrixs0[17]);
-                matrixs[17]=tool.clone().multiply(matrixs[17]);tool=tool.clone().multiply(matrixs0[18]);
-                matrixs[18]=tool.clone().multiply(matrixs[18]);tool=tool.clone().multiply(matrixs0[19]);
-                matrixs[19]=tool.clone().multiply(matrixs[19]);
-
-                tool=matrixs0[0].clone().multiply(matrixs0[20]);
-                matrixs[20]=tool.clone().multiply(matrixs[20]);tool=tool.clone().multiply(matrixs0[21]);
-                matrixs[21]=tool.clone().multiply(matrixs[21]);tool=tool.clone().multiply(matrixs0[22]);
-                matrixs[22]=tool.clone().multiply(matrixs[22]);tool=tool.clone().multiply(matrixs0[23]);
-                matrixs[23]=tool.clone().multiply(matrixs[23]);tool=tool.clone().multiply(matrixs0[24]);
-                matrixs[24]=tool.clone().multiply(matrixs[24]);/**/
-                //完成计算matrix
-
-            /*for(i=0;i<25;i++){
-                var arr=matrixs[i].toArray();
-                for(j=0;j<16;j++){
-                    data.push(arr[j]);
-                }
-            }*/
-
-            for(i of [7,8,9,10,11,12,13,14]){
-                var temp=matrixs[i].toArray();
-                for(j=0;j<16;j++){
-                    //data.push(arr[j]);
-                }
-                data.push(temp[0]);
-                data.push(temp[1]);
-                data.push(temp[2]);
-                data.push(temp[4]);
-                data.push(temp[5]);
-                data.push(temp[6]);
-                data.push(temp[8]);
-                data.push(temp[9]);
-                data.push(temp[10]);
-                data.push(temp[12]);
-                data.push(temp[13]);
-                data.push(temp[14]);
-            }/**/
-
-                /*var temp=[];
-                temp.push(matrixs[7].toArray());
-                temp.push(matrixs[8].toArray());
-                temp.push(matrixs[9].toArray());
-                temp.push(matrixs[10].toArray());
-                temp.push(matrixs[11].toArray());
-                temp.push(matrixs[12].toArray());
-                temp.push(matrixs[13].toArray());
-                temp.push(matrixs[14].toArray());
-                for(var i=0;i<8;i++){
-                    data.push(temp[i][0]);
-                    data.push(temp[i][1]);
-                    data.push(temp[i][2]);
-                    data.push(temp[i][4]);
-                    data.push(temp[i][5]);
-                    data.push(temp[i][6]);
-                    data.push(temp[i][8]);
-                    data.push(temp[i][9]);
-                    data.push(temp[i][10]);
-                    data.push(temp[i][12]);
-                    data.push(temp[i][13]);
-                    data.push(temp[i][14]);
-                }*/
-            }//iii
-            let link = document.createElement('a');
-            link.style.display = 'none';
-            document.body.appendChild(link);
-            link.href = URL.createObjectURL(new Blob([JSON.stringify({data:data})], { type: 'text/plain' }));
-            link.download ="skeletonData.json";
-            //console.log(data);
-            //link.click();/**/
-	-->
-	<!--shader中计算骨骼矩阵-->
-	<!--
-	float x,y,z,w,px,py,pz;
-					float x2,y2,z2 ,
-					      xx,xy,xz,
-					      yy,yz,zz,
-					      wx,wy,wz;
-
-
-						px=skeletonData[80*frame_index+10*iii+0];
-						py=skeletonData[80*frame_index+10*iii+1];
-						pz=skeletonData[80*frame_index+10*iii+2];
-						x=skeletonData[80*frame_index+10*iii+3];
-						y=skeletonData[80*frame_index+10*iii+4];
-						z=skeletonData[80*frame_index+10*iii+5];
-						w=skeletonData[80*frame_index+10*iii+6];
-
-						x2 = x + x;	y2 = y + y; z2 = z + z;
-    	                xx = x * x2;xy = x * y2;xz = x * z2;
-        	            yy = y * y2;yz = y * z2;zz = z * z2;
-            	        wx = w * x2;wy = w * y2;wz = w * z2;
-                	    mat4 m=mat4(
-                    		( 1.0-( yy + zz ) ),( xy + wz )         ,( xz - wy )         ,0.0,
-                    		( xy - wz )        ,( 1.0-( xx + zz ) ) ,( yz + wx )         ,0.0,
-	                    	( xz + wy )        ,( yz - wx )         ,( 1.0-( xx + yy ) ) ,0.0,
-    	                	px                 ,py                  ,pz                  ,1.0
-        	            );
-
-					return m;
-	-->
-
-		<script src="js/lib/threeJS/three.js"></script>
-		<script src="js/lib/threeJS/OrbitControls.js"></script>
-		<script src="js/lib/threeJS/GLTFLoader.js"></script>
-
-		<script src="js/lib/pmLib/MyPMLoader.js"></script>
-
-		<script src="js/lib/instancedLib/InstancedGroup.js"></script>
-		<script src="js/lib/instancedLib/InstancedGroup2.js"></script>
-		<script src="js/lib/instancedLib/SkinnedMeshController.js"></script>
-
-		<script src="js/sceneSet/RoomManager.js"></script>
-		<script src="js/sceneSet/SeatManager.js"></script>
-		<script src="js/sceneSet/AvatarManager.js"></script>
-
-		<script src="js/playerControl/PlayerControl.js"></script>
-		<script src="js/playerControl/PreviewManager.js"></script>
-
-		<script src="js/ParamMeasure.js"></script>
-		<script src="js/Main.js"></script>
-
-
-
-	<script src='test/tool/OrbitControls.js'></script>
-	<script src='test/tool/UI.js'></script>
-	<script src='test/tool/Referee.js'></script>
-
-	<script src="test/testLaunch.js"></script>
-
-
-
-
+		//开始添加时钟
+		window.myClock=0;
+		setInterval(function () {
+			window.myClock++;
+		},1)
+		//完成添加时钟
+	</script>
 	</body>
 </html>
