@@ -3,13 +3,14 @@ class Network{
         this.testFlag=true;
         if(this.testFlag)this.test={}
         this.ips=[
-            //"localhost",
-            "101.34.166.68"
+            "localhost",
+            //"101.34.166.68",
             //"110.40.255.87",
             //"101.34.161.225",
             //"81.71.38.168"
         ]
         this.count= {}//记录每一个地址承担请求的个数
+        window.countFinish=[];//已加载资源的总个数
         for(var i=0;i<this.ips.length;i++)
             this.count[this.ips[i]]=0
     }
@@ -17,6 +18,7 @@ class Network{
         return this.ips[Math.floor(Math.random()*this.ips.length)]
     }
     myRequest(path,callback) {
+        var scope=this;
         if(this.testFlag)var time0= performance.now()
         var ip=this.getIP()
         this.count[ip]++
@@ -37,6 +39,11 @@ class Network{
                     time0:time0,
                     time1:performance.now()
                 },str=>console.log(str))
+                window.countFinish.push(0)
+                console.log("window.countFinish",window.countFinish.length)
+                if(window.countFinish.length>=42){
+                    alert("finish!",window.countFinish.length)
+                }
             }
         }//接收数据
         oReq.send(path);//发送请求

@@ -1,0 +1,254 @@
+[
+	{
+		"path": "myModel/chair.glb",
+		"ip": "101.34.166.68",
+		"time0": 1215.9000000357628,
+		"time1": 1740.199999988079
+	},
+	{
+		"path": "./myModel/room/ConferenceRoom3.gltf",
+		"ip": "101.34.166.68",
+		"time0": 1711.9000000357628,
+		"time1": 1880.9000000357628
+	},
+	{
+		"path": "./myModel/room/ConferenceRoom7.gltf",
+		"ip": "101.34.166.68",
+		"time0": 1900.800000011921,
+		"time1": 1960.9000000357628
+	},
+	{
+		"path": "./myModel/room/ConferenceRoom11.gltf",
+		"ip": "101.34.166.68",
+		"time0": 1992.300000011921,
+		"time1": 2334.800000011921
+	},
+	{
+		"path": "./img/texture/w/w0.jpg",
+		"ip": "101.34.166.68",
+		"time0": 2273.100000023842,
+		"time1": 2481.199999988079
+	},
+	{
+		"path": "./myModel/room/ConferenceRoom15.gltf",
+		"ip": "101.34.166.68",
+		"time0": 2484.699999988079,
+		"time1": 2788
+	},
+	{
+		"path": "./myModel/room/first.glb",
+		"ip": "101.34.166.68",
+		"time0": 1207.1000000238419,
+		"time1": 2947.800000011921
+	},
+	{
+		"path": "./img/texture/w/w1.jpg",
+		"ip": "101.34.166.68",
+		"time0": 2808.800000011921,
+		"time1": 2956.699999988079
+	},
+	{
+		"path": "./myModel/room/ConferenceRoom18.gltf",
+		"ip": "101.34.166.68",
+		"time0": 2810.600000023842,
+		"time1": 3120.100000023842
+	},
+	{
+		"path": "./myModel/host/voice2.glb",
+		"ip": "101.34.166.68",
+		"time0": 1218,
+		"time1": 3577.400000035763
+	},
+	{
+		"path": "./myModel/room/ConferenceRoom11.jpg",
+		"ip": "101.34.166.68",
+		"time0": 3065.100000023842,
+		"time1": 5957.900000035763
+	},
+	{
+		"path": "./myModel/room/ConferenceRoom13.jpg",
+		"ip": "101.34.166.68",
+		"time0": 3065.600000023842,
+		"time1": 8631.800000011921
+	},
+	{
+		"path": "./myModel/room/ConferenceRoom1.jpg",
+		"ip": "101.34.166.68",
+		"time0": 3063.600000023842,
+		"time1": 8678.600000023842
+	},
+	{
+		"path": "./myModel/room/ConferenceRoom19.jpg",
+		"ip": "101.34.166.68",
+		"time0": 3067.900000035763,
+		"time1": 9788
+	},
+	{
+		"path": "./myModel/room/ConferenceRoom2.jpg",
+		"ip": "101.34.166.68",
+		"time0": 3068.699999988079,
+		"time1": 10682.800000011921
+	},
+	{
+		"path": "./myModel/room/ConferenceRoom26.jpg",
+		"ip": "101.34.166.68",
+		"time0": 3069.400000035763,
+		"time1": 11520.600000023842
+	},
+	{
+		"path": "./myModel/room/ConferenceRoom27.jpg",
+		"ip": "101.34.166.68",
+		"time0": 3070.199999988079,
+		"time1": 12361.600000023842
+	},
+	{
+		"path": "./myModel/room/ConferenceRoom14.jpg",
+		"ip": "101.34.166.68",
+		"time0": 3066.100000023842,
+		"time1": 12978.199999988079
+	},
+	{
+		"path": "./myModel/room/ConferenceRoom34.jpg",
+		"ip": "101.34.166.68",
+		"time0": 3071.600000023842,
+		"time1": 13005.600000023842
+	},
+	{
+		"path": "./myModel/room/ConferenceRoom16.jpg",
+		"ip": "101.34.166.68",
+		"time0": 3066.800000011921,
+		"time1": 14882.900000035763
+	},
+	{
+		"path": "./myModel/room/ConferenceRoom4.jpg",
+		"ip": "101.34.166.68",
+		"time0": 3072.300000011921,
+		"time1": 17879.80000001192
+	},
+	{
+		"path": "./myModel/room/ConferenceRoom3.jpg",
+		"ip": "101.34.166.68",
+		"time0": 3071,
+		"time1": 19930.30000001192
+	},
+	{
+		"path": "./myModel/room/ConferenceRoom3.jpg",
+		"ip": "101.34.166.68",
+		"time0": 1713,
+		"time1": 21438.80000001192
+	},
+	{
+		"path": "./img/texture/w/w2.jpg",
+		"ip": "101.34.166.68",
+		"time0": 3108.300000011921,
+		"time1": 22978.5
+	},
+	{
+		"path": "./myModel/room/ConferenceRoom25.gltf",
+		"ip": "101.34.166.68",
+		"time0": 3155.600000023842,
+		"time1": 23431.19999998808
+	},
+	{
+		"path": "./myModel/room/ConferenceRoom25.jpg",
+		"ip": "101.34.166.68",
+		"time0": 21895.69999998808,
+		"time1": 25558.100000023842
+	},
+	{
+		"path": "./img/texture/m/m0.jpg",
+		"ip": "101.34.166.68",
+		"time0": 23150.400000035763,
+		"time1": 25571.5
+	},
+	{
+		"path": "./myModel/room/ConferenceRoom28.gltf",
+		"ip": "101.34.166.68",
+		"time0": 23433.600000023842,
+		"time1": 25830
+	},
+	{
+		"path": "./myModel/room/ConferenceRoom9.jpg",
+		"ip": "101.34.166.68",
+		"time0": 3074.5,
+		"time1": 25867.100000023842
+	},
+	{
+		"path": "./img/texture/m/m1.jpg",
+		"ip": "101.34.166.68",
+		"time0": 25627.100000023842,
+		"time1": 26163.5
+	},
+	{
+		"path": "./myModel/room/ConferenceRoom8.jpg",
+		"ip": "101.34.166.68",
+		"time0": 3073.699999988079,
+		"time1": 26272
+	},
+	{
+		"path": "./myModel/room/ConferenceRoom7.jpg",
+		"ip": "101.34.166.68",
+		"time0": 3073,
+		"time1": 26844.900000035763
+	},
+	{
+		"path": "./img/texture/m/m2.jpg",
+		"ip": "101.34.166.68",
+		"time0": 26216.400000035763,
+		"time1": 27947.600000023842
+	},
+	{
+		"path": "./myModel/room/ConferenceRoom30.gltf",
+		"ip": "101.34.166.68",
+		"time0": 25859.600000023842,
+		"time1": 28661.900000035763
+	},
+	{
+		"path": "./myModel/room/ConferenceRoom32.gltf",
+		"ip": "101.34.166.68",
+		"time0": 28839.69999998808,
+		"time1": 29500.100000023842
+	},
+	{
+		"path": "./myModel/room/ConferenceRoom35.gltf",
+		"ip": "101.34.166.68",
+		"time0": 29529.100000023842,
+		"time1": 30446
+	},
+	{
+		"path": "./myModel/room/ConferenceRoom36.gltf",
+		"ip": "101.34.166.68",
+		"time0": 30473.600000023842,
+		"time1": 30602.900000035763
+	},
+	{
+		"path": "./myModel/room/ConferenceRoom18.jpg",
+		"ip": "101.34.166.68",
+		"time0": 25654.30000001192,
+		"time1": 31398.400000035763
+	},
+	{
+		"path": "./myModel/room/ConferenceRoom10.jpg",
+		"ip": "101.34.166.68",
+		"time0": 3064.199999988079,
+		"time1": 31516.30000001192
+	},
+	{
+		"path": "./myModel/room/ConferenceRoom0.jpg",
+		"ip": "101.34.166.68",
+		"time0": 3062.699999988079,
+		"time1": 32384.900000035763
+	},
+	{
+		"path": "./myModel/room/ConferenceRoom32.jpg",
+		"ip": "101.34.166.68",
+		"time0": 32113.100000023842,
+		"time1": 34138.69999998808
+	},
+	{
+		"path": "./myModel/room/ConferenceRoom33.gltf",
+		"ip": "101.34.166.68",
+		"time0": 35554.5,
+		"time1": 35740.10000002384
+	}
+]
