@@ -1,7 +1,7 @@
-function PlayerControl(camera){
-    this.controller=new PlayerControl0(camera);
-    this.frustum;
-    this.init=function () {
+class PlayerControl{
+    constructor(camera){
+        this.controller=new PlayerControl0(camera);
+        this.frustum;
         var scope=this;
         this.controller.KeyboardMoveStep=8;
         function tool(){
@@ -9,11 +9,7 @@ function PlayerControl(camera){
             scope.controller.update();
         }tool();
     }
-    this.init();
-
-}/**/
-PlayerControl.prototype={
-    computeFrustumFromCamera:function(){//求视锥体
+    computeFrustumFromCamera=function(){//求视锥体
         var camera=this.controller.camera;
         var frustum = new THREE.Frustum();
         //frustum.setFromMatrix( new THREE.Matrix4().multiplyMatrices( camera.projectionMatrix,camera.matrixWorldInverse ) );
@@ -23,8 +19,9 @@ PlayerControl.prototype={
         frustum.setFromProjectionMatrix(projScreenMatrix);
         this.frustum=frustum;
         return frustum;
-    },
-    intersectsSphere(mesh){
+    }
+    intersectsSphere=function(mesh){
+        var scope=this;
         mesh.geometry.computeBoundingBox();
 
         var box=mesh.geometry.boundingBox;
@@ -39,7 +36,7 @@ PlayerControl.prototype={
             0.5
         )/2;
 
-        return this.intersectsSphere0([
+        return scope.intersectsSphere0([
             mesh.geometry.boundingSphere.center.x
             +mesh.matrixWorld.elements[12],
             mesh.geometry.boundingSphere.center.y
@@ -47,8 +44,8 @@ PlayerControl.prototype={
             mesh.geometry.boundingSphere.center.z
             +mesh.matrixWorld.elements[14]
         ], r );
-    },
-    intersectsSphere0(pos,radius ) {
+    }
+    intersectsSphere0=function(pos,radius ) {
         var center=new THREE.Vector3(pos[0],pos[1],pos[2])
         const planes = this.frustum.planes;
         //const center = sphere.center;
@@ -61,8 +58,8 @@ PlayerControl.prototype={
         }
         //console.log(center);
         return true;//相交
-    },
-    cullingTest(scene){
+    }
+    cullingTest=function(scene){
         var scope=this;
         setInterval(function () {
             scope.computeFrustumFromCamera();
@@ -79,8 +76,8 @@ PlayerControl.prototype={
                 }
             })
         },2000)
-    },
-    showFrustum(scene){
+    }
+    showFrustum=function(scene){
 
         /*for(i=0;i<6;i++)
             for(j=i;j<6;j++)
@@ -114,7 +111,7 @@ PlayerControl.prototype={
         var spots=[];
         for(var i=0;i<2;i++)
             for(j=0;j<2;j++)
-                for(k=0;k<2;k++)
+                for(var k=0;k<2;k++)
                     spots.push(
                         getSpot(
                             this.frustum.planes[i],
@@ -187,7 +184,7 @@ PlayerControl.prototype={
                 m_arr[0],m_arr[1],m_arr[2],
                 m_arr[3],m_arr[4],m_arr[5],
                 m_arr[6],m_arr[7],m_arr[8],
-                );
+            );
             const vec1 = new THREE.Vector3(
                 vec_arr[0], vec_arr[1], vec_arr[2]
             );//看成一个列向量
@@ -212,7 +209,7 @@ PlayerControl.prototype={
 
 
 
-    },
+    }
 }
 function PlayerControl0(camera){
     this.camera=camera;
@@ -486,3 +483,4 @@ function PhoneManager(){
         document.addEventListener( 'touchend', scope.onTouchEnd, false );
     }
 }
+export{PlayerControl}

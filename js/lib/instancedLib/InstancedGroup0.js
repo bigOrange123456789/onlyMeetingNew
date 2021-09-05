@@ -34,13 +34,30 @@ function InstancedGroup(instanceCount,originMesh,animationClip,crowdData_json){
     this.neckPosition;
 }
 InstancedGroup.prototype={
+    updateGeometry:function(mesh){//用于和PM技术相结合
+        var position=mesh.geometry.attributes.position,//网格
+            uv=mesh.geometry.attributes.uv,//贴图
+            skinIndex=mesh.geometry.attributes.skinIndex,//骨骼
+            normal=mesh.geometry.attributes.normal;//法线
+            //skinWeight=mesh.geometry.attributes.skinWeight;
+        //position.array[3*440]+=0.1;
+        this.mesh.geometry.setAttribute('position', position);
+        this.mesh.geometry.setAttribute('inUV',uv);
+        this.mesh.geometry.setAttribute('skinIndex',skinIndex);
+        this.mesh.geometry.setAttribute('normal',normal);
+        //this.mesh.geometry.setAttribute('skinWeight',skinWeight);
+    },
     initGeometry:function(geometryNew){
         var geometryTemp= new THREE.InstancedBufferGeometry();
         geometryTemp.instanceCount = this.instanceCount;
         geometryTemp.setAttribute('position', geometryNew.attributes.position);//Float32Array
-        geometryTemp.setAttribute('position2', geometryNew.attributes.position2);
         geometryTemp.setAttribute('inUV',geometryNew.attributes.uv);
         geometryTemp.setAttribute('normal',geometryNew.attributes.normal);
+        if(this.haveSkeleton){
+            //console.log(geometryNew.attributes);//skinWeight
+            geometryTemp.setAttribute('skinIndex',geometryNew.attributes.skinIndex);
+            geometryTemp.setAttribute('skinWeight',geometryNew.attributes.skinWeight);
+        }
 
         for(var i=0;i<this.index.count;i++)
             this.index.array[i]=i;
@@ -63,7 +80,6 @@ InstancedGroup.prototype={
         return geometryTemp;
     },
     initMaterial:function(uniforms,texSrc,textNum,colors,texFlipY,finishFunction,camera){
-        console.log(uniforms)
         var canvas=new CanvasControl(textNum,1,colors,texFlipY);//绘制合并纹理贴图的地方
         uniforms.text0={type: 't', value: canvas.getTex()};
 
@@ -85,15 +101,90 @@ InstancedGroup.prototype={
             });
         }
     },
-    initAnimation:function(uniforms,camera){
+    initAnimation2:function(uniforms,camera,geometryNew){
+        var scope=this;
+
+
         uniforms.time={value: 0.0};
         uniforms.cameraX={value: camera.position.x};
         uniforms.cameraY={value: camera.position.y};
         uniforms.cameraZ={value: camera.position.z};
-        uniforms.animationData={type: 't', value:[]};
-        //updateAnimation();
-        uniforms.animationDataLength={value:0};
+        updateAnimation();
 
+        this.animationData=[];
+        this.animationConfig=[];
+        var animationDataLength=0;
+
+        this.animationConfig=this.crowdData_json.config;
+        for(i=0;i<scope.animationConfig.length;i++){
+            animationDataLength+=this.animationConfig[i];
+            this.animationData= this.animationData.concat(this.crowdData_json.animation[i]);
+        }
+        function getTex(arr) {
+            var addLength=(1000-arr.length%1000)%1000
+            for(var i=0;i<addLength;i++){
+                arr.push(0)
+            }
+            var data = new Float32Array( arr.length);
+            var width = 1000, height = (data.length/3)/width;
+            data.set(arr)
+            var tex=new THREE.DataTexture(data, width, height, THREE.RGBFormat,THREE.FloatType);
+            return {"value":tex};
+        }
+
+        var index=geometryNew.attributes.skinIndex
+        var ps=[]
+        for(var fi=0;fi<12;fi++){//for(var fi=0;fi<this.fn;fi++){//fi 帧序号
+            var position=geometryNew.attributes.position.clone()
+            for(var l=0;l<position.count;l++){
+                var x=position.array[3*l]
+                var y=position.array[3*l+1]
+                var z=position.array[3*l+2]
+
+                var a=this.animationData
+                var b=index.array[l*4]
+                var bn=33//骨骼数
+                var p=12*bn*fi+12*b
+                ps.push(x*a[p  ]+y*a[p+3]+z*a[p+6]+a[p+9 ])//position.array[3*l]  =x*a[p  ]+y*a[p+3]+z*a[p+6]+a[p+9]
+                ps.push(x*a[p+1]+y*a[p+4]+z*a[p+7]+a[p+10])//position.array[3*l+1]=x*a[p+1]+y*a[p+4]+z*a[p+7]+a[p+10]
+                ps.push(x*a[p+2]+y*a[p+5]+z*a[p+8]+a[p+11])//position.array[3*l+2]=x*a[p+2]+y*a[p+5]+z*a[p+8]+a[p+11]
+            }
+        }
+
+        uniforms.animationDataLength={value:ps.length};
+        uniforms.animationData=getTex(ps);
+    },
+    initAnimation:function(uniforms,camera){
+        var scope=this;
+
+        function updateAnimation() {//每帧更新一次动画
+            requestAnimationFrame(updateAnimation);
+            scope.time=(scope.time+1.0)%60000;
+
+            uniforms.time={value: scope.time};
+            //console.log(scope.time,uniforms.cameraX.value)
+            uniforms.cameraX={value: camera.position.x};
+            uniforms.cameraY={value: camera.position.y};
+            uniforms.cameraZ={value: camera.position.z};
+        }
+
+        uniforms.time={value: 0.0};
+        uniforms.cameraX={value: camera.position.x};
+        uniforms.cameraY={value: camera.position.y};
+        uniforms.cameraZ={value: camera.position.z};
+        uniforms.animationData={type: 't', value:[]};updateAnimation();
+        uniforms.animationDataLength={value:0};
+        this.animationData=[];
+        this.animationConfig=[];
+        var animationDataLength=0;
+
+        this.animationConfig=this.crowdData_json.config;
+        for(i=0;i<scope.animationConfig.length;i++){
+            animationDataLength+=this.animationConfig[i];
+            this.animationData= this.animationData.concat(this.crowdData_json.animation[i]);
+        }
+        uniforms.animationDataLength={value:this.animationData.length};
+        uniforms.animationData=getTex(this.animationData);
 
         console.log(this.mcol0)
         console.log(this.mcol0.length)
@@ -155,7 +246,7 @@ InstancedGroup.prototype={
             if(this.haveSkeleton)this.initAnimation(uniforms,camera);
 
             var material=this.initMaterial(uniforms,texSrc,textNum,colors,texFlipY,finishFunction,camera);
-            if(this.vertURL===undefined)this.vertURL=this.haveSkeleton?"shader/vertexBone1.vert":"shader/vertex.vert";
+            if(this.vertURL===undefined)this.vertURL=this.haveSkeleton?"shader/vertexBone0.vert":"shader/vertex.vert";
             if(this.fragURL===undefined)this.fragURL="shader/fragment.frag";
             material.vertexShader=load(this.vertURL);
             material.fragmentShader=load(this.fragURL);
@@ -302,7 +393,6 @@ InstancedGroup.prototype={
     },
     speedSet:function (i,speed) {//设置动画速度
         this.speed.array[i]=speed;
-        this.speed.needsUpdate=true;
     },
 
     move:function (i,dPos){

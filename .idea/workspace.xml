@@ -21,10 +21,21 @@
   <component name="ChangeListManager">
     <list default="true" id="b7b6123d-caec-4b82-a432-424a6b5be5dd" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/analysis2/analysis.py" beforeDir="false" afterPath="$PROJECT_DIR$/analysis2/analysis.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/analysis2/data.json" beforeDir="false" afterPath="$PROJECT_DIR$/analysis2/data.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/analysis2/server.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/js/Network.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/Network.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PMtest.html" beforeDir="false" afterPath="$PROJECT_DIR$/PMtest.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PMtest2无动画.html" beforeDir="false" afterPath="$PROJECT_DIR$/PMtest2无动画.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crowdTest.html" beforeDir="false" afterPath="$PROJECT_DIR$/crowdTest.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crowdTest1融合加载.html" beforeDir="false" afterPath="$PROJECT_DIR$/crowdTest1融合加载.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crowdTest2.html" beforeDir="false" afterPath="$PROJECT_DIR$/crowdTest2.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crowdTest3.html" beforeDir="false" afterPath="$PROJECT_DIR$/crowdTest3.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crowdTest4.html" beforeDir="false" afterPath="$PROJECT_DIR$/crowdTest4.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/lib/instancedLib/InstancedGroup1.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/lib/instancedLib/InstancedGroup1.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/playerControl/PlayerControl.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/playerControl/PlayerControl.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shader/vertexBone1.vert" beforeDir="false" afterPath="$PROJECT_DIR$/shader/vertexBone1.vert" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test.html" beforeDir="false" afterPath="$PROJECT_DIR$/test.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/单个人群.html" beforeDir="false" afterPath="$PROJECT_DIR$/单个人群.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/表情动画.html" beforeDir="false" afterPath="$PROJECT_DIR$/表情动画.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/语音与口型.html" beforeDir="false" afterPath="$PROJECT_DIR$/语音与口型.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,7 +56,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../SVN" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -302,6 +313,11 @@
       <workItem from="1630284635789" duration="8596000" />
       <workItem from="1630315562504" duration="16282000" />
       <workItem from="1630365037741" duration="8719000" />
+      <workItem from="1630589109177" duration="1604000" />
+      <workItem from="1630590852313" duration="851000" />
+      <workItem from="1630660584001" duration="1184000" />
+      <workItem from="1630767218112" duration="191000" />
+      <workItem from="1630803547073" duration="1135000" />
     </task>
     <servers />
   </component>
@@ -329,10 +345,10 @@
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="371" y="87" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1280.680@0.0.1280.680" timestamp="1628239296143" />
-    <state x="320" y="101" key="FileChooserDialogImpl" timestamp="1630375804261">
+    <state x="320" y="101" key="FileChooserDialogImpl" timestamp="1630661774574">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state x="320" y="101" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1630375804261" />
+    <state x="320" y="101" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1630661774574" />
     <state x="303" y="1" width="672" height="678" key="search.everywhere.popup" timestamp="1630369922563">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
