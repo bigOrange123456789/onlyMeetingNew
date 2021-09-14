@@ -21,21 +21,8 @@
   <component name="ChangeListManager">
     <list default="true" id="b7b6123d-caec-4b82-a432-424a6b5be5dd" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PMtest.html" beforeDir="false" afterPath="$PROJECT_DIR$/PMtest.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PMtest2无动画.html" beforeDir="false" afterPath="$PROJECT_DIR$/PMtest2无动画.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/crowdTest.html" beforeDir="false" afterPath="$PROJECT_DIR$/crowdTest.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/crowdTest1融合加载.html" beforeDir="false" afterPath="$PROJECT_DIR$/crowdTest1融合加载.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/crowdTest2.html" beforeDir="false" afterPath="$PROJECT_DIR$/crowdTest2.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/crowdTest3.html" beforeDir="false" afterPath="$PROJECT_DIR$/crowdTest3.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/crowdTest4.html" beforeDir="false" afterPath="$PROJECT_DIR$/crowdTest4.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/js/lib/instancedLib/InstancedGroup1.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/lib/instancedLib/InstancedGroup1.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/js/playerControl/PlayerControl.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/playerControl/PlayerControl.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shader/vertexBone1.vert" beforeDir="false" afterPath="$PROJECT_DIR$/shader/vertexBone1.vert" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test.html" beforeDir="false" afterPath="$PROJECT_DIR$/test.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/单个人群.html" beforeDir="false" afterPath="$PROJECT_DIR$/单个人群.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/表情动画.html" beforeDir="false" afterPath="$PROJECT_DIR$/表情动画.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/语音与口型.html" beforeDir="false" afterPath="$PROJECT_DIR$/语音与口型.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/Network.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/Network.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,7 +43,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../SVN" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -318,6 +305,9 @@
       <workItem from="1630660584001" duration="1184000" />
       <workItem from="1630767218112" duration="191000" />
       <workItem from="1630803547073" duration="1135000" />
+      <workItem from="1630837578166" duration="2037000" />
+      <workItem from="1631200952566" duration="168000" />
+      <workItem from="1631230621420" duration="1261000" />
     </task>
     <servers />
   </component>
@@ -345,10 +335,10 @@
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="371" y="87" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1280.680@0.0.1280.680" timestamp="1628239296143" />
-    <state x="320" y="101" key="FileChooserDialogImpl" timestamp="1630661774574">
+    <state x="320" y="101" key="FileChooserDialogImpl" timestamp="1631233514944">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state x="320" y="101" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1630661774574" />
+    <state x="320" y="101" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1631233514944" />
     <state x="303" y="1" width="672" height="678" key="search.everywhere.popup" timestamp="1630369922563">
       <screen x="0" y="0" width="1280" height="680" />
     </state>

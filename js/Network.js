@@ -3,7 +3,7 @@ class Network{
         this.testFlag=true;
         if(this.testFlag)this.test={}
         this.ips=[
-            "localhost",
+            "localhost"//"101.34.166.68",
             //"101.34.166.68",
             //"110.40.255.87",
             //"101.34.161.225",
