@@ -1,3 +1,4 @@
+export{Network}
 class Network{
     constructor(){
         this.testFlag=false;
@@ -54,15 +55,14 @@ class Network{
         console.log(ip,path)
     }
     getGlb(path,cb) {
-        /*this.myRequest(path,unitArray=>{
+        this.myRequest(path,unitArray=>{
             new THREE.GLTFLoader().parse(unitArray.buffer, './',glb=>
                 cb(glb)
             );
-        })*/
-        new THREE.GLTFLoader().load(path,glb=>cb(glb))
+        })
     }
     getTexture(path,cb) {
-        /*this.myRequest(path,(unityArray,blob)=>{
+        this.myRequest(path,(unityArray,blob)=>{
             var image = document.createElement('img')
             image.src =(window.URL || window.webkitURL).createObjectURL(blob);
             image.onload=function(){
@@ -71,11 +71,7 @@ class Network{
                 texture.needsUpdate = true;
                 cb(texture)
             }
-        })*/
-        new THREE.TextureLoader().load(
-            path,
-            texture=>cb(texture)
-        );
+        })
     }
     send(json0,cb) {
         var oReq = new XMLHttpRequest();
@@ -90,4 +86,4 @@ class Network{
         oReq.send(JSON.stringify(json0));//发送请求
     }
 }
-export{Network};
+
