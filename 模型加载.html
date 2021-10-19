@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>MEETING</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<style>
+			body {overflow:hidden;}
+		</style>
+	</head>
+
+	<body>
+
+	<script src="js/lib/threeJS/three.js"></script>
+	<script src="js/lib/threeJS/OrbitControls.js"></script>
+	<script src="js/lib/threeJS/GLTFLoader.js"></script>
+
+	<script src="js/lib/pmLib/MyPMLoader.js"></script>
+	<script src="js/lib/instancedLib/SkinnedMeshController.js"></script>
+
+	<script src="js/VideoManager.js"></script>
+
+
+	<script src="js/ParamMeasure.js"></script>
+	<script src="js/Main.js"></script>
+
+	<script src="StereoEffect.js"></script>
+	<script  type="module">
+		import {PlayerControl}from'./js/playerControl/PlayerControl.js'
+		import {PreviewManager} from './js/playerControl/PreviewManager.js';
+		import{InstancedGroup} from "./js/lib/instancedLib/InstancedGroup.js";
+
+		var myMain = new Main();
+		myMain.start();
+		window.camera=myMain.camera;
+		myMain.camera.position.set(0,0,0)
+
+		new PlayerControl(myMain.camera);//.cullingTest(myMain.scene)
+
+		//男性开始
+		new THREE.GLTFLoader().load("myModel/avatar/man.glb",function (glb1) {
+			var mesh1;
+			glb1.scene.traverse(function (node) {
+				if(node instanceof THREE.Mesh){
+					mesh1=node;
+					//mesh.scale.set(10,10,10)
+				}
+			})
+			var mesh=new THREE.Mesh(
+					mesh1.geometry,
+					mesh1.material
+			)
+			mesh.scale.set(5,5,5)
+			mesh.rotation.set(-Math.PI/2,0,0)
+			myMain.scene.add(mesh)
+		})
+
+
+		//男性结束
+
+
+	</script>
+	</body>
+</html>

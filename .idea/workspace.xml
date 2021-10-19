@@ -20,10 +20,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b7b6123d-caec-4b82-a432-424a6b5be5dd" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/模型加载.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/crowdTest4.html" beforeDir="false" afterPath="$PROJECT_DIR$/crowdTest4.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/js/Network.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/Network.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/lib/instancedLib/InstancedGroup.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/lib/instancedLib/InstancedGroup.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shader/vertexBone.vert" beforeDir="false" afterPath="$PROJECT_DIR$/shader/vertexBone.vert" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/单个人群.html" beforeDir="false" afterPath="$PROJECT_DIR$/单个人群.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,15 +57,16 @@
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\gitHubRepositorys\onlyMeetingNew\shader" />
-      <recent name="D:\gitHubRepositorys\onlyMeetingNew\test" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\gitHubRepositorys\onlyMeetingNew\test" />
       <recent name="D:\gitHubRepositorys\onlyMeetingNew" />
       <recent name="D:\gitHubRepositorys\onlyMeetingNew\js\sceneSet" />
       <recent name="D:\gitHubRepositorys\onlyMeetingNew\js" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\gitHubRepositorys\onlyMeetingNew" />
+      <recent name="D:\gitHubRepositorys\onlyMeetingNew\shader" />
+      <recent name="D:\gitHubRepositorys\onlyMeetingNew\test" />
     </key>
   </component>
   <component name="RunManager" selected="JavaScript Debug.index.html">
@@ -314,7 +317,20 @@
       <workItem from="1632573856723" duration="601000" />
       <workItem from="1632580773390" duration="1205000" />
       <workItem from="1632726819682" duration="2897000" />
-      <workItem from="1632833497358" duration="617000" />
+      <workItem from="1632833497358" duration="1291000" />
+      <workItem from="1632898836654" duration="2394000" />
+      <workItem from="1633140857076" duration="1036000" />
+      <workItem from="1633681259417" duration="913000" />
+      <workItem from="1633916054479" duration="641000" />
+      <workItem from="1634036477953" duration="4562000" />
+      <workItem from="1634108919350" duration="4779000" />
+      <workItem from="1634188901696" duration="1184000" />
+      <workItem from="1634209632274" duration="912000" />
+      <workItem from="1634210608407" duration="6642000" />
+      <workItem from="1634389990980" duration="892000" />
+      <workItem from="1634391095392" duration="4176000" />
+      <workItem from="1634462804529" duration="33000" />
+      <workItem from="1634464055096" duration="18561000" />
     </task>
     <servers />
   </component>
@@ -342,14 +358,14 @@
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="371" y="87" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1280.680@0.0.1280.680" timestamp="1628239296143" />
-    <state x="427" y="137" key="FileChooserDialogImpl" timestamp="1632622190894">
-      <screen x="0" y="0" width="1707" height="920" />
-    </state>
-    <state x="320" y="101" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1631233514944" />
-    <state x="427" y="137" key="FileChooserDialogImpl/0.0.1707.920@0.0.1707.920" timestamp="1632622190894" />
-    <state x="303" y="1" width="672" height="678" key="search.everywhere.popup" timestamp="1630369922563">
+    <state x="541" y="85" key="FileChooserDialogImpl" timestamp="1634468046250">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state x="303" y="1" width="672" height="678" key="search.everywhere.popup/0.0.1280.680@0.0.1280.680" timestamp="1630369922563" />
+    <state x="541" y="85" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1634468046250" />
+    <state x="796" y="145" key="FileChooserDialogImpl/0.0.1707.920@0.0.1707.920" timestamp="1634303298162" />
+    <state x="303" y="1" width="672" height="678" key="search.everywhere.popup" timestamp="1634486591895">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="303" y="1" width="672" height="678" key="search.everywhere.popup/0.0.1280.680@0.0.1280.680" timestamp="1634486591895" />
   </component>
 </project>

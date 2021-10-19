@@ -180,8 +180,14 @@ class InstancedGroup{
             );
 
             this.boneWidthSet(i,0,Math.random()/2-0.25);
-            this.boneWidthSet(i,1,Math.random()+0.5);//头部
+            this.boneWidthSet(i,1,0.2*Math.random()+0.9);//头部
+            //this.boneWidthSet(i,1,Math.random()+0.5);//头部
             this.boneWidthSet(i,3,Math.random()/2-0.25);
+            /**/
+
+            this.boneWidthSet(i,0,0);
+            this.boneWidthSet(i,1,1);//头部
+            this.boneWidthSet(i,3,0);
         }
 
         var uniforms={

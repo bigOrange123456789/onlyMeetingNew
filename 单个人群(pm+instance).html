@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>MEETING</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<style>
+			body {overflow:hidden;}
+		</style>
+	</head>
+
+	<body>
+
+	<script src="js/lib/threeJS/three.js"></script>
+	<script src="js/lib/threeJS/OrbitControls.js"></script>
+	<script src="js/lib/threeJS/GLTFLoader.js"></script>
+
+	<script src="js/lib/pmLib/MyPMLoader.js"></script>
+	<script src="js/lib/instancedLib/SkinnedMeshController.js"></script>
+
+	<script src="js/VideoManager.js"></script>
+
+
+	<script src="js/ParamMeasure.js"></script>
+	<script src="js/Main.js"></script>
+
+	<script src="StereoEffect.js"></script>
+	<script  type="module">
+		import {PlayerControl}from'./js/playerControl/PlayerControl.js'
+		import {PreviewManager} from './js/playerControl/PreviewManager.js';
+		import{InstancedGroup} from "./js/lib/instancedLib/InstancedGroup.js";
+
+		var myMain = new Main();
+		myMain.start();
+		window.camera=myMain.camera;
+
+		new PlayerControl(myMain.camera);//.cullingTest(myMain.scene)
+
+		//男性开始
+		var loader = new THREE.XHRLoader(THREE.DefaultLoadingManager);
+		loader.load("json/crowdData.json", function(str){//dataTexture
+			var crowdData_json=JSON.parse(str);
+			createMan(crowdData_json)
+		});
+		function createMan(crowdData_json,finishFunction2) {
+			//男性开始
+			var pmLoader2 = new MyPMLoader(
+					{animations: []},
+					'./myModel/Male',    //模型路径
+					[],//没有LOD分级//LOD等级的数组
+					myMain.camera,  //LOD需要判断到相机的距离
+					0,       //有多个动画时,表示第0个动画//可以通过pmLoader.updateAnimation(i)来切换动画
+					0,     //动画播放速度//可以通过调整pmLoader.animationSpeed来调整速度
+					[],
+					function () {
+						var mesh2 = pmLoader2.rootObject.children[0];
+						var peoples2 = new InstancedGroup(
+								1,//908
+								[mesh2],//这些mesh的网格应该一致
+								true,
+								crowdData_json,
+								myMain.camera//添加光线效果
+						);
+						peoples2.neckPosition=0.68;
+						//peoples2.vertURL="shader/vertexBone2.vert";
+						//peoples2.fragURL="shader/fragment2.frag";
+						peoples2.init(["./img/texture/m/m0.jpg","./img/texture/m/m1.jpg","./img/texture/m/m2.jpg"],
+								32,
+								['#a9a541','#726050','#836557','#5a4c40','#716365',
+									'#483530','#695148','#917a6e','#786861','#4d453f','#553531','#8b7a73',
+									'#5d5146','#6c5b58','#656261','#646058','#5c5653','#5f5042','#6b6665',
+									'#6e5b4c','#82756d','#8f7462','#8e6b5d','#5a4c40','#6c6f72','#8e7f78',
+									'#514d50','#423e3f','#644e40','#746255','#524946','#56453d','#60564d'],
+								true,
+								finishFunction2,
+								myMain.camera
+						);
+						var index = 0;
+						for (var i = 0; i < peoples2.instanceCount; i++)
+							//if (scope.sexs[i] === 1)
+							{
+								peoples2.rotationSet(index, [Math.PI / 2, 0, 3 * Math.PI / 2]);
+								//peoples2.positionSet(index, [scope.positions[i][0] + 1.8, scope.positions[i][1] + 1.5, scope.positions[i][2]]);
+								var symm=1,k=0.5;
+								//if(Math.random()<0.5)symm=-1;
+								peoples2.scaleSet(index, [5,5,5]);//最后一个是高
+								peoples2.animationSet(index, 0);
+								peoples2.colorSet(index, [0,0,0]);
+								//peoples2.speedSet(index, 0.6 + Math.random() * 0.4);
+								peoples2.textureSet0(index, [1,1,1]);
+								//peoples2.faceShapeSet(index,Math.random()*3.5)
+								index++;
+							}
+						myMain.scene.add(peoples2.obj);
+						//console.log("男性模型加载时间"+(window.myClock-window.myClock_Male0));
+						var timeId2 = setInterval(function () {
+							mesh2 = pmLoader2.rootObject.children[0];
+							peoples2.updateGeometry(mesh2);
+							console.log(pmLoader2.finished);
+							if (pmLoader2.finished) window.clearInterval(timeId2)
+						}, 1000);
+					}
+			);
+			//男性结束
+		}
+
+		//男性结束
+
+
+	</script>
+	</body>
+</html>
